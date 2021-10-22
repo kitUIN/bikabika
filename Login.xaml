@@ -1,0 +1,25 @@
+﻿<Page Width="600" Height="400"
+    x:Class="bikabika.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:bikabika"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Margin="0,50,0,0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="E-mail:" VerticalAlignment="Center"/>
+                <TextBox x:Name="Email" Width="358" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Password:" VerticalAlignment="Center"/>
+                <TextBox x:Name="Password" Width="358" />
+            </StackPanel>
+        </StackPanel>
+
+    <Button x:Name="Button" Click="ClickHandler" Content="登陆" Margin="419,168,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+    
+</Page>

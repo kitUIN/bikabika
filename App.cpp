@@ -3,6 +3,7 @@
 #include "App.h"
 #include "MainPage.h"
 
+
 using namespace winrt;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
@@ -95,6 +96,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
             //tTitleBar.BackgroundColor(ColorHelper::FromArgb(255, 255, 180, 180));
             tTitleBar.ButtonBackgroundColor(Colors::Transparent());
             tTitleBar.ButtonInactiveBackgroundColor(Colors::Transparent());
+            
         }
     }
     else

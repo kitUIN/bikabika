@@ -2,24 +2,30 @@
 #include "MainPage.h"
 
 #include "MainPage.g.cpp"
-
+#include "Login.h"
 
 using namespace std;
 using namespace winrt;
+using namespace Windows::UI;
+using namespace Windows::UI::Core;
+using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media::Imaging;
-using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation;
-using namespace Windows::UI::ViewManagement;
+using namespace Windows::ApplicationModel;
+using namespace Windows::ApplicationModel::Activation;
+using namespace Windows::ApplicationModel::Core;
+using namespace std;
 
 namespace winrt::bikabika::implementation
 {
     MainPage::MainPage()
     {
         InitializeComponent();
-       
+        
+        Window::Current().SetTitleBar(AppTitleBar());
     }
 
     int32_t MainPage::MyProperty()
@@ -125,9 +131,32 @@ namespace winrt::bikabika::implementation
         }
     }
 
-    
 
+    Windows::Foundation::IAsyncAction MainPage::CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
+    {
+        OutputDebugStringW((L"\n Entered the function : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
 
+        auto coreView = winrt::Windows::ApplicationModel::Core::CoreApplication::CreateNewView();
+
+        OutputDebugStringW((L"\n Created the view : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+
+        co_await resume_foreground(coreView.Dispatcher());
+        auto appView = winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
+        auto m_window_debug = Windows::UI::Core::CoreWindow::GetForCurrentThread();
+        OutputDebugStringW((L"\n Switched thread : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+
+        hstring newTitle = L"my new window";
+        appView.Title(newTitle);
+        OutputDebugStringW((L"\n Set new title : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+        m_window_debug.Activate();
+        OutputDebugStringW((L"\n Registered the callback : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+        co_await resume_foreground(coreView.Dispatcher());
+        Windows::UI::Core::CoreWindow::GetForCurrentThread().Activate();
+        OutputDebugStringW((L"\n After activation : " + std::to_wstring(static_cast<int>(m_window_debug.ActivationMode())) + L"\n").c_str());
+
+    }
+
+  
 
 
     

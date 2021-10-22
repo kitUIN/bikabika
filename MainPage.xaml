@@ -14,7 +14,6 @@
                     <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground" TintColor="{ThemeResource SystemAccentColorLight1}" TintOpacity=".6"/>
                     <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight1}" TintOpacity=".6"/>
                     <AcrylicBrush x:Key="NavigationViewTopPaneBackground" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity=".6"/>
-                    <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColor}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
@@ -26,10 +25,7 @@
         <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded"  IsTitleBarAutoPaddingEnabled="False" IsBackEnabled="True" PaneDisplayMode="Left" IsPaneToggleButtonVisible="False" OpenPaneLength="180" Background="{ThemeResource MyAcrylicBrush}">
             <muxc:NavigationView.PaneHeader>
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="picacomic_2.png" Width="36" Height="36" />
-                        <TextBlock Text="嗶咔嗶咔" FontSize="25" FontWeight="Bold" Margin="20,0,0,0"/>
-                    </StackPanel>
+
                     <StackPanel x:Name="Users" Orientation="Vertical">
                         <PersonPicture ProfilePicture="Assets\BetsyShermanProfile.png" Width="120" Height="120"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -49,7 +45,7 @@
 
                 <muxc:NavigationViewItemHeader Height="30"/>
                 <muxc:NavigationViewItem Tag="home" Icon="Home" Content="主頁"/>
-                <muxc:NavigationViewItem Tag="fenglie" Content="分類">
+                <muxc:NavigationViewItem Tag="classification" Content="分類">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE71D;"/>
                     </muxc:NavigationViewItem.Icon>
@@ -64,11 +60,21 @@
             <Frame x:Name="ContentFrame">
                 <StackPanel Margin="300,50,0,0">
                     <CheckBox x:Name="UseCustomColorCheckBox" Content="Use custom color"/>
-                    <Button x:Name="ChangeColorButton" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
+                    <Button x:Name="ChangeColorButton" Click="CreateLoginPage" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
                 </StackPanel>
             </Frame>
         </muxc:NavigationView>
 
-
+        <Grid x:Name="AppTitleBar" Background="Transparent" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="3000" Margin="45,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition/>
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="1">
+                <Image Source="picacomic_2.png" Width="36" Height="36" Margin="0,8,0,0"/>
+                <TextBlock Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,8,0,0"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

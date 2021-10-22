@@ -1,0 +1,8 @@
+namespace bikabika
+{
+    runtimeclass Login : Windows.UI.Xaml.Controls.Page
+    {
+        Login();
+        Int32 MyProperty;
+    }
+}

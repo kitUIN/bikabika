@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    [default_interface]
+    runtimeclass Home : Windows.UI.Xaml.Controls.Page
+    {
+        Home();
+        Int32 MyProperty;
+    }
+}

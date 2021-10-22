@@ -8,6 +8,8 @@
     <Page Include="LightDictionary.xaml">
       <Filter>View</Filter>
     </Page>
+    <Page Include="Home.xaml" />
+    <Page Include="Login.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />

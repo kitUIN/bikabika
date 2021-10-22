@@ -34,6 +34,8 @@ namespace winrt::bikabika::implementation
         void NavView_Navigate(
             std::wstring navItemTag,
             Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo);
+        Windows::Foundation::IAsyncAction CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
+
     private:
         // Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
         std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
