@@ -13,6 +13,7 @@ namespace wuxc
 
 namespace winrt::bikabika::implementation
 {
+    
     struct MainPage : MainPageT<MainPage>
     {
         MainPage();

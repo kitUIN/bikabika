@@ -4,23 +4,26 @@
 #include "MainPage.g.cpp"
 #include "Login.h"
 
+
 using namespace std;
 using namespace winrt;
 using namespace Windows::UI;
 using namespace Windows::UI::Core;
+using namespace Windows::UI::Composition;
 using namespace Windows::UI::ViewManagement;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Numerics;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
-using namespace std;
 
 namespace winrt::bikabika::implementation
 {
+    ;
     MainPage::MainPage()
     {
         InitializeComponent();
@@ -134,26 +137,41 @@ namespace winrt::bikabika::implementation
 
     Windows::Foundation::IAsyncAction MainPage::CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
     {
-        OutputDebugStringW((L"\n Entered the function : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
 
-        auto coreView = winrt::Windows::ApplicationModel::Core::CoreApplication::CreateNewView();
+        auto Views = CoreApplication::Views();
+        if (Views.Size() == 2)
+            return;
+        CoreDispatcher MainDispatcher =
+            CoreApplication::GetCurrentView().Dispatcher();
+        int32_t  ViewId = 0;
+        // Create a new window.
+        
+        CoreApplicationView View = CoreApplication::CreateNewView();
+        co_await resume_foreground(View.Dispatcher());
 
-        OutputDebugStringW((L"\n Created the view : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+        // Show the "Loading..." screen.
+        Windows::UI::Xaml::Controls::Frame f;
+        f.Navigate(xaml_typename<bikabika::Login>(), nullptr);
+        Window::Current().Content(f);
+        
+        //ApplicationView::PreferredLaunchViewSize();
+        //ApplicationView::PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
+        Window::Current().Activate();
 
-        co_await resume_foreground(coreView.Dispatcher());
-        auto appView = winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
-        auto m_window_debug = Windows::UI::Core::CoreWindow::GetForCurrentThread();
-        OutputDebugStringW((L"\n Switched thread : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
+        //Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(600, 400));
+        
+        ViewId = ApplicationView::GetForCurrentView().Id();
+        
+        // Activate the new window.
+        co_await resume_foreground(MainDispatcher);
+        
+        co_await ApplicationViewSwitcher::TryShowAsStandaloneAsync(ViewId);
+        
+        // Start the emulation in the new window.
+        co_await resume_foreground(View.Dispatcher());
+        co_await ApplicationViewSwitcher::SwitchAsync(ViewId);
 
-        hstring newTitle = L"my new window";
-        appView.Title(newTitle);
-        OutputDebugStringW((L"\n Set new title : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
-        m_window_debug.Activate();
-        OutputDebugStringW((L"\n Registered the callback : " + std::to_wstring(GetCurrentThreadId()) + L"\n").c_str());
-        co_await resume_foreground(coreView.Dispatcher());
-        Windows::UI::Core::CoreWindow::GetForCurrentThread().Activate();
-        OutputDebugStringW((L"\n After activation : " + std::to_wstring(static_cast<int>(m_window_debug.ActivationMode())) + L"\n").c_str());
-
+        //ApplicationView::GetForCurrentView().ExitFullScreenMode();
     }
 
   

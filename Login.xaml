@@ -1,4 +1,4 @@
-﻿<Page Width="600" Height="400"
+﻿<Page 
     x:Class="bikabika.Login"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

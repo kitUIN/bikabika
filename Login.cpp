@@ -6,12 +6,16 @@
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::ViewManagement;
+using namespace Windows::Foundation;
 
 namespace winrt::bikabika::implementation
 {
     Login::Login()
     {
         InitializeComponent();
+
+        
     }
 
     int32_t Login::MyProperty()
@@ -27,5 +31,6 @@ namespace winrt::bikabika::implementation
     void Login::ClickHandler(IInspectable const&, RoutedEventArgs const&)
     {
         Button().Content(box_value(L"Clicked"));
+        Window::Current().Close();
     }
 }
