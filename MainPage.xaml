@@ -22,7 +22,8 @@
 
     <Grid >
 
-        <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded"  IsTitleBarAutoPaddingEnabled="False" IsBackEnabled="True" PaneDisplayMode="Left" IsPaneToggleButtonVisible="False" OpenPaneLength="180" Background="{ThemeResource MyAcrylicBrush}">
+        <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked" IsSettingsVisible ="False"
+                         BackRequested="NavView_BackRequested" IsTitleBarAutoPaddingEnabled="False" IsBackEnabled="True" PaneDisplayMode="Left" IsPaneToggleButtonVisible="False" OpenPaneLength="180" Background="{ThemeResource MyAcrylicBrush}">
             <muxc:NavigationView.PaneHeader>
                 <StackPanel>
 
@@ -30,39 +31,43 @@
                         <PersonPicture ProfilePicture="Assets\BetsyShermanProfile.png" Width="120" Height="120"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Grid>
-                                <TextBlock x:Name="UserName" Text="不知名绅士"  VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}"/>
+                                <TextBlock x:Name="UserName" x:Uid="DefaultUserName" Text="不知名紳士" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}"/>
                             </Grid>
                             <Grid  Margin="1,0,0,0" >
-                                <TextBlock x:Name="UserLevel" Text="Lv.5" Margin="3,1,0,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
+                                <TextBlock x:Name="UserLevel" x:Uid="DefaultUserLevel" Text="Lv.5" Margin="3,1,0,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
                             </Grid>
                         </StackPanel>
                         <TextBlock x:Name="UserInfomation"/>
                     </StackPanel>
                 </StackPanel>
             </muxc:NavigationView.PaneHeader>
-
+            <muxc:NavigationView.FooterMenuItems>
+                <muxc:NavigationViewItem Tag="settings" x:Uid="NavSettings" Icon="Setting" Content="設置"/>
+            </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems>
 
                 <muxc:NavigationViewItemHeader Height="30"/>
-                <muxc:NavigationViewItem Tag="home" Icon="Home" Content="主頁"/>
-                <muxc:NavigationViewItem Tag="classification" Content="分類">
+                <muxc:NavigationViewItem Tag="home" x:Uid="NavHome" Icon="Home" Content="主頁"/>
+                <muxc:NavigationViewItem Tag="classification" x:Uid="NavClassification" Content="分類">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE71D;"/>
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem Tag="geren" Content="我的">
+                <muxc:NavigationViewItem Tag="account" x:Uid="NavAccount" Content="我的">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77B;"/>
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-
-            <Frame x:Name="ContentFrame">
-                <StackPanel Margin="300,50,0,0">
-                    <CheckBox x:Name="UseCustomColorCheckBox" Content="Use custom color"/>
-                    <Button x:Name="ChangeColorButton" Click="CreateLoginPage" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
-                </StackPanel>
-            </Frame>
+            <ScrollViewer>
+                <Frame x:Name="ContentFrame" Padding="12,0,12,24" IsTabStop="True"
+                   NavigationFailed="ContentFrame_NavigationFailed">
+                    <StackPanel Margin="300,50,0,0">
+                        <CheckBox x:Name="UseCustomColorCheckBox" Content="Use custom color"/>
+                        <Button x:Name="ChangeColorButton" Click="CreateLoginPage" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
+                    </StackPanel>
+                </Frame>
+            </ScrollViewer>
         </muxc:NavigationView>
 
         <Grid x:Name="AppTitleBar" Background="Transparent" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="3000" Margin="45,0,0,0">
@@ -73,7 +78,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="1">
                 <Image Source="picacomic_2.png" Width="36" Height="36" Margin="0,8,0,0"/>
-                <TextBlock Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,8,0,0"/>
+                <TextBlock x:Uid="APPTitle" Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,8,0,0"/>
             </StackPanel>
         </Grid>
     </Grid>

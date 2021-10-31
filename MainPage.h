@@ -22,24 +22,30 @@ namespace winrt::bikabika::implementation
         void NavView_Loaded(
             Windows::Foundation::IInspectable const& /* sender */,
             Windows::UI::Xaml::RoutedEventArgs const& /* args */);
+
         void NavView_ItemInvoked(
             Windows::Foundation::IInspectable const& /* sender */,
             muxc::NavigationViewItemInvokedEventArgs const& args);
-
         // NavView_SelectionChanged is not used in this example, but is shown for completeness.
         // You'll typically handle either ItemInvoked or SelectionChanged to perform navigation,
         // but not both.
-        void NavView_SelectionChanged(
-            muxc::NavigationView const& /* sender */,
-            muxc::NavigationViewSelectionChangedEventArgs const& args);
         void NavView_Navigate(
             std::wstring navItemTag,
             Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo);
+        void NavView_BackRequested(muxc::NavigationView const&, muxc::NavigationViewBackRequestedEventArgs const&);
+        void CoreDispatcher_AcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher const&, Windows::UI::Core::AcceleratorKeyEventArgs const& args);
+        void CoreWindow_PointerPressed(Windows::UI::Core::CoreWindow const&, Windows::UI::Core::PointerEventArgs const& args);
+        void System_BackRequested(Windows::Foundation::IInspectable const&, Windows::UI::Core::BackRequestedEventArgs const& args);
+        void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
+        bool TryGoBack();
+        void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
         Windows::Foundation::IAsyncAction CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
 
     private:
         // Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
         std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
+    public:
+        void NavView_ItemInvoked_1(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs const& args);
     };
     
 

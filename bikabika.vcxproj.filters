@@ -10,6 +10,10 @@
     </Page>
     <Page Include="Home.xaml" />
     <Page Include="Login.xaml" />
+    <Page Include="SettingsPage.xaml" />
+    <Page Include="HomePage.xaml" />
+    <Page Include="ClassificationPage.xaml" />
+    <Page Include="AccountPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
@@ -62,5 +66,8 @@
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-cn\Resources.resw" />
   </ItemGroup>
 </Project>

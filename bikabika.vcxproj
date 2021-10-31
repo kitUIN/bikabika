@@ -9,7 +9,7 @@
     <ProjectGuid>{3ffe40f6-6dcf-4027-a814-7bb0eb0b4e06}</ProjectGuid>
     <ProjectName>bikabika</ProjectName>
     <RootNamespace>bikabika</RootNamespace>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>zh-cn</DefaultLanguage>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
@@ -109,8 +109,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AccountPage.h">
+      <DependentUpon>AccountPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="ClassificationPage.h">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Home.h">
       <DependentUpon>Home.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="HomePage.h">
+      <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Login.h">
@@ -124,12 +136,25 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="SettingsPage.h">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AccountPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ClassificationPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Home.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LightDictionary.xaml">
@@ -139,6 +164,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -158,8 +186,20 @@
     <Image Include="picacomic_2.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AccountPage.cpp">
+      <DependentUpon>AccountPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="ClassificationPage.cpp">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="Home.cpp">
       <DependentUpon>Home.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="HomePage.cpp">
+      <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Login.cpp">
@@ -176,13 +216,29 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="SettingsPage.cpp">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="AccountPage.idl">
+      <DependentUpon>AccountPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
+    <Midl Include="ClassificationPage.idl">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="Home.idl">
       <DependentUpon>Home.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="HomePage.idl">
+      <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Login.idl">
@@ -192,10 +248,17 @@
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>
+    <Midl Include="SettingsPage.idl">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-cn\Resources.resw" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
