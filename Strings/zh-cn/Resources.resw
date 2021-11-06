@@ -129,6 +129,42 @@
     <value>不知名绅士</value>
     <comment>左侧导航栏默认用户名</comment>
   </data>
+  <data name="E-mail.Text" xml:space="preserve">
+    <value>邮箱</value>
+    <comment>登陆账号显示</comment>
+  </data>
+  <data name="E-mailBox.PlaceholderText" xml:space="preserve">
+    <value>邮箱</value>
+    <comment>登陆账号提示</comment>
+  </data>
+  <data name="LoginBlankFail.CloseButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>因为用户名空登陆失败对话框按钮</comment>
+  </data>
+  <data name="LoginBlankFail.Content" xml:space="preserve">
+    <value>请输入您的账号和密码</value>
+    <comment>因为用户名空登陆失败对话框内容</comment>
+  </data>
+  <data name="LoginBlankFail.Title" xml:space="preserve">
+    <value>登陆失败</value>
+    <comment>因为用户名空登陆失败对话框标题</comment>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>登陆</value>
+    <comment>登陆按钮</comment>
+  </data>
+  <data name="LoginPasswordFail.CloseButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>因为密码错误登陆失败对话框按钮</comment>
+  </data>
+  <data name="LoginPasswordFail.Content" xml:space="preserve">
+    <value>密码错误</value>
+    <comment>因为密码错误登陆失败对话框内容</comment>
+  </data>
+  <data name="LoginPasswordFail.Title" xml:space="preserve">
+    <value>登陆失败</value>
+    <comment>因为密码错误登陆失败对话框标题</comment>
+  </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
     <comment>左侧导航栏第三个元素</comment>
@@ -144,5 +180,17 @@
   <data name="NavSettings.Content" xml:space="preserve">
     <value>设置</value>
     <comment>左侧导航栏倒数第一个元素</comment>
+  </data>
+  <data name="Password.Text" xml:space="preserve">
+    <value>密码</value>
+    <comment>登陆密码显示</comment>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>密码</value>
+    <comment>登陆密码提示</comment>
+  </data>
+  <data name="RememberCheckBox.Content" xml:space="preserve">
+    <value>记住我</value>
+    <comment>登录时记住我</comment>
   </data>
 </root>

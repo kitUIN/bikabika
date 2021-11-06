@@ -6,20 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid>
-        <StackPanel Margin="0,50,0,0" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <TextBlock Text="E-mail:" VerticalAlignment="Center"/>
-                <TextBox x:Name="Email" Width="358" />
+    <Grid >
+        <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock x:Uid="E-mail" Text="E-mail:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBox x:Uid="E-mailBox"  x:Name="Email"  Width="200" Background="{StaticResource SystemAccentColorLight3}" PlaceholderText = "E-mail"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <TextBlock Text="Password:" VerticalAlignment="Center"/>
-                <TextBox x:Name="Password" Width="358" />
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <TextBlock x:Uid="Password" Text="Password:" VerticalAlignment="Center" />
+                <PasswordBox x:Uid="PasswordBox" x:Name="Password" Loaded="Password_Loaded" Width="200" Background="{StaticResource SystemAccentColorLight3}" PlaceholderText = "Password"/>
             </StackPanel>
+            <CheckBox x:Uid="RememberCheckBox" x:Name="RememberCheckBox" Content="Remember me"/>
+            <Button x:Uid="LoginButton" Click="ClickHandler" Content="Log In" Background="{StaticResource SystemAccentColorLight2}" Margin="0,0,0,0" HorizontalAlignment="Right"/>
+
         </StackPanel>
-
-    <Button x:Name="Button" Click="ClickHandler" Content="登陆" Margin="419,168,0,0" VerticalAlignment="Top"/>
-
+        <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}"/>
     </Grid>
     
 </Page>

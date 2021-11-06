@@ -40,14 +40,11 @@ namespace winrt::bikabika::implementation
         bool TryGoBack();
         void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
         Windows::Foundation::IAsyncAction CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
-
     private:
+       bikabika::LoginBlockViewModel m_mainViewModel{ nullptr };
         // Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
         std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
-    public:
-        void NavView_ItemInvoked_1(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Microsoft::UI::Xaml::Controls::NavigationViewItemInvokedEventArgs const& args);
     };
-    
 
 }
 

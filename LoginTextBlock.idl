@@ -1,0 +1,10 @@
+// LoginTextBlock.idl
+namespace bikabika
+{
+    runtimeclass LoginTextBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        LoginTextBlock(String email, String password);
+        String Email;
+        String Password;
+    }
+}

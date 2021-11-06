@@ -1,0 +1,11 @@
+// LoginBlockViewModel.idl
+import "LoginTextBlock.idl";
+
+namespace bikabika
+{
+    runtimeclass LoginBlockViewModel
+    {
+        LoginBlockViewModel();
+        LoginTextBlock LoginTextBlock{ get; };
+    }
+}

@@ -5,11 +5,12 @@
     xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Padding="12,12,12,12"
     mc:Ignorable="d">
 
-    <Grid  Background="{ThemeResource MyAcrylicBrush}">
-        
+    <Grid>
+        <CheckBox x:Name="Usxx" Content="Use custom color" HorizontalAlignment="Stretch" Margin="0,2000,0,0"/>
     </Grid>
 
-    
+
 </Page>

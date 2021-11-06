@@ -18,15 +18,24 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
+    <Midl Include="LoginTextBlock.idl" />
+    <Midl Include="LoginBlockViewModel.idl" />
+    <Midl Include="BikaHttpClient.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainPage.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="LoginTextBlock.cpp" />
+    <ClCompile Include="LoginBlockViewModel.cpp" />
+    <ClCompile Include="BikaHttpClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="LoginTextBlock.h" />
+    <ClInclude Include="LoginBlockViewModel.h" />
+    <ClInclude Include="BikaHttpClient.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

@@ -21,12 +21,10 @@
     </Page.Resources>
 
     <Grid >
-
         <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked" IsSettingsVisible ="False"
                          BackRequested="NavView_BackRequested" IsTitleBarAutoPaddingEnabled="False" IsBackEnabled="True" PaneDisplayMode="Left" IsPaneToggleButtonVisible="False" OpenPaneLength="180" Background="{ThemeResource MyAcrylicBrush}">
             <muxc:NavigationView.PaneHeader>
-                <StackPanel>
-
+                <StackPanel Margin="0,20,0,0">
                     <StackPanel x:Name="Users" Orientation="Vertical">
                         <PersonPicture ProfilePicture="Assets\BetsyShermanProfile.png" Width="120" Height="120"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -59,7 +57,7 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-            <ScrollViewer>
+            <ScrollViewer Margin="0,25,0,0" Padding="12,12,12,12">
                 <Frame x:Name="ContentFrame" Padding="12,0,12,24" IsTabStop="True"
                    NavigationFailed="ContentFrame_NavigationFailed">
                     <StackPanel Margin="300,50,0,0">

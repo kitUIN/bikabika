@@ -23,9 +23,20 @@ namespace winrt::bikabika::implementation
     {
         throw hresult_not_implemented();
     }
+    Windows::Foundation::IAsyncAction HomePage::ExampleCoroutineAsync()
+    {
 
+        Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+        Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+
+        co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists);
+
+    }
     void HomePage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
     {
+
         Button().Content(box_value(L"Clicked"));
+        auto processOp{ ExampleCoroutineAsync() };
     }
+    
 }
