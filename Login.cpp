@@ -55,9 +55,9 @@ namespace winrt::bikabika::implementation
 			{
 				if (folder.Name() == L"bikabikadb")
 				{
-					Windows::Storage::StorageFolder folder{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
+					Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
 
-					for (auto const& file : co_await folder.GetFilesAsync())
+					for (auto const& file : co_await folderDB.GetFilesAsync())
 					{
 						if (file.Name() == L"account.json")
 						{
@@ -71,8 +71,8 @@ namespace winrt::bikabika::implementation
 			
 			if (f)
 			{
-				Windows::Storage::StorageFolder folder{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
-				auto accountFile{ co_await folder.GetFileAsync(L"account.json") };
+				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
+				auto accountFile{ co_await folderDB.GetFileAsync(L"account.json") };
 				Windows::Storage::Streams::IRandomAccessStream stream{ co_await accountFile.OpenAsync(Windows::Storage::FileAccessMode::Read) };
 				uint64_t size{ stream.Size() };
 				Windows::Storage::Streams::IInputStream inputStream{ stream.GetInputStreamAt(0) };
@@ -128,7 +128,7 @@ namespace winrt::bikabika::implementation
 		{
 			account.SetNamedValue(L"password", Windows::Data::Json::JsonValue::CreateStringValue(password));
 		}
-		if (account.GetNamedBoolean(L"isChecked") != isCheck)
+		if (isCheck !=	(boolean)account.GetNamedBoolean(L"isChecked") )
 		{
 			account.SetNamedValue(L"isChecked", Windows::Data::Json::JsonValue::CreateBooleanValue(isCheck));
 		}
@@ -146,27 +146,41 @@ namespace winrt::bikabika::implementation
 		//co_await winrt::resume_background();
 		// Do compute-bound work here.
 		hstring ress = co_await m_bikaHttp.Login(Email().Text(), Password().Password());
-		Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
-		OutputDebugStringW(resp.ToString().c_str());
-		double code = resp.GetNamedNumber(L"code");
-		if (code == (double)400)
-		{	//账号或密码错误
+		if (to_string(ress).substr(0,7)=="[ERROR]")
+		{
+			Progressing().IsActive(false);
 			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoginPasswordFail/Title")));
-			LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginPasswordFail/Content")));
+			LoginContentDialog().Content(box_value(ress));
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"LoginPasswordFail/CloseButtonText"));
 			Progressing().IsActive(false);
 			auto show{ LoginContentDialog().ShowAsync() };
-			Password().Password(L"");
 		}
-		else if (code == (double)200)
-		{	//登陆成功
-			Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
-			hstring token = data.GetNamedString(L"token");
-			auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
-			Progressing().IsActive(false);
-			Frame().Navigate(winrt::xaml_typename<bikabika::Home>());
+		else
+		{
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
+			OutputDebugStringW(resp.ToString().c_str());
+			double code = resp.GetNamedNumber(L"code");
+			if (code == (double)400)
+			{	//账号或密码错误
+				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoginPasswordFail/Title")));
+				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginPasswordFail/Content")));
+				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"LoginPasswordFail/CloseButtonText"));
+				Progressing().IsActive(false);
+				auto show{ LoginContentDialog().ShowAsync() };
+				Password().Password(L"");
+			}
+			else if (code == (double)200)
+			{	//登陆成功
+				Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
+				hstring token = data.GetNamedString(L"token");
+				auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
+				Progressing().IsActive(false);
+				Frame().Navigate(winrt::xaml_typename<bikabika::Home>());
+			}
 		}
+		
 
 	}
 	void Login::ClickHandler(IInspectable const&, RoutedEventArgs const&)

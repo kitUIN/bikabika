@@ -18,6 +18,7 @@
                     <Color x:Key="SystemAccentColorLight2">#ffdeeb</Color>
                     <Color x:Key="SystemAccentColorLight3">#fff0f6</Color>
                     <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColor}"/>
+                    <AcrylicBrush x:Key="MyAcrylicBrush2" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight2}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorLight2}"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
