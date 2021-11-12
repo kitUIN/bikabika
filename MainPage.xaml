@@ -26,7 +26,7 @@
             <muxc:NavigationView.PaneHeader>
                 <StackPanel Margin="0,20,0,0">
                     <StackPanel x:Name="Users" Orientation="Vertical">
-                        <PersonPicture ProfilePicture="Assets\BetsyShermanProfile.png" Width="120" Height="120"/>
+                        <PersonPicture ProfilePicture="userlogo.png" Width="120" Height="120"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Grid>
                                 <TextBlock x:Name="UserName" x:Uid="DefaultUserName" Text="不知名紳士" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}"/>

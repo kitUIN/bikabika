@@ -187,6 +187,7 @@
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
     <Image Include="picacomic_2.png" />
+    <Image Include="userlogo.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AccountPage.cpp">

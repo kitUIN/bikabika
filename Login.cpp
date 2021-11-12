@@ -21,56 +21,40 @@ namespace winrt::bikabika::implementation
 		return m_bikaHttp;
 	}
 	
-	Windows::Foundation::IAsyncAction CheckFile(hstring fileName)
+	Windows::Foundation::IAsyncOperation<boolean> CheckFile(hstring fileName)
 	{   // 检测数据文件
 		boolean f = false;
+		co_await winrt::resume_background();
 		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 		for (auto const& folder : co_await localFolder.GetFoldersAsync())
 		{
 			if (folder.Name() == L"bikabikadb")
 			{
-				f = true;
-				break;
-			}
-		}
-		for (auto const& file : co_await localFolder.GetFilesAsync())
-		{
-			if (file.Name() == fileName)
-			{
-				f = true;
-				break;
-			}
-		}
+				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
 
+				for (auto const& file : co_await folderDB.GetFilesAsync())
+				{
+					if (file.Name() == fileName)
+					{
+						f = true;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		co_return f;
 		
 	}
 	Windows::Foundation::IAsyncAction Login::ReadAccountJson()
 	{	// 自动登陆载入数据
 		try 
 		{
-			boolean f = false;
-			co_await winrt::resume_background();
-			Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-			for (auto const& folder : co_await localFolder.GetFoldersAsync())
-			{
-				if (folder.Name() == L"bikabikadb")
-				{
-					Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
-
-					for (auto const& file : co_await folderDB.GetFilesAsync())
-					{
-						if (file.Name() == L"account.json")
-						{
-							f = true;
-							break;
-						}
-					}
-					break;
-				}
-			}
 			
-			if (f)
+			
+			if (CheckFile(L"account.json"))
 			{
+				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
 				auto accountFile{ co_await folderDB.GetFileAsync(L"account.json") };
 				Windows::Storage::Streams::IRandomAccessStream stream{ co_await accountFile.OpenAsync(Windows::Storage::FileAccessMode::Read) };
@@ -79,22 +63,18 @@ namespace winrt::bikabika::implementation
 				Windows::Storage::Streams::DataReader dataReader{ inputStream };
 				unsigned int cBytesLoaded{ co_await dataReader.LoadAsync(size) };
 				winrt::hstring streamText{ dataReader.ReadString(cBytesLoaded) };
-				winrt::apartment_context ui_thread;
-				co_await winrt::resume_background();
-				co_await ui_thread;
+				
 
 				Windows::Data::Json::JsonObject account = Windows::Data::Json::JsonObject::Parse(streamText);
 				//OutputDebugStringW(account.ToString().c_str());
 				//OutputDebugStringW(L"\n");
-				co_await winrt::resume_foreground(Email().Dispatcher());
 				Email().Text(account.GetNamedString(L"email"));
-				co_await winrt::resume_foreground(Password().Dispatcher());
 				Password().Password(account.GetNamedString(L"password"));
-				co_await winrt::resume_foreground(RememberCheckBox().Dispatcher());
 				RememberCheckBox().IsChecked(account.GetNamedBoolean(L"isChecked"));
 			}
 			else
 			{
+				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 				OutputDebugStringW(L"\n[Error] account file is not exist -> passed\n\n");
 				Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
 				auto accountFile{ co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
@@ -176,7 +156,24 @@ namespace winrt::bikabika::implementation
 				Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
 				hstring token = data.GetNamedString(L"token");
 				auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
+				hstring personInfo = co_await m_bikaHttp.PersonInfo();
+				Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(personInfo);
+				OutputDebugStringW(personData.ToString().c_str());
 				Progressing().IsActive(false);
+				double code = personData.GetNamedNumber(L"code");
+				if (code == (double)400)
+				{	
+					auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+					LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoginPasswordFail/Title")));
+					LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginPasswordFail/Content")));
+					LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"LoginPasswordFail/CloseButtonText"));
+					auto show{ LoginContentDialog().ShowAsync() };
+					
+				}
+				else if (code == (double)200)
+				{
+
+				}
 				Frame().Navigate(winrt::xaml_typename<bikabika::Home>());
 			}
 		}

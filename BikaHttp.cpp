@@ -59,9 +59,13 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"app-build-version", L"45");
 		headers.Insert(L"User-Agent", L"okhttp/3.8.1");
 		headers.Insert(L"signature", BikaEncryption(strAPI, to_hstring(uid), t, method, L"C69BAF41DA5ABD1FFEDC6D2FEA56B", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
+		if (m_auth != L"")
+		{	
+			headers.Insert(L"Authorization", m_auth);
+		}
 		return headers;
 	}
-	IAsyncOperation<hstring> BikaHttp::GET(Uri requestUri, hstring strAPI, guid uuid, hstring apiKey, hstring strKey)
+	IAsyncOperation<hstring> BikaHttp::GET(Uri requestUri, hstring strAPI, guid uuid)
 	{   //GET类型
 		HttpClient httpClient;
 		HttpRequestMessage httpRequestMessage;
@@ -70,6 +74,7 @@ namespace winrt::bikabika::implementation
 		httpRequestMessage.Method(HttpMethod::Get());
 		httpRequestMessage.RequestUri(requestUri);
 		httpRequestMessage.Headers() = SetHeader(httpRequestMessage.Headers(), strAPI, uuid, t, L"GET");
+		
 		try
 		{
 			HttpResponseMessage res{ co_await httpClient.SendRequestAsync(httpRequestMessage) };
@@ -120,13 +125,66 @@ namespace winrt::bikabika::implementation
 		
 	}
 	IAsyncOperation<hstring> BikaHttp::Login(hstring account, hstring password)
-	{   //登陆获取token
+	{   
+		/*登陆获取token
+		{
+		"code":200,
+		"message":"success",
+		"data":
+			{
+				"token":"xNjRiNzdlMWNmNDYiLCJlbWFpbCI6Imt1bHVqdW4iLCJyb2xlIjoibWVtYmVyIiwibmFtZSI6Iuaer-mcsuWQmyIsInZlcnNpb24iOiIyLjIuMS4yLjMuNCIsImJ1aWxkVmVyc2lvbiI6IjQ1IiwicGxhdGZvcm0iOiJhbmRyb2lkIiwiaWF0IjoxNjM2NzI0ODI0LCJleHAiOjE2MzczMjk2MjR9.XvDyMQ0Br4h2XtIeVXaoQ89BMxBdCP1NUvIBbEoFHHo"
+			}
+		}*/
 		Uri requestUri{ L"https://picaapi.picacomic.com/auth/sign-in" };
 		guid uuid = GuidHelper::CreateNewGuid();
 		HttpStringContent jsonContent(
 			L"{ \"email\": \"" + account + L"\", \"password\": \"" + password + L"\" }",
 			UnicodeEncoding::Utf8,
 			L"application/json");
-		co_return co_await POST(requestUri, jsonContent, L"auth/sign-in", uuid);
+		auto ress = co_await POST(requestUri, jsonContent, L"auth/sign-in", uuid);
+		Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
+		Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
+		hstring token = data.GetNamedString(L"token");
+		Auth(token);
+		co_return ress;
 	}
+	IAsyncOperation<hstring> BikaHttp::PersonInfo()
+	{   /*获取个人信息
+		{
+		"code":200,
+		"message":"success",
+		"data":
+		{
+			"user":
+			{
+				"_id":"  ",
+				"birthday":"1999-03-02T00:00:00.000Z",
+				"email":"kuluju",
+				"gender":"m",
+				"name":"枯露君",
+				"slogan":"只要冲不死就往死里冲",
+				"title":"萌新",
+				"verified":false,
+				"exp":1320,
+				"level":4,
+				"characters":[],
+				"created_at":"2018-03-02T15:39:24.530Z",
+				"avatar":
+				{
+					"fileServer":"https://storage1.picacomic.com",
+					"path":"81e4-46a5-9206-c424226bed07.jpg",
+					"originalName":"avatar.jpg"
+				},
+				"isPunched":false,
+				"character":"https://pica-web.wakamoment.tk/images/halloween_m.png"
+			}
+		}
+		}
+		*/
+		Uri requestUri{ L"https://picaapi.picacomic.com/users/profile" };
+		guid uuid = GuidHelper::CreateNewGuid();
+		co_return co_await GET(requestUri, L"users/profile", uuid);
+		
+	}
+	
 }

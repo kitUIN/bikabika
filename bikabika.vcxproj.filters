@@ -60,6 +60,7 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="picacomic_2.png" />
+    <Image Include="userlogo.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
