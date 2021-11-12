@@ -1,9 +1,0 @@
-// BikaHttpClient.idl
-namespace bikabika
-{
-    runtimeclass BikaHttpClient
-    {
-        BikaHttpClient();
-        String Authorization;
-    }
-}

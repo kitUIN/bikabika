@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    runtimeclass BikaHttp
+    {
+        BikaHttp();
+        String Auth;
+        Windows.Web.Http.HttpResponseMessage Login(String account, String password);
+    }
+}

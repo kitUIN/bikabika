@@ -16,26 +16,45 @@ namespace winrt::bikabika::implementation
 		InitializeComponent();
 		
 	}
-
-	int32_t Login::MyProperty()
+	bikabika::BikaHttp Login::BikaHttpAPI()
 	{
-		throw hresult_not_implemented();
+		return m_bikaHttp;
 	}
+	
+	Windows::Foundation::IAsyncAction CheckFile(hstring fileName)
+	{   // 检测数据文件
+		boolean f = false;
+		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+		for (auto const& folder : co_await localFolder.GetFoldersAsync())
+		{
+			if (folder.Name() == L"bikabikadb")
+			{
+				f = true;
+				break;
+			}
+		}
+		for (auto const& file : co_await localFolder.GetFilesAsync())
+		{
+			if (file.Name() == fileName)
+			{
+				f = true;
+				break;
+			}
+		}
 
-	void Login::MyProperty(int32_t /* value */)
-	{
-		throw hresult_not_implemented();
+		
 	}
 	Windows::Foundation::IAsyncAction Login::ReadAccountJson()
-	{
+	{	// 自动登陆载入数据
 		try 
 		{
 			boolean f = false;
 			co_await winrt::resume_background();
 			Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-			for (auto const& folder : co_await localFolder.GetFoldersAsync())
+
+			for (auto const& file : co_await localFolder.GetFilesAsync())
 			{
-				if (folder.Name() == L"bikabikadb")
+				if (file.Name() == L"account.json")
 				{
 					f = true;
 					break;
@@ -67,26 +86,48 @@ namespace winrt::bikabika::implementation
 			}
 			else
 			{
-				CreateAccountJson(L"", L"", false);
 				OutputDebugStringW(L"\n[Error] account file is not exist -> passed\n\n");
+				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+				Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+				auto accountFile{ co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+				Windows::Data::Json::JsonObject account;
+				account.SetNamedValue(L"email", Windows::Data::Json::JsonValue::CreateStringValue(L""));
+				account.SetNamedValue(L"password", Windows::Data::Json::JsonValue::CreateStringValue(L""));
+				account.SetNamedValue(L"isChecked", Windows::Data::Json::JsonValue::CreateBooleanValue(false));
+				account.SetNamedValue(L"token", Windows::Data::Json::JsonValue::CreateStringValue(L""));
+				hstring data = account.Stringify();
+				co_await Windows::Storage::FileIO::WriteTextAsync(accountFile, data);
 			}
 		}
 		catch (winrt::hresult_error const& ex) 
 		{
 		}
 	}
-	Windows::Foundation::IAsyncAction Login::CreateAccountJson(hstring email,hstring password,boolean isCheck)
+	Windows::Foundation::IAsyncAction Login::WriteAccountJson(hstring email,hstring password,hstring token,boolean isCheck)
 	{
-		// 创建用户配置文件
+		// 读入用户配置文件
 		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 		Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
 		auto accountFile{co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists)};
+		auto accountData{co_await Windows::Storage::FileIO::ReadTextAsync(accountFile)};
 		// 序列化json
-		
-		Windows::Data::Json::JsonObject account;
-		account.SetNamedValue(L"email", Windows::Data::Json::JsonValue::CreateStringValue(email));
-		account.SetNamedValue(L"password", Windows::Data::Json::JsonValue::CreateStringValue(password));
-		account.SetNamedValue(L"isChecked", Windows::Data::Json::JsonValue::CreateBooleanValue(isCheck));
+		Windows::Data::Json::JsonObject account = Windows::Data::Json::JsonObject::Parse(accountData);
+		if (account.GetNamedString(L"email") != email)
+		{
+			account.SetNamedValue(L"email", Windows::Data::Json::JsonValue::CreateStringValue(email));
+		}
+		if (account.GetNamedString(L"password") != password)
+		{
+			account.SetNamedValue(L"password", Windows::Data::Json::JsonValue::CreateStringValue(password));
+		}
+		if (account.GetNamedBoolean(L"isChecked") != isCheck)
+		{
+			account.SetNamedValue(L"isChecked", Windows::Data::Json::JsonValue::CreateBooleanValue(isCheck));
+		}
+		if (account.GetNamedString(L"token") != password)
+		{
+			account.SetNamedValue(L"token", Windows::Data::Json::JsonValue::CreateStringValue(token));
+		}
 		hstring data = account.Stringify();
 		co_await Windows::Storage::FileIO::WriteTextAsync(accountFile, data);
 	}
@@ -104,10 +145,18 @@ namespace winrt::bikabika::implementation
 			auto show{ LoginContentDialog().ShowAsync() };
 			//Email().Text(L"");
 			//Password().Password(L"");
-			}
+		}
 		else 
-		{
-			auto processOp{ CreateAccountJson(Email().Text(),Password().Password(),RememberCheckBox().IsChecked().GetBoolean()) };
+		{	
+			//auto client = winrt::make<BikaHttpClient>();
+			Windows::Web::Http::HttpResponseMessage res = m_bikaHttp.Login(Email().Text(), Password().Password());
+			auto ress{ res.Content().ReadAsStringAsync().get() };
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
+			Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
+			hstring token = data.GetNamedString(L"token");
+			auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean())};
+			
+			
 		}
 	}
 }

@@ -226,9 +226,9 @@ namespace winrt::bikabika::implementation
 		}
 	}
 
-
+	/*
 	Windows::Foundation::IAsyncAction MainPage::CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
-	{
+	{	// 新建页面
 
 		auto Views = CoreApplication::Views();
 		if (Views.Size() == 2)
@@ -263,5 +263,5 @@ namespace winrt::bikabika::implementation
 		co_await ApplicationViewSwitcher::SwitchAsync(ViewId);
 
 		//ApplicationView::GetForCurrentView().ExitFullScreenMode();
-	}
+	}*/
 }
