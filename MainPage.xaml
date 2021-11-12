@@ -62,7 +62,7 @@
                    NavigationFailed="ContentFrame_NavigationFailed">
                     <StackPanel Margin="300,50,0,0">
                         <CheckBox x:Name="UseCustomColorCheckBox" Content="Use custom color"/>
-                        <Button x:Name="ChangeColorButton" Click="CreateLoginPage" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
+                        <Button x:Name="ChangeColorButton" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
                     </StackPanel>
                 </Frame>
             </ScrollViewer>

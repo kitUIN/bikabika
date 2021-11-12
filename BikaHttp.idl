@@ -4,6 +4,6 @@ namespace bikabika
     {
         BikaHttp();
         String Auth;
-        Windows.Web.Http.HttpResponseMessage Login(String account, String password);
+        Windows.Foundation.IAsyncOperation<String> Login(String account, String password);
     }
 }

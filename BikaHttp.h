@@ -14,8 +14,8 @@ namespace winrt::bikabika::implementation
         hstring BikaEncryption(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey, hstring strKey);
         Windows::Web::Http::Headers::HttpRequestHeaderCollection SetHeader(Windows::Web::Http::Headers::HttpRequestHeaderCollection headers, hstring strAPI, guid uuid, time_t t, hstring method);
         Windows::Web::Http::HttpResponseMessage GET(Windows::Foundation::Uri requestUri, hstring strAPI, guid uuid, hstring apiKey, hstring strKey);
-        Windows::Web::Http::HttpResponseMessage POST(Windows::Foundation::Uri requestUri, Windows::Web::Http::HttpStringContent jsonContent, hstring strAPI, guid uuid);
-        Windows::Web::Http::HttpResponseMessage Login(hstring account, hstring password);
+        Windows::Foundation::IAsyncOperation<hstring> POST(Windows::Foundation::Uri requestUri, Windows::Web::Http::HttpStringContent jsonContent, hstring strAPI, guid uuid);
+        Windows::Foundation::IAsyncOperation<hstring> Login(hstring account, hstring password);
     private:
         winrt::hstring m_auth;
     };

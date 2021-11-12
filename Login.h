@@ -11,6 +11,7 @@ namespace winrt::bikabika::implementation
 
         Windows::Foundation::IAsyncAction WriteAccountJson(hstring email, hstring password, hstring token, boolean isCheck);
 
+        Windows::Foundation::IAsyncAction LoginAccount();
 
         bikabika::BikaHttp BikaHttpAPI();
         //Windows::Foundation::IAsyncOperation<winrt::hstring>  ReadAccountJson();

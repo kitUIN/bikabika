@@ -71,26 +71,27 @@ namespace winrt::bikabika::implementation
         httpRequestMessage.RequestUri(requestUri);
         httpRequestMessage.Headers() = SetHeader(httpRequestMessage.Headers(), strAPI, uuid, t, L"GET");
         httpResponseMessage = httpClient.SendRequestAsync(httpRequestMessage).get();
-        httpResponseMessage.EnsureSuccessStatusCode();
+        //httpResponseMessage.EnsureSuccessStatusCode();
+
         return httpResponseMessage;
     }
-    HttpResponseMessage BikaHttp::POST(Uri requestUri, HttpStringContent jsonContent, hstring strAPI, guid uuid)
+    IAsyncOperation<hstring>  BikaHttp::POST(Uri requestUri, HttpStringContent jsonContent, hstring strAPI, guid uuid)
     {   //POST类型
         HttpClient httpClient;
         HttpRequestMessage httpRequestMessage;
-        HttpResponseMessage httpResponseMessage;
+        //HttpResponseMessage httpResponseMessage;
         time_t t = time(NULL);
         httpRequestMessage.Method(HttpMethod::Post());
         httpRequestMessage.RequestUri(requestUri);
         httpRequestMessage.Headers() = SetHeader(httpRequestMessage.Headers(), strAPI, uuid, t, L"POST");
         httpRequestMessage.Content(jsonContent);
-        httpResponseMessage = httpClient.SendRequestAsync(httpRequestMessage).get();
-        httpResponseMessage.EnsureSuccessStatusCode();
-        hstring httpResponseBody = httpResponseMessage.Content().ReadAsStringAsync().get();
-        std::wcout << httpResponseBody.c_str();
-        return httpResponseMessage;
+        HttpResponseMessage res{ co_await httpClient.SendRequestAsync(httpRequestMessage) };
+        //httpResponseMessage.EnsureSuccessStatusCode();
+        //hstring httpResponseBody = httpResponseMessage.Content().ReadAsStringAsync().get();
+        //std::wcout << httpResponseBody.c_str();
+        co_return co_await res.Content().ReadAsStringAsync();
     }
-    HttpResponseMessage BikaHttp::Login(hstring account, hstring password)
+    IAsyncOperation<hstring> BikaHttp::Login(hstring account, hstring password)
     {   //登陆获取token
         Uri requestUri{ L"https://picaapi.picacomic.com/auth/sign-in" };
         guid uuid = GuidHelper::CreateNewGuid();
@@ -98,6 +99,6 @@ namespace winrt::bikabika::implementation
             L"{ \"email\": \"" + account + L"\", \"password\": \"" + password + L"\" }",
             UnicodeEncoding::Utf8,
             L"application/json");
-        return POST(requestUri, jsonContent, L"auth/sign-in", uuid);
+        co_return co_await POST(requestUri, jsonContent, L"auth/sign-in", uuid);
     }
 }
