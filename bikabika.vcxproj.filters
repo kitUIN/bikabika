@@ -8,7 +8,6 @@
     <Page Include="LightDictionary.xaml">
       <Filter>View</Filter>
     </Page>
-    <Page Include="Home.xaml" />
     <Page Include="Login.xaml" />
     <Page Include="SettingsPage.xaml" />
     <Page Include="HomePage.xaml" />
@@ -18,24 +17,24 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
-    <Midl Include="LoginTextBlock.idl" />
-    <Midl Include="LoginBlockViewModel.idl" />
     <Midl Include="BikaHttp.idl" />
+    <Midl Include="ClassBlock.idl" />
+    <Midl Include="ClassBlockViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainPage.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="LoginTextBlock.cpp" />
-    <ClCompile Include="LoginBlockViewModel.cpp" />
     <ClCompile Include="BikaHttp.cpp" />
+    <ClCompile Include="ClassBlock.cpp" />
+    <ClCompile Include="ClassBlockViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="LoginTextBlock.h" />
-    <ClInclude Include="LoginBlockViewModel.h" />
     <ClInclude Include="BikaHttp.h" />
+    <ClInclude Include="ClassBlock.h" />
+    <ClInclude Include="ClassBlockViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

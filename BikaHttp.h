@@ -17,6 +17,7 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncOperation<hstring> POST(Windows::Foundation::Uri requestUri, Windows::Web::Http::HttpStringContent jsonContent, hstring strAPI, guid uuid);
         Windows::Foundation::IAsyncOperation<hstring> Login(hstring account, hstring password);
         Windows::Foundation::IAsyncOperation<hstring> PersonInfo();
+        Windows::Foundation::IAsyncOperation<hstring> Categories();
     private:
         winrt::hstring m_auth;
     };

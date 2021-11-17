@@ -39,6 +39,7 @@ namespace winrt::bikabika::implementation
 		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
 		bool TryGoBack();
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
+	
 	private:
 		//bikabika::LoginBlockViewModel m_mainViewModel{ nullptr };
 		// Vector of std::pair holding the Navigation Tag and the relative Navigation Page.

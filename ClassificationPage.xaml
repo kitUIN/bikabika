@@ -7,7 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="0,200,0,0">
-        <Button x:Name="Button" Click="ClickHandler">Click Me</Button>
-    </StackPanel>
+    <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{x:Bind ClassBlockView.ClassBlocks}">
+        <GridView.ItemTemplate>
+            <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
+                <StackPanel Height="220" Width="180" Margin="12">
+                    <Image Source="{x:Bind ClassPic}" Height="180" Width="180" Stretch="UniformToFill"/>
+                    <TextBlock Text="{x:Bind ClassName}"/>
+                </StackPanel>
+            </DataTemplate>
+        </GridView.ItemTemplate>
+        <GridView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </GridView.ItemsPanel>
+
+    </GridView>
 </Page>

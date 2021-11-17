@@ -33,7 +33,7 @@ namespace winrt::bikabika::implementation
 	{   //HMAC-SHA256签名验证
 		auto encoding = BinaryStringEncoding::Utf8;
 		IBuffer buffMsg = CryptographicBuffer::ConvertStringToBinary(SetRaw(strAPI, uid, t, method, apiKey), encoding);
-		std::wcout << SetRaw(strAPI, uid, t, method, apiKey).c_str() << std::endl;
+		//std::wcout << SetRaw(strAPI, uid, t, method, apiKey).c_str() << std::endl;
 		IBuffer buffPublicKey = CryptographicBuffer::ConvertStringToBinary(strKey, encoding);
 		MacAlgorithmProvider objMacProv = MacAlgorithmProvider::OpenAlgorithm(MacAlgorithmNames::HmacSha256());
 		auto hash = objMacProv.CreateHash(buffPublicKey);
@@ -186,5 +186,10 @@ namespace winrt::bikabika::implementation
 		co_return co_await GET(requestUri, L"users/profile", uuid);
 		
 	}
-	
+	IAsyncOperation<hstring> BikaHttp::Categories()
+	{	/*主目录*/
+		Uri requestUri{ L"https://picaapi.picacomic.com/categories" };
+		guid uuid = GuidHelper::CreateNewGuid();
+		co_return co_await GET(requestUri, L"categories", uuid);
+	}
 }

@@ -9,7 +9,8 @@
     mc:Ignorable="d">
 
     <Grid>
-        <CheckBox x:Name="Usxx" Content="Use custom color" HorizontalAlignment="Stretch" Margin="0,2000,0,0"/>
+        
+        <CheckBox x:Name="Usxx" Content="这个界面还没做好" HorizontalAlignment="Stretch" Margin="0,200,0,0"/>
     </Grid>
 
 

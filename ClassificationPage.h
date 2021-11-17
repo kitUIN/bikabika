@@ -1,17 +1,16 @@
 ﻿#pragma once
 
 #include "ClassificationPage.g.h"
+#include "ClassBlockViewModel.h"
 
 namespace winrt::bikabika::implementation
 {
     struct ClassificationPage : ClassificationPageT<ClassificationPage>
     {
         ClassificationPage();
-
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
-
-        void ClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
+        bikabika::ClassBlockViewModel ClassBlockView();
+    private:
+        bikabika::ClassBlockViewModel m_classBlockView{ nullptr };
     };
 }
 

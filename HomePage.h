@@ -1,24 +1,22 @@
 ﻿#pragma once
 
 #include "HomePage.g.h"
-
+#include "Login.h"
 namespace winrt::bikabika::implementation
 {
-    struct HomePage : HomePageT<HomePage>
-    {
-        HomePage();
+	struct HomePage : HomePageT<HomePage>
+	{
+		HomePage();
 
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
-
-        void ClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
-        Windows::Foundation::IAsyncAction ExampleCoroutineAsync();
-    };
+		Windows::Foundation::IAsyncAction ExampleCoroutineAsync();
+		void SetText(hstring str);
+		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+	};
 }
 
 namespace winrt::bikabika::factory_implementation
 {
-    struct HomePage : HomePageT<HomePage, implementation::HomePage>
-    {
-    };
+	struct HomePage : HomePageT<HomePage, implementation::HomePage>
+	{
+	};
 }

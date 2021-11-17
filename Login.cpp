@@ -14,7 +14,7 @@ namespace winrt::bikabika::implementation
 	Login::Login()
 	{
 		InitializeComponent();
-		
+		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 	}
 	bikabika::BikaHttp Login::BikaHttpAPI()
 	{
@@ -174,7 +174,7 @@ namespace winrt::bikabika::implementation
 				{
 
 				}
-				Frame().Navigate(winrt::xaml_typename<bikabika::Home>());
+				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>(), winrt::box_value(L"HELLO WORLD!"));
 			}
 		}
 		
@@ -214,12 +214,11 @@ namespace winrt::bikabika::implementation
 			
 		}
 	}
+	void winrt::bikabika::implementation::Login::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+	{
+		auto acc{ ReadAccountJson() };
+	}
 }
 
 
-void winrt::bikabika::implementation::Login::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-	auto acc{ ReadAccountJson() };
 
-	
-}

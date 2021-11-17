@@ -114,12 +114,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="BikaHttp.h" />
+    <ClInclude Include="ClassBlock.h" />
+    <ClInclude Include="ClassBlockViewModel.h" />
     <ClInclude Include="ClassificationPage.h">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Home.h">
-      <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="HomePage.h">
@@ -130,8 +128,6 @@
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="LoginBlockViewModel.h" />
-    <ClInclude Include="LoginTextBlock.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -152,9 +148,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ClassificationPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Home.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HomePage.xaml">
@@ -195,12 +188,10 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="BikaHttp.cpp" />
+    <ClCompile Include="ClassBlock.cpp" />
+    <ClCompile Include="ClassBlockViewModel.cpp" />
     <ClCompile Include="ClassificationPage.cpp">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Home.cpp">
-      <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="HomePage.cpp">
@@ -211,8 +202,6 @@
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="LoginBlockViewModel.cpp" />
-    <ClCompile Include="LoginTextBlock.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -237,12 +226,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
     <Midl Include="BikaHttp.idl" />
+    <Midl Include="ClassBlock.idl" />
+    <Midl Include="ClassBlockViewModel.idl" />
     <Midl Include="ClassificationPage.idl">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
-    <Midl Include="Home.idl">
-      <DependentUpon>Home.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="HomePage.idl">
@@ -253,8 +240,6 @@
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="LoginBlockViewModel.idl" />
-    <Midl Include="LoginTextBlock.idl" />
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>

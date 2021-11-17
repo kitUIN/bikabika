@@ -12,20 +12,14 @@ namespace winrt::bikabika::implementation
     ClassificationPage::ClassificationPage()
     {
         InitializeComponent();
+        NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+        m_classBlockView = winrt::make<ClassBlockViewModel>();
     }
 
-    int32_t ClassificationPage::MyProperty()
+    bikabika::ClassBlockViewModel ClassificationPage::ClassBlockView()
     {
-        throw hresult_not_implemented();
+        return m_classBlockView;
     }
 
-    void ClassificationPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
-    void ClassificationPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
-    {
-        Button().Content(box_value(L"Clicked"));
-    }
+    
 }

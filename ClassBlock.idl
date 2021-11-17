@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    runtimeclass ClassBlock
+    {
+        ClassBlock(String className, String classPic);
+        String ClassName{ get; };
+        String ClassPic{ get; };
+    }
+}

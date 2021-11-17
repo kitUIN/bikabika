@@ -37,7 +37,7 @@ namespace winrt::bikabika::implementation
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"login", winrt::xaml_typename<bikabika::Login>()));
-
+		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
 	}
 
@@ -52,7 +52,7 @@ namespace winrt::bikabika::implementation
 	}
 	
 
-	// List of ValueTuple holding the Navigation Tag and the relative Navigation Page
+	
 	std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 
 	void MainPage::NavView_Loaded(

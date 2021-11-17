@@ -4,6 +4,5 @@ namespace bikabika
     runtimeclass HomePage : Windows.UI.Xaml.Controls.Page
     {
         HomePage();
-        Int32 MyProperty;
     }
 }

@@ -1,0 +1,10 @@
+import "ClassBlock.idl";
+namespace bikabika
+{
+    runtimeclass ClassBlockViewModel
+    {
+        ClassBlockViewModel();
+        bikabika.ClassBlock DefaultClassBlock{ get; };
+        Windows.Foundation.Collections.IVector<IInspectable> ClassBlocks{ get; };
+    }
+}

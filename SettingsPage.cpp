@@ -12,6 +12,7 @@ namespace winrt::bikabika::implementation
     SettingsPage::SettingsPage()
     {
         InitializeComponent();
+        NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
     int32_t SettingsPage::MyProperty()

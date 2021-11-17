@@ -13,16 +13,6 @@ namespace winrt::bikabika::implementation
     {
         InitializeComponent();
     }
-
-    int32_t HomePage::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
-
-    void HomePage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
     Windows::Foundation::IAsyncAction HomePage::ExampleCoroutineAsync()
     {
 
@@ -30,13 +20,17 @@ namespace winrt::bikabika::implementation
         Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
 
         co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists);
-
+        
     }
-    void HomePage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+    void HomePage::SetText(hstring str)
     {
-
-        Button().Content(box_value(L"Clicked"));
-        auto processOp{ ExampleCoroutineAsync() };
+       
+        OutputDebugStringW(str.c_str());
     }
-    
+    void HomePage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+    {
+        SetText(winrt::unbox_value<winrt::hstring>(e.Parameter()));
+
+        __super::OnNavigatedTo(e);
+    }
 }
