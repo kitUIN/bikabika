@@ -1,6 +1,6 @@
 namespace bikabika
 {
-    runtimeclass ClassBlock
+    runtimeclass ClassBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         ClassBlock(String className, String classPic);
         String ClassName{ get; };

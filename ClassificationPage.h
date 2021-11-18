@@ -9,8 +9,15 @@ namespace winrt::bikabika::implementation
     {
         ClassificationPage();
         bikabika::ClassBlockViewModel ClassBlockView();
+        Windows::Foundation::IAsyncAction ReadAuthJson();
+        Windows::Foundation::IAsyncAction Init();
+        Windows::Foundation::IAsyncOperation<boolean> CheckFile(hstring fileName);
+        void HttpLogOut(hstring s1, hstring s2);
+        void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+        bikabika::BikaHttp BikaHttpAPI();
     private:
         bikabika::ClassBlockViewModel m_classBlockView{ nullptr };
+        bikabika::BikaHttp m_bikaHttp;
     };
 }
 

@@ -23,7 +23,7 @@ using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::bikabika::implementation
 {
-	;
+	
 	MainPage::MainPage()
 	{
 		InitializeComponent();
@@ -68,7 +68,7 @@ namespace winrt::bikabika::implementation
 		
 		NavView_Navigate(L"login",
 			Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
-		//NavView().SelectedItem(NavView().MenuItems().GetAt(1));
+		NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 	}
 
 	void MainPage::NavView_ItemInvoked(

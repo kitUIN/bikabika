@@ -11,8 +11,8 @@
         <GridView.ItemTemplate>
             <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
                 <StackPanel Height="220" Width="180" Margin="12">
-                    <Image Source="{x:Bind ClassPic}" Height="180" Width="180" Stretch="UniformToFill"/>
-                    <TextBlock Text="{x:Bind ClassName}"/>
+                    <Image Source="{x:Bind ClassPic , Mode=OneWay}" Height="180" Width="180" Stretch="UniformToFill"/>
+                    <TextBlock Text="{x:Bind ClassName , Mode=OneWay}"/>
                 </StackPanel>
             </DataTemplate>
         </GridView.ItemTemplate>

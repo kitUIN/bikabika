@@ -1,4 +1,5 @@
 import "ClassBlockViewModel.idl";
+import "BikaHttp.idl";
 namespace bikabika
 {
     [default_interface]
@@ -6,5 +7,6 @@ namespace bikabika
     {
         ClassificationPage();
         ClassBlockViewModel ClassBlockView{ get; };
+        BikaHttp BikaHttpAPI{ get; };
     }
 }

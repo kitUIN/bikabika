@@ -5,6 +5,6 @@ namespace bikabika
     {
         ClassBlockViewModel();
         bikabika.ClassBlock DefaultClassBlock{ get; };
-        Windows.Foundation.Collections.IVector<IInspectable> ClassBlocks{ get; };
+        Windows.Foundation.Collections.IObservableVector<bikabika.ClassBlock> ClassBlocks{ get; };
     }
 }

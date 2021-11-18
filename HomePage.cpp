@@ -29,8 +29,7 @@ namespace winrt::bikabika::implementation
     }
     void HomePage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
-        SetText(winrt::unbox_value<winrt::hstring>(e.Parameter()));
-
+        
         __super::OnNavigatedTo(e);
     }
 }

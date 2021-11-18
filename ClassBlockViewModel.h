@@ -5,15 +5,15 @@ namespace winrt::bikabika::implementation
 {
     struct ClassBlockViewModel : ClassBlockViewModelT<ClassBlockViewModel>
     {
+       
         ClassBlockViewModel();
-        ClassBlockViewModel(Windows::Data::Json::JsonArray jsonArray);
 
         winrt::bikabika::ClassBlock DefaultClassBlock();
-        Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> ClassBlocks();
+        Windows::Foundation::Collections::IObservableVector<bikabika::ClassBlock> ClassBlocks();
 
     private:
         winrt::bikabika::ClassBlock m_defaultClassBlock{ nullptr };
-        Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> m_classBlocks;
+        Windows::Foundation::Collections::IObservableVector<bikabika::ClassBlock> m_classBlocks;
     };
 }
 namespace winrt::bikabika::factory_implementation
