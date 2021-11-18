@@ -21,38 +21,12 @@ namespace winrt::bikabika::implementation
 		return m_bikaHttp;
 	}
 	
-	Windows::Foundation::IAsyncOperation<boolean> CheckFile(hstring fileName)
-	{   // 检测数据文件
-		boolean f = false;
-		co_await winrt::resume_background();
-		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-		for (auto const& folder : co_await localFolder.GetFoldersAsync())
-		{
-			if (folder.Name() == L"bikabikadb")
-			{
-				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
-
-				for (auto const& file : co_await folderDB.GetFilesAsync())
-				{
-					if (file.Name() == fileName)
-					{
-						f = true;
-						break;
-					}
-				}
-				break;
-			}
-		}
-		co_return f;
-		
-	}
+	
 	Windows::Foundation::IAsyncAction Login::ReadAccountJson()
 	{	// 自动登陆载入数据
 		try 
 		{
-			
-			
-			if (CheckFile(L"account.json"))
+			if (m_fileCheckTool.CheckFile(L"account.json"))
 			{
 				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
@@ -75,7 +49,7 @@ namespace winrt::bikabika::implementation
 			else
 			{
 				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-				OutputDebugStringW(L"\n[Error] account file is not exist -> passed\n\n");
+				OutputDebugStringW(L"\n[Error] account file is not exist -> Get New\n\n");
 				Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
 				auto accountFile{ co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
 				Windows::Data::Json::JsonObject account;
@@ -181,7 +155,7 @@ namespace winrt::bikabika::implementation
 		
 
 	}
-	void Login::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void Login::LoginClickHandler(IInspectable const&, RoutedEventArgs const&)
 	{
 		
 		if (Email().Text() == L""|| Password().Password() == L"")

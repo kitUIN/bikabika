@@ -30,7 +30,7 @@ namespace winrt::bikabika::implementation
 	{	// 自动登陆载入数据
 		try
 		{
-			if (CheckFile(L"account.json"))
+			if (m_fileCheckTool.CheckFile(L"account.json"))
 			{
 				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 				Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
@@ -63,7 +63,6 @@ namespace winrt::bikabika::implementation
 		co_await ReadAuthJson();
 		hstring res{ co_await m_bikaHttp.Categories() };
 		Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
-		HttpLogOut(L"[GET]/categories\nReturn:", resp.ToString());
 		double code = resp.GetNamedNumber(L"code");
 		
 		if (code == (double)200)
@@ -90,41 +89,8 @@ namespace winrt::bikabika::implementation
 			OutputDebugStringW(L"\n\n");
 			
 		}
-	
+		
 
-	}
-	Windows::Foundation::IAsyncOperation<boolean> ClassificationPage::CheckFile(hstring fileName)
-	{   // 检测数据文件
-		boolean f = false;
-		co_await winrt::resume_background();
-		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-		for (auto const& folder : co_await localFolder.GetFoldersAsync())
-		{
-			if (folder.Name() == L"bikabikadb")
-			{
-				Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
-
-				for (auto const& file : co_await folderDB.GetFilesAsync())
-				{
-					if (file.Name() == fileName)
-					{
-						f = true;
-						break;
-					}
-				}
-				break;
-			}
-		}
-		co_return f;
-
-	}
-	void ClassificationPage::HttpLogOut(hstring s1, hstring s2)
-	{
-		OutputDebugStringW(L"\n");
-		OutputDebugStringW(s1.c_str());
-		OutputDebugStringW(L"\n");
-		OutputDebugStringW(s2.c_str());
-		OutputDebugStringW(L"\n");
 	}
 	void ClassificationPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{

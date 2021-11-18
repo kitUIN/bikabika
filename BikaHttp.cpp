@@ -54,8 +54,9 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"signature", L"encrypt");
 		headers.Insert(L"app-version", L"2.2.1.2.3.4");
 		headers.Insert(L"nonce", to_hstring(uid));
-		headers.Insert(L"app-uuid", L"418e56fb-60fb-352b-8fca-c6e8f0737ce6");
+		headers.Insert(L"app-uuid", L"defaultUuid");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
 		headers.Insert(L"app-platform", L"android");
+		headers.Insert(L"image-quality", L"medium");
 		headers.Insert(L"app-build-version", L"45");
 		headers.Insert(L"User-Agent", L"okhttp/3.8.1");
 		headers.Insert(L"signature", BikaEncryption(strAPI, to_hstring(uid), t, method, L"C69BAF41DA5ABD1FFEDC6D2FEA56B", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
@@ -124,17 +125,9 @@ namespace winrt::bikabika::implementation
 		}
 		
 	}
+	//登陆获取token
 	IAsyncOperation<hstring> BikaHttp::Login(hstring account, hstring password)
 	{   
-		/*登陆获取token
-		{
-		"code":200,
-		"message":"success",
-		"data":
-			{
-				"token":"xNjRiNzdlMWNmNDYiLCJlbWFpbCI6Imt1bHVqdW4iLCJyb2xlIjoibWVtYmVyIiwibmFtZSI6Iuaer-mcsuWQmyIsInZlcnNpb24iOiIyLjIuMS4yLjMuNCIsImJ1aWxkVmVyc2lvbiI6IjQ1IiwicGxhdGZvcm0iOiJhbmRyb2lkIiwiaWF0IjoxNjM2NzI0ODI0LCJleHAiOjE2MzczMjk2MjR9.XvDyMQ0Br4h2XtIeVXaoQ89BMxBdCP1NUvIBbEoFHHo"
-			}
-		}*/
 		Uri requestUri{ L"https://picaapi.picacomic.com/auth/sign-in" };
 		guid uuid = GuidHelper::CreateNewGuid();
 		HttpStringContent jsonContent(
@@ -146,10 +139,20 @@ namespace winrt::bikabika::implementation
 		Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
 		hstring token = data.GetNamedString(L"token");
 		Auth(token);
+		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	void BikaHttp::HttpLogOut(hstring s1, hstring s2)
+	{
+		OutputDebugStringW(L"\n");
+		OutputDebugStringW(s1.c_str());
+		OutputDebugStringW(L"\n");
+		OutputDebugStringW(s2.c_str());
+		OutputDebugStringW(L"\n");
+	}
+	//获取个人信息
 	IAsyncOperation<hstring> BikaHttp::PersonInfo()
-	{   /*获取个人信息
+	{   /*
 		{
 		"code":200,
 		"message":"success",
@@ -183,19 +186,28 @@ namespace winrt::bikabika::implementation
 		*/
 		Uri requestUri{ L"https://picaapi.picacomic.com/users/profile" };
 		guid uuid = GuidHelper::CreateNewGuid();
-		co_return co_await GET(requestUri, L"users/profile", uuid);
+		hstring res = co_await GET(requestUri, L"users/profile", uuid);
+		HttpLogOut(L"[GET]->/users/profile\nReturn:", res.c_str());
+		co_return res;
 		
 	}
+	// 获取主目录
 	IAsyncOperation<hstring> BikaHttp::Categories()
-	{	/*主目录*/
+	{	
 		Uri requestUri{ L"https://picaapi.picacomic.com/categories" };
 		guid uuid = GuidHelper::CreateNewGuid();
-		co_return co_await GET(requestUri, L"categories", uuid);
+		hstring res = co_await GET(requestUri, L"categories", uuid);
+		HttpLogOut(L"[GET]->/categories\nReturn:", res.c_str());
+		co_return res;
 	}
+	// 大家都在搜的关键字
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Keywords()
 	{
+		
 		Uri requestUri{ L"https://picaapi.picacomic.com/keywords" };
 		guid uuid = GuidHelper::CreateNewGuid();
-		co_return co_await GET(requestUri, L"categories", uuid);
+		hstring res = co_await GET(requestUri, L"keywords", uuid);
+		HttpLogOut(L"[GET]->/keywords\nReturn:", res.c_str());
+		co_return res;
 	}
 }

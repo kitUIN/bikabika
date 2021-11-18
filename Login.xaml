@@ -17,7 +17,7 @@
                 <PasswordBox x:Uid="PasswordBox" x:Name="Password" Loaded="Password_Loaded" Width="200" Background="{StaticResource SystemAccentColorLight3}" PlaceholderText = "Password"/>
             </StackPanel>
             <CheckBox x:Uid="RememberCheckBox" x:Name="RememberCheckBox" Content="Remember me"/>
-            <Button x:Uid="LoginButton" Click="ClickHandler" Content="Log In" Background="{StaticResource SystemAccentColorLight2}" Margin="0,0,0,0" HorizontalAlignment="Right"/>
+            <Button x:Uid="LoginButton" Click="LoginClickHandler" Content="Log In" Background="{StaticResource SystemAccentColorLight2}" Margin="0,0,0,0" HorizontalAlignment="Right"/>
 
         </StackPanel>
         <ProgressRing x:Name="Progressing" Padding="20" Height="100" Width="100" Foreground="{StaticResource SystemAccentColor}"/>

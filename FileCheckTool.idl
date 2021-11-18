@@ -1,0 +1,8 @@
+namespace bikabika
+{
+	runtimeclass FileCheckTool
+	{
+		FileCheckTool();
+		Windows.Foundation.IAsyncOperation<Boolean> CheckFile(String fileName);
+	}
+}

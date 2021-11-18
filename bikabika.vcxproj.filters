@@ -20,6 +20,7 @@
     <Midl Include="BikaHttp.idl" />
     <Midl Include="ClassBlock.idl" />
     <Midl Include="ClassBlockViewModel.idl" />
+    <Midl Include="FileCheckTool.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -29,12 +30,14 @@
     <ClCompile Include="BikaHttp.cpp" />
     <ClCompile Include="ClassBlock.cpp" />
     <ClCompile Include="ClassBlockViewModel.cpp" />
+    <ClCompile Include="FileCheckTool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="BikaHttp.h" />
     <ClInclude Include="ClassBlock.h" />
     <ClInclude Include="ClassBlockViewModel.h" />
+    <ClInclude Include="FileCheckTool.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
