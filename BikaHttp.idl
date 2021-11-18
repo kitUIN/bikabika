@@ -7,5 +7,6 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String> Login(String account, String password);
         Windows.Foundation.IAsyncOperation<String> PersonInfo();
         Windows.Foundation.IAsyncOperation<String> Categories();
+        Windows.Foundation.IAsyncOperation<String> Keywords();
     }
 }

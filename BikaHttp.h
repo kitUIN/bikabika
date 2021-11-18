@@ -18,6 +18,8 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncOperation<hstring> Login(hstring account, hstring password);
         Windows::Foundation::IAsyncOperation<hstring> PersonInfo();
         Windows::Foundation::IAsyncOperation<hstring> Categories();
+        Windows::Foundation::IAsyncOperation<hstring> Keywords();
+
     private:
         winrt::hstring m_auth;
     };

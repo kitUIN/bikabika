@@ -77,7 +77,7 @@ namespace winrt::bikabika::implementation
 				Windows::Data::Json::JsonObject thumb = categories.GetNamedObject(L"thumb");
 				hstring path = thumb.GetNamedString(L"path");
 				hstring fileServer = thumb.GetNamedString(L"fileServer");
-				auto block = winrt::make<bikabika::implementation::ClassBlock>(title, fileServer + L"/static/" + path);
+				auto block = winrt::make<bikabika::implementation::ClassBlock>(title,L"https://storage1.picacomic.com/static/" + path);
 				ClassBlockView().ClassBlocks().Append(block);
 			}
 			//m_classBlockView = winrt::make<ClassBlockViewModel>(ca.GetNamedArray(L"categories"));

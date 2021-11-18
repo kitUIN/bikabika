@@ -9,17 +9,15 @@ namespace winrt::bikabika::implementation
 	ClassBlockViewModel::ClassBlockViewModel()
 	{
 		m_classBlocks = winrt::single_threaded_observable_vector<bikabika::ClassBlock>();
-		//m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(L"???",L"userlogo.png"));
-		/*for (auto e : jsonArray)
-		{
-			Windows::Data::Json::JsonObject categories = e.GetObject();
-			hstring title = categories.GetNamedString(L"title");
-			Windows::Data::Json::JsonObject thumb = categories.GetNamedObject(L"thumb");
-			hstring path = thumb.GetNamedString(L"path");
-			hstring fileServer = thumb.GetNamedString(L"fileServer");
-			auto block = winrt::make<bikabika::implementation::ClassBlock>(title, fileServer + L"/static/" + path);
-			m_classBlocks.Append(block);
-		}*/
+		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/support"), L"cat_support.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/leaderboard"), L"cat_leaderboard.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/game"), L"cat_game.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/help"), L"chat_bg_image.png"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/smalltool"), L"cat_love_pica.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/forum"), L"cat_forum.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/latest"), L"cat_latest.jpg"));
+		m_classBlocks.Append(winrt::make<bikabika::implementation::ClassBlock>(resourceLoader.GetString(L"categories/random"), L"cat_random.jpg"));
 	}
 	winrt::bikabika::ClassBlock ClassBlockViewModel::DefaultClassBlock()
 	{

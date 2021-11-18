@@ -60,6 +60,16 @@
     </Image>
     <Image Include="picacomic_2.png" />
     <Image Include="userlogo.png" />
+    <Image Include="cat_forum.jpg" />
+    <Image Include="cat_game.jpg" />
+    <Image Include="cat_latest.jpg" />
+    <Image Include="cat_leaderboard.jpg" />
+    <Image Include="cat_love_pica.jpg" />
+    <Image Include="cat_random.jpg" />
+    <Image Include="cat_support.jpg" />
+    <Image Include="chat_bg_image.png" />
+    <Image Include="gray.png" />
+    <Image Include="register_name.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

@@ -57,26 +57,27 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
+
             <ScrollViewer Margin="0,25,0,0" Padding="12,12,12,12">
                 <Frame x:Name="ContentFrame" Padding="12,0,12,24" IsTabStop="True"
                    NavigationFailed="ContentFrame_NavigationFailed">
-                    <StackPanel Margin="300,50,0,0">
-                        <CheckBox x:Name="UseCustomColorCheckBox" Content="Use custom color"/>
-                        <Button x:Name="ChangeColorButton" Content="Change color" IsEnabled="{x:Bind UseCustomColorCheckBox.IsChecked.Value, Mode=OneWay}"/>
-                    </StackPanel>
+
                 </Frame>
             </ScrollViewer>
         </muxc:NavigationView>
 
-        <Grid x:Name="AppTitleBar" Background="Transparent" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="3000" Margin="45,0,0,0">
+        <AutoSuggestBox x:Uid="CatSearch" PlaceholderText="Search" QueryIcon="Find" Height="35" Width="180" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,150,0"/>
+
+        <Grid x:Name="AppTitleBar" Background="Transparent" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="3000" Margin="45,0,330,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
                 <ColumnDefinition/>
                 <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="1">
-                <Image Source="picacomic_2.png" Width="36" Height="36" Margin="0,8,0,0"/>
-                <TextBlock x:Uid="APPTitle" Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,8,0,0"/>
+                <Image Source="picacomic_2.png" Width="36" Height="36" Margin="0,0,0,0"/>
+                <TextBlock x:Uid="APPTitle" Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,4,0,0"/>
+
             </StackPanel>
         </Grid>
     </Grid>

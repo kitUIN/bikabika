@@ -5,7 +5,6 @@ namespace bikabika
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
     {
         MainPage();
-        Windows.UI.Xaml.Controls.CheckBox UseCustomColorCheckBox{ get; };
         Windows.UI.Xaml.Controls.TextBlock UserName{ get; };
     }
 }

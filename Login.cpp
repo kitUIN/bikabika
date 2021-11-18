@@ -175,6 +175,7 @@ namespace winrt::bikabika::implementation
 
 				}
 				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>(), winrt::box_value(L"HELLO WORLD!"));
+
 			}
 		}
 		

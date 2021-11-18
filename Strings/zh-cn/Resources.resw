@@ -121,6 +121,42 @@
     <value>哔咔</value>
     <comment>标题栏</comment>
   </data>
+  <data name="categories.forum" xml:space="preserve">
+    <value>哔咔留言板</value>
+    <comment>分类第六个</comment>
+  </data>
+  <data name="categories.game" xml:space="preserve">
+    <value>游戏推荐</value>
+    <comment>分类第三个</comment>
+  </data>
+  <data name="categories.help" xml:space="preserve">
+    <value>点击救哔咔</value>
+    <comment>分类第四个</comment>
+  </data>
+  <data name="categories.latest" xml:space="preserve">
+    <value>最近更新</value>
+    <comment>分类第七个</comment>
+  </data>
+  <data name="categories.leaderboard" xml:space="preserve">
+    <value>哔咔排行榜</value>
+    <comment>分类第二个</comment>
+  </data>
+  <data name="categories.random" xml:space="preserve">
+    <value>随机本子</value>
+    <comment>分类第八个</comment>
+  </data>
+  <data name="categories.smalltool" xml:space="preserve">
+    <value>哔咔小程序</value>
+    <comment>分类第五个</comment>
+  </data>
+  <data name="categories.support" xml:space="preserve">
+    <value>支持哔咔</value>
+    <comment>分类第一个</comment>
+  </data>
+  <data name="CatSearch.PlaceholderText" xml:space="preserve">
+    <value>搜索</value>
+    <comment>分类搜索栏</comment>
+  </data>
   <data name="DefaultUserLevel.Text" xml:space="preserve">
     <value>Lv.5</value>
     <comment>左侧导航栏默认等级</comment>

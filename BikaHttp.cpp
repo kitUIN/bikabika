@@ -192,4 +192,10 @@ namespace winrt::bikabika::implementation
 		guid uuid = GuidHelper::CreateNewGuid();
 		co_return co_await GET(requestUri, L"categories", uuid);
 	}
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Keywords()
+	{
+		Uri requestUri{ L"https://picaapi.picacomic.com/keywords" };
+		guid uuid = GuidHelper::CreateNewGuid();
+		co_return co_await GET(requestUri, L"categories", uuid);
+	}
 }
