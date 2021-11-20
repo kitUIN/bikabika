@@ -5,8 +5,8 @@
     xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+      mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
@@ -40,7 +40,18 @@
                 </StackPanel>
             </muxc:NavigationView.PaneHeader>
             <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem Tag="settings" x:Uid="NavSettings" Icon="Setting" Content="設置"/>
+                <muxc:NavigationViewItem Tag="settings" x:Uid="NavSettings"  Content="設置">
+                    <muxc:NavigationViewItem.Icon>
+                        <muxc:AnimatedIcon x:Name='GameSettingsIcon'>
+                            <muxc:AnimatedIcon.Source>
+                                <animatedvisuals:AnimatedSettingsVisualSource/>
+                            </muxc:AnimatedIcon.Source>
+                            <muxc:AnimatedIcon.FallbackIconSource>
+                                <muxc:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
+                            </muxc:AnimatedIcon.FallbackIconSource>
+                        </muxc:AnimatedIcon>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
             </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems>
 
