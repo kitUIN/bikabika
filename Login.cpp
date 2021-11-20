@@ -36,14 +36,12 @@ namespace winrt::bikabika::implementation
 			unsigned int cBytesLoaded{ co_await dataReader.LoadAsync(size) };
 			winrt::hstring streamText{ dataReader.ReadString(cBytesLoaded) };
 
-
 			Windows::Data::Json::JsonObject account = Windows::Data::Json::JsonObject::Parse(streamText);
-			//OutputDebugStringW(account.ToString().c_str());
-			//OutputDebugStringW(L"\n");
 			Email().Text(account.GetNamedString(L"email"));
-			Password().Password(account.GetNamedString(L"password"));
-			RememberCheckBox().IsChecked(account.GetNamedBoolean(L"isChecked"));
-
+			bool flag = account.GetNamedBoolean(L"isChecked");
+			RememberCheckBox().IsChecked(flag);
+			if(flag) Password().Password(account.GetNamedString(L"password"));
+			//else Password().Password(L"");
 		}
 		catch (winrt::hresult_error const& ex) 
 		{
@@ -102,7 +100,7 @@ namespace winrt::bikabika::implementation
 			
 			Progressing().IsActive(false);
 			
-			Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>(), winrt::box_value(L"HELLO WORLD!"));
+			Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 
 		}
 	}
@@ -124,7 +122,6 @@ namespace winrt::bikabika::implementation
 		else if (code == (double)200)
 		{
 			auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
-			//Frame().Navigate(winrt::xaml_typename<bikabika::MainPage>(), winrt::box_value(personData.GetNamedObject(L"data").GetNamedObject(L"user").Stringify()));
 			extern winrt::hstring userName;
 			extern winrt::hstring userLevel;
 			extern winrt::hstring userImage;
@@ -132,7 +129,6 @@ namespace winrt::bikabika::implementation
 			userName = personInfo.GetNamedString(L"name");
 			userLevel = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
 			userImage = serverStream+L"/static/"+personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
-
 		}
 	}
 	//登录按钮
@@ -181,7 +177,40 @@ namespace winrt::bikabika::implementation
 	{
 		//OutputDebugStringW(L"\n\n?????\n\n");
 		auto acc{ ReadAccountJson() };
+		auto bcc{ AutoLogin() };
+		
+	}
+	Windows::Foundation::IAsyncAction Login::AutoLogin()
+	{
+		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
+		if (f) {
+			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
+			if (account.GetNamedBoolean(L"isChecked")) {
+				hstring personInfo = co_await m_bikaHttp.PersonInfo();
+				Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(personInfo);
+				double code = personData.GetNamedNumber(L"code");
+				if (code == (double)401&& personData.GetNamedString(L"error") == L"1005")
+				{
+					auto login{ LoginAccount() };
+				}
+				else if (code == (double)200)
+				{
+					auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
+					extern winrt::hstring userName;
+					extern winrt::hstring userLevel;
+					extern winrt::hstring userImage;
+					extern winrt::hstring serverStream;
+					userName = personInfo.GetNamedString(L"name");
+					userLevel = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
+					userImage = serverStream + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+					Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 
+				}
+			}
+		}
+		
+		
+		
 	}
 }
 

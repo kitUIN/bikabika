@@ -226,7 +226,7 @@
     <comment>登陆密码提示</comment>
   </data>
   <data name="RememberCheckBox.Content" xml:space="preserve">
-    <value>记住我</value>
+    <value>记住密码</value>
     <comment>登录时记住我</comment>
   </data>
 </root>

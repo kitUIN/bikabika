@@ -43,9 +43,8 @@ namespace winrt::bikabika::implementation
 				OutputDebugStringW(L"\n[Error] account file is not exist -> back to login\n\n");
 				Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
 			}
-			OutputDebugStringW(L"\n[Auth] \n");
-			OutputDebugStringW(token.c_str());
-			m_bikaHttp.Auth(token);
+			//OutputDebugStringW(L"\n[Auth] \n");
+			//OutputDebugStringW(token.c_str());
 		}
 		catch (winrt::hresult_error const& ex)
 		{

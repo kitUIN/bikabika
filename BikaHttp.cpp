@@ -13,22 +13,7 @@ using namespace Windows::Web::Http::Headers;
 
 namespace winrt::bikabika::implementation
 {
-	hstring BikaHttp::Auth()
-	{
-		return m_auth;
-	}
-	void BikaHttp::Auth(hstring const& value)
-	{
-		if (m_auth != value) m_auth = value;
-	}
-	hstring BikaHttp::ImageQuality()
-	{
-		return m_imageQuality;
-	}
-	void BikaHttp::ImageQuality(hstring const& value)
-	{
-		m_imageQuality = value;
-	}
+
 	hstring BikaHttp::SetRaw(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey)
 	{   // ‘≠ ºURLµÿ÷∑
 		hstring raw = strAPI + to_hstring(t) + uid + method + apiKey;
@@ -72,7 +57,7 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"signature", BikaEncryption(strAPI, to_hstring(uid), t, method, L"C69BAF41DA5ABD1FFEDC6D2FEA56B", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
 		if (token != L"")
 		{	
-			headers.Insert(L"Authorization", m_auth);
+			headers.Insert(L"Authorization", token);
 		}
 		return headers;
 	}
@@ -149,8 +134,6 @@ namespace winrt::bikabika::implementation
 		Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
 		extern winrt::hstring token;
 		token = data.GetNamedString(L"token");
-
-		Auth(token);
 		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
 		co_return ress;
 	}

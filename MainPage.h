@@ -39,15 +39,16 @@ namespace winrt::bikabika::implementation
 		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
 		bool TryGoBack();
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
+		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		bikabika::UserViewModel MainUserViewModel();
-	
+		Windows::Foundation::IAsyncAction UpdateToken();
+
 	private:
 		//bikabika::LoginBlockViewModel m_mainViewModel{ nullptr };
 		// Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
-	public:
-		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+		bikabika::FileCheckTool m_fileCheckTool;
 	};
 
 }

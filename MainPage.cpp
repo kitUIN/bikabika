@@ -41,6 +41,7 @@ namespace winrt::bikabika::implementation
 			(L"login", winrt::xaml_typename<bikabika::Login>()));
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
+		auto acc{ UpdateToken() };
 	}
 
 
@@ -224,6 +225,19 @@ namespace winrt::bikabika::implementation
 	bikabika::UserViewModel MainPage::MainUserViewModel()
 	{
 		return m_userViewModel;
+	}
+
+	Windows::Foundation::IAsyncAction MainPage::UpdateToken()
+	{
+		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
+		if (f) {
+			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
+			extern winrt::hstring token;
+			token = account.GetNamedString(L"token");
+			OutputDebugStringW(L"\n自动加载token成功->\n");
+			OutputDebugStringW(token.c_str());
+			OutputDebugStringW(L"\n");
+		}
 	}
 
 	/*

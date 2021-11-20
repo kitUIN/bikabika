@@ -116,4 +116,13 @@ namespace winrt::bikabika::implementation
 
 
 	}
+	Windows::Foundation::IAsyncOperation<Windows::Data::Json::JsonObject> FileCheckTool::GetAccount()
+	{
+		//bool f{ co_await CheckFileAccount() };
+		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+		Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
+		auto accountFile{ co_await folderDB.GetFileAsync(L"account.json") };
+		co_return Windows::Data::Json::JsonObject::Parse(co_await Windows::Storage::FileIO::ReadTextAsync(accountFile));
+
+	}
 }

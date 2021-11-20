@@ -3,8 +3,7 @@ namespace bikabika
     runtimeclass BikaHttp
     {
         BikaHttp();
-        String Auth;
-        String ImageQuality;
+
         Windows.Foundation.IAsyncOperation<String> Login(String account, String password);
         Windows.Foundation.IAsyncOperation<String> PersonInfo();
         Windows.Foundation.IAsyncOperation<String> Categories();

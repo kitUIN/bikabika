@@ -20,8 +20,8 @@ namespace winrt::bikabika::implementation
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
     private:
-        winrt::hstring m_name;
-        winrt::hstring m_level;
+        winrt::hstring m_name=L"Gentleman";
+        winrt::hstring m_level=L"Lv.0";
         winrt::hstring m_imageSource= L"https://storage1.picacomic.com/static/0788a77a-81e4-46a5-9206-c424226bed07.jpg";
         winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_img{ Windows::Foundation::Uri{ L"ms-appx:///gray.png" } };
         

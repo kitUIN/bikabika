@@ -8,11 +8,6 @@ namespace winrt::bikabika::implementation
     {
         BikaHttp() = default;
 
-        hstring Auth();
-        void Auth(hstring const& value);
-        hstring ImageQuality();
-        void ImageQuality(hstring const& value);
-        
         // 原始URL地址
         winrt::hstring SetRaw(winrt::hstring strAPI, winrt::hstring uid, time_t t, winrt::hstring method, winrt::hstring apiKey);
         //HMAC-SHA256签名验证
@@ -33,10 +28,7 @@ namespace winrt::bikabika::implementation
         // 大家都在搜的关键字
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Keywords();
 
-    private:
-        winrt::hstring m_auth;
-        winrt::hstring m_imageQuality= L"medium";
-
+    
     };
 }
 namespace winrt::bikabika::factory_implementation

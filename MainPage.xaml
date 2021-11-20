@@ -44,7 +44,8 @@
             </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems>
 
-                <muxc:NavigationViewItemHeader Height="30"/>
+                <muxc:NavigationViewItemHeader Height="5"/>
+                <muxc:NavigationViewItemSeparator/>
                 <muxc:NavigationViewItem Tag="home" x:Uid="NavHome" Icon="Home" Content="主頁"/>
                 <muxc:NavigationViewItem Tag="classification" x:Uid="NavClassification" Content="分類">
                     <muxc:NavigationViewItem.Icon>
