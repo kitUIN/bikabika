@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "MainPage.g.h"
+#include "UserViewModel.h"
 namespace muxc
 {
 	using namespace winrt::Microsoft::UI::Xaml::Controls;
@@ -17,8 +18,7 @@ namespace winrt::bikabika::implementation
 	struct MainPage : MainPageT<MainPage>
 	{
 		MainPage();
-		int32_t MyProperty();
-		void MyProperty(int32_t value);
+
 		void NavView_Loaded(
 			Windows::Foundation::IInspectable const& /* sender */,
 			Windows::UI::Xaml::RoutedEventArgs const& /* args */);
@@ -39,11 +39,15 @@ namespace winrt::bikabika::implementation
 		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
 		bool TryGoBack();
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
+		bikabika::UserViewModel MainUserViewModel();
 	
 	private:
 		//bikabika::LoginBlockViewModel m_mainViewModel{ nullptr };
 		// Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
+		bikabika::UserViewModel m_userViewModel;
+	public:
+		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 	};
 
 }

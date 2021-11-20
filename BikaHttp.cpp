@@ -21,6 +21,14 @@ namespace winrt::bikabika::implementation
 	{
 		if (m_auth != value) m_auth = value;
 	}
+	hstring BikaHttp::ImageQuality()
+	{
+		return m_imageQuality;
+	}
+	void BikaHttp::ImageQuality(hstring const& value)
+	{
+		m_imageQuality = value;
+	}
 	hstring BikaHttp::SetRaw(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey)
 	{   // ‘≠ ºURLµÿ÷∑
 		hstring raw = strAPI + to_hstring(t) + uid + method + apiKey;
@@ -47,6 +55,8 @@ namespace winrt::bikabika::implementation
 		string uid = to_string(to_hstring(uuid)).substr(1, 36);
 		remove(uid.begin(), uid.end(), '-');
 		uid.substr(1, 32);
+		extern winrt::hstring token;
+		extern winrt::hstring imageQuality;
 		headers.Insert(L"api-key", L"C69BAF41DA5ABD1FFEDC6D2FEA56B");
 		headers.Insert(L"accept", L"application/vnd.picacomic.com.v1+json");
 		headers.Insert(L"app-channel", L"2");
@@ -56,11 +66,11 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"nonce", to_hstring(uid));
 		headers.Insert(L"app-uuid", L"defaultUuid");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
 		headers.Insert(L"app-platform", L"android");
-		headers.Insert(L"image-quality", L"medium");
+		headers.Insert(L"image-quality", imageQuality);
 		headers.Insert(L"app-build-version", L"45");
 		headers.Insert(L"User-Agent", L"okhttp/3.8.1");
 		headers.Insert(L"signature", BikaEncryption(strAPI, to_hstring(uid), t, method, L"C69BAF41DA5ABD1FFEDC6D2FEA56B", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
-		if (m_auth != L"")
+		if (token != L"")
 		{	
 			headers.Insert(L"Authorization", m_auth);
 		}
@@ -137,7 +147,9 @@ namespace winrt::bikabika::implementation
 		auto ress = co_await POST(requestUri, jsonContent, L"auth/sign-in", uuid);
 		Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
 		Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
-		hstring token = data.GetNamedString(L"token");
+		extern winrt::hstring token;
+		token = data.GetNamedString(L"token");
+
 		Auth(token);
 		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
 		co_return ress;
@@ -184,6 +196,7 @@ namespace winrt::bikabika::implementation
 		}
 		}
 		*/
+		
 		Uri requestUri{ L"https://picaapi.picacomic.com/users/profile" };
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(requestUri, L"users/profile", uuid);

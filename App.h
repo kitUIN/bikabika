@@ -6,6 +6,7 @@
 #include "winrt/Windows.UI.h"
 namespace winrt::bikabika::implementation
 {
+    
     struct App : AppT<App>
     {
         App();

@@ -8,7 +8,8 @@ namespace winrt::bikabika::implementation
     {
         FileCheckTool() = default;
         
-        Windows::Foundation::IAsyncOperation<bool> CheckFile(hstring const& fileName);
+        Windows::Foundation::IAsyncOperation<bool> CheckFileAccount();
+        Windows::Foundation::IAsyncOperation<bool> CheckFileUser();
     };
 }
 namespace winrt::bikabika::factory_implementation

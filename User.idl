@@ -1,0 +1,11 @@
+namespace bikabika
+{
+    runtimeclass User : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        User(String name,String level);
+        String Name;
+        String Level;
+        Windows.UI.Xaml.Media.Imaging.BitmapImage Img;
+        String ImageSource;
+    }
+}

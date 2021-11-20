@@ -30,26 +30,22 @@ namespace winrt::bikabika::implementation
 	{	// 自动登陆载入数据
 		try
 		{
-			if (m_fileCheckTool.CheckFile(L"account.json"))
-			{
-				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
-				Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
-				auto accountFile{ co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
-				auto accountData{ co_await Windows::Storage::FileIO::ReadTextAsync(accountFile) };
-				Windows::Data::Json::JsonObject account = Windows::Data::Json::JsonObject::Parse(accountData);
-				// Auth
-				hstring token = account.GetNamedString(L"token");
-				OutputDebugStringW(L"\n[Auth] \n");
-				OutputDebugStringW(token.c_str());
-				m_bikaHttp.Auth(token);
-				
-			}
-			else
-			{
+			bool f{ co_await m_fileCheckTool.CheckFileAccount() };
+			Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+			Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+			auto accountFile{ co_await folder.CreateFileAsync(L"account.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+			auto accountData{ co_await Windows::Storage::FileIO::ReadTextAsync(accountFile) };
+			Windows::Data::Json::JsonObject account = Windows::Data::Json::JsonObject::Parse(accountData);
+			// Auth
+			hstring token = account.GetNamedString(L"token");
+			if (token == L"") {
 				Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
 				OutputDebugStringW(L"\n[Error] account file is not exist -> back to login\n\n");
 				Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
 			}
+			OutputDebugStringW(L"\n[Auth] \n");
+			OutputDebugStringW(token.c_str());
+			m_bikaHttp.Auth(token);
 		}
 		catch (winrt::hresult_error const& ex)
 		{
@@ -79,10 +75,9 @@ namespace winrt::bikabika::implementation
 				auto block = winrt::make<bikabika::implementation::ClassBlock>(title,L"https://storage1.picacomic.com/static/" + path);
 				ClassBlockView().ClassBlocks().Append(block);
 			}
-			//m_classBlockView = winrt::make<ClassBlockViewModel>(ca.GetNamedArray(L"categories"));
 			
 		}
-		else
+		else if (code == (double)401)
 		{
 			OutputDebugStringW(L"\n[Error]" );
 			OutputDebugStringW(to_hstring(code).c_str());

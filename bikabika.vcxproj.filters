@@ -21,6 +21,8 @@
     <Midl Include="ClassBlock.idl" />
     <Midl Include="ClassBlockViewModel.idl" />
     <Midl Include="FileCheckTool.idl" />
+    <Midl Include="User.idl" />
+    <Midl Include="UserViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -31,6 +33,8 @@
     <ClCompile Include="ClassBlock.cpp" />
     <ClCompile Include="ClassBlockViewModel.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -38,6 +42,8 @@
     <ClInclude Include="ClassBlock.h" />
     <ClInclude Include="ClassBlockViewModel.h" />
     <ClInclude Include="FileCheckTool.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

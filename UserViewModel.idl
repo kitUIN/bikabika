@@ -1,0 +1,10 @@
+import "User.idl";
+
+namespace bikabika
+{
+    runtimeclass UserViewModel
+    {
+        UserViewModel();
+        User User{ get; };
+    }
+}

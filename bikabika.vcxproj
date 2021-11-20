@@ -140,6 +140,8 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="User.h" />
+    <ClInclude Include="UserViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -228,6 +230,8 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="AccountPage.idl">
@@ -260,6 +264,8 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="User.idl" />
+    <Midl Include="UserViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

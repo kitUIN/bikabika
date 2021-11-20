@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+
 #include "MainPage.h"
 
 #include "MainPage.g.cpp"
@@ -23,7 +24,8 @@ using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::bikabika::implementation
 {
-	
+
+
 	MainPage::MainPage()
 	{
 		InitializeComponent();
@@ -41,18 +43,10 @@ namespace winrt::bikabika::implementation
 		Window::Current().SetTitleBar(AppTitleBar());
 	}
 
-	int32_t MainPage::MyProperty()
-	{
-		throw hresult_not_implemented();
-	}
 
-	void MainPage::MyProperty(int32_t /* value */)
-	{
-		throw hresult_not_implemented();
-	}
-	
 
-	
+
+
 	std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 
 	void MainPage::NavView_Loaded(
@@ -65,7 +59,6 @@ namespace winrt::bikabika::implementation
 		//navigationViewItem.Icon(wuxc::SymbolIcon(static_cast<wuxc::Symbol>(0xF1AD)));
 		// navigationViewItem.Tag(winrt::box_value(L"content"));
 		//NavView().MenuItems().Append(navigationViewItem);
-		
 		NavView_Navigate(L"login",
 			Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
 		NavView().SelectedItem(NavView().MenuItems().GetAt(1));
@@ -147,6 +140,7 @@ namespace winrt::bikabika::implementation
 		Windows::UI::Core::CoreWindow const& /* sender */,
 		Windows::UI::Core::PointerEventArgs const& args)
 	{
+
 		// Handle mouse back button.
 		if (args.CurrentPoint().Properties().IsXButton1Pressed())
 		{
@@ -198,6 +192,7 @@ namespace winrt::bikabika::implementation
 		}
 		else if (ContentFrame().SourcePageType().Name != L"")
 		{
+			//m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ L"https://storage1.picacomic.com/static/0788a77a-81e4-46a5-9206-c424226bed07.jpg" } });
 			for (auto&& eachPage : m_pages)
 			{
 				if (eachPage.second.Name == args.SourcePageType().Name)
@@ -226,7 +221,29 @@ namespace winrt::bikabika::implementation
 		}
 	}
 
+	bikabika::UserViewModel MainPage::MainUserViewModel()
+	{
+		return m_userViewModel;
+	}
+
 	/*
+	* void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	{
+		auto propertyValue{ e.Parameter().as<Windows::Foundation::IPropertyValue>() };
+		if (propertyValue.Type() == Windows::Foundation::PropertyType::String)
+		{
+			auto ss = winrt::unbox_value<winrt::hstring>(e.Parameter());
+			Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(ss);
+			Uri url(L"https://storage1.picacomic.com/static/" + personData.GetNamedObject(L"avatar").GetNamedString(L"path"));
+			Windows::UI::Xaml::Media::Imaging::BitmapImage source(url);
+			UsersPic().ProfilePicture(source);
+		}
+		else
+		{
+			__super::OnNavigatedTo(e);
+		}
+
+	}
 	Windows::Foundation::IAsyncAction MainPage::CreateLoginPage(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
 	{	// 新建页面
 
@@ -237,7 +254,7 @@ namespace winrt::bikabika::implementation
 			CoreApplication::GetCurrentView().Dispatcher();
 		int32_t  ViewId = 0;
 		// Create a new window.
-		
+
 		CoreApplicationView View = CoreApplication::CreateNewView();
 		co_await resume_foreground(View.Dispatcher());
 
@@ -250,18 +267,35 @@ namespace winrt::bikabika::implementation
 		//ApplicationView::PreferredLaunchViewSize();
 		//ApplicationView::PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
 		//Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(600, 400));
-		
+
 		ViewId = ApplicationView::GetForCurrentView().Id();
-		
+
 		// Activate the new window.
 		co_await resume_foreground(MainDispatcher);
-		
+
 		co_await ApplicationViewSwitcher::TryShowAsStandaloneAsync(ViewId);
-		
+
 		// Start the emulation in the new window.
 		co_await resume_foreground(View.Dispatcher());
 		co_await ApplicationViewSwitcher::SwitchAsync(ViewId);
 
 		//ApplicationView::GetForCurrentView().ExitFullScreenMode();
 	}*/
+	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	{
+		extern winrt::hstring userName;
+		extern winrt::hstring userLevel;
+		extern winrt::hstring userImage;
+		if (userName != m_userViewModel.User().Name()) m_userViewModel.User().Name(userName);
+
+		if (userLevel != m_userViewModel.User().Level()) m_userViewModel.User().Level(userLevel);
+		if (userImage != m_userViewModel.User().Img().UriSource().ToString()) {
+			m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ userImage } });
+		}
+	}
 }
+
+
+
+
+

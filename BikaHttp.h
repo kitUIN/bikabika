@@ -10,19 +10,33 @@ namespace winrt::bikabika::implementation
 
         hstring Auth();
         void Auth(hstring const& value);
-        hstring SetRaw(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey);
-        hstring BikaEncryption(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey, hstring strKey);
-        Windows::Web::Http::Headers::HttpRequestHeaderCollection SetHeader(Windows::Web::Http::Headers::HttpRequestHeaderCollection headers, hstring strAPI, guid uuid, time_t t, hstring method);
-        Windows::Foundation::IAsyncOperation<hstring> GET(Windows::Foundation::Uri requestUri, hstring strAPI, guid uuid);
-        Windows::Foundation::IAsyncOperation<hstring> POST(Windows::Foundation::Uri requestUri, Windows::Web::Http::HttpStringContent jsonContent, hstring strAPI, guid uuid);
-        Windows::Foundation::IAsyncOperation<hstring> Login(hstring account, hstring password);
-        void HttpLogOut(hstring s1, hstring s2);
-        Windows::Foundation::IAsyncOperation<hstring> PersonInfo();
-        Windows::Foundation::IAsyncOperation<hstring> Categories();
-        Windows::Foundation::IAsyncOperation<hstring> Keywords();
+        hstring ImageQuality();
+        void ImageQuality(hstring const& value);
+        
+        // 原始URL地址
+        winrt::hstring SetRaw(winrt::hstring strAPI, winrt::hstring uid, time_t t, winrt::hstring method, winrt::hstring apiKey);
+        //HMAC-SHA256签名验证
+        winrt::hstring BikaEncryption(winrt::hstring strAPI, winrt::hstring uid, time_t t, winrt::hstring method, winrt::hstring apiKey, winrt::hstring strKey);
+        //生成请求头
+        winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection SetHeader(winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection headers, winrt::hstring strAPI, winrt::guid uuid, time_t t, winrt::hstring method);
+        //GET类型
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> GET(winrt::Windows::Foundation::Uri requestUri, winrt::hstring strAPI, winrt::guid uuid);
+        //POST类型
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring>  POST(winrt::Windows::Foundation::Uri requestUri, winrt::Windows::Web::Http::HttpStringContent jsonContent, winrt::hstring strAPI, winrt::guid uuid);
+        void HttpLogOut(winrt::hstring s1, winrt::hstring s2);
+        //登陆获取token
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Login(winrt::hstring account, winrt::hstring password);
+        //获取个人信息
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> PersonInfo();
+        // 获取主目录
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Categories();
+        // 大家都在搜的关键字
+        winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Keywords();
 
     private:
         winrt::hstring m_auth;
+        winrt::hstring m_imageQuality= L"medium";
+
     };
 }
 namespace winrt::bikabika::factory_implementation

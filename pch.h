@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <unknwn.h>
 #include <iostream>
+#include <utility>
 #include <restrictederrorinfo.h>
 #include <hstring.h>
 #include <winrt/Windows.Foundation.h>
@@ -39,3 +40,9 @@
 #include <winrt/Windows.Security.Cryptography.Core.h>
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
+extern winrt::hstring token = L"";
+extern winrt::hstring imageQuality = L"medium";
+extern winrt::hstring userName = L"Unknown";
+extern winrt::hstring userLevel = L"Lv.5";
+extern winrt::hstring userImage = L"ms-appx:///gray.png";
+extern winrt::hstring serverStream = L"https://storage1.picacomic.com";
