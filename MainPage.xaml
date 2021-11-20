@@ -62,7 +62,6 @@
             <ScrollViewer Margin="0,25,0,0" Padding="12,12,12,12" >
                 <Frame x:Name="ContentFrame"  Padding="12,0,12,24" IsTabStop="True"
                    NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated">
-
                 </Frame>
             </ScrollViewer>
         </muxc:NavigationView>

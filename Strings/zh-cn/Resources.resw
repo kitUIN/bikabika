@@ -173,33 +173,45 @@
     <value>邮箱</value>
     <comment>登陆账号提示</comment>
   </data>
-  <data name="LoginBlankFail.CloseButtonText" xml:space="preserve">
+  <data name="ErrorText1.Text" xml:space="preserve">
+    <value>哔咔哔咔被玩坏了!</value>
+    <comment>未知错误第1行</comment>
+  </data>
+  <data name="ErrorText2.Text" xml:space="preserve">
+    <value>  </value>
+    <comment>未知错误第2行</comment>
+  </data>
+  <data name="ErrorText3.Text" xml:space="preserve">
+    <value>这肯定不是哔咔的问题!</value>
+    <comment>未知错误第3行</comment>
+  </data>
+  <data name="ErrorText4.Text" xml:space="preserve">
+    <value>绝对不是!</value>
+    <comment>未知错误第4行</comment>
+  </data>
+  <data name="Fail.CloseButtonText" xml:space="preserve">
     <value>确定</value>
-    <comment>因为用户名空登陆失败对话框按钮</comment>
+    <comment>对话框按钮"确定"</comment>
+  </data>
+  <data name="Fail.Title" xml:space="preserve">
+    <value>登陆失败</value>
+    <comment>对话框标题"登陆失败"</comment>
+  </data>
+  <data name="LoginAuthFail.Content" xml:space="preserve">
+    <value>Token获取失败,请重新登录</value>
+    <comment>因为Token获取失败登陆失败对话框内容</comment>
   </data>
   <data name="LoginBlankFail.Content" xml:space="preserve">
     <value>请输入您的账号和密码</value>
     <comment>因为用户名空登陆失败对话框内容</comment>
   </data>
-  <data name="LoginBlankFail.Title" xml:space="preserve">
-    <value>登陆失败</value>
-    <comment>因为用户名空登陆失败对话框标题</comment>
-  </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>登陆</value>
     <comment>登陆按钮</comment>
   </data>
-  <data name="LoginPasswordFail.CloseButtonText" xml:space="preserve">
-    <value>确定</value>
-    <comment>因为密码错误登陆失败对话框按钮</comment>
-  </data>
   <data name="LoginPasswordFail.Content" xml:space="preserve">
-    <value>密码错误</value>
+    <value>错误的账号或密码,请重试 :(</value>
     <comment>因为密码错误登陆失败对话框内容</comment>
-  </data>
-  <data name="LoginPasswordFail.Title" xml:space="preserve">
-    <value>登陆失败</value>
-    <comment>因为密码错误登陆失败对话框标题</comment>
   </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
@@ -224,6 +236,10 @@
   <data name="PasswordBox.PlaceholderText" xml:space="preserve">
     <value>密码</value>
     <comment>登陆密码提示</comment>
+  </data>
+  <data name="PicErrorDialog.CloseButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>未知错误按钮</comment>
   </data>
   <data name="RememberCheckBox.Content" xml:space="preserve">
     <value>记住密码</value>

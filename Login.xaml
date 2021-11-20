@@ -21,8 +21,21 @@
 
         </StackPanel>
         <ProgressRing x:Name="Progressing" Padding="20" Height="100" Width="100" Foreground="{StaticResource SystemAccentColor}"/>
-        <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}"/>
-
+        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
+            Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
     </Grid>
     
 </Page>

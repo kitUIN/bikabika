@@ -191,6 +191,13 @@
     <Image Include="cat_support.jpg" />
     <Image Include="chat_bg_image.png" />
     <Image Include="gray.png" />
+    <Image Include="icon_empty.png" />
+    <Image Include="icon_exclamation_error.png" />
+    <Image Include="icon_leave.png" />
+    <Image Include="icon_no_comment.png" />
+    <Image Include="icon_question_error.png" />
+    <Image Include="icon_success.png" />
+    <Image Include="icon_unknown_error.png" />
     <Image Include="picacomic_2.png" />
     <Image Include="register_name.png" />
     <Image Include="userlogo.png" />

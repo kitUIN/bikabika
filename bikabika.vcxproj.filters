@@ -79,6 +79,13 @@
     <Image Include="chat_bg_image.png" />
     <Image Include="gray.png" />
     <Image Include="register_name.png" />
+    <Image Include="icon_empty.png" />
+    <Image Include="icon_exclamation_error.png" />
+    <Image Include="icon_leave.png" />
+    <Image Include="icon_no_comment.png" />
+    <Image Include="icon_question_error.png" />
+    <Image Include="icon_success.png" />
+    <Image Include="icon_unknown_error.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

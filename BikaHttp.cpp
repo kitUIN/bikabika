@@ -111,7 +111,7 @@ namespace winrt::bikabika::implementation
 			winrt::hresult hr = ex.code(); // HRESULT_FROM_WIN32(WININET_E_CANNOT_CONNECT).
 			if (hr == WININET_E_CANNOT_CONNECT) {
 				OutputDebugStringW(message.c_str());
-				co_return L"[ERROR]" + message;
+				co_return L"[TimeOut]" + message;
 			}
 			else
 			{
@@ -130,10 +130,6 @@ namespace winrt::bikabika::implementation
 			UnicodeEncoding::Utf8,
 			L"application/json");
 		auto ress = co_await POST(requestUri, jsonContent, L"auth/sign-in", uuid);
-		Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
-		Windows::Data::Json::JsonObject data = resp.GetNamedObject(L"data");
-		extern winrt::hstring token;
-		token = data.GetNamedString(L"token");
 		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
 		co_return ress;
 	}
