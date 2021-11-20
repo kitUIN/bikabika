@@ -15,14 +15,6 @@ namespace winrt::bikabika::implementation
         NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
-    int32_t SettingsPage::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
-
-    void SettingsPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
+    
 
 }

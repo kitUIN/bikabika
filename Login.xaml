@@ -20,7 +20,7 @@
             <Button x:Uid="LoginButton" Click="LoginClickHandler" Content="Log In" Background="{StaticResource SystemAccentColorLight2}" Margin="0,0,0,0" HorizontalAlignment="Right"/>
 
         </StackPanel>
-        <ProgressRing x:Name="Progressing" Padding="20" Height="100" Width="100" Foreground="{StaticResource SystemAccentColor}"/>
+        <ProgressRing x:Name="Progressing" Padding="20" Height="200" Width="200" Foreground="{StaticResource SystemAccentColor}"/>
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>

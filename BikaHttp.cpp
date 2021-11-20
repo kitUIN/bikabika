@@ -82,11 +82,11 @@ namespace winrt::bikabika::implementation
 			winrt::hresult hr = ex.code(); // HRESULT_FROM_WIN32(WININET_E_CANNOT_CONNECT).
 			if (hr == WININET_E_CANNOT_CONNECT) {
 				OutputDebugStringW(message.c_str());
-				co_return L"[ERROR]" + message;
+				co_return L"[TimeOut]" + message;
 			}
 			else
 			{
-				co_return L"[ERROR]"+ message;
+				co_return L"[ERROR]" + message;
 			}
 		}
 	}

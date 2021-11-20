@@ -8,9 +8,6 @@ namespace winrt::bikabika::implementation
     {
         SettingsPage();
 
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
-
     };
 }
 
