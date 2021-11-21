@@ -13,7 +13,45 @@ using namespace Windows::Web::Http::Headers;
 
 namespace winrt::bikabika::implementation
 {
+	unsigned char ToHex(unsigned char x)
+	{
+		return  x > 9 ? x + 55 : x + 48;
+	}
 
+	unsigned char FromHex(unsigned char x)
+	{
+		unsigned char y;
+		if (x >= 'A' && x <= 'Z') y = x - 'A' + 10;
+		else if (x >= 'a' && x <= 'z') y = x - 'a' + 10;
+		else if (x >= '0' && x <= '9') y = x - '0';
+		else assert(0);
+		return y;
+	}
+
+	std::string UrlEncode(const std::string& str)
+	{
+		std::string strTemp = "";
+		size_t length = str.length();
+		for (size_t i = 0; i < length; i++)
+		{
+			if (isalnum((unsigned char)str[i]) ||
+				(str[i] == '-') ||
+				(str[i] == '_') ||
+				(str[i] == '.') ||
+				(str[i] == '~'))
+				strTemp += str[i];
+			else if (str[i] == ' ')
+				strTemp += "+";
+			else
+			{
+				strTemp += '%';
+				strTemp += ToHex((unsigned char)str[i] >> 4);
+				strTemp += ToHex((unsigned char)str[i] % 16);
+			}
+		}
+		return strTemp;
+	}
+	
 	hstring BikaHttp::SetRaw(hstring strAPI, hstring uid, time_t t, hstring method, hstring apiKey)
 	{   // 原始URL地址
 		hstring raw = strAPI + to_hstring(t) + uid + method + apiKey;
@@ -48,13 +86,14 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"time", to_hstring(t));
 		headers.Insert(L"signature", L"encrypt");
 		headers.Insert(L"app-version", L"2.2.1.2.3.4");
-		headers.Insert(L"nonce", to_hstring(uid));
-		headers.Insert(L"app-uuid", L"defaultUuid");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
+		headers.Insert(L"nonce", L"b1ab87b4800d4d4590a11701b8551afa");
+		headers.Insert(L"app-uuid", L"418e56fb-60fb-352b-8fca-c6e8f0737ce6");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
 		headers.Insert(L"app-platform", L"android");
 		headers.Insert(L"image-quality", imageQuality);
 		headers.Insert(L"app-build-version", L"45");
 		headers.Insert(L"User-Agent", L"okhttp/3.8.1");
-		headers.Insert(L"signature", BikaEncryption(strAPI, to_hstring(uid), t, method, L"C69BAF41DA5ABD1FFEDC6D2FEA56B", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
+		//headers.Insert(L"Content-Type", L"application/json; charset=UTF-8");
+		headers.Insert(L"signature", BikaEncryption(strAPI, L"b1ab87b4800d4d4590a11701b8551afa", t, method, L"c69baf41da5abd1ffedc6d2fea56b", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
 		if (token != L"")
 		{	
 			headers.Insert(L"Authorization", token);
@@ -70,7 +109,8 @@ namespace winrt::bikabika::implementation
 		httpRequestMessage.Method(HttpMethod::Get());
 		httpRequestMessage.RequestUri(requestUri);
 		httpRequestMessage.Headers() = SetHeader(httpRequestMessage.Headers(), strAPI, uuid, t, L"GET");
-		
+		//httpRequestMessage.Content().Headers().ContentType(HttpMediaTypeHeaderValue(L"application/json; charset=UTF-8"));
+
 		try
 		{
 			HttpResponseMessage res{ co_await httpClient.SendRequestAsync(httpRequestMessage) };
@@ -200,6 +240,19 @@ namespace winrt::bikabika::implementation
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(requestUri, L"keywords", uuid);
 		HttpLogOut(L"[GET]->/keywords\nReturn:", res.c_str());
+		co_return res;
+	}
+	// 分区
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Comics(int32_t page,hstring title,hstring sort)
+	{
+		
+		 
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/comics?page=" + to_hstring(page) + L"&c=" + to_hstring(UrlEncode(to_string(title))) + L"&s=" + sort};
+		hstring api = to_hstring(to_string(uri.ToString()).substr(30));
+		//OutputDebugStringW(api.c_str());
+		guid uuid = GuidHelper::CreateNewGuid();
+		hstring res = co_await GET(uri, api, uuid);
+		HttpLogOut(L"[GET]->/comics\nReturn:", res.c_str());
 		co_return res;
 	}
 }

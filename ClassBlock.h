@@ -8,14 +8,16 @@ namespace winrt::bikabika::implementation
     {
         ClassBlock() = default;
 
-        ClassBlock(hstring const& className, hstring const& classPic);
+        ClassBlock(hstring const& className, hstring const& classPic, hstring const& classType);
         hstring ClassName();
         hstring ClassPic();
+        hstring ClassType();
         winrt::event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& value);
         void PropertyChanged(winrt::event_token const& token);
     private:
         hstring m_className;
         hstring m_classPic;
+        hstring m_classType;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 
     };

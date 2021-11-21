@@ -120,6 +120,11 @@
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ComicBlock.h" />
+    <ClInclude Include="ComicsPage.h">
+      <DependentUpon>ComicsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="FileCheckTool.h" />
     <ClInclude Include="HomePage.h">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -153,6 +158,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ClassificationPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ComicsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HomePage.xaml">
@@ -218,6 +226,11 @@
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ComicBlock.cpp" />
+    <ClCompile Include="ComicsPage.cpp">
+      <DependentUpon>ComicsPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="FileCheckTool.cpp" />
     <ClCompile Include="HomePage.cpp">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -259,6 +272,11 @@
     <Midl Include="ClassBlockViewModel.idl" />
     <Midl Include="ClassificationPage.idl">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="ComicBlock.idl" />
+    <Midl Include="ComicsPage.idl">
+      <DependentUpon>ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="FileCheckTool.idl" />

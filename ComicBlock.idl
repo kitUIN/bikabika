@@ -1,0 +1,16 @@
+namespace bikabika
+{
+    runtimeclass ComicBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        ComicBlock(String _id,String title,String author,Int32 pageCount,Int32 epsCount,Boolean finished,Windows.Data.Json.JsonArray categories,Windows.UI.Xaml.Media.Imaging.BitmapImage thumb,Int32 likesCount);
+        String ID;
+        String Title;
+        String Author;
+        Int32 PageCount;
+        Int32 EpsCount;
+        Boolean Finished;
+        Windows.Data.Json.JsonArray Categories;
+        Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;
+        Int32 LikesCount;
+    }
+}

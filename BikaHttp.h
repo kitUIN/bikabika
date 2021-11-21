@@ -28,6 +28,9 @@ namespace winrt::bikabika::implementation
         // 大家都在搜的关键字
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Keywords();
 
+        Windows::Foundation::IAsyncOperation<hstring> Comics(int32_t page, hstring title, hstring sort);
+
+        
     
     };
 }

@@ -35,7 +35,7 @@ namespace winrt::bikabika::implementation
 		}
 		else if (res[1] == 'E') {
 			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
+			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
 			LoginContentDialog().Content(box_value(res));
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
 			auto show{ co_await LoginContentDialog().ShowAsync() };
@@ -55,7 +55,7 @@ namespace winrt::bikabika::implementation
 					Windows::Data::Json::JsonObject thumb = categories.GetNamedObject(L"thumb");
 					hstring path = thumb.GetNamedString(L"path");
 					hstring fileServer = thumb.GetNamedString(L"fileServer");
-					auto block = winrt::make<bikabika::implementation::ClassBlock>(title, L"https://storage1.picacomic.com/static/" + path);
+					auto block = winrt::make<bikabika::implementation::ClassBlock>(title, L"https://storage1.picacomic.com/static/" + path, L"2");
 					ClassBlockView().ClassBlocks().Append(block);
 				}
 
@@ -63,7 +63,7 @@ namespace winrt::bikabika::implementation
 			else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
 			{	//缺少鉴权
 				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
+				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
 				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
 				auto show{ co_await LoginContentDialog().ShowAsync() };
@@ -73,7 +73,7 @@ namespace winrt::bikabika::implementation
 			{
 				//未知
 				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
+				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
 				LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
 				auto show{ co_await LoginContentDialog().ShowAsync() };
@@ -89,4 +89,55 @@ namespace winrt::bikabika::implementation
 		__super::OnNavigatedTo(e);
 	}
 	
+}
+
+
+Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+{
+	OutputDebugStringW(L"\n\n------\n\n");
+	auto classBlack = e.ClickedItem().as<bikabika::ClassBlock>();
+	if (classBlack.ClassType() == L"2") {
+		Progressing().IsActive(true);
+		hstring res{ co_await m_bikaHttp.Comics(1,classBlack.ClassName(),L"ua")};
+		Progressing().IsActive(false);
+		if (res[1] == 'T') {
+			auto show{ PicErrorDialog().ShowAsync() };
+		}
+		else if (res[1] == 'E') {
+			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+			LoginContentDialog().Content(box_value(res));
+			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+			auto show{ co_await LoginContentDialog().ShowAsync() };
+		}
+		else
+		{
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+			double code = resp.GetNamedNumber(L"code");
+			if (code == (double)200)
+			{
+				
+				resp.GetNamedObject(L"data");
+			}
+			else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+			{	//缺少鉴权
+				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
+				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+				auto show{ co_await LoginContentDialog().ShowAsync() };
+				if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
+			}
+			else
+			{
+				//未知
+				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+				LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
+				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+				auto show{ co_await LoginContentDialog().ShowAsync() };
+			}
+		}
+	}
+
 }

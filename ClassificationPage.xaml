@@ -12,7 +12,8 @@
                 <Image Source="register_name.png" Width="36" Height="36" Margin="0,0,0,0"/>
                 <TextBlock Text="热门分类" FontSize="25" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
             </StackPanel>
-            <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemsSource="{x:Bind ClassBlockView.ClassBlocks}" Margin="0,30,0,0">
+            <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridV_ItemClick"
+                ItemsSource="{x:Bind ClassBlockView.ClassBlocks}" Margin="0,30,0,0">
                 <GridView.ItemTemplate>
                     <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
                         <StackPanel Height="210" Width="180" Margin="12">

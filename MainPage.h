@@ -55,8 +55,9 @@ namespace winrt::bikabika::implementation
 		// Vector of std::pair holding the Navigation Tag and the relative Navigation Page.
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
-		bikabika::FileCheckTool m_fileCheckTool;
+		
 		bool m_suggestIsChosen = false;
+		bikabika::FileCheckTool m_fileCheckTool;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordsBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
 	};
 

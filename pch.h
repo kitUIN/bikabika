@@ -2,6 +2,10 @@
 #include <windows.h>
 #include <unknwn.h>
 #include <iostream>
+#include <cctype>
+#include <iomanip>
+#include <sstream>
+#include <string>
 #include <utility>
 #include <restrictederrorinfo.h>
 #include <hstring.h>
@@ -42,7 +46,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 
 extern winrt::hstring token = L"";
-extern winrt::hstring imageQuality = L"medium";
+extern winrt::hstring imageQuality = L"original";//medium
 extern winrt::hstring userName = L"Gentleman";
 extern winrt::hstring userLevel = L"Lv.0";
 extern winrt::hstring userImage = L"ms-appx:///gray.png";

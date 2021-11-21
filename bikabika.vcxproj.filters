@@ -13,6 +13,7 @@
     <Page Include="HomePage.xaml" />
     <Page Include="ClassificationPage.xaml" />
     <Page Include="AccountPage.xaml" />
+    <Page Include="ComicsPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
@@ -25,6 +26,7 @@
     <Midl Include="UserViewModel.idl" />
     <Midl Include="SuggestBox.idl" />
     <Midl Include="KeywordsBox.idl" />
+    <Midl Include="ComicBlock.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -39,6 +41,7 @@
     <ClCompile Include="UserViewModel.cpp" />
     <ClCompile Include="SuggestBox.cpp" />
     <ClCompile Include="KeywordsBox.cpp" />
+    <ClCompile Include="ComicBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -50,6 +53,7 @@
     <ClInclude Include="UserViewModel.h" />
     <ClInclude Include="SuggestBox.h" />
     <ClInclude Include="KeywordsBox.h" />
+    <ClInclude Include="ComicBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

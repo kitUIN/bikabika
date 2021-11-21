@@ -12,11 +12,13 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncAction Init();
         void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         bikabika::BikaHttp BikaHttpAPI();
+        Windows::Foundation::IAsyncAction  GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
+
     private:
         bikabika::ClassBlockViewModel m_classBlockView{ nullptr };
         bikabika::BikaHttp m_bikaHttp;
         bikabika::FileCheckTool m_fileCheckTool;
-    };
+        };
 }
 
 namespace winrt::bikabika::factory_implementation
