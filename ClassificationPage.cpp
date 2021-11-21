@@ -15,6 +15,7 @@ namespace winrt::bikabika::implementation
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		m_classBlockView = winrt::make<ClassBlockViewModel>();
 		auto ccc{ Init() };
+		
 	}
 	bikabika::BikaHttp ClassificationPage::BikaHttpAPI()
 	{
@@ -116,8 +117,10 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::Classificati
 			double code = resp.GetNamedNumber(L"code");
 			if (code == (double)200)
 			{
-				
-				resp.GetNamedObject(L"data");
+				Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+				Windows::Data::Json::JsonObject jsonObject = ca.GetNamedObject(L"comics");
+				Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(jsonObject));
+
 			}
 			else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
 			{	//缺少鉴权

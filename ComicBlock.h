@@ -6,15 +6,18 @@ namespace winrt::bikabika::implementation
 {
     struct ComicBlock : ComicBlockT<ComicBlock>
     {
-        ComicBlock() = default;
-
-        ComicBlock(hstring const& _id, hstring const& title, hstring const& author, int32_t pageCount, int32_t epsCount, bool finished, winrt::Windows::Data::Json::JsonArray const& categories, winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage const& thumb, int32_t likesCount);
+       
+        ComicBlock(winrt::Windows::Data::Json::JsonObject const& json);
         hstring ID();
         void ID(hstring const& value);
         hstring Title();
         void Title(hstring const& value);
         hstring Author();
         void Author(hstring const& value);
+        int32_t TotalViews();
+        void TotalViews(int32_t value);
+        int32_t TotalLikes();
+        void TotalLikes(int32_t value);
         int32_t PageCount();
         void PageCount(int32_t value);
         int32_t EpsCount();
@@ -33,6 +36,8 @@ namespace winrt::bikabika::implementation
         hstring m_id;
         hstring m_title;
         hstring m_author;
+        int32_t m_totalViews;
+        int32_t m_totalLikes;
         int32_t m_pageCount;
         int32_t m_epsCount;
         bool m_finished;

@@ -12,6 +12,8 @@ namespace winrt::bikabika::implementation
     ComicsPage::ComicsPage()
     {
         InitializeComponent();
+
+        NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
     
@@ -21,5 +23,20 @@ namespace winrt::bikabika::implementation
         return m_comicBlocks;
     }
 
+    void ComicsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+    {
+        winrt::Windows::Data::Json::JsonObject jsonObject = winrt::unbox_value<winrt::Windows::Data::Json::JsonObject>(e.Parameter());
+        m_limit = jsonObject.GetNamedNumber(L"limit");
+        m_total = jsonObject.GetNamedNumber(L"total");
+        m_page = jsonObject.GetNamedNumber(L"page");
+        m_pages = jsonObject.GetNamedNumber(L"pages");
+        for (auto x : jsonObject.GetNamedArray(L"docs"))
+        {
+            m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
+        }
+        
+        
+        __super::OnNavigatedTo(e);
+    }
     
 }

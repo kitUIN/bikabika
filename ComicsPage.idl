@@ -1,9 +1,11 @@
+import "ComicBlock.idl";
 namespace bikabika
 {
-    [default_interface]
+
     runtimeclass ComicsPage : Windows.UI.Xaml.Controls.Page
     {
         ComicsPage();
-        
+        Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  ComicBlocks{ get; };
+       
     }
 }

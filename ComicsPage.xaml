@@ -6,8 +6,93 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Name="ListViewItemNoneStyle" TargetType="GridViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Name="MyListBoxItemStyle" TargetType="GridViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewItem">
+                            <Grid Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+                                        <!--缺省样式-->
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush2}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Margin">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="2,2,0,0" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <!--设置鼠标悬停样式-->
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border  Height="210" Width="410" BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground1" >
+                                    <Border BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground">
+                                        <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                Margin="{TemplateBinding Padding}" />
+                                    </Border>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <StackPanel>
+            
+            <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" 
+                ItemsSource="{x:Bind ComicBlocks}" Margin="0,30,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}">
+                <GridView.ItemTemplate  >
+                    <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ComicBlock" >
+                        <StackPanel Orientation="Horizontal"  Height="190" Width="400"  Margin="10,0,0,0">
+                            <Border  CornerRadius="10" Height="160" Width="120" VerticalAlignment="Center">
+                                <Image Source="{x:Bind Thumb , Mode=OneWay}" />
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind Title , Mode=OneWay}" Margin="10,0,0,0" FontSize="16" TextWrapping="Wrap" Width="250" Foreground="{ThemeResource SystemAccentColorDark3}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <GridView.ItemsPanel >
+                    <ItemsPanelTemplate >
+                        <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                
+            </GridView>
+        </StackPanel >
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="Button" >Click Me</Button>
-    </StackPanel>
+    </Grid>
+
 </Page>
