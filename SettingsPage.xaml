@@ -33,7 +33,7 @@
                 <TextBlock Text="画面" FontSize="20" FontFamily="Bold"  Foreground="{StaticResource SystemAccentColorDark3}"/>
                 <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe786;" Margin="10,0,0,0" />
             </StackPanel>
-            <ToggleSwitch x:Name="" FontSize="16" Margin="0,15,0,0">
+            <ToggleSwitch  FontSize="16" Margin="0,15,0,0">
                 <StackPanel Orientation="Horizontal">
                     <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe7f8;"/>
                     <TextBlock Text="广告" FontSize="16" Margin="10,0,0,0"/>

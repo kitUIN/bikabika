@@ -4,6 +4,7 @@
 
 #include "MainPage.g.cpp"
 #include "Login.h"
+#include <SuggestBox.h>
 
 
 using namespace std;
@@ -42,6 +43,7 @@ namespace winrt::bikabika::implementation
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
 		auto acc{ UpdateToken() };
+		m_suggestBlockView = winrt::make<SuggestBlockViewModel>();
 	}
 
 
@@ -240,6 +242,11 @@ namespace winrt::bikabika::implementation
 		}
 	}
 
+	bikabika::SuggestBlockViewModel MainPage::SuggestBlockView()
+	{
+		return m_suggestBlockView;
+	}
+
 	/*
 	* void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
@@ -306,8 +313,42 @@ namespace winrt::bikabika::implementation
 		if (userImage != m_userViewModel.User().Img().UriSource().ToString()) {
 			m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ userImage } });
 		}
+
+	}
+	void winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
+	{
+		if (!m_suggestIsChosen)
+		{
+			auto suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
+			//suggestions.Append(L"1");
+			//suggestions.Append(L"2");
+			//suggestions.Append(L"3");
+			//auto suggestions = winrt::single_threaded_observable_vector<bikabika::SuggestBlock>();
+			suggestions.Append(winrt::make<KeywordsBox>(L"标签标签标签标签", L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///tag.png"))));
+			//suggestions.Append(winrt::make<SuggestBox>(L"33333"));
+
+			sender.ItemsSource(box_value(suggestions));
+
+		}
+		m_suggestIsChosen = false;
+	}
+
+
+	void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
+	{
+
+	}
+
+
+	void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
+	{
+		m_suggestIsChosen = true;
 	}
 }
+
+
+
+
 
 
 

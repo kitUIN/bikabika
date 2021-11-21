@@ -1,4 +1,5 @@
 import "UserViewModel.idl";
+import "SuggestBlockViewModel.idl";
 namespace bikabika
 {
 
@@ -7,6 +8,6 @@ namespace bikabika
         MainPage();
         Windows.UI.Xaml.Controls.TextBlock UserName{ get; };
         UserViewModel MainUserViewModel{ get; };
-
+        SuggestBlockViewModel SuggestBlockView{ get; };
     }
 }

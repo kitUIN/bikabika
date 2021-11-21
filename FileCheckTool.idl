@@ -5,6 +5,11 @@ namespace bikabika
 		FileCheckTool();
 		Windows.Foundation.IAsyncOperation<Boolean> CheckFileAccount();
 		Windows.Foundation.IAsyncOperation<Boolean> CheckFileUser();
+		Windows.Foundation.IAsyncOperation<Boolean> CheckFileKeywords();
 		Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonObject> GetAccount();
+
+		Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonObject> GetKeywords();
+
+
 	}
 }

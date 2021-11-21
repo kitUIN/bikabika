@@ -1,0 +1,11 @@
+namespace bikabika
+{
+    runtimeclass SuggestBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        SuggestBlock(String keyword, String message,String keywordType, Windows.UI.Xaml.Media.Imaging.SvgImageSource icon);
+        String Keyword{ get; };
+        String Message{ get; }; 
+        String KeywordType{ get; }; 
+        Windows.UI.Xaml.Media.Imaging.SvgImageSource Icon{ get; };
+    }
+}

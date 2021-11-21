@@ -9,7 +9,6 @@ namespace winrt::bikabika::implementation
     {
         ClassificationPage();
         bikabika::ClassBlockViewModel ClassBlockView();
-        Windows::Foundation::IAsyncAction ReadAuthJson();
         Windows::Foundation::IAsyncAction Init();
         void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         bikabika::BikaHttp BikaHttpAPI();

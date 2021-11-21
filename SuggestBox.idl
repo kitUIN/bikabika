@@ -1,0 +1,10 @@
+namespace bikabika
+{
+	runtimeclass SuggestBox
+	{
+		SuggestBox(String keyword, String message,String keywordType);
+		String Keywords{ get; };
+		String Messages{ get; };
+		String KeywordType{ get; };
+	}
+}

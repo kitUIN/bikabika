@@ -5,8 +5,8 @@
     xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-      mc:Ignorable="d">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
@@ -42,14 +42,7 @@
             <muxc:NavigationView.FooterMenuItems>
                 <muxc:NavigationViewItem Tag="settings" x:Uid="NavSettings"  Content="設置">
                     <muxc:NavigationViewItem.Icon>
-                        <muxc:AnimatedIcon x:Name='GameSettingsIcon'>
-                            <muxc:AnimatedIcon.Source>
-                                <animatedvisuals:AnimatedSettingsVisualSource/>
-                            </muxc:AnimatedIcon.Source>
-                            <muxc:AnimatedIcon.FallbackIconSource>
-                                <muxc:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
-                            </muxc:AnimatedIcon.FallbackIconSource>
-                        </muxc:AnimatedIcon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.FooterMenuItems>
@@ -69,7 +62,7 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-
+            
             <ScrollViewer Margin="0,25,0,0" Padding="12,12,12,12" >
                 <Frame x:Name="ContentFrame"  Padding="12,0,12,24" IsTabStop="True"
                    NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated">
@@ -77,7 +70,7 @@
             </ScrollViewer>
         </muxc:NavigationView>
 
-        <AutoSuggestBox x:Uid="CatSearch" PlaceholderText="Search" QueryIcon="Find" Height="34" Width="180" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,2,150,0"/>
+        
 
         <Grid x:Name="AppTitleBar" Background="Transparent" Height="44" VerticalAlignment="Top" HorizontalAlignment="Left" Width="3000" Margin="45,0,330,0">
             <Grid.ColumnDefinitions>
@@ -91,5 +84,24 @@
 
             </StackPanel>
         </Grid>
+        <AutoSuggestBox x:Name="CatSearch" x:Uid="CatSearch"  PlaceholderText="Search" QueryIcon="Find" Height="34" Width="300"
+          VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,2,150,0"
+            TextChanged="CatSearch_TextChanged" QuerySubmitted="CatSearch_QuerySubmitted" SuggestionChosen="CatSearch_SuggestionChosen">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate  x:DataType="local:KeywordsBox">
+                    <Grid Width="265">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Image Source="{x:Bind GetKeywordIcon}" Margin="0,0,5,0" Width="20" Height="20"/>
+                            <TextBlock Text="{x:Bind GetKeywords}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft">
+                            <TextBlock Text="{x:Bind GetMessages}" FontStyle="Italic" Foreground="{ThemeResource SystemAccentColorDark2}"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+
+        </AutoSuggestBox>
+
     </Grid>
 </Page>

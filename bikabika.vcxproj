@@ -125,6 +125,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="KeywordsBox.h" />
     <ClInclude Include="Login.h">
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -140,6 +141,10 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="SortMode.h" />
+    <ClInclude Include="SuggestBlock.h" />
+    <ClInclude Include="SuggestBlockViewModel.h" />
+    <ClInclude Include="SuggestBox.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserViewModel.h" />
   </ItemGroup>
@@ -191,6 +196,7 @@
     <Image Include="cat_support.jpg" />
     <Image Include="chat_bg_image.png" />
     <Image Include="gray.png" />
+    <Image Include="history.png" />
     <Image Include="icon_empty.png" />
     <Image Include="icon_exclamation_error.png" />
     <Image Include="icon_leave.png" />
@@ -200,6 +206,7 @@
     <Image Include="icon_unknown_error.png" />
     <Image Include="picacomic_2.png" />
     <Image Include="register_name.png" />
+    <Image Include="tag.png" />
     <Image Include="userlogo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +226,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="KeywordsBox.cpp" />
     <ClCompile Include="Login.cpp">
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -237,6 +245,10 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="SortMode.cpp" />
+    <ClCompile Include="SuggestBlock.cpp" />
+    <ClCompile Include="SuggestBlockViewModel.cpp" />
+    <ClCompile Include="SuggestBox.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserViewModel.cpp" />
   </ItemGroup>
@@ -260,6 +272,7 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="KeywordsBox.idl" />
     <Midl Include="Login.idl">
       <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -271,12 +284,18 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="SortMode.idl" />
+    <Midl Include="SuggestBlock.idl" />
+    <Midl Include="SuggestBlockViewModel.idl" />
+    <Midl Include="SuggestBox.idl" />
     <Midl Include="User.idl" />
     <Midl Include="UserViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="history.svg" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
+    <None Include="tag.svg" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\zh-cn\Resources.resw" />

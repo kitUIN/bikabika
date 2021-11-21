@@ -2,6 +2,8 @@
 
 #include "MainPage.g.h"
 #include "UserViewModel.h"
+#include "SuggestBlockViewModel.h"
+#include "KeywordsBox.h"
 namespace muxc
 {
 	using namespace winrt::Microsoft::UI::Xaml::Controls;
@@ -42,6 +44,10 @@ namespace winrt::bikabika::implementation
 		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		bikabika::UserViewModel MainUserViewModel();
 		Windows::Foundation::IAsyncAction UpdateToken();
+		bikabika::SuggestBlockViewModel SuggestBlockView();
+		void CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args);
+		void CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);
+		void CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args);
 
 	private:
 		//bikabika::LoginBlockViewModel m_mainViewModel{ nullptr };
@@ -49,6 +55,8 @@ namespace winrt::bikabika::implementation
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
 		bikabika::FileCheckTool m_fileCheckTool;
+		bool m_suggestIsChosen = false;
+		bikabika::SuggestBlockViewModel m_suggestBlockView{ nullptr };
 	};
 
 }
