@@ -1,9 +1,0 @@
-import "SuggestBlock.idl";
-namespace bikabika
-{
-    runtimeclass SuggestBlockViewModel
-    {
-        SuggestBlockViewModel();
-        Windows.Foundation.Collections.IObservableVector<bikabika.SuggestBlock> SuggestBlocks{ get; };
-    }
-}

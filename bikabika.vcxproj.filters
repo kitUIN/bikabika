@@ -23,9 +23,6 @@
     <Midl Include="FileCheckTool.idl" />
     <Midl Include="User.idl" />
     <Midl Include="UserViewModel.idl" />
-    <Midl Include="SortMode.idl" />
-    <Midl Include="SuggestBlock.idl" />
-    <Midl Include="SuggestBlockViewModel.idl" />
     <Midl Include="SuggestBox.idl" />
     <Midl Include="KeywordsBox.idl" />
   </ItemGroup>
@@ -40,9 +37,6 @@
     <ClCompile Include="FileCheckTool.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserViewModel.cpp" />
-    <ClCompile Include="SortMode.cpp" />
-    <ClCompile Include="SuggestBlock.cpp" />
-    <ClCompile Include="SuggestBlockViewModel.cpp" />
     <ClCompile Include="SuggestBox.cpp" />
     <ClCompile Include="KeywordsBox.cpp" />
   </ItemGroup>
@@ -54,9 +48,6 @@
     <ClInclude Include="FileCheckTool.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserViewModel.h" />
-    <ClInclude Include="SortMode.h" />
-    <ClInclude Include="SuggestBlock.h" />
-    <ClInclude Include="SuggestBlockViewModel.h" />
     <ClInclude Include="SuggestBox.h" />
     <ClInclude Include="KeywordsBox.h" />
   </ItemGroup>
@@ -118,8 +109,6 @@
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
-    <None Include="tag.svg" />
-    <None Include="history.svg" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\zh-cn\Resources.resw" />

@@ -23,14 +23,12 @@ namespace winrt::bikabika::implementation
 				{
 					if (file.Name() == L"account.json")
 					{
-						
 						f = true;
 						break;
 					}
 				}
 				break;
 			}
-			
 		}
 		if (!f)
 		{
@@ -171,6 +169,10 @@ namespace winrt::bikabika::implementation
 		co_return f;
 	}
 	Windows::Foundation::IAsyncOperation<bool> FileCheckTool::CheckFileSettings()
+	{
+		return Windows::Foundation::IAsyncOperation<bool>();
+	}
+	Windows::Foundation::IAsyncOperation<bool> FileCheckTool::CheckFileSearchHistory()
 	{
 		return Windows::Foundation::IAsyncOperation<bool>();
 	}

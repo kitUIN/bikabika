@@ -141,9 +141,6 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="SortMode.h" />
-    <ClInclude Include="SuggestBlock.h" />
-    <ClInclude Include="SuggestBlockViewModel.h" />
     <ClInclude Include="SuggestBox.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserViewModel.h" />
@@ -245,9 +242,6 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="SortMode.cpp" />
-    <ClCompile Include="SuggestBlock.cpp" />
-    <ClCompile Include="SuggestBlockViewModel.cpp" />
     <ClCompile Include="SuggestBox.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserViewModel.cpp" />
@@ -284,18 +278,13 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="SortMode.idl" />
-    <Midl Include="SuggestBlock.idl" />
-    <Midl Include="SuggestBlockViewModel.idl" />
     <Midl Include="SuggestBox.idl" />
     <Midl Include="User.idl" />
     <Midl Include="UserViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="history.svg" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
-    <None Include="tag.svg" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\zh-cn\Resources.resw" />

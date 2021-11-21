@@ -7,8 +7,11 @@ namespace bikabika
 		Windows.Foundation.IAsyncOperation<Boolean> CheckFileUser();
 		Windows.Foundation.IAsyncOperation<Boolean> CheckFileKeywords();
 		Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonObject> GetAccount();
-
+		Windows.Foundation.IAsyncAction SetAccount(Windows.Data.Json.JsonObject value);
+		Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonObject> GetUser();
+		Windows.Foundation.IAsyncAction SetUser(Windows.Data.Json.JsonObject value);
 		Windows.Foundation.IAsyncOperation<Windows.Data.Json.JsonObject> GetKeywords();
+		Windows.Foundation.IAsyncAction SetKeywords(Windows.Data.Json.JsonObject value);
 
 
 	}

@@ -30,7 +30,7 @@
             </GridView>
 
         </StackPanel >
-        <ProgressRing x:Name="Progressing" Padding="20" Height="200" Width="200" Foreground="{StaticResource SystemAccentColor}"/>
+        <ProgressRing x:Name="Progressing" Padding="20" Height="150" Width="150" Foreground="{StaticResource SystemAccentColor}"/>
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>

@@ -86,10 +86,11 @@
         </Grid>
         <AutoSuggestBox x:Name="CatSearch" x:Uid="CatSearch"  PlaceholderText="Search" QueryIcon="Find" Height="34" Width="300"
           VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,2,150,0"
-            TextChanged="CatSearch_TextChanged" QuerySubmitted="CatSearch_QuerySubmitted" SuggestionChosen="CatSearch_SuggestionChosen">
+            TextChanged="CatSearch_TextChanged" QuerySubmitted="CatSearch_QuerySubmitted" SuggestionChosen="CatSearch_SuggestionChosen"
+            >
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate  x:DataType="local:KeywordsBox">
-                    <Grid Width="265">
+                    <Grid Height="25" Width="265">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                             <Image Source="{x:Bind GetKeywordIcon}" Margin="0,0,5,0" Width="20" Height="20"/>
                             <TextBlock Text="{x:Bind GetKeywords}" Margin="5,0,0,0"/>

@@ -4,7 +4,7 @@
 
 #include "MainPage.g.cpp"
 #include "Login.h"
-#include <SuggestBox.h>
+
 
 
 using namespace std;
@@ -29,6 +29,7 @@ namespace winrt::bikabika::implementation
 
 	MainPage::MainPage()
 	{
+		
 		InitializeComponent();
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"home", winrt::xaml_typename<bikabika::HomePage>()));
@@ -43,7 +44,7 @@ namespace winrt::bikabika::implementation
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
 		auto acc{ UpdateToken() };
-		m_suggestBlockView = winrt::make<SuggestBlockViewModel>();
+		
 	}
 
 
@@ -229,6 +230,8 @@ namespace winrt::bikabika::implementation
 		return m_userViewModel;
 	}
 
+
+
 	Windows::Foundation::IAsyncAction MainPage::UpdateToken()
 	{
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
@@ -240,11 +243,24 @@ namespace winrt::bikabika::implementation
 			OutputDebugStringW(token.c_str());
 			OutputDebugStringW(L"\n");
 		}
+		
 	}
-
-	bikabika::SuggestBlockViewModel MainPage::SuggestBlockView()
+	Windows::Foundation::IAsyncAction MainPage::UpdateSuggestion()
 	{
-		return m_suggestBlockView;
+		bool flag{ co_await m_fileCheckTool.CheckFileKeywords() };
+		if (flag) {
+			m_suggestions.Clear();
+
+			Windows::Data::Json::JsonObject keywords{ co_await m_fileCheckTool.GetKeywords() };
+			auto keyword = keywords.GetNamedArray(L"keywords");
+			OutputDebugStringW(keyword.ToString().c_str());
+			OutputDebugStringW(L"\n");
+			for (auto x : keyword)
+			{
+				m_suggestions.Append(winrt::make<KeywordsBox>(x.GetString(), L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///tag.png"))));
+			}
+
+		}
 	}
 
 	/*
@@ -302,32 +318,37 @@ namespace winrt::bikabika::implementation
 
 		//ApplicationView::GetForCurrentView().ExitFullScreenMode();
 	}*/
+
 	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		extern winrt::hstring userName;
 		extern winrt::hstring userLevel;
 		extern winrt::hstring userImage;
+		extern bool keywordLoaded;
 		if (userName != m_userViewModel.User().Name()) m_userViewModel.User().Name(userName);
 
 		if (userLevel != m_userViewModel.User().Level()) m_userViewModel.User().Level(userLevel);
 		if (userImage != m_userViewModel.User().Img().UriSource().ToString()) {
 			m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ userImage } });
 		}
-
+		if (!keywordLoaded) {
+			auto bcc{ UpdateSuggestion() };
+			keywordLoaded = true;
+		}
 	}
-	void winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
+	void  winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
 	{
 		if (!m_suggestIsChosen)
 		{
-			auto suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
+			
 			//suggestions.Append(L"1");
 			//suggestions.Append(L"2");
 			//suggestions.Append(L"3");
 			//auto suggestions = winrt::single_threaded_observable_vector<bikabika::SuggestBlock>();
-			suggestions.Append(winrt::make<KeywordsBox>(L"标签标签标签标签", L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///tag.png"))));
+			//suggestions.Append(winrt::make<KeywordsBox>(L"标签标签标签标签", L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///tag.png"))));
 			//suggestions.Append(winrt::make<SuggestBox>(L"33333"));
-
-			sender.ItemsSource(box_value(suggestions));
+			OutputDebugStringW(L"\n\n\n666\n\n\n");
+			sender.ItemsSource(box_value(m_suggestions));
 
 		}
 		m_suggestIsChosen = false;
