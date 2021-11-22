@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    runtimeclass TagBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        TagBlock(String tag);
+        String Tag{ get; };
+
+    }
+}

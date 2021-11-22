@@ -1,3 +1,4 @@
+import "TagBlock.idl";
 namespace bikabika
 {
     runtimeclass ComicBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
@@ -11,7 +12,8 @@ namespace bikabika
         Int32 PageCount;
         Int32 EpsCount;
         Boolean Finished;
-        Windows.Data.Json.JsonArray Categories;
+        Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Categories{ get; };
+        String Category;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;
         Int32 LikesCount;
     }

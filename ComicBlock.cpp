@@ -20,7 +20,12 @@ namespace winrt::bikabika::implementation
 		m_pageCount = json.GetNamedNumber(L"pagesCount");
 		m_epsCount = json.GetNamedNumber(L"epsCount");
 		m_finished = json.GetNamedBoolean(L"finished");
-		m_categories = json.GetNamedArray(L"categories");
+		for (auto x : json.GetNamedArray(L"categories"))
+		{
+			m_categories.Append(winrt::make<TagBlock>(x.GetString()));
+			m_category = m_category + x.GetString() + L"  ";
+		}
+		 
 		m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
 		m_likesCount = json.GetNamedNumber(L"likesCount");
 	}
@@ -88,13 +93,21 @@ namespace winrt::bikabika::implementation
 	{
 		if (value != m_finished) m_finished = value;
 	}
-	winrt::Windows::Data::Json::JsonArray ComicBlock::Categories()
+	winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> ComicBlock::Categories()
 	{
 		return m_categories;
 	}
-	void ComicBlock::Categories(winrt::Windows::Data::Json::JsonArray const& value)
+	void ComicBlock::Categories(winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> const& value)
 	{
 		if (value != m_categories) m_categories = value;
+	}
+	hstring ComicBlock::Category()
+	{
+		return m_category;
+	}
+	void ComicBlock::Category(hstring const& value)
+	{
+		if (value != m_category) m_category = value;
 	}
 	winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage ComicBlock::Thumb()
 	{

@@ -1,6 +1,6 @@
 #pragma once
 #include "ComicBlock.g.h"
-
+#include "TagBlock.h"
 
 namespace winrt::bikabika::implementation
 {
@@ -24,8 +24,10 @@ namespace winrt::bikabika::implementation
         void EpsCount(int32_t value);
         bool Finished();
         void Finished(bool value);
-        winrt::Windows::Data::Json::JsonArray Categories();
-        void Categories(winrt::Windows::Data::Json::JsonArray const& value);
+        winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Categories();
+        void Categories(winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> const& value);
+        hstring Category();
+        void Category(hstring const& value);
         winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage Thumb();
         void Thumb(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage const& value);
         int32_t LikesCount();
@@ -41,7 +43,8 @@ namespace winrt::bikabika::implementation
         int32_t m_pageCount;
         int32_t m_epsCount;
         bool m_finished;
-        winrt::Windows::Data::Json::JsonArray m_categories;
+        winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> m_categories = winrt::single_threaded_observable_vector<bikabika::TagBlock>();
+        hstring m_category;
         winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_thumb;
         int32_t m_likesCount;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
