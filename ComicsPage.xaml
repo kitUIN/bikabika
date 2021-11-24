@@ -5,6 +5,7 @@
     xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -32,7 +33,7 @@
                                                 <ObjectAnimationUsingKeyFrames 
                                                     Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush2}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight2}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames 
                                                     Storyboard.TargetName="ContentBackground"
@@ -67,63 +68,79 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid>
-        <StackPanel>
-            
-            <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" 
-                ItemsSource="{x:Bind ComicBlocks}" Margin="0,30,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}">
-                <GridView.ItemTemplate  >
-                    <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ComicBlock" >
-                        <StackPanel Orientation="Horizontal"  Height="190" Width="400"  Margin="10,0,0,0">
-                            <Border  CornerRadius="10" Height="160" Width="120" VerticalAlignment="Center">
-                                <Image Source="{x:Bind Thumb , Mode=OneWay}" />
-                            </Border>
-                            <Grid>
-                                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
-                                    <StackPanel>
-                                        <TextBlock Text="{x:Bind Title , Mode=OneWay}" MaxLines="3" FontSize="17" TextWrapping="Wrap" Width="250" FontWeight="Bold"/>
-                                        <TextBlock Text="{x:Bind Author,Mode=OneWay}"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
-                                    <StackPanel Orientation="Horizontal">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
-                                        <TextBlock Text="{x:Bind LikesCount,Mode=OneWay}" FontSize="18" Margin="5,0,0,0" />
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
-                                        <TextBlock Text="{x:Bind TotalViews,Mode=OneWay}" Margin="5,0,0,0" FontSize="18" />
-                                        
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal">
-                                       <TextBlock Text="{x:Bind Category,Mode=OneWay}" Foreground="Gray" TextWrapping="Wrap" Width="250"  FontSize="13" FontWeight="Black"/>
-                                    </StackPanel>
-                                    
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
-                                        <TextBlock Text="{x:Bind EpsCount,Mode=OneWay}" FontSize="18"  Margin="10,0,0,0" Foreground="Gray" FontWeight="Light"/>
-                                        <TextBlock Text="E" FontSize="18" Foreground="Gray" FontWeight="Light"/>
-                                        <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray" FontWeight="Light"/>
-                                        <TextBlock Text="{x:Bind PageCount,Mode=OneWay}" FontSize="18"  Margin="4,0,0,0" Foreground="Gray" FontWeight="Light"/>
-                                        <TextBlock Text="P" FontSize="18" Foreground="Gray" FontWeight="Light"/>
-                                    </StackPanel>
-                                    
-                                    
-                                </StackPanel>
-                                <Border   Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                    <TextBlock Text="完结"/>
+    <Grid Margin="0,3,0,0">
+
+        <ScrollViewer Margin="3,38,0,10">
+            <StackPanel >
+
+                <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" 
+                ItemsSource="{x:Bind ComicBlocks}" Margin="0,0,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}">
+                    <GridView.ItemTemplate  >
+                        <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ComicBlock" >
+                            <StackPanel Orientation="Horizontal"  Height="190" Width="400"  Margin="10,0,0,0">
+                                <Border  CornerRadius="10" Height="160" Width="120" VerticalAlignment="Center">
+                                    <Image Source="{x:Bind Thumb , Mode=OneWay}" />
                                 </Border>
-                            </Grid>
+                                <Grid Width="260">
+                                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind Title , Mode=OneWay}" MaxLines="3" FontSize="17" TextWrapping="Wrap" Width="250" FontWeight="Bold"/>
+                                            <TextBlock Text="{x:Bind Author,Mode=OneWay}"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                            <TextBlock Text="{x:Bind LikesCount,Mode=OneWay}" FontSize="18" Margin="5,0,0,0" />
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
+                                            <TextBlock Text="{x:Bind TotalViews,Mode=OneWay}" Margin="5,0,0,0" FontSize="18" />
+
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{x:Bind Category,Mode=OneWay}" Foreground="Gray" TextWrapping="Wrap" Width="250"  FontSize="13" FontWeight="Black"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
+                                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
+                                            <TextBlock Text="{x:Bind EpsCount,Mode=OneWay}" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
+                                            <TextBlock Text="E" FontSize="18" Foreground="Gray" />
+                                            <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
+                                            <TextBlock Text="{x:Bind PageCount,Mode=OneWay}" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
+                                            <TextBlock Text="P" FontSize="18" Foreground="Gray" />
+                                        </StackPanel>
+
+
+                                    </StackPanel>
+                                    <Border Visibility="{x:Bind Finished,Mode=OneWay}" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel >
+                        <ItemsPanelTemplate >
+                            <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+                </GridView>
+            </StackPanel >
+        </ScrollViewer>
+        <Border  Height="40" CornerRadius="10"  VerticalAlignment="Top" Background="{ThemeResource MyAcrylicBrushLight1}">
+                    <Grid>
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left">
+                            <FontIcon Margin="7,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe71c;"/>
                         </StackPanel>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemsPanel >
-                    <ItemsPanelTemplate >
-                        <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-                
-            </GridView>
-        </StackPanel >
+                        <StackPanel Grid.Column="2"   Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" Height="32">
+                            <FontIcon Margin="7,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe71c;"/>
+                            <ComboBox Margin="7,0,0,0" SelectionChanged="TypeCombo_SelectionChanged" x:Name="TypeCombo" ItemsSource="{x:Bind TypeBlocks}" Loaded="TypeCombo_Loaded" Width="200"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
 
+        <Border  Height="20" Width="100" CornerRadius="10"  VerticalAlignment="Bottom" Background="{ThemeResource MyAcrylicBrushLight1}">
+            <muxc:PipsPager x:Name="Pips" VerticalAlignment="Bottom" HorizontalAlignment="Center" SelectedIndexChanged="PipsPager_SelectedIndexChanged"  Orientation="Horizontal" PreviousButtonVisibility="VisibleOnPointerOver" NextButtonVisibility="VisibleOnPointerOver" />
+        </Border>
     </Grid>
-
 </Page>

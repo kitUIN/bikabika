@@ -62,12 +62,10 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-            
-            <ScrollViewer Margin="0,25,0,0" Padding="12,12,12,12" >
-                <Frame x:Name="ContentFrame"  Padding="12,0,12,24" IsTabStop="True"
+            <Frame x:Name="ContentFrame"  Padding="24,12,24,36" Margin="0,24,0,0" IsTabStop="True"
                    NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated">
-                </Frame>
-            </ScrollViewer>
+            </Frame>
+            
         </muxc:NavigationView>
 
         
@@ -90,12 +88,12 @@
             >
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate  x:DataType="local:KeywordsBox">
-                    <Grid Height="25" Width="265">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Grid  Width="265">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="25">
                             <Image Source="{x:Bind GetKeywordIcon}" Margin="0,0,5,0" Width="20" Height="20"/>
                             <TextBlock Text="{x:Bind GetKeywords}" Margin="5,0,0,0"/>
                         </StackPanel>
-                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft">
+                        <StackPanel Height="25"  Orientation="Horizontal" HorizontalAlignment="Right" FlowDirection="RightToLeft">
                             <TextBlock Text="{x:Bind GetMessages}" FontStyle="Italic" Foreground="{ThemeResource SystemAccentColorDark2}"/>
                         </StackPanel>
                     </Grid>

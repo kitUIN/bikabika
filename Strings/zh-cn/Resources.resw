@@ -249,4 +249,19 @@
     <value>记住密码</value>
     <comment>登录时记住我</comment>
   </data>
+  <data name="SortMode.DA" xml:space="preserve">
+    <value>旧到新</value>
+  </data>
+  <data name="SortMode.DD" xml:space="preserve">
+    <value>新到旧</value>
+  </data>
+  <data name="SortMode.LD" xml:space="preserve">
+    <value>最多爱心</value>
+  </data>
+  <data name="SortMode.UA" xml:space="preserve">
+    <value>默认排序</value>
+  </data>
+  <data name="SortMode.VD" xml:space="preserve">
+    <value>最多指名</value>
+  </data>
 </root>

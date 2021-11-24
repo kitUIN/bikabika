@@ -6,6 +6,8 @@ namespace bikabika
     {
         ComicsPage();
         Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  ComicBlocks{ get; };
-       
+        Windows.Foundation.Collections.IObservableVector<String>  TypeBlocks{ get; };
+        Int32 Pages{ get; };
+        Int32 PageIndex{ get; };
     }
 }

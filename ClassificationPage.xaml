@@ -7,45 +7,49 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
     <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Image Source="register_name.png" Width="36" Height="36" Margin="0,0,0,0"/>
-                <TextBlock Text="热门分类" FontSize="25" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
-            </StackPanel>
-            <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridV_ItemClick"
+        <ScrollViewer>
+        <Grid>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Image Source="register_name.png" Width="36" Height="36" Margin="0,0,0,0"/>
+                    <TextBlock Text="热门分类" FontSize="25" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
+                </StackPanel>
+                <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridV_ItemClick"
                 ItemsSource="{x:Bind ClassBlockView.ClassBlocks}" Margin="0,30,0,0">
-                <GridView.ItemTemplate>
-                    <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
-                        <StackPanel Height="210" Width="180" Margin="12">
-                            <Image Source="{x:Bind ClassPic , Mode=OneWay}" Height="180" Width="180" Stretch="UniformToFill"/>
-                            <TextBlock Text="{x:Bind ClassName , Mode=OneWay}" HorizontalAlignment="Center" FontSize="25" Foreground="{StaticResource SystemAccentColorDark1}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
+                            <StackPanel Height="210" Width="180" Margin="12">
+                                <Image Source="{x:Bind ClassPic , Mode=OneWay}" Height="180" Width="180" Stretch="UniformToFill"/>
+                                <TextBlock Text="{x:Bind ClassName , Mode=OneWay}" HorizontalAlignment="Center" FontSize="25" Foreground="{StaticResource SystemAccentColorDark1}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
 
-            </GridView>
+                </GridView>
 
-        </StackPanel >
-        <ProgressRing x:Name="Progressing" Padding="20" Height="150" Width="150" Foreground="{StaticResource SystemAccentColor}"/>
-        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
+            </StackPanel >
+            <ProgressRing x:Name="Progressing" Padding="20" Height="150" Width="150" Foreground="{StaticResource SystemAccentColor}"/>
+            <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
-        </ContentDialog>
-        <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
-    </Grid>
+                <ContentDialog.TitleTemplate>
+                    <DataTemplate>
+                        <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                    </DataTemplate>
+                </ContentDialog.TitleTemplate>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                    <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+            </ContentDialog>
+            <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+        </Grid>
+    </ScrollViewer>
+        </Grid>
 </Page>

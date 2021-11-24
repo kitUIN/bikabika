@@ -22,8 +22,8 @@ namespace winrt::bikabika::implementation
         void PageCount(int32_t value);
         int32_t EpsCount();
         void EpsCount(int32_t value);
-        bool Finished();
-        void Finished(bool value);
+        winrt::Windows::UI::Xaml::Visibility Finished();
+        void Finished(winrt::Windows::UI::Xaml::Visibility value);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Categories();
         void Categories(winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> const& value);
         hstring Category();
@@ -42,10 +42,10 @@ namespace winrt::bikabika::implementation
         int32_t m_totalLikes;
         int32_t m_pageCount;
         int32_t m_epsCount;
-        bool m_finished;
+        winrt::Windows::UI::Xaml::Visibility m_finished = winrt::Windows::UI::Xaml::Visibility::Collapsed;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> m_categories = winrt::single_threaded_observable_vector<bikabika::TagBlock>();
         hstring m_category;
-        winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_thumb;
+        winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{L"ms-appx:///gray.png"} } ;
         int32_t m_likesCount;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 

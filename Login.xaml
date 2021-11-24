@@ -6,7 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid >
+    <Grid>
+        <ScrollViewer>
+            <Grid>
         <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock x:Uid="E-mail" Text="E-mail:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
@@ -36,6 +38,8 @@
             </StackPanel>
         </ContentDialog>
         <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+            </Grid>
+        </ScrollViewer>
     </Grid>
-    
+                
 </Page>

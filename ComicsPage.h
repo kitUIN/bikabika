@@ -10,17 +10,30 @@ namespace winrt::bikabika::implementation
 
         
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> ComicBlocks();
-
-        void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+        winrt::Windows::Foundation::Collections::IObservableVector<winrt::hstring> TypeBlocks();
+        Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+        Windows::Foundation::IAsyncAction PipsPager_SelectedIndexChanged(winrt::Microsoft::UI::Xaml::Controls::PipsPager const& sender, winrt::Microsoft::UI::Xaml::Controls::PipsPagerSelectedIndexChangedEventArgs const& args);
+        Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode);
+        void TypeCombo_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        int32_t Pages();
+        int32_t PageIndex();
+        void Pips_Loading(winrt::Windows::UI::Xaml::FrameworkElement const& sender, winrt::Windows::Foundation::IInspectable const& args);
+        Windows::Foundation::IAsyncAction TypeCombo_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
 
     private:
         bikabika::FileCheckTool m_fileCheckTool;
+        bikabika::BikaHttp m_bikaHttp;
+        
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
+        hstring m_title = L"";
+        hstring m_sortMode=L"ua";
         int32_t m_total;
         int32_t m_limit;
-        int32_t m_page;
+        int32_t m_page = 1;
         int32_t m_pages;
+        int32_t m_index = 0;
 
+  
     };
 }
 

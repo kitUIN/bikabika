@@ -11,7 +11,7 @@ namespace bikabika
         Int32 TotalLikes;
         Int32 PageCount;
         Int32 EpsCount;
-        Boolean Finished;
+        Windows.UI.Xaml.Visibility Finished;
         Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Categories{ get; };
         String Category;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;

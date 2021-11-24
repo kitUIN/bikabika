@@ -19,7 +19,14 @@ namespace winrt::bikabika::implementation
 		m_totalViews = json.GetNamedNumber(L"totalViews");
 		m_pageCount = json.GetNamedNumber(L"pagesCount");
 		m_epsCount = json.GetNamedNumber(L"epsCount");
-		m_finished = json.GetNamedBoolean(L"finished");
+		if (json.GetNamedBoolean(L"finished"))
+		{
+			m_finished = winrt::Windows::UI::Xaml::Visibility::Visible;
+		}
+		else
+		{
+			m_finished = winrt::Windows::UI::Xaml::Visibility::Collapsed;
+		}
 		for (auto x : json.GetNamedArray(L"categories"))
 		{
 			m_categories.Append(winrt::make<TagBlock>(x.GetString()));
@@ -85,11 +92,11 @@ namespace winrt::bikabika::implementation
 	{
 		if (value != m_epsCount) m_epsCount = value;
 	}
-	bool ComicBlock::Finished()
+	Windows::UI::Xaml::Visibility ComicBlock::Finished()
 	{
 		return m_finished;
 	}
-	void ComicBlock::Finished(bool value)
+	void ComicBlock::Finished(Windows::UI::Xaml::Visibility value)
 	{
 		if (value != m_finished) m_finished = value;
 	}
