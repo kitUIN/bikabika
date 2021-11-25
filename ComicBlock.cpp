@@ -15,8 +15,10 @@ namespace winrt::bikabika::implementation
 		m_id = json.GetNamedString(L"_id");
 		m_title = json.GetNamedString(L"title");
 		m_author = json.GetNamedString(L"author");
-		m_totalLikes = json.GetNamedNumber(L"totalLikes");
-		m_totalViews = json.GetNamedNumber(L"totalViews");
+
+		if (auto s = json.TryLookup(L"totalLikes")) m_totalLikes = s.GetNumber();
+		if (auto s = json.TryLookup(L"totalViews")) m_totalViews = s.GetNumber();
+
 		m_pageCount = json.GetNamedNumber(L"pagesCount");
 		m_epsCount = json.GetNamedNumber(L"epsCount");
 		if (json.GetNamedBoolean(L"finished"))

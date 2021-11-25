@@ -97,7 +97,7 @@
 
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{x:Bind Category,Mode=OneWay}" Foreground="Gray" TextWrapping="Wrap" Width="250"  FontSize="13" FontWeight="Black"/>
+                                            <TextBlock Text="{x:Bind Category,Mode=OneWay}" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="250"  FontSize="13" FontWeight="Black"/>
                                         </StackPanel>
 
                                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
@@ -129,13 +129,20 @@
         </ScrollViewer>
         <Border  Height="40" CornerRadius="10"  VerticalAlignment="Top" Background="{ThemeResource MyAcrylicBrushLight1}">
                     <Grid>
-                        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left">
-                            <FontIcon Margin="7,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe71c;"/>
-                        </StackPanel>
+                        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
+                    <TextBlock Text="{x:Bind MyPageNumBox.Title,Mode=OneWay}" FontSize="25" Margin="10,0,0,3" FontWeight="ExtraBlack" VerticalAlignment="Center" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+
+                    
+                </StackPanel>
                         <StackPanel Grid.Column="2"   Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" Height="32">
                             <FontIcon Margin="7,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe71c;"/>
                             <ComboBox Margin="7,0,0,0" SelectionChanged="TypeCombo_SelectionChanged" x:Name="TypeCombo" ItemsSource="{x:Bind TypeBlocks}" Loaded="TypeCombo_Loaded" Width="200"/>
-                        </StackPanel>
+                    <FontIcon Margin="17,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe7c4;" />
+
+                    <muxc:NumberBox Height="32"   x:Name="NumberBox1" Value="{x:Bind MyPageNumBox.PageIndex,Mode=OneWay}" ValueChanged="NumberBox1_ValueChanged" AcceptsExpression="True"  Margin="10,0,0,0"/>
+                    <TextBlock Text="/" FontSize="25" Margin="10,0,0,3" VerticalAlignment="Center"/>
+                    <muxc:NumberBox Height="32"   x:Name="NumberBox2" Value="{x:Bind MyPageNumBox.Pages,Mode=OneWay}" IsEnabled="False" Margin="10,0,0,0"/>
+                </StackPanel>
                     </Grid>
                 </Border>
 

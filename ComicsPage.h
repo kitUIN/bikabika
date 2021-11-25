@@ -2,6 +2,7 @@
 
 #include "ComicsPage.g.h"
 #include "ComicBlock.h"
+#include "PageNumBox.h"
 namespace winrt::bikabika::implementation
 {
     struct ComicsPage : ComicsPageT<ComicsPage>
@@ -15,24 +16,21 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncAction PipsPager_SelectedIndexChanged(winrt::Microsoft::UI::Xaml::Controls::PipsPager const& sender, winrt::Microsoft::UI::Xaml::Controls::PipsPagerSelectedIndexChangedEventArgs const& args);
         Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode);
         void TypeCombo_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-        int32_t Pages();
-        int32_t PageIndex();
         void Pips_Loading(winrt::Windows::UI::Xaml::FrameworkElement const& sender, winrt::Windows::Foundation::IInspectable const& args);
         Windows::Foundation::IAsyncAction TypeCombo_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
+        bikabika::PageNumBox MyPageNumBox();
+        Windows::Foundation::IAsyncAction  NumberBox1_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args);
 
     private:
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
-        
+        bool m_numberBoxFlag = true;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
-        hstring m_title = L"";
-        hstring m_sortMode=L"ua";
+        hstring m_sortMode = L"ua";
         int32_t m_total;
         int32_t m_limit;
-        int32_t m_page = 1;
-        int32_t m_pages;
-        int32_t m_index = 0;
-
+        int32_t m_sortType = 0;
+        bikabika::PageNumBox m_pageNumBox{ 1,1 ,L"" };
   
     };
 }

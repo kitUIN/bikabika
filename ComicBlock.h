@@ -38,10 +38,10 @@ namespace winrt::bikabika::implementation
         hstring m_id;
         hstring m_title;
         hstring m_author;
-        int32_t m_totalViews;
-        int32_t m_totalLikes;
-        int32_t m_pageCount;
-        int32_t m_epsCount;
+        int32_t m_totalViews=0;
+        int32_t m_totalLikes=0;
+        int32_t m_pageCount=0;
+        int32_t m_epsCount=0;
         winrt::Windows::UI::Xaml::Visibility m_finished = winrt::Windows::UI::Xaml::Visibility::Collapsed;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> m_categories = winrt::single_threaded_observable_vector<bikabika::TagBlock>();
         hstring m_category;
