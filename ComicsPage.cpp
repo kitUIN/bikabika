@@ -44,15 +44,15 @@ namespace winrt::bikabika::implementation
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
 		m_pageNumBox.Title(params.GetAt(0));
 		m_sortMode = params.GetAt(1);
-		co_await Goto(m_pageNumBox.PageIndex(), m_pageNumBox.Title(), m_sortMode);
+		co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
 		
-        
-        
+
         __super::OnNavigatedTo(e);
     }
 	Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode) {
 		if (index <= m_pageNumBox.Pages()) {
 			//Progressing().IsActive(true);
+			m_comicBlocks.Clear();
 			hstring res{ co_await m_bikaHttp.Comics(index,title,mode) };
 
 			if (m_sortMode == L"ua") m_sortType = 0;
@@ -84,7 +84,7 @@ namespace winrt::bikabika::implementation
 					m_total = jsonObject.GetNamedNumber(L"total");
 					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
 					m_pageNumBox.Pages(jsonObject.GetNamedNumber(L"pages"));
-					m_comicBlocks.Clear();
+					
 					for (auto x : jsonObject.GetNamedArray(L"docs"))
 					{
 						m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));

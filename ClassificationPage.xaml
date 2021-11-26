@@ -6,6 +6,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
+
     <Grid>
         <ScrollViewer>
         <Grid>
@@ -18,9 +19,9 @@
                 ItemsSource="{x:Bind ClassBlockView.ClassBlocks}" Margin="0,30,0,0">
                     <GridView.ItemTemplate>
                         <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ClassBlock">
-                            <StackPanel Height="210" Width="180" Margin="12">
-                                <Image Source="{x:Bind ClassPic , Mode=OneWay}" Height="180" Width="180" Stretch="UniformToFill"/>
-                                <TextBlock Text="{x:Bind ClassName , Mode=OneWay}" HorizontalAlignment="Center" FontSize="25" Foreground="{StaticResource SystemAccentColorDark1}"/>
+                            <StackPanel Height="180" Width="160" Margin="12">
+                                <Image Source="{x:Bind ClassPic , Mode=OneWay}" Height="140" Width="140" Stretch="UniformToFill"/>
+                                <TextBlock Text="{x:Bind ClassName , Mode=OneWay}" HorizontalAlignment="Center" FontSize="23" Foreground="{StaticResource SystemAccentColorDark1}"/>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

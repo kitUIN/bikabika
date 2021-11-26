@@ -27,10 +27,15 @@ namespace winrt::bikabika::implementation
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Categories();
         // 大家都在搜的关键字
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Keywords();
-
+        // 分区
         Windows::Foundation::IAsyncOperation<hstring> Comics(int32_t page, hstring title, hstring sort);
+        // 详细
+        Windows::Foundation::IAsyncOperation<hstring> BookInfo(hstring bookId);
+        // 分话
+        Windows::Foundation::IAsyncOperation<hstring> Episodes(hstring bookId, int32_t page);
+        // 本体
+        Windows::Foundation::IAsyncOperation<hstring> Picture(hstring bookId, hstring epsId, int32_t page);
 
-        
     
     };
 }

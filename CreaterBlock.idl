@@ -1,0 +1,21 @@
+import "TagBlock.idl";
+namespace bikabika
+{
+    runtimeclass CreaterBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        CreaterBlock(Windows.Data.Json.JsonObject json);
+        String ID;
+        String Gender;
+        String Name;
+        Int32 Exp;
+        Int32 Level;
+        String Role;
+        String Title;
+        String Slogan;
+        String Character;
+        Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;
+        Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Characters;
+        String CharactersString;
+        Boolean Verified;
+    }
+}

@@ -30,6 +30,8 @@
     <Midl Include="ComicBlock.idl" />
     <Midl Include="TagBlock.idl" />
     <Midl Include="PageNumBox.idl" />
+    <Midl Include="CreaterBlock.idl" />
+    <Midl Include="InfoBlock.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -47,6 +49,8 @@
     <ClCompile Include="ComicBlock.cpp" />
     <ClCompile Include="TagBlock.cpp" />
     <ClCompile Include="PageNumBox.cpp" />
+    <ClCompile Include="CreaterBlock.cpp" />
+    <ClCompile Include="InfoBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -61,6 +65,8 @@
     <ClInclude Include="ComicBlock.h" />
     <ClInclude Include="TagBlock.h" />
     <ClInclude Include="PageNumBox.h" />
+    <ClInclude Include="CreaterBlock.h" />
+    <ClInclude Include="InfoBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

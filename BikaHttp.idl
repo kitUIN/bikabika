@@ -9,5 +9,8 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String> Categories();
         Windows.Foundation.IAsyncOperation<String> Keywords();
         Windows.Foundation.IAsyncOperation<String>  Comics(Int32 page, String title, String sort);
+        Windows.Foundation.IAsyncOperation<String>  BookInfo(String bookId);
+        Windows.Foundation.IAsyncOperation<String>  Episodes(String bookId, Int32 page);
+        Windows.Foundation.IAsyncOperation<String>  Picture(String bookId, String epsId, Int32 page);
     }
 }

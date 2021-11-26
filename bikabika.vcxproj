@@ -125,11 +125,13 @@
       <DependentUpon>ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="CreaterBlock.h" />
     <ClInclude Include="FileCheckTool.h" />
     <ClInclude Include="HomePage.h">
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="InfoBlock.h" />
     <ClInclude Include="InfoPage.h">
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -284,11 +286,13 @@
       <DependentUpon>ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="CreaterBlock.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
     <ClCompile Include="HomePage.cpp">
       <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="InfoBlock.cpp" />
     <ClCompile Include="InfoPage.cpp">
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -327,6 +331,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
     <Midl Include="BikaHttp.idl" />
+    <Midl Include="CreaterBlock.idl" />
+    <Midl Include="InfoBlock.idl" />
     <Midl Include="InfoPage.idl">
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
