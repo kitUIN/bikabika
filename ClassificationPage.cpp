@@ -95,7 +95,7 @@ namespace winrt::bikabika::implementation
 
 void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
-	OutputDebugStringW(L"\n\n------\n\n");
+	//OutputDebugStringW(L"\n\n------\n\n");
 	auto classBlack = e.ClickedItem().as<bikabika::ClassBlock>();
 	
 	if (classBlack.ClassType() == L"2") {

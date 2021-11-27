@@ -42,6 +42,7 @@ namespace winrt::bikabika::implementation
         m_isFavourite = json.GetNamedBoolean(L"isFavourite");
         m_isLiked = json.GetNamedBoolean(L"isLiked");
         m_commentsCount = json.GetNamedNumber(L"commentsCount");
+
     }
     hstring InfoBlock::ID()
     {

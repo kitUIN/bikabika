@@ -1,9 +1,11 @@
+import "TagBlock.idl";
+import "CreaterBlock.idl";
 namespace bikabika
 {
     [default_interface]
     runtimeclass InfoPage : Windows.UI.Xaml.Controls.Page
     {
         InfoPage();
-        Int32 MyProperty;
+        
     }
 }

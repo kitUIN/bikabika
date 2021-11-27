@@ -6,11 +6,11 @@ namespace bikabika
     {
         InfoBlock(Windows.Data.Json.JsonObject json);
         String ID;
-        String Title;
+        String Title{ get; };
         bikabika.CreaterBlock Creater;
         String Description;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;
-        String Author;
+        String Author{ get; };
         String ChineseTeam;
         Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Categories;
         String CategoriesString;

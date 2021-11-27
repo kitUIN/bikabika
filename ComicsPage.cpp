@@ -164,7 +164,20 @@ namespace winrt::bikabika::implementation
 			sender.Value(m_pageNumBox.PageIndex());
 		}
 	}
+	void winrt::bikabika::implementation::ComicsPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+	{
+		auto comicBlock = e.ClickedItem().as<bikabika::ComicBlock>();
+		auto container = GridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
+		auto root = container.ContentTemplateRoot().as<FrameworkElement>();
+		auto image =  root.FindName(L"ConnectedElement2").as<UIElement>();
+		winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+		Frame().Navigate(winrt::xaml_typename<bikabika::InfoPage>(),box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(comicBlock.ID()) })) , winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+
+	}
 }
+
+
+
 
 
 

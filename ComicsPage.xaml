@@ -20,6 +20,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
             <Style x:Name="MyListBoxItemStyle" TargetType="GridViewItem">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -68,23 +69,25 @@
             </Style>
         </ResourceDictionary>
     </Page.Resources>
+
     <Grid Margin="0,3,0,0">
 
         <ScrollViewer Margin="3,38,0,10">
             <StackPanel >
 
-                <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" 
-                ItemsSource="{x:Bind ComicBlocks}" Margin="0,0,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}">
-                    <GridView.ItemTemplate  >
+                <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="GridV_ItemClick"
+                ItemsSource="{x:Bind ComicBlocks}" Margin="0,0,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}"
+                >
+                    <GridView.ItemTemplate>
                         <DataTemplate x:Name="ImageTextDataTemplate" x:DataType="local:ComicBlock" >
-                            <StackPanel Orientation="Horizontal"  Height="190" Width="400"  Margin="10,0,0,0">
-                                <Border  CornerRadius="10" Height="160" Width="120" VerticalAlignment="Center">
-                                    <Image Source="{x:Bind Thumb , Mode=OneWay}" />
+                            <StackPanel Name="Connected" Orientation="Horizontal"  Height="190" Width="400"  Margin="10,0,0,0">
+                                <Border Name="ConnectedElement"  CornerRadius="10" Height="160" Width="120" VerticalAlignment="Center">
+                                    <Image Name="ConnectedElement2" Source="{x:Bind Thumb , Mode=OneWay}" />
                                 </Border>
                                 <Grid Width="260">
                                     <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                                         <StackPanel>
-                                            <TextBlock Text="{x:Bind Title , Mode=OneWay}" MaxLines="3" FontSize="17" TextWrapping="Wrap" Width="250" FontWeight="Bold"/>
+                                            <TextBlock Name="ConnectedElement3" Text="{x:Bind Title , Mode=OneWay}" MaxLines="3" FontSize="17" TextWrapping="Wrap" Width="250" FontWeight="Bold"/>
                                             <TextBlock Text="{x:Bind Author,Mode=OneWay}"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
                                         </StackPanel>
                                     </StackPanel>
@@ -108,8 +111,6 @@
                                             <TextBlock Text="{x:Bind PageCount,Mode=OneWay}" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
                                             <TextBlock Text="P" FontSize="18" Foreground="Gray" />
                                         </StackPanel>
-
-
                                     </StackPanel>
                                     <Border Visibility="{x:Bind Finished,Mode=OneWay}" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                         <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>

@@ -20,6 +20,7 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncAction TypeCombo_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
         bikabika::PageNumBox MyPageNumBox();
         Windows::Foundation::IAsyncAction  NumberBox1_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args);
+        void GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
     private:
         bikabika::FileCheckTool m_fileCheckTool;
@@ -32,7 +33,7 @@ namespace winrt::bikabika::implementation
         int32_t m_sortType = 0;
         bikabika::PageNumBox m_pageNumBox{ 1,1 ,L"" };
   
-    };
+        };
 }
 
 namespace winrt::bikabika::factory_implementation

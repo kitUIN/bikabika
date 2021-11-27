@@ -1,7 +1,7 @@
 #pragma once
 #include "InfoBlock.g.h"
 #include "CreaterBlock.h"
-
+#include "TagBlock.h"
 namespace winrt::bikabika::implementation
 {
     struct InfoBlock : InfoBlockT<InfoBlock>
