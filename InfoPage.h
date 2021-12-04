@@ -12,7 +12,7 @@ namespace winrt::bikabika::implementation
         InfoPage();
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         
-        
+        void Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         
     private:
         bikabika::FileCheckTool m_fileCheckTool;
@@ -42,6 +42,7 @@ namespace winrt::bikabika::implementation
         bool m_isFavourite;
         bool m_isLiked;
         int32_t m_commentsCount;
+
     };
 }
 

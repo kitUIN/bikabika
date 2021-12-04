@@ -14,7 +14,7 @@ namespace bikabika
         String ChineseTeam;
         Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Categories;
         String CategoriesString;
-        Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Tages;
+        Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Tags;
         String TagsString;
         Int32 PagesCount;
         Int32 EpsCount;

@@ -27,7 +27,7 @@ App::App()
 {
     
     InitializeComponent();
-    
+
     Suspending({ this, &App::OnSuspending });
     
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
@@ -51,8 +51,8 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
 {
     
     Frame rootFrame{ nullptr };
-    auto content = Window::Current().Content();
     
+    auto content = Window::Current().Content();
     if (content)
     {
         rootFrame = content.try_as<Frame>();
@@ -84,6 +84,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
                 rootFrame.Navigate(xaml_typename<bikabika::MainPage>(), box_value(e.Arguments()));
             }
             // Place the frame in the current Window
+            
             Window::Current().Content(rootFrame);
             // Ensure the current window is active
             Window::Current().Activate();

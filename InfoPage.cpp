@@ -54,19 +54,38 @@ namespace winrt::bikabika::implementation
                 Title().Text(m_title);
                 m_creater = winrt::make<CreaterBlock>(json.GetNamedObject(L"_creator"));
                 m_description = json.GetNamedString(L"description");
+                
                 extern winrt::hstring serverStream;
                 hstring path = serverStream + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
                 m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
+                
                 m_author = json.GetNamedString(L"author");
                 Author().Text(m_author);
                 m_chineseTeam = json.GetNamedString(L"chineseTeam");
+                
                 for (auto x : json.GetNamedArray(L"categories"))
                 {
                     m_categories.Append(winrt::make<TagBlock>(x.GetString()));
                     m_categoriesString = m_categoriesString + x.GetString() + L"  ";
                 }
+                CategoriesString().Text(m_categoriesString);
+                for (auto x : json.GetNamedArray(L"tags"))
+                {
+                    m_tags.Append(winrt::make<TagBlock>(x.GetString()));
+                    m_tagsString = m_tagsString + x.GetString() + L"  ";
+                    auto button = Controls::Button();
+                    button.Content(box_value(x.GetString()));
+                    auto margin = Thickness();
+                    margin.Left = 10;
+                    button.Margin(margin);
+                    button.Click(Windows::UI::Xaml::RoutedEventHandler(this, &InfoPage::Button_Click));
+                    TagsGrid().Children().Append(button);
+                }
+                
                 m_pagesCount = json.GetNamedNumber(L"pagesCount");
                 m_epsCount = json.GetNamedNumber(L"epsCount");
+                EpsCount().Text(to_hstring(m_epsCount));
+                PagesCount().Text(to_hstring(m_pagesCount));
                 if (json.GetNamedBoolean(L"finished"))
                 {
                     m_finished = winrt::Windows::UI::Xaml::Visibility::Visible;
@@ -75,6 +94,7 @@ namespace winrt::bikabika::implementation
                 {
                     m_finished = winrt::Windows::UI::Xaml::Visibility::Collapsed;
                 }
+                Finished().Visibility(m_finished);
                 m_updatedAt = json.GetNamedString(L"updated_at");
                 m_createdAt = json.GetNamedString(L"created_at");
                 m_allowDownload = json.GetNamedBoolean(L"allowDownload");
@@ -83,11 +103,14 @@ namespace winrt::bikabika::implementation
                 m_totalViews = json.GetNamedNumber(L"totalViews");
                 m_viewsCount = json.GetNamedNumber(L"viewsCount");
                 m_likesCount = json.GetNamedNumber(L"likesCount");
+                LikesCount().Text(to_hstring(m_likesCount));
+                TotalViews().Text(to_hstring(m_viewsCount));
+                
                 m_isFavourite = json.GetNamedBoolean(L"isFavourite");
                 m_isLiked = json.GetNamedBoolean(L"isLiked");
                 m_commentsCount = json.GetNamedNumber(L"commentsCount");
-
-
+                
+                
             }
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {	//缺少鉴权
@@ -111,5 +134,14 @@ namespace winrt::bikabika::implementation
             }
         }
     }
-    
+    void winrt::bikabika::implementation::InfoPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    {
+        auto ss = unbox_value<hstring>(sender.as<Controls::Button>().Content());
+        OutputDebugStringW(ss.c_str());
+    }
 }
+
+
+
+
+

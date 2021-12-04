@@ -25,8 +25,8 @@ namespace winrt::bikabika::implementation
         void Categories(winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> const& value);
         hstring CategoriesString();
         void CategoriesString(hstring const& value);
-        winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> Tages();
-        void Tages(winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> const& value);
+        winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> Tags();
+        void Tags(winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> const& value);
         hstring TagsString();
         void TagsString(hstring const& value);
         int32_t PagesCount();

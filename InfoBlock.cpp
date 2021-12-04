@@ -143,11 +143,11 @@ namespace winrt::bikabika::implementation
             //m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Character" });
         }
     }
-    winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> InfoBlock::Tages()
+    winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> InfoBlock::Tags()
     {
         return m_tags;
     }
-    void InfoBlock::Tages(winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> const& value)
+    void InfoBlock::Tags(winrt::Windows::Foundation::Collections::IObservableVector<winrt::bikabika::TagBlock> const& value)
     {
         if (m_tags != value) {
             m_tags = value;

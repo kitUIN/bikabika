@@ -4,52 +4,107 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d">
-    <Grid>
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-            <Image  HorizontalAlignment="Left" x:Name="Img" Height="280" Width="210" />
-            <StackPanel Orientation="Horizontal">
-                <Grid  Height="280" Margin="10,0,0,0">
-                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
-                        <StackPanel>
-                            <TextBlock x:Name="Title" MaxLines="3" FontSize="17" TextWrapping="Wrap" Width="800" FontWeight="Bold"/>
-                            <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
-                            <TextBlock x:Name="LikesCount" FontSize="18" Margin="5,0,0,0" />
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
-                            <TextBlock x:Name="TotalViews" Margin="5,0,0,0" FontSize="18" />
 
+        <Grid x:Name="MainGrid">
+        
+        <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="64" />
+                </Grid.ColumnDefinitions>
+                <Image  HorizontalAlignment="Left" x:Name="Img" Height="280" Width="210" Grid.Row="0" Grid.Column="0" />
+                <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1">
+                    <Grid  Height="280" Margin="10,0,0,0">
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                            <StackPanel>
+                                <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold"/>
+                                <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="CategoriesString" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="800"  FontSize="13" FontWeight="Black"/>
+                        <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                <TextBlock x:Name="LikesCount" FontSize="18" Margin="5,0,0,0" />
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
+                                <TextBlock x:Name="TotalViews" Margin="5,0,0,0" FontSize="18" />
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="CategoriesString" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="540"  FontSize="13" FontWeight="Black"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
+                                <TextBlock x:Name="EpsCount" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
+                                <TextBlock Text="E" FontSize="18" Foreground="Gray" />
+                                <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
+                                <TextBlock x:Name="PagesCount" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
+                                <TextBlock Text="P" FontSize="18" Foreground="Gray" />
+                            </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
-                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
-                            <TextBlock x:Name="EpsCount" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
-                            <TextBlock Text="E" FontSize="18" Foreground="Gray" />
-                            <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
-                            <TextBlock x:Name="PagesCount" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
-                            <TextBlock Text="P" FontSize="18" Foreground="Gray" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
+                    </Grid>
 
-            </StackPanel>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Bottom"  Grid.Row="0" Grid.Column="2">
+                    <Border x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                    </Border>
+                    <AppBarToggleButton >
+                        <AppBarToggleButton.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="Pink" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+                    <AppBarToggleButton  >
+                        <AppBarToggleButton.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+
+                </StackPanel>
+            </Grid>
+
+            <VariableSizedWrapGrid Margin="0,20,0,0" x:Name="TagsGrid" Orientation="Horizontal" MaximumRowsOrColumns="8">
+               
+            </VariableSizedWrapGrid>
+
+            <Border  Margin="0,10,0,0" BorderThickness="1.0" Height="1" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColor}" Background="#FFC8D5DD" />
+            
         </StackPanel>
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Height="280">
-            <StackPanel>
-                <Button/>
-                <Button/>
-                <Border x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                </Border>
-            </StackPanel>
-        </Grid>
+        
+        
     </Grid>
+    <VisualStateManager.VisualStateGroups>
+
+        
+
+        <VisualStateGroup>
+            <VisualState x:Name="DefaultState">
+                <Storyboard>
+                </Storyboard>
+            </VisualState>
+
+            <VisualState x:Name="WideState">
+                <Storyboard>
+                    <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="TextBlock.Witsh"
+                            Storyboard.TargetName="Width">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="800"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames
+                            Storyboard.TargetProperty="SplitView.IsPaneOpen"
+                            Storyboard.TargetName="mySplitView">
+                        <DiscreteObjectKeyFrame KeyTime="0" Value="True"/>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </VisualState>
+        </VisualStateGroup>
+    </VisualStateManager.VisualStateGroups>
 </Page>
