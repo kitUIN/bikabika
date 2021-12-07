@@ -14,15 +14,18 @@ namespace winrt::bikabika::implementation
         m_level = json.GetNamedNumber(L"level");
         m_role = json.GetNamedString(L"role");
         extern winrt::hstring serverStream;
-        auto path = serverStream + L"/static/" + json.GetNamedObject(L"avatar").GetNamedString(L"path");
-        m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
+        if (auto s = json.TryLookup(L"avatar"))
+        {
+            hstring path = serverStream + L"/static/" + s.GetObject().GetNamedString(L"path");
+            m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
+        }
         for (auto x : json.GetNamedArray(L"characters"))
         {
             m_characters.Append(winrt::make<TagBlock>(x.GetString()));
             m_charactersString = m_charactersString + x.GetString() + L"  ";
         }
-        m_verified = json.GetNamedBoolean(L"verified");
-        m_title = json.GetNamedString(L"title");
+        if (auto s = json.TryLookup(L"verified")) m_verified = s.GetBoolean();
+        if (auto y = json.TryLookup(L"title")) m_title = y.GetString();
         m_slogan = json.GetNamedString(L"slogan");
         m_character = json.GetNamedString(L"character");
     }

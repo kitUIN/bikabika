@@ -15,7 +15,59 @@ namespace winrt::bikabika::implementation
     }
 
    
-    
+    Windows::Foundation::IAsyncAction InfoPage::Eps()
+    {
+        auto res{ co_await m_bikaHttp.Episodes(m_id,1) };
+        if (res[1] == 'T') {
+            //auto show{ PicErrorDialog().ShowAsync() };
+        }
+        else if (res[1] == 'E') {
+            /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+            LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+            LoginContentDialog().Content(box_value(res));
+            LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+            auto show{ co_await LoginContentDialog().ShowAsync() };*/
+        }
+        else
+        {
+            Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+            double code = resp.GetNamedNumber(L"code");
+            if (code == (double)200)
+            {
+                Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+                Windows::Data::Json::JsonObject eps = ca.GetNamedObject(L"eps");
+                m_epsTotal = eps.GetNamedNumber(L"total");
+                m_epsLimit = eps.GetNamedNumber(L"limit");
+                m_epsPage = eps.GetNamedNumber(L"page");
+                m_epsPages = eps.GetNamedNumber(L"pages");
+                for (auto x : eps.GetNamedArray(L"docs"))
+                {
+                    Windows::Data::Json::JsonObject json = x.GetObject();
+                    m_eps.Append(winrt::make<EpisodeBlock>(json.GetNamedString(L"_id"), json.GetNamedString(L"title"), json.GetNamedNumber(L"order"), json.GetNamedString(L"updated_at")));
+                }
+            }
+            else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+            {	//缺少鉴权
+                /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+                LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
+                LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+                auto show{ co_await LoginContentDialog().ShowAsync() };
+                if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
+                */
+            }
+            else
+            {
+                //未知
+                /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
+                LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
+                LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
+                auto show{ co_await LoginContentDialog().ShowAsync() };
+                */
+            }
+        }
+    }
     
     Windows::Foundation::IAsyncAction InfoPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
@@ -54,13 +106,17 @@ namespace winrt::bikabika::implementation
                 Title().Text(m_title);
                 m_creater = winrt::make<CreaterBlock>(json.GetNamedObject(L"_creator"));
                 CreaterName().Text(m_creater.Name());
+                UsersName().Text(m_creater.Name());
                 Creater().ProfilePicture(m_creater.Thumb());
+                UsersPic().ProfilePicture(m_creater.Thumb());
+                UsersLevel().Text(L"Lv." +to_hstring(m_creater.Level()) );
+                UsersTitle().Text(m_creater.Title());
+                UserInfomation().Text(m_creater.Slogan());
                 m_description = json.GetNamedString(L"description");
                 Description().Text(m_description);
                 extern winrt::hstring serverStream;
                 hstring path = serverStream + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
                 m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
-                
                 m_author = json.GetNamedString(L"author");
                 Author().Text(m_author);
                 if (auto s = json.TryLookup(L"chineseTeam"))
@@ -104,31 +160,25 @@ namespace winrt::bikabika::implementation
                 CreateDate().Text(m_createdAt);
                 m_allowDownload = json.GetNamedBoolean(L"allowDownload");
                 m_allowComment = json.GetNamedBoolean(L"allowComment");
+                Comments().IsEnabled(m_allowComment);
+                if (!m_allowComment) {
+                    auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                    CommentsTip().Content(box_value(resourceLoader.GetString(L"FailComment")));
+                }
                 m_totalLikes = json.GetNamedNumber(L"totalLikes");
                 m_totalViews = json.GetNamedNumber(L"totalViews");
                 m_viewsCount = json.GetNamedNumber(L"viewsCount");
                 m_likesCount = json.GetNamedNumber(L"likesCount");
+                LikeCounts().Value(m_likesCount);
                 LikesCount().Text(to_hstring(m_likesCount));
                 TotalViews().Text(to_hstring(m_viewsCount));
                 m_isFavourite = json.GetNamedBoolean(L"isFavourite");
-                if (m_isFavourite)
-                {
-                    Like().Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
-                }
-                else
-                {
-                    Like().Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
-                }
+                Favourite().IsChecked(m_isFavourite);
                 m_isLiked = json.GetNamedBoolean(L"isLiked");
-                if (m_isLiked)
-                {
-                    Love().Visibility(winrt::Windows::UI::Xaml::Visibility::Visible);
-                }
-                else
-                {
-                    Love().Visibility(winrt::Windows::UI::Xaml::Visibility::Collapsed);
-                }
+                Like().IsChecked(m_isLiked);
                 m_commentsCount = json.GetNamedNumber(L"commentsCount");
+                CommentCounts().Value(m_commentsCount);
+                co_await Eps();
             }
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {	//缺少鉴权
@@ -152,9 +202,14 @@ namespace winrt::bikabika::implementation
             }
         }
     }
+    
     winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> InfoPage::Tags()
     {
         return m_tags;
+    }
+    winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> InfoPage::Episodes()
+    {
+        return m_eps;
     }
     void winrt::bikabika::implementation::InfoPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
     {
@@ -170,7 +225,7 @@ namespace winrt::bikabika::implementation
         if (width - 250 > 10) {
             Title().Width(width - 250);
             CategoriesString().Width(width - 250);
-            Description().Width(width - 50);
+            Description().Width(width - 250);
         }
     }
 }
@@ -182,3 +237,16 @@ namespace winrt::bikabika::implementation
 
 
 
+
+
+void winrt::bikabika::implementation::InfoPage::CreaterButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    
+}
+
+
+void winrt::bikabika::implementation::InfoPage::CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    ToggleThemeTeachingTip1().Title(m_creater.Role());
+    ToggleThemeTeachingTip1().IsOpen(true);
+}

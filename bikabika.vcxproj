@@ -126,6 +126,7 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="CreaterBlock.h" />
+    <ClInclude Include="EpisodeBlock.h" />
     <ClInclude Include="FileCheckTool.h" />
     <ClInclude Include="HomePage.h">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -290,6 +291,7 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="CreaterBlock.cpp" />
+    <ClCompile Include="EpisodeBlock.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
     <ClCompile Include="HomePage.cpp">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -335,6 +337,7 @@
     </Midl>
     <Midl Include="BikaHttp.idl" />
     <Midl Include="CreaterBlock.idl" />
+    <Midl Include="EpisodeBlock.idl" />
     <Midl Include="InfoBlock.idl" />
     <Midl Include="InfoPage.idl">
       <DependentUpon>InfoPage.xaml</DependentUpon>

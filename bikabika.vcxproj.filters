@@ -32,6 +32,7 @@
     <Midl Include="PageNumBox.idl" />
     <Midl Include="CreaterBlock.idl" />
     <Midl Include="InfoBlock.idl" />
+    <Midl Include="EpisodeBlock.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="PageNumBox.cpp" />
     <ClCompile Include="CreaterBlock.cpp" />
     <ClCompile Include="InfoBlock.cpp" />
+    <ClCompile Include="EpisodeBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="PageNumBox.h" />
     <ClInclude Include="CreaterBlock.h" />
     <ClInclude Include="InfoBlock.h" />
+    <ClInclude Include="EpisodeBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

@@ -161,6 +161,9 @@
     <value>评论</value>
     <comment>漫画详细页</comment>
   </data>
+  <data name="CommentsTip.Content" xml:space="preserve">
+    <value>展开评论面板</value>
+  </data>
   <data name="DefaultUserLevel.Text" xml:space="preserve">
     <value>Lv.5</value>
     <comment>左侧导航栏默认等级</comment>
@@ -201,8 +204,14 @@
     <value>登陆失败</value>
     <comment>对话框标题"登陆失败"</comment>
   </data>
-  <data name="Like.Label" xml:space="preserve">
+  <data name="FailComment" xml:space="preserve">
+    <value>该作品不允许评论</value>
+  </data>
+  <data name="Favourite.Label" xml:space="preserve">
     <value>收藏</value>
+  </data>
+  <data name="Like.Label" xml:space="preserve">
+    <value>爱心</value>
     <comment>漫画详细页</comment>
   </data>
   <data name="LoadFail.Title" xml:space="preserve">
@@ -224,10 +233,6 @@
   <data name="LoginPasswordFail.Content" xml:space="preserve">
     <value>错误的账号或密码,请重试 :(</value>
     <comment>因为密码错误登陆失败对话框内容</comment>
-  </data>
-  <data name="Love.Label" xml:space="preserve">
-    <value>爱心</value>
-    <comment>漫画详细页</comment>
   </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>

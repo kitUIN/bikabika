@@ -1,0 +1,12 @@
+
+namespace bikabika
+{
+    runtimeclass EpisodeBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        EpisodeBlock(String _id,String title,Int32 order,String updatedAt);
+        String ID{ get; };
+        String UpdatedAt{ get; };
+        Int32 Order{ get; };
+        String Title{ get; };
+    }
+}

@@ -5,15 +5,22 @@
 #include "FileCheckTool.h"
 #include "TagBlock.h"
 #include "CreaterBlock.h"
+#include "EpisodeBlock.h"
 namespace winrt::bikabika::implementation
 {
     struct InfoPage : InfoPageT<InfoPage>
     {
         InfoPage();
+        Windows::Foundation::IAsyncAction Eps();
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();
+        winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> Episodes();
+       
         void Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
+
+
+
     private:
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
@@ -42,7 +49,15 @@ namespace winrt::bikabika::implementation
         bool m_isFavourite;
         bool m_isLiked;
         int32_t m_commentsCount;
+        int32_t m_epsTotal;
+        int32_t m_epsLimit;
+        int32_t m_epsPage;
+        int32_t m_epsPages;
+        winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<bikabika::EpisodeBlock>();
 
+    public:
+        void CreaterButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
 }
 

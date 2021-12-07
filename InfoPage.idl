@@ -1,5 +1,6 @@
 import "TagBlock.idl";
 import "CreaterBlock.idl";
+import "EpisodeBlock.idl";
 namespace bikabika
 {
     [default_interface]
@@ -7,5 +8,7 @@ namespace bikabika
     {
         InfoPage();
         Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Tags{ get; };
+        Windows.Foundation.Collections.IObservableVector<bikabika.EpisodeBlock> Episodes{ get; };
+        Windows.UI.Xaml.Controls.Border CreaterBorder{ get; };
     }
 }

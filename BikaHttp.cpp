@@ -247,12 +247,13 @@ namespace winrt::bikabika::implementation
 	{
 		
 		 
-		Uri uri = Uri{ L"https://picaapi.picacomic.com/comics?page=" + to_hstring(page) + L"&c=" + to_hstring(UrlEncode(to_string(title))) + L"&s=" + sort};
-		hstring api = to_hstring(to_string(uri.ToString()).substr(30));
+		
+		hstring api = L"comics?page=" + to_hstring(page) + L"&c=" + to_hstring(UrlEncode(to_string(title))) + L"&s=" + sort;
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/"+api};
 		//OutputDebugStringW(api.c_str());
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(uri, api, uuid);
-		HttpLogOut(L"[GET]->/comics\nReturn:", res.c_str());
+		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::BookInfo(hstring bookId)
@@ -264,7 +265,7 @@ namespace winrt::bikabika::implementation
 		//OutputDebugStringW(api.c_str());
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(uri, api, uuid);
-		HttpLogOut(L"[GET]->/comics\nReturn:", res.c_str());
+		HttpLogOut(L"[GET]->/"+ api+L"\nReturn:", res.c_str());
 		co_return res;
 	}
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Episodes(hstring bookId,int32_t page)
@@ -276,7 +277,7 @@ namespace winrt::bikabika::implementation
 		//OutputDebugStringW(api.c_str());
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(uri, api, uuid);
-		HttpLogOut(L"[GET]->/comics\nReturn:", res.c_str());
+		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
 	
@@ -289,7 +290,7 @@ namespace winrt::bikabika::implementation
 		//OutputDebugStringW(api.c_str());
 		guid uuid = GuidHelper::CreateNewGuid();
 		hstring res = co_await GET(uri, api, uuid);
-		HttpLogOut(L"[GET]->/comics\nReturn:", res.c_str());
+		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
 }

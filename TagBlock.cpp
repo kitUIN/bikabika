@@ -7,7 +7,7 @@ namespace winrt::bikabika::implementation
 {
     TagBlock::TagBlock(hstring const& tag)
     {
-        if (m_tag != tag) m_tag = tag;
+        m_tag = tag;
     }
     hstring TagBlock::Tag()
     {
