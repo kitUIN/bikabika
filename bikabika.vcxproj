@@ -150,6 +150,11 @@
     <ClInclude Include="MainPage.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="PicPage.h">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="PicturesBlock.h" />
     <ClInclude Include="SettingsPage.h">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -185,6 +190,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PicPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsPage.xaml">
@@ -318,6 +326,11 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="PicPage.cpp">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="PicturesBlock.cpp" />
     <ClCompile Include="SettingsPage.cpp">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -344,6 +357,11 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="PageNumBox.idl" />
+    <Midl Include="PicPage.idl">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="PicturesBlock.idl" />
     <Midl Include="TagBlock.idl" />
     <Midl Include="ClassBlock.idl" />
     <Midl Include="ClassBlockViewModel.idl" />

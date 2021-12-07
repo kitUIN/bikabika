@@ -25,9 +25,9 @@ namespace winrt::bikabika::implementation
             m_charactersString = m_charactersString + x.GetString() + L"  ";
         }
         if (auto s = json.TryLookup(L"verified")) m_verified = s.GetBoolean();
+        if (auto x = json.TryLookup(L"character")) m_character = x.GetString();
         if (auto y = json.TryLookup(L"title")) m_title = y.GetString();
-        m_slogan = json.GetNamedString(L"slogan");
-        m_character = json.GetNamedString(L"character");
+        if (auto z = json.TryLookup(L"slogan")) m_slogan = z.GetString();
     }
     hstring CreaterBlock::ID()
     {

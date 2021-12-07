@@ -53,3 +53,4 @@ extern winrt::hstring userLevel = L"Lv.0";
 extern winrt::hstring userImage = L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png";
 extern winrt::hstring serverStream = L"https://storage1.picacomic.com";
 extern bool keywordLoaded = false;
+extern bool animeFlag = true;

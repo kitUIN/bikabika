@@ -40,6 +40,8 @@ namespace winrt::bikabika::implementation
 
 	Windows::Foundation::IAsyncAction ComicsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
+		extern bool animeFlag;
+		animeFlag = true;
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
 		OutputDebugStringW(params.GetAt(0).c_str());
 		OutputDebugStringW(L"\n");

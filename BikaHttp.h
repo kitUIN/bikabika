@@ -34,7 +34,7 @@ namespace winrt::bikabika::implementation
         // 分话
         Windows::Foundation::IAsyncOperation<hstring> Episodes(hstring bookId, int32_t page);
         // 本体
-        Windows::Foundation::IAsyncOperation<hstring> Picture(hstring bookId, hstring epsId, int32_t page);
+        Windows::Foundation::IAsyncOperation<hstring> Picture(hstring bookId, int32_t epsId, int32_t page);
 
     
     };

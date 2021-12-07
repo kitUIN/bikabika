@@ -1,0 +1,10 @@
+
+namespace bikabika
+{
+    runtimeclass PicturesBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        PicturesBlock(String path);
+        Windows.UI.Xaml.Media.Imaging.BitmapImage Path{ get; };
+        String Order;
+    }
+}

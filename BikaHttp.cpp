@@ -281,10 +281,10 @@ namespace winrt::bikabika::implementation
 		co_return res;
 	}
 	
-	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Picture(hstring bookId, hstring epsId, int32_t page)
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Picture(hstring bookId, int32_t epsId, int32_t page)
 	{
 
-		hstring api = L"comics/" + bookId + L"/order/" + epsId +L"/pages?page="+ to_hstring(page);
+		hstring api = L"comics/" + bookId + L"/order/" + to_hstring(epsId) +L"/pages?page="+ to_hstring(page);
 		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
 
 		//OutputDebugStringW(api.c_str());

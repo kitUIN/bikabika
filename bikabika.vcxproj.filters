@@ -15,6 +15,7 @@
     <Page Include="AccountPage.xaml" />
     <Page Include="ComicsPage.xaml" />
     <Page Include="InfoPage.xaml" />
+    <Page Include="PicPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
@@ -33,6 +34,7 @@
     <Midl Include="CreaterBlock.idl" />
     <Midl Include="InfoBlock.idl" />
     <Midl Include="EpisodeBlock.idl" />
+    <Midl Include="PicturesBlock.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -53,6 +55,7 @@
     <ClCompile Include="CreaterBlock.cpp" />
     <ClCompile Include="InfoBlock.cpp" />
     <ClCompile Include="EpisodeBlock.cpp" />
+    <ClCompile Include="PicturesBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -70,6 +73,7 @@
     <ClInclude Include="CreaterBlock.h" />
     <ClInclude Include="InfoBlock.h" />
     <ClInclude Include="EpisodeBlock.h" />
+    <ClInclude Include="PicturesBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

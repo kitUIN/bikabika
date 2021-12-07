@@ -11,13 +11,15 @@ namespace winrt::bikabika::implementation
     struct InfoPage : InfoPageT<InfoPage>
     {
         InfoPage();
-        Windows::Foundation::IAsyncAction Eps();
+        Windows::Foundation::IAsyncAction Eps(int32_t const& page);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> Episodes();
        
         void Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
+        void CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
 
 
@@ -55,9 +57,6 @@ namespace winrt::bikabika::implementation
         int32_t m_epsPages;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<bikabika::EpisodeBlock>();
 
-    public:
-        void CreaterButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-        void CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
 }
 

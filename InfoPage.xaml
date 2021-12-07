@@ -82,74 +82,74 @@
     </Page.Resources>
     <ScrollViewer>
         <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
-        
-        <StackPanel VerticalAlignment="Top" Orientation="Vertical">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Image  HorizontalAlignment="Left" x:Name="Img" Height="280" Width="210" Grid.Row="0" Grid.Column="0" />
-                <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1">
-                    <Grid  Height="280" Margin="10,0,0,0">
-                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
-                            <StackPanel>
-                                <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold"/>
-                                <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue"/>
+
+            <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image  HorizontalAlignment="Left" x:Name="Img" Height="280" Width="210" Grid.Row="0" Grid.Column="0" />
+                    <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1">
+                        <Grid  Height="280" Margin="10,0,0,0">
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                                <StackPanel>
+                                    <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold"/>
+                                    <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                    <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue"/>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                        <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
-                                <TextBlock x:Name="LikesCount" FontSize="18" Margin="5,0,0,0" />
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
-                                <TextBlock x:Name="TotalViews" Margin="5,0,0,0" FontSize="18" />
+                            <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                    <TextBlock x:Name="LikesCount" FontSize="18" Margin="5,0,0,0" />
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" Foreground="{ThemeResource SystemAccentColorDark2}" Margin="10,0,0,0"/>
+                                    <TextBlock x:Name="TotalViews" Margin="5,0,0,0" FontSize="18" />
 
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="CategoriesString" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="540"  FontSize="13" FontWeight="Black"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,0" >
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
+                                    <TextBlock x:Name="EpsCount" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
+                                    <TextBlock Text="E" FontSize="18" Foreground="Gray" />
+                                    <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
+                                    <TextBlock x:Name="PagesCount" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
+                                    <TextBlock Text="P" FontSize="18" Foreground="Gray" />
+                                    <Border Margin="10,0,0,0" x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                    </Border>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock x:Name="CategoriesString" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="540"  FontSize="13" FontWeight="Black"/>
-                            </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,0" >
-                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
-                                <TextBlock x:Name="EpsCount" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
-                                <TextBlock Text="E" FontSize="18" Foreground="Gray" />
-                                <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
-                                <TextBlock x:Name="PagesCount" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
-                                <TextBlock Text="P" FontSize="18" Foreground="Gray" />
-                                <Border Margin="10,0,0,0" x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                    <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                </Border>
-                            </StackPanel>
-                        </StackPanel>
+                        </Grid>
 
-                    </Grid>
+                    </StackPanel>
+                </Grid>
+                <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled"  HorizontalScrollBarVisibility="Visible" Height="45">
+                    <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel x:Name="TagsGrid"  Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:TagBlock">
+                                <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Click="Button_Click" Style="{StaticResource TagStyle}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
-                </StackPanel>
-            </Grid>
-            <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled"  HorizontalScrollBarVisibility="Visible" Height="45">
-                <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}" >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel x:Name="TagsGrid"  Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="local:TagBlock">
-                            <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Click="Button_Click" Style="{StaticResource TagStyle}"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-             </ScrollViewer>
-            <Border CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColorDark1}" Background="{ThemeResource MyAcrylicBrushLight3}">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock FontSize="18"  Margin="3,10,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" x:Name="Description"/>
+                </ScrollViewer>
+                <Border CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColorDark1}" Background="{ThemeResource MyAcrylicBrushLight3}">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="18"  Margin="3,10,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" x:Name="Description"/>
                             <Border CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
 
                                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
@@ -198,24 +198,22 @@
                             </StackPanel>
                         </Border>
 
-                    </StackPanel>             
-         
+                    </StackPanel>
+
                 </Border>
-            
-            <Border Margin="0,10,0,0" CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
-                
-                <ListView Margin="0,0,0,0" x:Name="ListV" SelectionMode="None"  ItemsSource="{x:Bind Episodes}">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:EpisodeBlock">
-                            <Border  CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9"  Background="{ThemeResource MyAcrylicBrush}">
-                            <TextBlock Text="{x:Bind Title}" FontWeight="Bold"/>
-                            </Border>
-                        
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            </Border>
-        </StackPanel>
+
+                <Border Margin="0,10,0,0" CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <ListView Margin="0,0,0,0" x:Name="ListV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListV_ItemClick" ItemsSource="{x:Bind Episodes}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:EpisodeBlock">
+                                <Border  CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9"  Background="{ThemeResource MyAcrylicBrush}">
+                                    <TextBlock Text="{x:Bind Title}" FontWeight="Bold"/>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
+            </StackPanel>
 
             <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Target="{x:Bind CreaterBorder}" Title="Change themes without hassle" Background="{ThemeResource MyAcrylicBrushLight2}">
                 <muxc:TeachingTip.Content>
@@ -230,7 +228,7 @@
                                         <TextBlock x:Name="UsersTitle" FontWeight="Bold" FontSize="10"/>
                                     </Border>
                                 </StackPanel>
-                                
+
                             </StackPanel>
                         </StackPanel>
                         <TextBlock Margin="0,6,0,0" x:Name="UserInfomation"/>
@@ -243,7 +241,7 @@
         </Grid>
     </ScrollViewer>
     <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+        <VisualStateGroup>
             <VisualState x:Name="DefaultState">
                 <Storyboard>
                 </Storyboard>
@@ -265,5 +263,5 @@
             </VisualState>
         </VisualStateGroup>
     </VisualStateManager.VisualStateGroups>
-    
+
 </Page>

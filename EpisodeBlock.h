@@ -13,6 +13,10 @@ namespace winrt::bikabika::implementation
         hstring UpdatedAt();
         int32_t Order();
         hstring Title();
+        void BookId(hstring const& value);
+        hstring BookId();
+        void Total(int32_t const& value);
+        int32_t Total();
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
     private:
@@ -21,7 +25,8 @@ namespace winrt::bikabika::implementation
         int32_t m_order;
         hstring m_updatedAt;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
-
+        hstring m_bookId;
+        int32_t m_total;
     };
 }
 namespace winrt::bikabika::factory_implementation
