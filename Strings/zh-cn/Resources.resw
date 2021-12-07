@@ -157,6 +157,10 @@
     <value>搜索</value>
     <comment>分类搜索栏</comment>
   </data>
+  <data name="Comments.Label" xml:space="preserve">
+    <value>评论</value>
+    <comment>漫画详细页</comment>
+  </data>
   <data name="DefaultUserLevel.Text" xml:space="preserve">
     <value>Lv.5</value>
     <comment>左侧导航栏默认等级</comment>
@@ -197,6 +201,10 @@
     <value>登陆失败</value>
     <comment>对话框标题"登陆失败"</comment>
   </data>
+  <data name="Like.Label" xml:space="preserve">
+    <value>收藏</value>
+    <comment>漫画详细页</comment>
+  </data>
   <data name="LoadFail.Title" xml:space="preserve">
     <value>加载失败</value>
     <comment>对话框标题加载失败</comment>
@@ -216,6 +224,10 @@
   <data name="LoginPasswordFail.Content" xml:space="preserve">
     <value>错误的账号或密码,请重试 :(</value>
     <comment>因为密码错误登陆失败对话框内容</comment>
+  </data>
+  <data name="Love.Label" xml:space="preserve">
+    <value>爱心</value>
+    <comment>漫画详细页</comment>
   </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
@@ -263,5 +275,9 @@
   </data>
   <data name="SortMode.VD" xml:space="preserve">
     <value>最多指名</value>
+  </data>
+  <data name="UpdateTime.Text" xml:space="preserve">
+    <value>更新</value>
+    <comment>漫画详细页的 更新</comment>
   </data>
 </root>

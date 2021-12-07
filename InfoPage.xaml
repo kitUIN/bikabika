@@ -6,8 +6,82 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Style x:Key="TagStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemAccentColor}"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark3}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="Padding" Value="{StaticResource ButtonPadding}"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw"  Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" CornerRadius="10" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColorLight1}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColorDark3}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-        <Grid x:Name="MainGrid">
+        <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
         
         <StackPanel VerticalAlignment="Top" Orientation="Vertical">
             <Grid>
@@ -16,8 +90,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="210"/>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="64" />
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Image  HorizontalAlignment="Left" x:Name="Img" Height="280" Width="210" Grid.Row="0" Grid.Column="0" />
                 <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1">
@@ -26,6 +99,7 @@
                             <StackPanel>
                                 <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
@@ -40,43 +114,73 @@
                                 <TextBlock x:Name="CategoriesString" Foreground="Gray" MaxLines="5" TextWrapping="Wrap" Width="540"  FontSize="13" FontWeight="Black"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,15" >
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,0" >
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b8;" Foreground="Gray"/>
                                 <TextBlock x:Name="EpsCount" FontSize="18"  Margin="10,0,0,0" Foreground="Gray"/>
                                 <TextBlock Text="E" FontSize="18" Foreground="Gray" />
                                 <TextBlock Text="/" Margin="4,0,0,0" FontSize="18" Foreground="Gray"/>
                                 <TextBlock x:Name="PagesCount" FontSize="18"  Margin="4,0,0,0" Foreground="Gray"/>
                                 <TextBlock Text="P" FontSize="18" Foreground="Gray" />
+                                <Border Margin="10,0,0,0" x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                    <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                </Border>
                             </StackPanel>
                         </StackPanel>
 
                     </Grid>
 
                 </StackPanel>
-                <StackPanel VerticalAlignment="Bottom"  Grid.Row="0" Grid.Column="2">
-                    <Border x:Name="Finished" Visibility="Collapsed" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <TextBlock Text="完结" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                    </Border>
-                    <AppBarToggleButton >
+            </Grid>
+            <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled"  HorizontalScrollBarVisibility="Visible" Height="45">
+                <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel x:Name="TagsGrid"  Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="local:TagBlock">
+                            <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Click="Button_Click" Style="{StaticResource TagStyle}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+             </ScrollViewer>
+
+            <TextBlock FontSize="18"  Margin="0,10,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" x:Name="Description"/>
+            <Grid>
+                <Border HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColorDark3}" Background="Transparent">
+                    <StackPanel Orientation="Horizontal">
+                        <PersonPicture x:Name="Creater" Margin="10,0,0,0" HorizontalAlignment="Left" Width="64" Height="64" ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png"/>
+                        <StackPanel Margin="10,0,0,0">
+                            <TextBlock VerticalAlignment="Center" x:Name="CreaterName" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
+                            <TextBlock VerticalAlignment="Center" x:Name="CreateDate" FontSize="16" Foreground="Gray" Margin="0,0,30,0"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="UpdateTime" Text="更新" FontSize="15" FontWeight="Bold" Foreground="Gray"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border  HorizontalAlignment="Right" BorderThickness="1.5" Padding="10" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColorDark3}" Background="Transparent">
+
+                    <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
+                    <AppBarToggleButton x:Uid="Comments" Label="评论">
                         <AppBarToggleButton.Icon>
-                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="Pink" />
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE8F2;"  />
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
-                    <AppBarToggleButton  >
+                        <AppBarToggleButton x:Name="Love"  x:Uid="Love" Label="爱心">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="HotPink" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+                        <AppBarToggleButton x:Name="Like"  x:Uid="Like" Label="收藏">
                         <AppBarToggleButton.Icon>
                             <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
-
                 </StackPanel>
+                </Border>
             </Grid>
-
-            <VariableSizedWrapGrid Margin="0,20,0,0" x:Name="TagsGrid" Orientation="Horizontal" MaximumRowsOrColumns="8">
-               
-            </VariableSizedWrapGrid>
-
-            <Border  Margin="0,10,0,0" BorderThickness="1.0" Height="1" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColor}" Background="#FFC8D5DD" />
-            
+       
         </StackPanel>
         
         

@@ -202,6 +202,9 @@
     <Image Include="Assets\LargeTile.scale-200.png" />
     <Image Include="Assets\LargeTile.scale-400.png" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\Picacgs\placeholder_avatar.png" />
+    <Image Include="Assets\Picacgs\placeholder_avatar_2.png" />
+    <Image Include="Assets\Picacgs\placeholder_transparent.png" />
     <Image Include="Assets\SmallTile.scale-100.png" />
     <Image Include="Assets\SmallTile.scale-125.png" />
     <Image Include="Assets\SmallTile.scale-150.png" />

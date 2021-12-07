@@ -73,7 +73,7 @@ namespace winrt::bikabika::implementation
 		//muxc::NavigationViewItem navigationViewItem;
 		//navigationViewItem.Content(winrt::box_value(L"My content"));
 		//navigationViewItem.Icon(wuxc::SymbolIcon(static_cast<wuxc::Symbol>(0xF1AD)));
-		// navigationViewItem.Tag(winrt::box_value(L"content"));
+		//navigationViewItem.Tag(winrt::box_value(L"content"));
 		//NavView().MenuItems().Append(navigationViewItem);
 		NavView_Navigate(L"login",
 			Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());

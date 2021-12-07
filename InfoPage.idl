@@ -6,6 +6,6 @@ namespace bikabika
     runtimeclass InfoPage : Windows.UI.Xaml.Controls.Page
     {
         InfoPage();
-        Windows.UI.Xaml.Controls.Grid MainGrid{ get; };
+        Windows.Foundation.Collections.IObservableVector<bikabika.TagBlock> Tags{ get; };
     }
 }

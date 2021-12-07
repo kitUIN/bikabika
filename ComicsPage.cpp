@@ -12,7 +12,6 @@ namespace winrt::bikabika::implementation
     ComicsPage::ComicsPage()
     {
         InitializeComponent();
-
         NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
@@ -42,17 +41,19 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction ComicsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
+		OutputDebugStringW(params.GetAt(0).c_str());
+		OutputDebugStringW(L"\n");
+		OutputDebugStringW(to_hstring(m_pageNumBox.Pages()).c_str());
+		OutputDebugStringW(L"\n");
 		m_pageNumBox.Title(params.GetAt(0));
 		m_sortMode = params.GetAt(1);
 		co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
-		
-
         __super::OnNavigatedTo(e);
     }
 	Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode) {
 		if (index <= m_pageNumBox.Pages()) {
 			//Progressing().IsActive(true);
-			m_comicBlocks.Clear();
+			
 			hstring res{ co_await m_bikaHttp.Comics(index,title,mode) };
 
 			if (m_sortMode == L"ua") m_sortType = 0;
@@ -84,7 +85,7 @@ namespace winrt::bikabika::implementation
 					m_total = jsonObject.GetNamedNumber(L"total");
 					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
 					m_pageNumBox.Pages(jsonObject.GetNamedNumber(L"pages"));
-					
+					m_comicBlocks.Clear();
 					for (auto x : jsonObject.GetNamedArray(L"docs"))
 					{
 						m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
@@ -121,10 +122,12 @@ namespace winrt::bikabika::implementation
 
 	Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicsPage::PipsPager_SelectedIndexChanged(winrt::Microsoft::UI::Xaml::Controls::PipsPager const& sender, winrt::Microsoft::UI::Xaml::Controls::PipsPagerSelectedIndexChangedEventArgs const& args)
 	{
+		
 		auto index = sender.SelectedPageIndex();
-		if(m_pageNumBox.Title()!=L""&&m_numberBoxFlag) co_await Goto(index + 1, m_pageNumBox.Title(), m_sortMode);
-
-
+		if (m_pageNumBox.Title() != L"" && m_numberBoxFlag)
+		{
+			co_await Goto(index + 1, m_pageNumBox.Title(), m_sortMode);
+		}
 	}
 
 
@@ -141,7 +144,11 @@ namespace winrt::bikabika::implementation
 		else if (m_sortType == 2) m_sortMode = L"da";
 		else if (m_sortType == 3) m_sortMode = L"ld";
 		else if (m_sortType == 4) m_sortMode = L"vd";
-		if (m_pageNumBox.Title() != L"") co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
+
+		if (m_pageNumBox.Title() != L"")
+		{
+			co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
+		}
 	}
 	bikabika::PageNumBox ComicsPage::MyPageNumBox()
 	{
@@ -154,7 +161,11 @@ namespace winrt::bikabika::implementation
 		int32_t index = sender.Value();
 		if (index >= 1 && index <= m_pageNumBox.Pages())
 		{
-			if (m_pageNumBox.Title() != L"") co_await Goto(index, m_pageNumBox.Title(), m_sortMode);
+			if (m_pageNumBox.Title() != L"")
+			{
+				co_await Goto(index, m_pageNumBox.Title(), m_sortMode);
+			}
+				
 			m_numberBoxFlag = false;
 			Pips().SelectedPageIndex(index - 1);
 			m_numberBoxFlag = true;
