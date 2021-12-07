@@ -18,3 +18,9 @@ namespace winrt::bikabika::implementation
     
 
 }
+
+
+void winrt::bikabika::implementation::SettingsPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    
+}

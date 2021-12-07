@@ -26,6 +26,9 @@ namespace winrt::bikabika::implementation
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
         bool m_numberBoxFlag = true;
+        bool m_flag1 = false;
+        bool m_flag2 = false;
+        bool m_flag3 = false;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
         hstring m_sortMode = L"ua";
         int32_t m_total;

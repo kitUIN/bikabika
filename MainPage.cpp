@@ -36,6 +36,7 @@ namespace winrt::bikabika::implementation
 		if (!localSettings.Values().Lookup(L"launchedWithPrefSize"))
 		{
 			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1350, 1000));
+			ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1350, 1000));
 			ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
 			auto localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
 			localSettings.Values().Insert(L"launchedWithPrefSize", box_value(true));

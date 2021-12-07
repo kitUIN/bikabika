@@ -146,7 +146,8 @@ namespace winrt::bikabika::implementation
                     CategoriesString().Text(m_categoriesString);
                     for (auto x : json.GetNamedArray(L"tags"))
                     {
-                        m_tags.Append(winrt::make<TagBlock>(x.GetString()));
+                        if(L"水手服\r" == x.GetString()) m_tags.Append(winrt::make<TagBlock>(L"水手服"));
+                        else m_tags.Append(winrt::make<TagBlock>(x.GetString()));
                         m_tagsString = m_tagsString + x.GetString() + L"  ";
                         //auto button = Controls::Button();
                         //button.Content(box_value(x.GetString()));

@@ -43,19 +43,27 @@ namespace winrt::bikabika::implementation
 		extern bool animeFlag;
 		animeFlag = true;
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
-		OutputDebugStringW(params.GetAt(0).c_str());
+		/*OutputDebugStringW(params.GetAt(0).c_str());
 		OutputDebugStringW(L"\n");
 		OutputDebugStringW(to_hstring(m_pageNumBox.Pages()).c_str());
-		OutputDebugStringW(L"\n");
-		m_pageNumBox.Title(params.GetAt(0));
+		OutputDebugStringW(L"\n");*/
+		
 		m_sortMode = params.GetAt(1);
-		co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
+		if (m_pageNumBox.Title() != L"" && m_pageNumBox.Title() != params.GetAt(0) && m_flag1)
+		{
+			
+			co_await Goto(1, params.GetAt(0), m_sortMode);
+		}
+		m_flag1 = true;
+		m_pageNumBox.Title(params.GetAt(0));
         __super::OnNavigatedTo(e);
+		
+		
     }
 	Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode) {
 		if (index <= m_pageNumBox.Pages()) {
 			//Progressing().IsActive(true);
-			
+			m_comicBlocks.Clear();
 			hstring res{ co_await m_bikaHttp.Comics(index,title,mode) };
 
 			if (m_sortMode == L"ua") m_sortType = 0;
@@ -87,7 +95,7 @@ namespace winrt::bikabika::implementation
 					m_total = jsonObject.GetNamedNumber(L"total");
 					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
 					m_pageNumBox.Pages(jsonObject.GetNamedNumber(L"pages"));
-					m_comicBlocks.Clear();
+					
 					for (auto x : jsonObject.GetNamedArray(L"docs"))
 					{
 						m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
@@ -126,10 +134,15 @@ namespace winrt::bikabika::implementation
 	{
 		
 		auto index = sender.SelectedPageIndex();
-		if (m_pageNumBox.Title() != L"" && m_numberBoxFlag)
+		if (m_pageNumBox.Title() != L"" && m_numberBoxFlag&& m_flag3)
 		{
+			OutputDebugStringW(L"this ");
+			OutputDebugStringW(L"PipsPager_SelectedIndexChanged ");
+			OutputDebugStringW(to_hstring(index).c_str());
+			OutputDebugStringW(L"\n");
 			co_await Goto(index + 1, m_pageNumBox.Title(), m_sortMode);
 		}
+		m_flag3 = true;
 	}
 
 
@@ -139,8 +152,10 @@ namespace winrt::bikabika::implementation
 	}
 	Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicsPage::TypeCombo_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
 	{
+
 		m_sortType = TypeCombo().SelectedIndex();
-		OutputDebugStringW(to_hstring(TypeCombo().SelectedIndex()).c_str());
+		
+		
 		if (m_sortType == 0) m_sortMode = L"ua";
 		else if (m_sortType == 1) m_sortMode = L"dd";
 		else if (m_sortType == 2) m_sortMode = L"da";
@@ -149,8 +164,13 @@ namespace winrt::bikabika::implementation
 
 		if (m_pageNumBox.Title() != L"")
 		{
+			OutputDebugStringW(L"this ");
+			OutputDebugStringW(L"TypeCombo_SelectionChanged ");
+			OutputDebugStringW(to_hstring(TypeCombo().SelectedIndex()).c_str());
+			OutputDebugStringW(L"\n");
 			co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
 		}
+
 	}
 	bikabika::PageNumBox ComicsPage::MyPageNumBox()
 	{
@@ -159,23 +179,30 @@ namespace winrt::bikabika::implementation
 
 	Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::ComicsPage::NumberBox1_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args)
 	{
-		OutputDebugStringW(to_hstring(sender.Value()).c_str());
+		
+		
 		int32_t index = sender.Value();
 		if (index >= 1 && index <= m_pageNumBox.Pages())
 		{
-			if (m_pageNumBox.Title() != L"")
+			if (m_pageNumBox.Title() != L""&& m_flag2)
 			{
+				OutputDebugStringW(L"this ");
+				OutputDebugStringW(L"NumberBox1_ValueChanged ");
+				OutputDebugStringW(to_hstring(sender.Value()).c_str());
+				OutputDebugStringW(L"\n");
 				co_await Goto(index, m_pageNumBox.Title(), m_sortMode);
 			}
 				
 			m_numberBoxFlag = false;
 			Pips().SelectedPageIndex(index - 1);
 			m_numberBoxFlag = true;
+			m_flag2 = true;
 		}
 		else
 		{
 			sender.Value(m_pageNumBox.PageIndex());
 		}
+
 	}
 	void winrt::bikabika::implementation::ComicsPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 	{
