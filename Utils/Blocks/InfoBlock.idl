@@ -1,5 +1,4 @@
-import "CreaterBlock.idl";
-import "TagBlock.idl";
+import "Utils/Blocks/CreaterBlock.idl";
 namespace bikabika
 {
     runtimeclass InfoBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged

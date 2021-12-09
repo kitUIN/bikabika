@@ -1,6 +1,5 @@
-import "TagBlock.idl";
-import "CreaterBlock.idl";
-import "EpisodeBlock.idl";
+import "Utils/Blocks/CreaterBlock.idl";
+import "Utils/Blocks/EpisodeBlock.idl";
 namespace bikabika
 {
     [default_interface]

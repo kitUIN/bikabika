@@ -2,12 +2,12 @@
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
   <Identity
     Name="216498b6-651f-448d-99f4-4633881a4315"
-    Publisher="CN=kulujun"
-    Version="1.0.0.0" />
+    Publisher="CN=KitUIN"
+    Version="0.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="216498b6-651f-448d-99f4-4633881a4315" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   <Properties>
     <DisplayName>bikabika</DisplayName>
-    <PublisherDisplayName>kulujun</PublisherDisplayName>
+    <PublisherDisplayName>KitUIN</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

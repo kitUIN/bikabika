@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "BikaHttp.h"
+#include "Utils/API/BikaHttp.h"
 #include "PicPage.g.h"
-#include "PicturesBlock.h"
-#include "EpisodeBlock.h"
+#include "Utils/Blocks/PicturesBlock.h"
+#include "Utils/Blocks/EpisodeBlock.h"
 namespace winrt::bikabika::implementation
 {
     struct PicPage : PicPageT<PicPage>

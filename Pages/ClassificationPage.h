@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "ClassificationPage.g.h"
-#include "ClassBlockViewModel.h"
+#include "Utils/Blocks/ClassBlockViewModel.h"
 
 namespace winrt::bikabika::implementation
 {

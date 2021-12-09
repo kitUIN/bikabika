@@ -208,13 +208,13 @@ namespace winrt::bikabika::implementation
 	{
 		Progressing().IsActive(true);
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
+		Progressing().IsActive(false);
 		if (f) {
 			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
 			if (account.GetNamedBoolean(L"isChecked")) {
 				hstring personInfo = co_await m_bikaHttp.PersonInfo();
-				Progressing().IsActive(false);
+				
 				if (personInfo[1] == 'T') {
-					Progressing().IsActive(false);
 					auto show{ PicErrorDialog().ShowAsync() };
 				}
 				else if (personInfo[1] == 'E') {

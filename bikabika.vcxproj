@@ -78,7 +78,19 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>599831F910ABB08050247AE4CC373E8318F80442</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxPackageDir>E:\VsProjects\repos\bikabika\AppPackages\bikabika\bikabika_x64</AppxPackageDir>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -109,100 +121,100 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AccountPage.h">
-      <DependentUpon>AccountPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\AccountPage.h">
+      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="BikaHttp.h" />
-    <ClInclude Include="ClassBlock.h" />
-    <ClInclude Include="ClassBlockViewModel.h" />
-    <ClInclude Include="ClassificationPage.h">
-      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+    <ClInclude Include="Utils\API\BikaHttp.h" />
+    <ClInclude Include="Utils\Blocks\ClassBlock.h" />
+    <ClInclude Include="Utils\Blocks\ClassBlockViewModel.h" />
+    <ClInclude Include="Pages\ClassificationPage.h">
+      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ComicBlock.h" />
-    <ClInclude Include="ComicsPage.h">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <ClInclude Include="Utils\Blocks\ComicBlock.h" />
+    <ClInclude Include="Pages\ComicsPage.h">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="CreaterBlock.h" />
-    <ClInclude Include="DownloadPage.h">
-      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    <ClInclude Include="Utils\Blocks\CreaterBlock.h" />
+    <ClInclude Include="Pages\DownloadPage.h">
+      <DependentUpon>Pages\DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="EpisodeBlock.h" />
+    <ClInclude Include="Utils\Blocks\EpisodeBlock.h" />
     <ClInclude Include="FileCheckTool.h" />
-    <ClInclude Include="HomePage.h">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <ClInclude Include="Pages\HomePage.h">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="InfoBlock.h" />
-    <ClInclude Include="InfoPage.h">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <ClInclude Include="Utils\Blocks\InfoBlock.h" />
+    <ClInclude Include="Pages\InfoPage.h">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="KeywordsBox.h" />
-    <ClInclude Include="Login.h">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <ClInclude Include="Utils\Blocks\KeywordsBox.h" />
+    <ClInclude Include="Pages\Login.h">
+      <DependentUpon>Pages\Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="PageNumBox.h" />
+    <ClInclude Include="Utils\Blocks\PageNumBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="MainPage.h">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\MainPage.h">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="PicPage.h">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\PicPage.h">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="PicturesBlock.h" />
-    <ClInclude Include="SettingsPage.h">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <ClInclude Include="Utils\Blocks\PicturesBlock.h" />
+    <ClInclude Include="Pages\SettingsPage.h">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="SuggestBox.h" />
-    <ClInclude Include="TagBlock.h" />
-    <ClInclude Include="User.h" />
-    <ClInclude Include="UserViewModel.h" />
+    <ClInclude Include="Utils\Blocks\SuggestBox.h" />
+    <ClInclude Include="Utils\Blocks\TagBlock.h" />
+    <ClInclude Include="Utils\Blocks\User.h" />
+    <ClInclude Include="Utils\Blocks\UserViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AccountPage.xaml">
+    <Page Include="Pages\AccountPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ClassificationPage.xaml">
+    <Page Include="Pages\ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ComicsPage.xaml">
+    <Page Include="Pages\ComicsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DownloadPage.xaml">
+    <Page Include="Pages\DownloadPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="InfoPage.xaml">
+    <Page Include="Pages\InfoPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LightDictionary.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="Pages\Login.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PicPage.xaml">
+    <Page Include="Pages\PicPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SettingsPage.xaml">
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -251,7 +263,9 @@
     <Image Include="Assets\Picacgs\placeholder_transparent.png" />
     <Image Include="Assets\Picacgs\register_bday.png" />
     <Image Include="Assets\Picacgs\register_gender.png" />
+    <Image Include="Assets\Picacgs\register_name.png" />
     <Image Include="Assets\Picacgs\splash_img.jpg" />
+    <Image Include="Assets\Picacgs\userlogo.png" />
     <Image Include="Assets\SmallTile.scale-100.png" />
     <Image Include="Assets\SmallTile.scale-125.png" />
     <Image Include="Assets\SmallTile.scale-150.png" />
@@ -302,128 +316,129 @@
     <Image Include="tag.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AccountPage.cpp">
-      <DependentUpon>AccountPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\AccountPage.cpp">
+      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="BikaHttp.cpp" />
-    <ClCompile Include="ClassBlock.cpp" />
-    <ClCompile Include="ClassBlockViewModel.cpp" />
-    <ClCompile Include="ClassificationPage.cpp">
-      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+    <ClCompile Include="Utils\API\BikaHttp.cpp" />
+    <ClCompile Include="Utils\Blocks\ClassBlock.cpp" />
+    <ClCompile Include="Utils\Blocks\ClassBlockViewModel.cpp" />
+    <ClCompile Include="Pages\ClassificationPage.cpp">
+      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ComicBlock.cpp" />
-    <ClCompile Include="ComicsPage.cpp">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <ClCompile Include="Utils\Blocks\ComicBlock.cpp" />
+    <ClCompile Include="Pages\ComicsPage.cpp">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="CreaterBlock.cpp" />
-    <ClCompile Include="DownloadPage.cpp">
-      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    <ClCompile Include="Utils\Blocks\CreaterBlock.cpp" />
+    <ClCompile Include="Pages\DownloadPage.cpp">
+      <DependentUpon>Pages\DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="EpisodeBlock.cpp" />
+    <ClCompile Include="Utils\Blocks\EpisodeBlock.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
-    <ClCompile Include="HomePage.cpp">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <ClCompile Include="Pages\HomePage.cpp">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="InfoBlock.cpp" />
-    <ClCompile Include="InfoPage.cpp">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <ClCompile Include="Utils\Blocks\InfoBlock.cpp" />
+    <ClCompile Include="Pages\InfoPage.cpp">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="KeywordsBox.cpp" />
-    <ClCompile Include="Login.cpp">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <ClCompile Include="Utils\Blocks\KeywordsBox.cpp" />
+    <ClCompile Include="Pages\Login.cpp">
+      <DependentUpon>Pages\Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="PageNumBox.cpp" />
+    <ClCompile Include="Utils\Blocks\PageNumBox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="MainPage.cpp">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\MainPage.cpp">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="PicPage.cpp">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\PicPage.cpp">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="PicturesBlock.cpp" />
-    <ClCompile Include="SettingsPage.cpp">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <ClCompile Include="Utils\Blocks\PicturesBlock.cpp" />
+    <ClCompile Include="Pages\SettingsPage.cpp">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="SuggestBox.cpp" />
-    <ClCompile Include="TagBlock.cpp" />
-    <ClCompile Include="User.cpp" />
-    <ClCompile Include="UserViewModel.cpp" />
+    <ClCompile Include="Utils\Blocks\SuggestBox.cpp" />
+    <ClCompile Include="Utils\Blocks\TagBlock.cpp" />
+    <ClCompile Include="Utils\Blocks\User.cpp" />
+    <ClCompile Include="Utils\Blocks\UserViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="AccountPage.idl">
-      <DependentUpon>AccountPage.xaml</DependentUpon>
+    <Midl Include="Pages\AccountPage.idl">
+      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
-    <Midl Include="BikaHttp.idl" />
-    <Midl Include="CreaterBlock.idl" />
-    <Midl Include="DownloadPage.idl">
-      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    <Midl Include="Utils\API\BikaHttp.idl" />
+    <Midl Include="Utils\Blocks\CreaterBlock.idl" />
+    <Midl Include="Pages\DownloadPage.idl">
+      <DependentUpon>Pages\DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="EpisodeBlock.idl" />
-    <Midl Include="InfoBlock.idl" />
-    <Midl Include="InfoPage.idl">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <Midl Include="Utils\Blocks\EpisodeBlock.idl" />
+    <Midl Include="Utils\Blocks\InfoBlock.idl" />
+    <Midl Include="Pages\InfoPage.idl">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="PageNumBox.idl" />
-    <Midl Include="PicPage.idl">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <Midl Include="Utils\Blocks\PageNumBox.idl" />
+    <Midl Include="Pages\PicPage.idl">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="PicturesBlock.idl" />
-    <Midl Include="TagBlock.idl" />
-    <Midl Include="ClassBlock.idl" />
-    <Midl Include="ClassBlockViewModel.idl" />
-    <Midl Include="ClassificationPage.idl">
-      <DependentUpon>ClassificationPage.xaml</DependentUpon>
+    <Midl Include="Utils\Blocks\PicturesBlock.idl" />
+    <Midl Include="Utils\Blocks\TagBlock.idl" />
+    <Midl Include="Utils\Blocks\ClassBlock.idl" />
+    <Midl Include="Utils\Blocks\ClassBlockViewModel.idl" />
+    <Midl Include="Pages\ClassificationPage.idl">
+      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="ComicBlock.idl" />
-    <Midl Include="ComicsPage.idl">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <Midl Include="Utils\Blocks\ComicBlock.idl" />
+    <Midl Include="Pages\ComicsPage.idl">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="FileCheckTool.idl" />
-    <Midl Include="HomePage.idl">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Midl Include="Pages\HomePage.idl">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="KeywordsBox.idl" />
-    <Midl Include="Login.idl">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Midl Include="Utils\Blocks\KeywordsBox.idl" />
+    <Midl Include="Pages\Login.idl">
+      <DependentUpon>Pages\Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="MainPage.idl">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Midl Include="Pages\MainPage.idl">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </Midl>
-    <Midl Include="SettingsPage.idl">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Midl Include="Pages\SettingsPage.idl">
+      <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="SuggestBox.idl" />
-    <Midl Include="User.idl" />
-    <Midl Include="UserViewModel.idl" />
+    <Midl Include="Utils\Blocks\SuggestBox.idl" />
+    <Midl Include="Utils\Blocks\User.idl" />
+    <Midl Include="Utils\Blocks\UserViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bikabika_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>

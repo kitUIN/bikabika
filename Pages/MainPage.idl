@@ -1,4 +1,4 @@
-import "UserViewModel.idl";
+import "Utils/Blocks/UserViewModel.idl";
 namespace bikabika
 {
 

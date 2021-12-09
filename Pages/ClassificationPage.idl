@@ -1,5 +1,5 @@
-import "ClassBlockViewModel.idl";
-import "BikaHttp.idl";
+import "Utils/Blocks/ClassBlockViewModel.idl";
+import "Utils/API/BikaHttp.idl";
 namespace bikabika
 {
     [default_interface]

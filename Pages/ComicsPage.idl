@@ -1,5 +1,5 @@
-import "ComicBlock.idl";
-import "PageNumBox.idl";
+import "Utils/Blocks/ComicBlock.idl";
+import "Utils/Blocks/PageNumBox.idl";
 namespace bikabika
 {
 

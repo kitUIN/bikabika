@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 #include "InfoPage.g.h"
-#include "BikaHttp.h"
+#include "Utils/API/BikaHttp.h"
 #include "FileCheckTool.h"
-#include "TagBlock.h"
-#include "CreaterBlock.h"
-#include "EpisodeBlock.h"
+#include "Utils/Blocks/TagBlock.h"
+#include "Utils/Blocks/CreaterBlock.h"
+#include "Utils/Blocks/EpisodeBlock.h"
 namespace winrt::bikabika::implementation
 {
     struct InfoPage : InfoPageT<InfoPage>

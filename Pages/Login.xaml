@@ -27,7 +27,7 @@
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>
                 <DataTemplate>
-                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                            <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">

@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "ComicsPage.g.h"
-#include "ComicBlock.h"
-#include "PageNumBox.h"
+#include "Utils/Blocks/ComicBlock.h"
+#include "Utils/Blocks/PageNumBox.h"
 namespace winrt::bikabika::implementation
 {
     struct ComicsPage : ComicsPageT<ComicsPage>

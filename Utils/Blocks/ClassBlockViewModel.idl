@@ -1,4 +1,4 @@
-import "ClassBlock.idl";
+import "Utils/Blocks/ClassBlock.idl";
 namespace bikabika
 {
     runtimeclass ClassBlockViewModel

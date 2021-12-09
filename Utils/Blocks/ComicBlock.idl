@@ -1,4 +1,4 @@
-import "TagBlock.idl";
+import "Utils/Blocks/TagBlock.idl";
 namespace bikabika
 {
     runtimeclass ComicBlock : Windows.UI.Xaml.Data.INotifyPropertyChanged

@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "MainPage.g.h"
-#include "UserViewModel.h"
-#include "KeywordsBox.h"
+#include "Utils/Blocks/UserViewModel.h"
+#include "Utils/Blocks/KeywordsBox.h"
 namespace muxc
 {
 	using namespace winrt::Microsoft::UI::Xaml::Controls;

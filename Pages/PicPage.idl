@@ -1,4 +1,4 @@
-import "PicturesBlock.idl";
+import "Utils/Blocks/PicturesBlock.idl";
 namespace bikabika
 {
 	[default_interface]
