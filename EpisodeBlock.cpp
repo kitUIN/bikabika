@@ -29,6 +29,10 @@ namespace winrt::bikabika::implementation
 	{
 		return m_title;
 	}
+	void EpisodeBlock::Title(hstring const& value)
+	{
+		if (m_title != value) m_title = value;
+	}
 	void EpisodeBlock::BookId(hstring const& value)
 	{
 		if (m_bookId != value) m_bookId = value;

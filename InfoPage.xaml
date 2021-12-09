@@ -79,6 +79,48 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Name="MyListBoxItemStyle2" TargetType="ListViewItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                            <Grid Background="{TemplateBinding Background}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+                                        <!--缺省样式-->
+                                        <VisualState x:Name="Normal">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight1}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                                
+                                            </Storyboard>
+                                        </VisualState>
+                                        <!--设置鼠标悬停样式-->
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                            <Border CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9"  x:Name="ContentBackground">
+                                        <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                Margin="{TemplateBinding Padding}" />
+                                    </Border>
+                                
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        
     </Page.Resources>
     <ScrollViewer>
         <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
@@ -203,12 +245,11 @@
                 </Border>
 
                 <Border Margin="0,10,0,0" CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
-                    <ListView Margin="0,0,0,0" x:Name="ListV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListV_ItemClick" ItemsSource="{x:Bind Episodes}">
+                    <ListView ItemContainerStyle="{StaticResource MyListBoxItemStyle2}" Margin="0,0,0,0" x:Name="ListV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListV_ItemClick" ItemsSource="{x:Bind Episodes}">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="local:EpisodeBlock">
-                                <Border  CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9"  Background="{ThemeResource MyAcrylicBrush}">
                                     <TextBlock Text="{x:Bind Title}" FontWeight="Bold"/>
-                                </Border>
+                                
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

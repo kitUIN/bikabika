@@ -48,9 +48,22 @@ namespace winrt::bikabika::implementation
                     epi.BookId(m_id);
                     epi.Total(m_epsTotal);
                     m_eps.Append(epi);
+                    
                 }
+
                 if (m_epsPages > m_epsPage) {
                     co_await Eps(m_epsPage + 1);
+                }
+                else if (m_epsPages == m_epsPage)
+                {
+                    auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                    auto counts = eps.GetNamedArray(L"docs").Size();
+                    hstring read = resourceLoader.GetString(L"ReadText");
+                    auto epiLast = winrt::make<EpisodeBlock>(eps.GetNamedArray(L"docs").GetObjectAt(counts - 1).GetNamedString(L"_id"), read, eps.GetNamedArray(L"docs").GetObjectAt(counts - 1).GetNamedNumber(L"order"), eps.GetNamedArray(L"docs").GetObjectAt(counts - 1).GetNamedString(L"updated_at"));
+                    epiLast.BookId(m_id);
+                    epiLast.Total(m_epsTotal);
+                    //epiLast.Title(resourceLoader.GetString(L"ReadText"));
+                    m_eps.InsertAt(0, epiLast);
                 }
             }
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")

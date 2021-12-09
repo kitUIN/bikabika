@@ -262,6 +262,9 @@
     <value>确定</value>
     <comment>未知错误按钮</comment>
   </data>
+  <data name="ReadText" xml:space="preserve">
+    <value>开始阅读</value>
+  </data>
   <data name="RememberCheckBox.Content" xml:space="preserve">
     <value>记住密码</value>
     <comment>登录时记住我</comment>

@@ -7,7 +7,7 @@ namespace bikabika
         String ID{ get; };
         String UpdatedAt{ get; };
         Int32 Order{ get; };
-        String Title{ get; };
+        String Title;
         String BookId;
         Int32 Total;
     }

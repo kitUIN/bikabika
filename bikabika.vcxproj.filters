@@ -94,25 +94,7 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="picacomic_2.png" />
-    <Image Include="userlogo.png" />
-    <Image Include="cat_forum.jpg" />
-    <Image Include="cat_game.jpg" />
-    <Image Include="cat_latest.jpg" />
-    <Image Include="cat_leaderboard.jpg" />
-    <Image Include="cat_love_pica.jpg" />
-    <Image Include="cat_random.jpg" />
-    <Image Include="cat_support.jpg" />
-    <Image Include="chat_bg_image.png" />
     <Image Include="gray.png" />
-    <Image Include="register_name.png" />
-    <Image Include="icon_empty.png" />
-    <Image Include="icon_exclamation_error.png" />
-    <Image Include="icon_leave.png" />
-    <Image Include="icon_no_comment.png" />
-    <Image Include="icon_question_error.png" />
-    <Image Include="icon_success.png" />
-    <Image Include="icon_unknown_error.png" />
     <Image Include="history.png" />
     <Image Include="tag.png" />
     <Image Include="Assets\Square44x44Logo.scale-100.png">
@@ -253,6 +235,37 @@
     <Image Include="Assets\Picacgs\placeholder_avatar.png" />
     <Image Include="Assets\Picacgs\placeholder_avatar_2.png" />
     <Image Include="Assets\Picacgs\placeholder_transparent.png" />
+    <Image Include="Assets\Picacgs\picacomic_2.png" />
+    <Image Include="Assets\Picacgs\ic_launcher.png" />
+    <Image Include="Assets\Picacgs\icon_256.png" />
+    <Image Include="Assets\Picacgs\icon_adult.png" />
+    <Image Include="Assets\Picacgs\icon_announcement.png" />
+    <Image Include="Assets\Picacgs\icon_block.png" />
+    <Image Include="Assets\Picacgs\icon_block_gray.png" />
+    <Image Include="Assets\Picacgs\icon_empty.png" />
+    <Image Include="Assets\Picacgs\icon_exclamation_error.png" />
+    <Image Include="Assets\Picacgs\icon_exp.png" />
+    <Image Include="Assets\Picacgs\icon_exp_gray.png" />
+    <Image Include="Assets\Picacgs\icon_game_recommend.png" />
+    <Image Include="Assets\Picacgs\icon_leave.png" />
+    <Image Include="Assets\Picacgs\icon_no_comment.png" />
+    <Image Include="Assets\Picacgs\icon_question_error.png" />
+    <Image Include="Assets\Picacgs\icon_success.png" />
+    <Image Include="Assets\Picacgs\icon_unknown_error.png" />
+    <Image Include="Assets\Picacgs\login_lock.png" />
+    <Image Include="Assets\Picacgs\login_mail.png" />
+    <Image Include="Assets\Picacgs\logo_round.png" />
+    <Image Include="Assets\Picacgs\register_bday.png" />
+    <Image Include="Assets\Picacgs\register_gender.png" />
+    <Image Include="Assets\Picacgs\splash_img.jpg" />
+    <Image Include="Assets\Picacgs\cat_forum.jpg" />
+    <Image Include="Assets\Picacgs\cat_game.jpg" />
+    <Image Include="Assets\Picacgs\cat_latest.jpg" />
+    <Image Include="Assets\Picacgs\cat_leaderboard.jpg" />
+    <Image Include="Assets\Picacgs\cat_love_pica.jpg" />
+    <Image Include="Assets\Picacgs\cat_random.jpg" />
+    <Image Include="Assets\Picacgs\cat_support.jpg" />
+    <Image Include="Assets\Picacgs\chat_bg_image.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

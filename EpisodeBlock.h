@@ -13,6 +13,7 @@ namespace winrt::bikabika::implementation
         hstring UpdatedAt();
         int32_t Order();
         hstring Title();
+        void Title(hstring const& value);
         void BookId(hstring const& value);
         hstring BookId();
         void Total(int32_t const& value);

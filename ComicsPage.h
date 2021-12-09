@@ -19,7 +19,7 @@ namespace winrt::bikabika::implementation
         void Pips_Loading(winrt::Windows::UI::Xaml::FrameworkElement const& sender, winrt::Windows::Foundation::IInspectable const& args);
         Windows::Foundation::IAsyncAction TypeCombo_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e);
         bikabika::PageNumBox MyPageNumBox();
-        Windows::Foundation::IAsyncAction  NumberBox1_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args);
+        void  NumberBox1_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args);
         void GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
     private:
@@ -29,13 +29,14 @@ namespace winrt::bikabika::implementation
         bool m_flag1 = false;
         bool m_flag2 = false;
         bool m_flag3 = false;
+        hstring m_beforeSort = L"ua";
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
         hstring m_sortMode = L"ua";
         int32_t m_total;
         int32_t m_limit;
         int32_t m_sortType = 0;
         bikabika::PageNumBox m_pageNumBox{ 1,1 ,L"" };
-  
+        
         };
 }
 

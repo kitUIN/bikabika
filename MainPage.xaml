@@ -78,7 +78,7 @@
                 <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="1">
-                <Image Source="picacomic_2.png" Width="36" Height="36" Margin="0,0,0,0"/>
+                <Image Source="Assets//Picacgs//picacomic_2.png" Width="36" Height="36" Margin="0,0,0,0"/>
                 <TextBlock x:Uid="APPTitle" Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,4,0,0"/>
 
             </StackPanel>
