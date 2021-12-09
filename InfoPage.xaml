@@ -197,7 +197,7 @@
                                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                                     <Grid>
 
-                                        <AppBarToggleButton x:Name="Comments" x:Uid="Comments" Label="评论">
+                                        <AppBarToggleButton x:Name="Comments" x:Uid="Comments" Label="评论" Unchecked="Comments_Checked"  Checked="Comments_Checked">
                                             <ToolTipService.ToolTip>
                                                 <ToolTip x:Name="CommentsTip" x:Uid="CommentsTip" Content="展开评论面板"/>
                                             </ToolTipService.ToolTip>
@@ -255,7 +255,19 @@
                     </ListView>
                 </Border>
             </StackPanel>
+            <SplitView x:Name="CommentsView" PaneBackground="{ThemeResource MyAcrylicBrushLight2}"
+           IsPaneOpen="False" PaneClosed="CommentsView_PaneClosed" OpenPaneLength="400" DisplayMode="Overlay">
+                <SplitView.Pane>
+                    <ScrollViewer>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="评论区" x:Name="PaneHeader" Margin="60,12,0,0" />
 
+                            <SymbolIcon Symbol="Setting" />
+                            <TextBlock Text="还没做好" Margin="24,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </SplitView.Pane>
+            </SplitView>
             <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Target="{x:Bind CreaterBorder}" Title="Change themes without hassle" Background="{ThemeResource MyAcrylicBrushLight2}">
                 <muxc:TeachingTip.Content>
                     <StackPanel Margin="0,6,0,0">

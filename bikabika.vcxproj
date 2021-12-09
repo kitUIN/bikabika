@@ -126,6 +126,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="CreaterBlock.h" />
+    <ClInclude Include="DownloadPage.h">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="EpisodeBlock.h" />
     <ClInclude Include="FileCheckTool.h" />
     <ClInclude Include="HomePage.h">
@@ -175,6 +179,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ComicsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DownloadPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="HomePage.xaml">
@@ -312,6 +319,10 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="CreaterBlock.cpp" />
+    <ClCompile Include="DownloadPage.cpp">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="EpisodeBlock.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
     <ClCompile Include="HomePage.cpp">
@@ -363,6 +374,10 @@
     </Midl>
     <Midl Include="BikaHttp.idl" />
     <Midl Include="CreaterBlock.idl" />
+    <Midl Include="DownloadPage.idl">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="EpisodeBlock.idl" />
     <Midl Include="InfoBlock.idl" />
     <Midl Include="InfoPage.idl">

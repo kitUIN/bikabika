@@ -283,3 +283,16 @@ namespace winrt::bikabika::implementation
 
 
 
+
+
+void winrt::bikabika::implementation::InfoPage::Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
+    CommentsView().IsPaneOpen(f);
+}
+
+
+void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+    Comments().IsChecked(false);
+}

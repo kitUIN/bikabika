@@ -57,6 +57,9 @@ namespace winrt::bikabika::implementation
         int32_t m_epsPages;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<bikabika::EpisodeBlock>();
 
+    public:
+        void Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args);
     };
 }
 

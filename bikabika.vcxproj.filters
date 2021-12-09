@@ -16,6 +16,7 @@
     <Page Include="ComicsPage.xaml" />
     <Page Include="InfoPage.xaml" />
     <Page Include="PicPage.xaml" />
+    <Page Include="DownloadPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
