@@ -58,6 +58,42 @@ namespace winrt::bikabika::implementation
 			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"ImageSource" });
 		}
 	}
+	hstring User::Slogan()
+	{
+		return m_slogan;
+	}
+	void User::Slogan(hstring const& value)
+	{
+		if (m_slogan != value)
+		{
+			m_slogan = value;
+			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Slogan" });
+		}
+	}
+	int32_t User::Exp()
+	{
+		return m_exp;
+	}
+	void User::Exp(int32_t const& value)
+	{
+		if (m_exp != value)
+		{
+			m_exp = value;
+			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Exp" });
+		}
+	}
+	hstring User::Title()
+	{
+		return m_title;
+	}
+	void User::Title(hstring const& value)
+	{
+		if (m_title != value)
+		{
+			m_title = value;
+			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Title" });
+		}
+	}
 	winrt::event_token User::PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
 	{
 		return m_propertyChanged.add(handler);

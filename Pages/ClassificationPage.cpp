@@ -1,5 +1,5 @@
 ﻿#include "pch.h"
-#include "ClassificationPage.h"
+#include "Pages/ClassificationPage.h"
 #if __has_include("ClassificationPage.g.cpp")
 #include "ClassificationPage.g.cpp"
 #endif

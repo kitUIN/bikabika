@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
-#include "AccountPage.h"
-#if __has_include("AccountPage.g.cpp")
-#include "AccountPage.g.cpp"
+#include "Pages/AccountPage.h"
+#if __has_include("Generated Files/AccountPage.g.cpp")
+#include "Generated Files/AccountPage.g.cpp"
 #endif
 
 using namespace winrt;
@@ -12,20 +12,14 @@ namespace winrt::bikabika::implementation
     AccountPage::AccountPage()
     {
         InitializeComponent();
+        auto localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
+        winrt::Windows::Data::Json::JsonObject personInfo = unbox_value<winrt::Windows::Data::Json::JsonObject>(localSettings.Values().Lookup(L"personInfo"));
+        
     }
 
-    int32_t AccountPage::MyProperty()
+    bikabika::UserViewModel AccountPage::MainUserViewModel()
     {
-        throw hresult_not_implemented();
+        return m_userViewModel;
     }
 
-    void AccountPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
-    void AccountPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
-    {
-        Button().Content(box_value(L"Clicked"));
-    }
 }

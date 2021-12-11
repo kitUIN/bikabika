@@ -234,14 +234,10 @@ namespace winrt::bikabika::implementation
 					}
 					else if (code == (double)200)
 					{
+						auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 						auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
-						extern winrt::hstring userName;
-						extern winrt::hstring userLevel;
-						extern winrt::hstring userImage;
-						extern winrt::hstring serverStream;
-						userName = personInfo.GetNamedString(L"name");
-						userLevel = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
-						userImage = serverStream + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+						userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
+
 						Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 
 					}

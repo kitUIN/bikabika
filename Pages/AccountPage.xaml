@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,0">
-        <Button x:Name="Button" Click="ClickHandler">Click Me</Button>
-    </StackPanel>
+    <ScrollViewer>
+        <Grid>
+            
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -17,10 +17,10 @@
     <Page Include="Pages\InfoPage.xaml" />
     <Page Include="Pages\PicPage.xaml" />
     <Page Include="Pages\DownloadPage.xaml" />
+    <Page Include="UserPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
-    <Midl Include="MainPage.idl" />
     <Midl Include="Utils\API\BikaHttp.idl" />
     <Midl Include="Utils\Blocks\ClassBlock.idl" />
     <Midl Include="Utils\Blocks\ClassBlockViewModel.idl" />
@@ -40,7 +40,6 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="MainPage.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlock.cpp" />

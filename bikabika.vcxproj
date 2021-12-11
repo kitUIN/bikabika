@@ -125,6 +125,10 @@
       <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="UserPage.h">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Utils\API\BikaHttp.h" />
     <ClInclude Include="Utils\Blocks\ClassBlock.h" />
     <ClInclude Include="Utils\Blocks\ClassBlockViewModel.h" />
@@ -215,6 +219,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -320,6 +327,10 @@
       <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="UserPage.cpp">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlock.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlockViewModel.cpp" />
@@ -385,6 +396,10 @@
     </Midl>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="UserPage.idl">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\API\BikaHttp.idl" />
     <Midl Include="Utils\Blocks\CreaterBlock.idl" />

@@ -32,8 +32,12 @@ namespace winrt::bikabika::implementation
 		
 		InitializeComponent();
 		auto localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
-
-		if (!localSettings.Values().Lookup(L"launchedWithPrefSize"))
+		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (!serversSettings.Values().HasKey(L"picServer1")) serversSettings.Values().Insert(L"picServer1", box_value(L"https://storage1.picacomic.com"));
+		if (!serversSettings.Values().HasKey(L"picServer2")) serversSettings.Values().Insert(L"picServer2", box_value(L"https://s2.picacomic.com"));
+		if (!serversSettings.Values().HasKey(L"picServer3")) serversSettings.Values().Insert(L"picServer3", box_value(L"https://s3.picacomic.com"));
+		if (!serversSettings.Values().HasKey(L"picServerCurrent")) serversSettings.Values().Insert(L"picServerCurrent", box_value(L"https://storage1.picacomic.com"));
+		if (!localSettings.Values().HasKey(L"launchedWithPrefSize"))
 		{
 			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1350, 1000));
 			ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1350, 1000));
@@ -49,7 +53,7 @@ namespace winrt::bikabika::implementation
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"classification", winrt::xaml_typename<bikabika::ClassificationPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"account", winrt::xaml_typename<bikabika::AccountPage>()));
+			(L"account", winrt::xaml_typename<bikabika::UserPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
@@ -334,16 +338,21 @@ namespace winrt::bikabika::implementation
 
 	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
-		extern winrt::hstring userName;
-		extern winrt::hstring userLevel;
-		extern winrt::hstring userImage;
-		extern bool keywordLoaded;
-		if (userName != m_userViewModel.User().Name()) m_userViewModel.User().Name(userName);
-
-		if (userLevel != m_userViewModel.User().Level()) m_userViewModel.User().Level(userLevel);
-		if (userImage != m_userViewModel.User().Img().UriSource().ToString()) {
-			m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ userImage } });
+		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (userData.Values().HasKey(L"personInfo"))
+		{
+			Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
+			hstring name = personInfo.GetNamedString(L"name");
+			if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
+			hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
+			if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
+			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+			if (img != m_userViewModel.User().Img().UriSource().ToString()) {
+				m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
+			}
 		}
+		extern bool keywordLoaded;
 		if (!keywordLoaded) {
 			auto bcc{ UpdateSuggestion() };
 			keywordLoaded = true;

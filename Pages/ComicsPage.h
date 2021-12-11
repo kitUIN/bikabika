@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "ComicsPage.g.h"
+#include "Generated Files/ComicsPage.g.h"
 #include "Utils/Blocks/ComicBlock.h"
 #include "Utils/Blocks/PageNumBox.h"
 namespace winrt::bikabika::implementation

@@ -7,5 +7,8 @@ namespace bikabika
         String Level;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Img;
         String ImageSource;
+        String Slogan;
+        Int32 Exp;
+        String Title;
     }
 }

@@ -2,9 +2,9 @@ import "Utils/Blocks/UserViewModel.idl";
 namespace bikabika
 {
     [default_interface]
-    runtimeclass AccountPage : Windows.UI.Xaml.Controls.Page
+    runtimeclass UserPage : Windows.UI.Xaml.Controls.Page
     {
-        AccountPage();
+        UserPage();
         UserViewModel MainUserViewModel{ get; };
     }
 }
