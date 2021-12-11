@@ -3,7 +3,7 @@
 #include "MainPage.h"
 
 #include "MainPage.g.cpp"
-#include "Login.h"
+
 
 
 
@@ -128,7 +128,7 @@ namespace winrt::bikabika::implementation
 		// entries in the backstack.
 		Windows::UI::Xaml::Interop::TypeName preNavPageType =
 			ContentFrame().CurrentSourcePageType();
-
+		
 		// Navigate only if the selected page isn't currently loaded.
 		if (pageTypeName.Name != L"" && preNavPageType.Name != pageTypeName.Name)
 		{

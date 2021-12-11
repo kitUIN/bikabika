@@ -8,7 +8,7 @@
     <Page Include="LightDictionary.xaml">
       <Filter>View</Filter>
     </Page>
-    <Page Include="Pages\Login.xaml" />
+    <Page Include="Login.xaml" />
     <Page Include="Pages\SettingsPage.xaml" />
     <Page Include="Pages\HomePage.xaml" />
     <Page Include="Pages\ClassificationPage.xaml" />

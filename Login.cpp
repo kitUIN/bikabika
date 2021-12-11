@@ -66,15 +66,13 @@ namespace winrt::bikabika::implementation
 	}
 	Windows::Foundation::IAsyncAction Login::LoginAccount()
 	{	
-
+		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		auto ress = co_await m_bikaHttp.Login(Email().Text(), Password().Password());
-		Progressing().IsActive(false);
+		LayoutMessage().IsOpen(false);
 		if (ress[1] == 'T') {
-			
 			auto show{ PicErrorDialog().ShowAsync() };
 		}
 		else if (ress[1] == 'E') {
-			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 			LoginContentDialog().Content(box_value(ress));
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -86,7 +84,6 @@ namespace winrt::bikabika::implementation
 			double code = resp.GetNamedNumber(L"code");
 			if (code == (double)400)
 			{	//账号或密码错误
-				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginPasswordFail/Content")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -99,14 +96,13 @@ namespace winrt::bikabika::implementation
 				extern winrt::hstring token;
 				token = resp.GetNamedObject(L"data").GetNamedString(L"token");
 				auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
+				LayoutMessage().IsOpen(true);
 				co_await SetPerson();
 				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
-
 			}
 			else
 			{
 				//未知
-				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 				LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -117,15 +113,13 @@ namespace winrt::bikabika::implementation
 	}
 	Windows::Foundation::IAsyncAction Login::SetPerson()
 	{
-		Progressing().IsActive(true);
+		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		hstring personInfo = co_await m_bikaHttp.PersonInfo();
-		Progressing().IsActive(false);
+		LayoutMessage().IsOpen(false);
 		if (personInfo[1] == 'T') {
-			
 			auto show{ PicErrorDialog().ShowAsync() };
 		}
 		else if(personInfo[1] == 'E'){
-			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 			LoginContentDialog().Content(box_value(personInfo));
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -136,7 +130,6 @@ namespace winrt::bikabika::implementation
 			double code = personData.GetNamedNumber(L"code");
 			if (code == (double)401 && personData.GetNamedString(L"error") == L"1005")
 			{	//缺少鉴权
-				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -145,7 +138,6 @@ namespace winrt::bikabika::implementation
 			else if (code == (double)400)
 			{
 				//请求无效
-				auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 				LoginContentDialog().Content(box_value(personData.GetNamedString(L"message")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -154,14 +146,10 @@ namespace winrt::bikabika::implementation
 			}
 			else if (code == (double)200)
 			{
+				auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 				auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
-				extern winrt::hstring userName;
-				extern winrt::hstring userLevel;
-				extern winrt::hstring userImage;
-				extern winrt::hstring serverStream;
-				userName = personInfo.GetNamedString(L"name");
-				userLevel = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
-				userImage = serverStream + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+				userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
+				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 			}
 			else
 			{
@@ -193,7 +181,7 @@ namespace winrt::bikabika::implementation
 		else 
 		{	
 			//auto client = winrt::make<BikaHttpClient>();
-			Progressing().IsActive(true);
+			LayoutMessage().IsOpen(true);
 			auto login{ LoginAccount() };
 		}
 	}
@@ -204,54 +192,14 @@ namespace winrt::bikabika::implementation
 		auto bcc{ AutoLogin() };
 		
 	}
+	//自动登录
 	Windows::Foundation::IAsyncAction Login::AutoLogin()
 	{
-		Progressing().IsActive(true);
+		LayoutMessage().IsOpen(true);
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
-		Progressing().IsActive(false);
 		if (f) {
 			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
-			if (account.GetNamedBoolean(L"isChecked")) {
-				hstring personInfo = co_await m_bikaHttp.PersonInfo();
-				
-				if (personInfo[1] == 'T') {
-					auto show{ PicErrorDialog().ShowAsync() };
-				}
-				else if (personInfo[1] == 'E') {
-					auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-					LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
-					LoginContentDialog().Content(box_value(personInfo));
-					LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-					auto show{ LoginContentDialog().ShowAsync() };
-				}
-				else
-				{
-					Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(personInfo);
-					double code = personData.GetNamedNumber(L"code");
-					if (code == (double)401 && personData.GetNamedString(L"error") == L"1005")
-					{
-						auto login{ LoginAccount() };
-					}
-					else if (code == (double)200)
-					{
-						auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-						auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
-						userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
-
-						Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
-
-					}
-					else
-					{
-						//未知
-						auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-						LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
-						LoginContentDialog().Content(box_value(to_hstring(code) + L":" + personData.GetNamedString(L"message")));
-						LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-						auto show{ LoginContentDialog().ShowAsync() };
-					}
-				}
-			}
+			if (account.GetNamedBoolean(L"isChecked")) co_await SetPerson();
 		}
 	}
 }

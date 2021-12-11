@@ -158,8 +158,8 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\KeywordsBox.h" />
-    <ClInclude Include="Pages\Login.h">
-      <DependentUpon>Pages\Login.xaml</DependentUpon>
+    <ClInclude Include="Login.h">
+      <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\PageNumBox.h" />
@@ -209,7 +209,7 @@
     <Page Include="LightDictionary.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
-    <Page Include="Pages\Login.xaml">
+    <Page Include="Login.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\MainPage.xaml">
@@ -360,8 +360,8 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\KeywordsBox.cpp" />
-    <ClCompile Include="Pages\Login.cpp">
-      <DependentUpon>Pages\Login.xaml</DependentUpon>
+    <ClCompile Include="Login.cpp">
+      <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\PageNumBox.cpp" />
@@ -437,8 +437,8 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\KeywordsBox.idl" />
-    <Midl Include="Pages\Login.idl">
-      <DependentUpon>Pages\Login.xaml</DependentUpon>
+    <Midl Include="Login.idl">
+      <DependentUpon>Login.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Pages\MainPage.idl">
