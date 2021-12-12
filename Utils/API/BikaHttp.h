@@ -41,6 +41,10 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncOperation<hstring> PersonComment(int32_t page);
         // ËÑË÷
         Windows::Foundation::IAsyncOperation<hstring> Search(hstring keywords,hstring sort,Windows::Data::Json::JsonArray categories,int32_t page);
+        // ÊÕ²ØÂþ»­
+        Windows::Foundation::IAsyncOperation<hstring> Favourite(hstring bookId);
+        // Ï²»¶Âþ»­
+        Windows::Foundation::IAsyncOperation<hstring> Like(hstring bookId);
 
 
 

@@ -331,7 +331,35 @@ namespace winrt::bikabika::implementation
 			UnicodeEncoding::Utf8,
 			L"application/json");
 		auto ress = co_await POST(uri, jsonContent, api, uuid);
-		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Favourite(hstring bookId)
+	{
+
+		hstring api = L"comics/"+ to_hstring(bookId)+L"/favourite" ;
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Like(hstring bookId)
+	{
+
+		hstring api = L"comics/" + to_hstring(bookId) + L"/like";
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
 }

@@ -15,7 +15,9 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String>  PersonFavourite(String sort, Int32 page);
         Windows.Foundation.IAsyncOperation<String>  PersonComment(Int32 page);
         Windows.Foundation.IAsyncOperation<String> Search(String keywords, String sort, Windows.Data.Json.JsonArray categories, Int32 page);
-
+        Windows.Foundation.IAsyncOperation<String> Favourite(String bookId);
+        Windows.Foundation.IAsyncOperation<String> Like(String bookId);
+        
 
     }
 }

@@ -243,6 +243,25 @@ namespace winrt::bikabika::implementation
                 }
             }
         }
+        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+        if (Favourite().IsChecked().GetBoolean())
+        {
+            FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipUnfavourite")));
+        }
+        else
+        {
+            FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipFavourite")));
+        }
+        CommentsTip().Content(box_value(resourceLoader.GetString(L"TipComment")));
+        if (Like().IsChecked().GetBoolean())
+        {
+            LikeTip().Content(box_value(resourceLoader.GetString(L"TipUnlike")));
+            
+        }
+        else
+        {
+            LikeTip().Content(box_value(resourceLoader.GetString(L"TipLike")));
+        }
     }
     
     winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> InfoPage::Tags()
@@ -253,11 +272,7 @@ namespace winrt::bikabika::implementation
     {
         return m_eps;
     }
-    void winrt::bikabika::implementation::InfoPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-    {
-        auto ss = unbox_value<hstring>(sender.as<Controls::Button>().Content());
-        OutputDebugStringW(ss.c_str());
-    }
+
     void winrt::bikabika::implementation::InfoPage::MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
     {
         /*OutputDebugStringW(to_hstring(sender.as<Controls::Grid>().ActualWidth()).c_str());
@@ -278,33 +293,152 @@ namespace winrt::bikabika::implementation
 
     void winrt::bikabika::implementation::InfoPage::ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
     {
-        OutputDebugStringW(L"\n1");
+        //OutputDebugStringW(L"\n1");
         auto epi = e.ClickedItem().as<bikabika::EpisodeBlock>();
-        OutputDebugStringW(epi.Title().c_str());
+        //OutputDebugStringW(epi.Title().c_str());
         Frame().Navigate(winrt::xaml_typename<bikabika::PicPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(epi.BookId()),box_value(epi.ID()),box_value(epi.Order()),box_value(epi.Total()) })));
+    }
+
+    void winrt::bikabika::implementation::InfoPage::Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    {
+        auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
+        CommentsView().IsPaneOpen(f);
+
+    }
+
+
+    void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+    {
+        Comments().IsChecked(false);
+        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+    }
+
+
+    Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Like_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    {
+        Like().IsChecked(!Like().IsChecked());
+        auto res{ co_await m_bikaHttp.Like(m_id) };
+        if (res[1] == 'T')
+        {
+            ContentDialogShow(L"Timeout", L"");
+        }
+        else if (res[1] == 'E') {
+            ContentDialogShow(L"Error", res);
+        }
+        else
+        {
+            Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+            double code = resp.GetNamedNumber(L"code");
+            if (code == (double)200)
+            {
+                Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+                hstring action = ca.GetNamedString(L"action");
+                if (action == L"like")
+                {
+                    Like().IsChecked(true);
+                }
+                else
+                {
+                    Like().IsChecked(false);
+                }
+            }
+            //缺少鉴权
+            else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+            {
+                ContentDialogShow(L"1005", L"");
+            }
+            //未知
+            else
+            {
+                ContentDialogShow(L"Unknown", res);
+            }
+        }
+    }
+
+
+    Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Favourite_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    {
+
+        Favourite().IsChecked(!Favourite().IsChecked());
+
+        auto res{ co_await m_bikaHttp.Favourite(m_id) };
+        if (res[1] == 'T')
+        {
+            ContentDialogShow(L"Timeout", L"");
+        }
+        else if (res[1] == 'E') {
+            ContentDialogShow(L"Error", res);
+        }
+        else
+        {
+            Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+            double code = resp.GetNamedNumber(L"code");
+            if (code == (double)200)
+            {
+                Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+                hstring action = ca.GetNamedString(L"action");
+                if (action == L"favourite")
+                {
+                    Favourite().IsChecked(true);
+                }
+                else
+                {
+                    Favourite().IsChecked(false);
+                }
+            }
+            //缺少鉴权
+            else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+            {
+                ContentDialogShow(L"1005", L"");
+            }
+            //未知
+            else
+            {
+                ContentDialogShow(L"Unknown", res);
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void winrt::bikabika::implementation::InfoPage::Like_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+    if (sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean())
+    {
+        LikeTip().Content(box_value(resourceLoader.GetString(L"TipUnlike")));
+    }
+    else
+    {
+        LikeTip().Content(box_value(resourceLoader.GetString(L"TipLike")));
     }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-void winrt::bikabika::implementation::InfoPage::Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::InfoPage::Favourite_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-    auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
-    CommentsView().IsPaneOpen(f);
-}
-
-
-void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
-{
-    Comments().IsChecked(false);
+    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+    if (sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean())
+    {
+        FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipUnfavourite")));
+    }
+    else
+    {
+        FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipFavourite")));
+    }
 }

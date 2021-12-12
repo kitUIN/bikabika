@@ -121,7 +121,6 @@ namespace winrt::bikabika::implementation
 				token = resp.GetNamedObject(L"data").GetNamedString(L"token");
 				auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
 				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-
 				LayoutMessage().Title(resourceLoader.GetString(L"Logining"));
 				LayoutMessage().IsOpen(true);
 				co_await SetPerson();

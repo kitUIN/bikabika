@@ -32,6 +32,9 @@ namespace winrt::bikabika::implementation
         int32_t m_total;
         int32_t m_limit;
         bool m_firstArrive = false;
+    public:
+        void GotoLook_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
     };
 }
 

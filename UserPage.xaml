@@ -41,7 +41,7 @@
                                     <TextBlock x:Uid="UserFavourite" Margin="10,0,0,0" Text="favourite" FontSize="16" />
                                 </StackPanel>
                                 <Grid HorizontalAlignment="Right">
-                                    <Button x:Name="GotoFav" Content=">" FontSize="16"/>
+                                    <Button x:Name="GotoFav" Content=">" FontSize="16" Click="GotoFav_Click"/>
                                     <muxc:InfoBadge VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="UserFavouriteCounts" Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="0" />
                                 </Grid>
                             </Grid>
@@ -80,7 +80,7 @@
                                     <TextBlock x:Uid="UserLook" Margin="10,0,0,0" Text="history" FontSize="16" />
                                 </StackPanel>
                                 <Grid HorizontalAlignment="Right">
-                                    <Button x:Name="GotoLook" Content=">" FontSize="16"/>
+                                    <Button x:Name="GotoLook" Content=">" FontSize="16" Click="GotoLook_Click"/>
                                     <muxc:InfoBadge VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="UserLookCounts" Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="0" />
                                 </Grid>
                             </Grid>

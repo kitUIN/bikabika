@@ -183,7 +183,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="local:TagBlock">
-                                    <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Click="Button_Click" Style="{StaticResource TagStyle}"/>
+                                    <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Style="{StaticResource TagStyle}"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -198,11 +198,10 @@
                                     <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                                         <Grid>
 
-                                            <AppBarToggleButton  Width="64" x:Name="Comments" x:Uid="Comments" Height="64" Label="评论" Unchecked="Comments_Checked"  Checked="Comments_Checked">
+                                            <AppBarToggleButton Width="64" x:Name="Comments" x:Uid="Comments" Height="64" Label="评论" Unchecked="Comments_Checked"  Checked="Comments_Checked">
                                                 <ToolTipService.ToolTip>
-                                                    <ToolTip x:Name="CommentsTip" x:Uid="CommentsTip" Content="展开评论面板"/>
+                                                    <ToolTip x:Name="CommentsTip"/>
                                                 </ToolTipService.ToolTip>
-
                                                 <AppBarToggleButton.Icon>
                                                     <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xE8F2;"  />
                                                 </AppBarToggleButton.Icon>
@@ -212,7 +211,10 @@
                                             </Grid>
                                         </Grid>
                                         <Grid>
-                                            <AppBarToggleButton x:Name="Like" x:Uid="Like" Label="爱心" Height="64" Width="64">
+                                            <AppBarToggleButton x:Name="Like" x:Uid="Like" Label="爱心" Height="64" Width="64" Click="Like_Unchecked" Checked="Like_Checked" Unchecked="Like_Checked">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip x:Name="LikeTip"/>
+                                                </ToolTipService.ToolTip>
                                                 <AppBarToggleButton.Icon>
                                                     <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="HotPink" />
                                                 </AppBarToggleButton.Icon>
@@ -221,7 +223,10 @@
                                                 <muxc:InfoBadge x:Name="LikeCounts" Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="0" />
                                             </Grid>
                                         </Grid>
-                                        <AppBarToggleButton x:Name="Favourite" x:Uid="Favourite" Label="收藏" Height="64" Width="64">
+                                        <AppBarToggleButton x:Name="Favourite" x:Uid="Favourite" Label="收藏" Height="64" Width="64" Click="Favourite_Checked" Unchecked="Favourite_Unchecked" Checked="Favourite_Unchecked">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="FavouriteTip"/>
+                                            </ToolTipService.ToolTip>
                                             <AppBarToggleButton.Icon>
                                                 <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
                                             </AppBarToggleButton.Icon>

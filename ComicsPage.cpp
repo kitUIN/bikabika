@@ -65,10 +65,12 @@ namespace winrt::bikabika::implementation
 		extern bool animeFlag;
 		animeFlag = true;
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
-		/*OutputDebugStringW(params.GetAt(0).c_str());
-		OutputDebugStringW(L"\n");
-		OutputDebugStringW(to_hstring(m_pageNumBox.Pages()).c_str());
-		OutputDebugStringW(L"\n");*/
+		if (!Pips().IsEnabled())
+		{
+			Pips().IsEnabled(true);
+			TypeCombo().IsEnabled(true);
+			NumberBox1().IsEnabled(true);
+		}
 		m_GoType = params.GetAt(0);
 		if (m_GoType == L"Comic")
 		{
@@ -79,9 +81,9 @@ namespace winrt::bikabika::implementation
 			}
 			m_pageNumBox.Title(params.GetAt(1));
 		}
-		else if (m_GoType == L"Search" || loadComicFlag)
+		else if (m_GoType == L"Search")
 		{
-			if (m_pageNumBox.Title() != params.GetAt(1))
+			if (m_pageNumBox.Title() != params.GetAt(1) || loadComicFlag)
 			{
 				co_await GotoSearch(params.GetAt(1), params.GetAt(2), m_categories, 1);
 				m_sortMode = params.GetAt(2);
@@ -89,13 +91,21 @@ namespace winrt::bikabika::implementation
 			m_pageNumBox.Title(params.GetAt(1));
 
 		}
-		else if (m_GoType == L"History" || loadComicFlag)
+		else if (m_GoType == L"History"  )
 		{
-			
+			auto history = co_await m_fileCheckTool.GetHistory();
+			for (auto x : history)
+			{
+				m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
+			}
+			m_pageNumBox.Title(params.GetAt(1));
+			Pips().IsEnabled(false);
+			TypeCombo().IsEnabled(false);
+			NumberBox1().IsEnabled(false);
 		}
-		else if (m_GoType == L"Favourite" || loadComicFlag)
+		else if (m_GoType == L"Favourite" )
 		{
-			if (m_pageNumBox.Title() != params.GetAt(1))
+			if (m_pageNumBox.Title() != params.GetAt(1) || loadComicFlag)
 			{
 				co_await GotoFavourite(params.GetAt(2), 1);
 				m_sortMode = params.GetAt(2);

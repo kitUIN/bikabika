@@ -139,3 +139,17 @@ namespace winrt::bikabika::implementation
 		return m_lookComicBlocks;
 	}
 }
+
+
+void winrt::bikabika::implementation::UserPage::GotoLook_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"History",L"History", to_hstring("dd") })));
+}
+
+
+void winrt::bikabika::implementation::UserPage::GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+
+	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Favourite",L"Favourite", to_hstring("dd") })));
+
+}

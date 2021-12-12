@@ -302,6 +302,24 @@
     <value>最多指名</value>
     <comment>筛选框</comment>
   </data>
+  <data name="TipComment" xml:space="preserve">
+    <value>点击展开评论区</value>
+  </data>
+  <data name="TipFavourite" xml:space="preserve">
+    <value>点击收藏</value>
+  </data>
+  <data name="TipLike" xml:space="preserve">
+    <value>点击给予爱心</value>
+  </data>
+  <data name="TipUncomment" xml:space="preserve">
+    <value>点击关闭评论区</value>
+  </data>
+  <data name="TipUnfavourite" xml:space="preserve">
+    <value>点击不收藏</value>
+  </data>
+  <data name="TipUnlike" xml:space="preserve">
+    <value>点击收回爱心</value>
+  </data>
   <data name="UpdateTime.Text" xml:space="preserve">
     <value>更新</value>
     <comment>漫画详细页的 更新</comment>
