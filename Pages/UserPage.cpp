@@ -47,7 +47,9 @@ namespace winrt::bikabika::implementation
 			hstring levelExp = L"("+to_hstring(personInfo.GetNamedNumber(L"exp"))+L" / "+to_hstring(GetEXP(personInfo.GetNamedNumber(L"level")))+L")";
 			if (levelExp != m_userViewModel.User().LevelExp()) m_userViewModel.User().LevelExp(levelExp);
 			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServerCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
-			//OutputDebugStringW(title.c_str());
+			int32_t percent = (int32_t)personInfo.GetNamedNumber(L"exp")*100 / GetEXP(personInfo.GetNamedNumber(L"level"));
+			//OutputDebugStringW(to_hstring(percent).c_str());
+			if (percent != m_userViewModel.User().Percent()) m_userViewModel.User().Percent(percent);
 			if (img != m_userViewModel.User().Img().UriSource().ToString()) m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
 		}
 		if (!m_firstArrive)
@@ -64,6 +66,7 @@ namespace winrt::bikabika::implementation
 		for (auto s : history)
 		{
 			m_lookComicBlocks.Append(winrt::make<ComicBlock>(s.GetObject()));
+			if (m_lookComicBlocks.Size() == 20) break;
 		}
 	}
 	void UserPage::ContentDialogShow(hstring const& mode, hstring const& message)

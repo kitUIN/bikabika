@@ -121,20 +121,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BlankPage.h">
-      <DependentUpon>BlankPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\LoginPage.h">
+      <DependentUpon>Pages\LoginPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="LoginPage.h">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\HomePage.h">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="HomePage.h">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="UserPage.h">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\UserPage.h">
+      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\API\BikaHttp.h" />
@@ -145,8 +141,8 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\ComicBlock.h" />
-    <ClInclude Include="ComicsPage.h">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\ComicsPage.h">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\CreaterBlock.h" />
@@ -155,10 +151,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\EpisodeBlock.h" />
-    <ClInclude Include="FileCheckTool.h" />
+    <ClInclude Include="Utils\Blocks\FileCheckTool.h" />
     <ClInclude Include="Utils\Blocks\InfoBlock.h" />
-    <ClInclude Include="InfoPage.h">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\InfoPage.h">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\KeywordsBox.h" />
@@ -167,11 +163,11 @@
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="MainPage.h">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\MainPage.h">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="PicPage.h">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <ClInclude Include="Pages\PicPage.h">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\PicturesBlock.h" />
@@ -188,40 +184,34 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BlankPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ComicsPage.xaml">
+    <Page Include="Pages\ComicsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\DownloadPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="Pages\HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="InfoPage.xaml">
+    <Page Include="Pages\InfoPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LightDictionary.xaml">
-      <DeploymentContent>true</DeploymentContent>
-    </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PicPage.xaml">
+    <Page Include="Pages\PicPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserPage.xaml">
+    <Page Include="Pages\UserPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -318,25 +308,20 @@
     <Image Include="Assets\Wide310x150Logo.scale-150.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
     <Image Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Image Include="gray.png" />
-    <Image Include="history.png" />
-    <Image Include="tag.png" />
+    <Image Include="Assets\Picacgs\history.png" />
+    <Image Include="Assets\Picacgs\tag.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BlankPage.cpp">
-      <DependentUpon>BlankPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\LoginPage.cpp">
+      <DependentUpon>Pages\LoginPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="LoginPage.cpp">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\HomePage.cpp">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="HomePage.cpp">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="UserPage.cpp">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\UserPage.cpp">
+      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
@@ -347,8 +332,8 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\ComicBlock.cpp" />
-    <ClCompile Include="ComicsPage.cpp">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\ComicsPage.cpp">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\CreaterBlock.cpp" />
@@ -357,10 +342,10 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\EpisodeBlock.cpp" />
-    <ClCompile Include="FileCheckTool.cpp" />
+    <ClCompile Include="Utils\Blocks\FileCheckTool.cpp" />
     <ClCompile Include="Utils\Blocks\InfoBlock.cpp" />
-    <ClCompile Include="InfoPage.cpp">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\InfoPage.cpp">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\KeywordsBox.cpp" />
@@ -371,12 +356,12 @@
     <ClCompile Include="App.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="MainPage.cpp">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\MainPage.cpp">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="PicPage.cpp">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <ClCompile Include="Pages\PicPage.cpp">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\PicturesBlock.cpp" />
@@ -390,23 +375,19 @@
     <ClCompile Include="Utils\Blocks\UserViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="BlankPage.idl">
-      <DependentUpon>BlankPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
-    <Midl Include="LoginPage.idl">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
+    <Midl Include="Pages\LoginPage.idl">
+      <DependentUpon>Pages\LoginPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="HomePage.idl">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Midl Include="Pages\HomePage.idl">
+      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="UserPage.idl">
-      <DependentUpon>UserPage.xaml</DependentUpon>
+    <Midl Include="Pages\UserPage.idl">
+      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\API\BikaHttp.idl" />
@@ -417,13 +398,13 @@
     </Midl>
     <Midl Include="Utils\Blocks\EpisodeBlock.idl" />
     <Midl Include="Utils\Blocks\InfoBlock.idl" />
-    <Midl Include="InfoPage.idl">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <Midl Include="Pages\InfoPage.idl">
+      <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\PageNumBox.idl" />
-    <Midl Include="PicPage.idl">
-      <DependentUpon>PicPage.xaml</DependentUpon>
+    <Midl Include="Pages\PicPage.idl">
+      <DependentUpon>Pages\PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\PicturesBlock.idl" />
@@ -435,14 +416,14 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\ComicBlock.idl" />
-    <Midl Include="ComicsPage.idl">
-      <DependentUpon>ComicsPage.xaml</DependentUpon>
+    <Midl Include="Pages\ComicsPage.idl">
+      <DependentUpon>Pages\ComicsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="FileCheckTool.idl" />
+    <Midl Include="Utils\Blocks\FileCheckTool.idl" />
     <Midl Include="Utils\Blocks\KeywordsBox.idl" />
-    <Midl Include="MainPage.idl">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Midl Include="Pages\MainPage.idl">
+      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Pages\SettingsPage.idl">
       <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>

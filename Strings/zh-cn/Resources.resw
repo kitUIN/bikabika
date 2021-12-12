@@ -171,6 +171,9 @@
   <data name="CommentsTip.Content" xml:space="preserve">
     <value>展开评论面板</value>
   </data>
+  <data name="CreaterTip.Content" xml:space="preserve">
+    <value>点击查看上传者信息</value>
+  </data>
   <data name="DefaultUserLevel.Text" xml:space="preserve">
     <value>Lv.5</value>
     <comment>左侧导航栏默认等级</comment>

@@ -2,7 +2,7 @@
 
 #include "InfoPage.g.h"
 #include "Utils/API/BikaHttp.h"
-#include "FileCheckTool.h"
+#include "Utils/Blocks/FileCheckTool.h"
 #include "Utils/Blocks/TagBlock.h"
 #include "Utils/Blocks/CreaterBlock.h"
 #include "Utils/Blocks/EpisodeBlock.h"

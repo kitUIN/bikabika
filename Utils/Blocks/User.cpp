@@ -82,6 +82,19 @@ namespace winrt::bikabika::implementation
 			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Exp" });
 		}
 	}
+	int32_t User::Percent()
+	{
+		return m_percent;
+	}
+	void User::Percent(int32_t const& value)
+	{
+		if (m_percent != value)
+		{
+			m_percent = value;
+			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Percent" });
+		}
+		
+	}
 	hstring User::LevelExp()
 	{
 		return m_levelExp;

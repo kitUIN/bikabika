@@ -21,6 +21,8 @@ namespace winrt::bikabika::implementation
         void Slogan(hstring const& value);
         int32_t Exp();
         void Exp(int32_t const& value);
+        int32_t Percent();
+        void Percent(int32_t const& value);
         hstring LevelExp();
         void LevelExp(hstring const& value);
         hstring Title();

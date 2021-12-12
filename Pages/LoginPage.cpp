@@ -165,8 +165,7 @@ namespace winrt::bikabika::implementation
 				userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
 				//auto nav = Frame().Parent().as<winrt::Microsoft::UI::Xaml::Controls::NavigationView>();
 				//nav.SelectedItem(nav.MenuItems().GetAt(3));
-
-				//Frame().Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
+				//Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 			}
 			//未知
 			else 

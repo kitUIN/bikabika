@@ -9,6 +9,7 @@ namespace bikabika
         String ImageSource;
         String Slogan;
         Int32 Exp;
+        Int32 Percent;
         String Title;
         String LevelExp;
     }

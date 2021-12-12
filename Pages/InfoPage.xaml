@@ -236,6 +236,9 @@
                             </StackPanel>
 
                             <Border PointerPressed="CreaterBorder_PointerPressed"  x:Name="CreaterBorder" CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="CreaterTip"/>
+                                </ToolTipService.ToolTip>
                                 <StackPanel Orientation="Horizontal">
                                     <PersonPicture x:Name="Creater" Margin="10,0,0,0" HorizontalAlignment="Left" Width="64" Height="64" ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png"/>
                                     <StackPanel Margin="10,0,0,0">

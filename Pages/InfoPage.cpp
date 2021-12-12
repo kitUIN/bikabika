@@ -316,7 +316,7 @@ namespace winrt::bikabika::implementation
 
     Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Like_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
     {
-        Like().IsChecked(!Like().IsChecked());
+        Like().IsChecked(!Like().IsChecked().GetBoolean());
         auto res{ co_await m_bikaHttp.Like(m_id) };
         if (res[1] == 'T')
         {
@@ -337,10 +337,12 @@ namespace winrt::bikabika::implementation
                 if (action == L"like")
                 {
                     Like().IsChecked(true);
+                    LikeCounts().Value(LikeCounts().Value() + 1);
                 }
                 else
                 {
                     Like().IsChecked(false);
+                    LikeCounts().Value(LikeCounts().Value() - 1);
                 }
             }
             //缺少鉴权
@@ -360,7 +362,7 @@ namespace winrt::bikabika::implementation
     Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Favourite_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
     {
 
-        Favourite().IsChecked(!Favourite().IsChecked());
+        Favourite().IsChecked(!Favourite().IsChecked().GetBoolean());
 
         auto res{ co_await m_bikaHttp.Favourite(m_id) };
         if (res[1] == 'T')

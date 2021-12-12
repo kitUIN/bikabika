@@ -2,7 +2,7 @@
 
 #include "UserPage.g.h"
 #include "Utils/API/BikaHttp.h"
-#include "FileCheckTool.h"
+#include "Utils/Blocks/FileCheckTool.h"
 #include "Utils/Blocks/UserViewModel.h"
 #include "Utils/Blocks/ComicBlock.h"
 namespace winrt::bikabika::implementation

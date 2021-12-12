@@ -20,7 +20,7 @@
                                     <TextBlock  Text="{x:Bind MainUserViewModel.User.LevelExp}"  FontSize="15" FontWeight="Bold"/>
                                 </StackPanel>
                                 <Grid>
-                                    <muxc:ProgressRing Width="148" Height="148" Value="100" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <muxc:ProgressRing Width="148" Height="148" Value="{x:Bind MainUserViewModel.User.Percent}" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray"/>
                                     <PersonPicture VerticalAlignment="Center" HorizontalAlignment="Center"  x:Name="UsersPic" ProfilePicture="{x:Bind MainUserViewModel.User.Img}"  Width="120" Height="120"/>
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
