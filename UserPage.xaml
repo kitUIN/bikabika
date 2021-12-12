@@ -6,17 +6,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <DataTemplate x:Key="ImageTemp" x:DataType="local:ComicBlock">
+            <Border x:Name="MyFav" Margin="10,0,0,0" CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight2}">
+                <Grid>
+                    <Image Source="{x:Bind Thumb}"/>
+                    <StackPanel Orientation="Vertical" Height="40" VerticalAlignment="Bottom" Padding="5,1,5,1"
+                    Background="LightGray" Opacity=".75">
+                        <TextBlock Text="{x:Bind Title}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
     <ScrollViewer>
         <Grid>
             <ScrollViewer>
                 <Grid>
                     <StackPanel Margin="0,20,0,0" >
+                        <Grid>
                         <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">
                             <StackPanel x:Name="Users" Orientation="Vertical">
                                 <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Center">
                                     <TextBlock Text="{x:Bind MainUserViewModel.User.Level}" FontWeight="Bold"  Margin="3,1,10,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
-                                    <TextBlock  Text="(还没做好/还没做好)"  FontSize="15" FontWeight="Bold"/>
+                                    <TextBlock  Text="{x:Bind MainUserViewModel.User.LevelExp}"  FontSize="15" FontWeight="Bold"/>
                                 </StackPanel>
                                 <Grid>
                                     <muxc:ProgressRing Width="148" Height="148" Value="100" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -29,6 +42,39 @@
                                     </Border>
                                     </StackPanel>
                                 <TextBlock HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan}" />
+                            </StackPanel>
+                        </Border>
+                        </Grid>
+                        <Border Margin="0,10,0,0" CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight3}">
+                            <StackPanel>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark1}"/>
+                                        <TextBlock x:Uid="UserFavourite" Margin="10,0,0,0" Text="favourite" FontSize="16" />
+                                    </StackPanel>
+                                    <Grid HorizontalAlignment="Right">
+                                        <Button x:Name="GotoFav" Content=">" FontSize="16"/>
+                                        <muxc:InfoBadge VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="UserFavouriteCounts" Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="0" />
+                                    </Grid>
+                                </Grid>
+                                <ScrollViewer x:Name="MyFav" Margin="0,10,0,0" Background="Transparent">
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+                        <Border Margin="0,10,0,0" CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight3}">
+                            <StackPanel>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE736;" Foreground="{ThemeResource SystemAccentColorDark1}"/>
+                                        <TextBlock x:Uid="UserLook" Margin="10,0,0,0" Text="history" FontSize="16" />
+                                    </StackPanel>
+                                    <Grid HorizontalAlignment="Right">
+                                        <Button x:Name="GotoLook" Content=">" FontSize="16"/>
+                                        <muxc:InfoBadge VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="UserLookCounts" Style="{StaticResource AttentionValueInfoBadgeStyle}" Value="0" />
+                                    </Grid>
+                                </Grid>
+                                <ScrollViewer x:Name="MyLook" Margin="0,10,0,0" Background="Transparent">
+                                </ScrollViewer>
                             </StackPanel>
                         </Border>
                     </StackPanel>

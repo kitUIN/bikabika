@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
-#include "Login.h"
-#if __has_include("Login.g.cpp")
-#include "Login.g.cpp"
+#include "LoginPage.h"
+#if __has_include("LoginPage.g.cpp")
+#include "LoginPage.g.cpp"
 #endif
 
 using namespace winrt;
@@ -10,34 +10,29 @@ using namespace Windows::UI::ViewManagement;
 using namespace Windows::Foundation;
 namespace winrt::bikabika::implementation
 {
-	Login::Login()
+	LoginPage::LoginPage()
 	{
 		InitializeComponent();
-		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+		//NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 	}
-	bikabika::BikaHttp Login::BikaHttpAPI()
-	{
-		return m_bikaHttp;
-	}
-	
-	
-	Windows::Foundation::IAsyncAction Login::ReadAccountJson()
+
+	Windows::Foundation::IAsyncAction LoginPage::ReadAccountJson()
 	{	// 自动登陆载入数据
-		try 
+		try
 		{
 			bool f{ co_await m_fileCheckTool.CheckFileAccount() };
 			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
 			Email().Text(account.GetNamedString(L"email"));
 			bool flag = account.GetNamedBoolean(L"isChecked");
 			RememberCheckBox().IsChecked(flag);
-			if(flag) Password().Password(account.GetNamedString(L"password"));
+			if (flag) Password().Password(account.GetNamedString(L"password"));
 			//else Password().Password(L"");
 		}
-		catch (winrt::hresult_error const& ex) 
+		catch (winrt::hresult_error const& ex)
 		{
 		}
 	}
-	Windows::Foundation::IAsyncAction Login::WriteAccountJson(hstring email,hstring password,hstring token,boolean isCheck)
+	Windows::Foundation::IAsyncAction LoginPage::WriteAccountJson(hstring email, hstring password, hstring token, boolean isCheck)
 	{
 		// 读入用户配置文件
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
@@ -53,7 +48,7 @@ namespace winrt::bikabika::implementation
 		{
 			account.SetNamedValue(L"password", Windows::Data::Json::JsonValue::CreateStringValue(password));
 		}
-		if (isCheck !=	(boolean)account.GetNamedBoolean(L"isChecked") )
+		if (isCheck != (boolean)account.GetNamedBoolean(L"isChecked"))
 		{
 			account.SetNamedValue(L"isChecked", Windows::Data::Json::JsonValue::CreateBooleanValue(isCheck));
 		}
@@ -64,8 +59,8 @@ namespace winrt::bikabika::implementation
 		hstring data = account.Stringify();
 		co_await Windows::Storage::FileIO::WriteTextAsync(accountFile, data);
 	}
-	Windows::Foundation::IAsyncAction Login::LoginAccount()
-	{	
+	Windows::Foundation::IAsyncAction LoginPage::LoginAccount()
+	{
 		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		auto ress = co_await m_bikaHttp.Login(Email().Text(), Password().Password());
 		LayoutMessage().IsOpen(false);
@@ -78,7 +73,7 @@ namespace winrt::bikabika::implementation
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
 			auto show{ LoginContentDialog().ShowAsync() };
 		}
-		else 
+		else
 		{
 			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
 			double code = resp.GetNamedNumber(L"code");
@@ -87,7 +82,7 @@ namespace winrt::bikabika::implementation
 				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 				LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginPasswordFail/Content")));
 				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-				
+
 				auto show{ LoginContentDialog().ShowAsync() };
 				Password().Password(L"");
 			}
@@ -98,7 +93,7 @@ namespace winrt::bikabika::implementation
 				auto processOp{ WriteAccountJson(Email().Text(),Password().Password(), token,RememberCheckBox().IsChecked().GetBoolean()) };
 				LayoutMessage().IsOpen(true);
 				co_await SetPerson();
-				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+				
 			}
 			else
 			{
@@ -109,9 +104,9 @@ namespace winrt::bikabika::implementation
 				auto show{ LoginContentDialog().ShowAsync() };
 			}
 		}
-		
+
 	}
-	Windows::Foundation::IAsyncAction Login::SetPerson()
+	Windows::Foundation::IAsyncAction LoginPage::SetPerson()
 	{
 		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		hstring personInfo = co_await m_bikaHttp.PersonInfo();
@@ -119,7 +114,7 @@ namespace winrt::bikabika::implementation
 		if (personInfo[1] == 'T') {
 			auto show{ PicErrorDialog().ShowAsync() };
 		}
-		else if(personInfo[1] == 'E'){
+		else if (personInfo[1] == 'E') {
 			LoginContentDialog().Title(box_value(resourceLoader.GetString(L"Fail/Title")));
 			LoginContentDialog().Content(box_value(personInfo));
 			LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
@@ -146,10 +141,17 @@ namespace winrt::bikabika::implementation
 			}
 			else if (code == (double)200)
 			{
-				auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 				auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
 				userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
-				Frame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+				auto nav = Frame().Parent().as<winrt::Microsoft::UI::Xaml::Controls::NavigationView>();
+				nav.SelectedItem(nav.MenuItems().GetAt(3));
+				Frame().Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
+				//auto pages = Frame().Parent().as<winrt::Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<winrt::Windows::UI::Xaml::Controls::Grid>();
+				//pages.Children().GetAt(0).as<winrt::Microsoft::UI::Xaml::Controls::TeachingTip>().IsOpen(true);;
+				//pages.UserName().Text(L"!!!!!!!!!!!!!!!!!!");
+				//Frame().Navigate(xaml_typename<bikabika::MainPage>(), box_value(single_threaded_vector<hstring>({ L"FromPage",L"None" })));
+				
+				
 			}
 			else
 			{
@@ -161,13 +163,13 @@ namespace winrt::bikabika::implementation
 				auto show{ LoginContentDialog().ShowAsync() };
 			}
 		}
-		
+
 	}
 	//登录按钮
-	void Login::LoginClickHandler(IInspectable const&, RoutedEventArgs const&)
+	void LoginPage::LoginClickHandler(IInspectable const&, RoutedEventArgs const&)
 	{
-		
-		if (Email().Text() == L""|| Password().Password() == L"")
+
+		if (Email().Text() == L"" || Password().Password() == L"")
 		{
 			// 账号密码为空
 			auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
@@ -178,22 +180,22 @@ namespace winrt::bikabika::implementation
 			//Email().Text(L"");
 			//Password().Password(L"");
 		}
-		else 
-		{	
+		else
+		{
 			//auto client = winrt::make<BikaHttpClient>();
 			LayoutMessage().IsOpen(true);
 			auto login{ LoginAccount() };
 		}
 	}
-	void winrt::bikabika::implementation::Login::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+	void winrt::bikabika::implementation::LoginPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
 		//OutputDebugStringW(L"\n\n?????\n\n");
 		auto acc{ ReadAccountJson() };
 		auto bcc{ AutoLogin() };
-		
+
 	}
 	//自动登录
-	Windows::Foundation::IAsyncAction Login::AutoLogin()
+	Windows::Foundation::IAsyncAction LoginPage::AutoLogin()
 	{
 		LayoutMessage().IsOpen(true);
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };

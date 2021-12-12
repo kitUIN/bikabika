@@ -1,9 +1,0 @@
-import "Utils/API/BikaHttp.idl";
-namespace bikabika
-{
-    runtimeclass Login : Windows.UI.Xaml.Controls.Page
-    {
-        Login();
-        BikaHttp BikaHttpAPI{ get; };
-    }
-}

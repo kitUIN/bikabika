@@ -121,8 +121,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BlankPage.h">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Pages\AccountPage.h">
       <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="LoginPage.h">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="HomePage.h">
+      <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="UserPage.h">
@@ -148,20 +160,12 @@
     </ClInclude>
     <ClInclude Include="Utils\Blocks\EpisodeBlock.h" />
     <ClInclude Include="FileCheckTool.h" />
-    <ClInclude Include="Pages\HomePage.h">
-      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="Utils\Blocks\InfoBlock.h" />
     <ClInclude Include="Pages\InfoPage.h">
       <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\KeywordsBox.h" />
-    <ClInclude Include="Login.h">
-      <DependentUpon>Login.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="Utils\Blocks\PageNumBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
@@ -188,6 +192,9 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BlankPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\AccountPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -200,7 +207,7 @@
     <Page Include="Pages\DownloadPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\HomePage.xaml">
+    <Page Include="HomePage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\InfoPage.xaml">
@@ -209,10 +216,10 @@
     <Page Include="LightDictionary.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
-    <Page Include="Login.xaml">
+    <Page Include="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PicPage.xaml">
@@ -323,8 +330,20 @@
     <Image Include="tag.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BlankPage.cpp">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="Pages\AccountPage.cpp">
       <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="LoginPage.cpp">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="HomePage.cpp">
+      <DependentUpon>HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="UserPage.cpp">
@@ -350,20 +369,12 @@
     </ClCompile>
     <ClCompile Include="Utils\Blocks\EpisodeBlock.cpp" />
     <ClCompile Include="FileCheckTool.cpp" />
-    <ClCompile Include="Pages\HomePage.cpp">
-      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="Utils\Blocks\InfoBlock.cpp" />
     <ClCompile Include="Pages\InfoPage.cpp">
       <DependentUpon>Pages\InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\KeywordsBox.cpp" />
-    <ClCompile Include="Login.cpp">
-      <DependentUpon>Login.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="Utils\Blocks\PageNumBox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -390,12 +401,24 @@
     <ClCompile Include="Utils\Blocks\UserViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="BlankPage.idl">
+      <DependentUpon>BlankPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="Pages\AccountPage.idl">
       <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="LoginPage.idl">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="HomePage.idl">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Midl>
     <Midl Include="UserPage.idl">
       <DependentUpon>UserPage.xaml</DependentUpon>
@@ -432,15 +455,7 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="FileCheckTool.idl" />
-    <Midl Include="Pages\HomePage.idl">
-      <DependentUpon>Pages\HomePage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
     <Midl Include="Utils\Blocks\KeywordsBox.idl" />
-    <Midl Include="Login.idl">
-      <DependentUpon>Login.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
     <Midl Include="Pages\MainPage.idl">
       <DependentUpon>Pages\MainPage.xaml</DependentUpon>
     </Midl>

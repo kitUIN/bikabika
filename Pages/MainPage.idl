@@ -7,6 +7,6 @@ namespace bikabika
         MainPage();
         Windows.UI.Xaml.Controls.TextBlock UserName{ get; };
         UserViewModel MainUserViewModel{ get; };
-        
+        Windows.UI.Xaml.Controls.ProgressRing Layouts{ get;};
     }
 }

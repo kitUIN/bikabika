@@ -8,9 +8,7 @@
     <Page Include="LightDictionary.xaml">
       <Filter>View</Filter>
     </Page>
-    <Page Include="Login.xaml" />
     <Page Include="Pages\SettingsPage.xaml" />
-    <Page Include="Pages\HomePage.xaml" />
     <Page Include="Pages\ClassificationPage.xaml" />
     <Page Include="Pages\AccountPage.xaml" />
     <Page Include="Pages\ComicsPage.xaml" />
@@ -18,6 +16,9 @@
     <Page Include="Pages\PicPage.xaml" />
     <Page Include="Pages\DownloadPage.xaml" />
     <Page Include="UserPage.xaml" />
+    <Page Include="LoginPage.xaml" />
+    <Page Include="HomePage.xaml" />
+    <Page Include="BlankPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />

@@ -31,8 +31,6 @@ namespace winrt::bikabika::implementation
 	{
 		
 		InitializeComponent();
-		auto localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
-		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (!serversSettings.Values().HasKey(L"picServer1")) serversSettings.Values().Insert(L"picServer1", box_value(L"https://storage1.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer2")) serversSettings.Values().Insert(L"picServer2", box_value(L"https://s2.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer3")) serversSettings.Values().Insert(L"picServer3", box_value(L"https://s3.picacomic.com"));
@@ -57,11 +55,10 @@ namespace winrt::bikabika::implementation
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"login", winrt::xaml_typename<bikabika::Login>()));
+			(L"login", winrt::xaml_typename<bikabika::LoginPage>()));
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
 		auto acc{ UpdateToken() };
-		
 	}
 
 
@@ -80,9 +77,8 @@ namespace winrt::bikabika::implementation
 		//navigationViewItem.Icon(wuxc::SymbolIcon(static_cast<wuxc::Symbol>(0xF1AD)));
 		//navigationViewItem.Tag(winrt::box_value(L"content"));
 		//NavView().MenuItems().Append(navigationViewItem);
-		NavView_Navigate(L"login",
-			Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
-		NavView().SelectedItem(NavView().MenuItems().GetAt(1));
+		NavView_Navigate(L"login",Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
+		//NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 	}
 
 	void MainPage::NavView_ItemInvoked(
@@ -247,8 +243,6 @@ namespace winrt::bikabika::implementation
 		return m_userViewModel;
 	}
 
-
-
 	Windows::Foundation::IAsyncAction MainPage::UpdateToken()
 	{
 		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
@@ -314,7 +308,7 @@ namespace winrt::bikabika::implementation
 
 		// Show the "Loading..." screen.
 		Windows::UI::Xaml::Controls::Frame f;
-		f.Navigate(xaml_typename<bikabika::Login>(), nullptr);
+		f.Navigate(xaml_typename<bikabika::LoginPage>(), nullptr);
 		Window::Current().Content(f);
 		Window::Current().Activate();
 
@@ -338,8 +332,6 @@ namespace winrt::bikabika::implementation
 
 	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
-		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (userData.Values().HasKey(L"personInfo"))
 		{
 			Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
@@ -387,6 +379,7 @@ namespace winrt::bikabika::implementation
 	{
 		m_suggestIsChosen = true;
 	}
+
 }
 
 

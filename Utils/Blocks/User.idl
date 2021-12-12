@@ -10,5 +10,6 @@ namespace bikabika
         String Slogan;
         Int32 Exp;
         String Title;
+        String LevelExp;
     }
 }

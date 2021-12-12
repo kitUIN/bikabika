@@ -22,7 +22,12 @@
     </Page.Resources>
 
     <Grid >
-        <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked" IsSettingsVisible ="False"
+        <muxc:TeachingTip Background="{StaticResource SystemAccentColorLight3}" Title="自动登录中..." PreferredPlacement="Center"  IsLightDismissEnabled="False">
+            <muxc:TeachingTip.Content>
+                <ProgressRing  x:Name="Layouts" Padding="10" Height="80" Width="80" IsActive="True" Foreground="{StaticResource SystemAccentColor}"/>
+            </muxc:TeachingTip.Content>
+        </muxc:TeachingTip>
+        <muxc:NavigationView x:Name="NavView" Loaded="NavView_Loaded" ItemInvoked="NavView_ItemInvoked" IsSettingsVisible ="True"
                          BackRequested="NavView_BackRequested" IsTitleBarAutoPaddingEnabled="False" IsBackEnabled="True" PaneDisplayMode="Left" IsPaneToggleButtonVisible="False" OpenPaneLength="180" Background="{ThemeResource MyAcrylicBrush}">
             <muxc:NavigationView.PaneHeader>
                 <StackPanel Margin="0,20,0,0">
@@ -41,11 +46,7 @@
                 </StackPanel>
             </muxc:NavigationView.PaneHeader>
             <muxc:NavigationView.FooterMenuItems>
-                <muxc:NavigationViewItem Tag="settings" x:Uid="NavSettings"  Content="設置">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                
             </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems>
 
@@ -63,8 +64,9 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame"  Padding="24,12,24,36" Margin="0,24,0,0" IsTabStop="True"
-                   NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated">
+            <Frame x:Name="ContentFrame"   Padding="24,12,24,36" Margin="0,24,0,0" IsTabStop="True"
+                   NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated" >
+
             </Frame>
             
         </muxc:NavigationView>
@@ -80,7 +82,6 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.ColumnSpan="1">
                 <Image Source="ms-appx:///Assets//Picacgs//picacomic_2.png" Width="36" Height="36" Margin="0,0,0,0"/>
                 <TextBlock x:Uid="APPTitle" Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,4,0,0"/>
-
             </StackPanel>
         </Grid>
         <AutoSuggestBox x:Name="CatSearch" x:Uid="CatSearch"  PlaceholderText="Search" QueryIcon="Find" Height="34" Width="300"

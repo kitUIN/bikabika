@@ -9,6 +9,7 @@ namespace winrt::bikabika::implementation
     {
         UserPage();
         bikabika::UserViewModel MainUserViewModel();
+        int32_t GetEXP(int32_t const& level);
         void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
     private:
         bikabika::UserViewModel m_userViewModel;

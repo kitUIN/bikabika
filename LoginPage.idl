@@ -1,0 +1,10 @@
+
+namespace bikabika
+{
+    [default_interface]
+    runtimeclass LoginPage : Windows.UI.Xaml.Controls.Page
+    {
+        LoginPage();
+        
+    }
+}

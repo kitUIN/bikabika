@@ -109,7 +109,7 @@ namespace winrt::bikabika::implementation
 					LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
 					LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
 					auto show{ co_await LoginContentDialog().ShowAsync() };
-					if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
+					if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::LoginPage>());
 					*/
 				}
 				else

@@ -157,6 +157,10 @@
     <value>搜索</value>
     <comment>分类搜索栏</comment>
   </data>
+  <data name="Comment.Text" xml:space="preserve">
+    <value>评论</value>
+    <comment>用户界面</comment>
+  </data>
   <data name="Comments.Label" xml:space="preserve">
     <value>评论</value>
     <comment>漫画详细页</comment>
@@ -271,21 +275,30 @@
   </data>
   <data name="SortMode.DA" xml:space="preserve">
     <value>旧到新</value>
+    <comment>筛选框</comment>
   </data>
   <data name="SortMode.DD" xml:space="preserve">
     <value>新到旧</value>
+    <comment>筛选框</comment>
   </data>
   <data name="SortMode.LD" xml:space="preserve">
     <value>最多爱心</value>
+    <comment>筛选框</comment>
   </data>
   <data name="SortMode.UA" xml:space="preserve">
     <value>默认排序</value>
+    <comment>筛选框</comment>
   </data>
   <data name="SortMode.VD" xml:space="preserve">
     <value>最多指名</value>
+    <comment>筛选框</comment>
   </data>
   <data name="UpdateTime.Text" xml:space="preserve">
     <value>更新</value>
     <comment>漫画详细页的 更新</comment>
+  </data>
+  <data name="UserFavourite.Text" xml:space="preserve">
+    <value>我的收藏</value>
+    <comment>用户界面</comment>
   </data>
 </root>

@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="bikabika.BlankPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:bikabika"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal">
+            <Image  Width="36" Height="36" Margin="0,0,0,0"/>
+            <TextBlock  Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,4,0,0"/>
+
+        </StackPanel>
+    </StackPanel>
+</Page>

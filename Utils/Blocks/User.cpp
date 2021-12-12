@@ -82,6 +82,18 @@ namespace winrt::bikabika::implementation
 			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Exp" });
 		}
 	}
+	hstring User::LevelExp()
+	{
+		return m_levelExp;
+	}
+	void User::LevelExp(hstring const& value)
+	{
+		if (m_levelExp != value)
+		{
+			m_levelExp = value;
+			m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"LevelExp" });
+		}
+	}
 	hstring User::Title()
 	{
 		return m_title;
