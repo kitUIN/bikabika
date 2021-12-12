@@ -27,6 +27,8 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction UserPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		__super::OnNavigatedTo(e);
+		extern bool loadComicFlag;
+		loadComicFlag = true;
 		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (userData.Values().HasKey(L"personInfo"))
@@ -91,7 +93,7 @@ namespace winrt::bikabika::implementation
 	}
 	Windows::Foundation::IAsyncAction UserPage::GetFavourite(hstring const& sort,int32_t const& page)
 	{
-		auto res = co_await m_bikaHttp.PersonFavourite(page);
+		auto res = co_await m_bikaHttp.PersonFavourite(sort,page);
 		if (res[1] == 'T')
 		{
 			ContentDialogShow(L"Timeout", L"");

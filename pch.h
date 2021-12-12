@@ -54,3 +54,4 @@ extern winrt::hstring userImage = L"ms-appx:///Assets//Picacgs//placeholder_avat
 extern winrt::hstring serverStream = L"https://storage1.picacomic.com";
 extern bool keywordLoaded = false;
 extern bool animeFlag = true;
+extern bool loadComicFlag = true;

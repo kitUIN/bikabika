@@ -293,9 +293,9 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
-	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::PersonFavourite(int32_t page)
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::PersonFavourite(hstring sort, int32_t page)
 	{
-		hstring api = L"users/favourite?s=dd&page=" + to_hstring(page);
+		hstring api = L"users/favourite?s="+sort+ L"&page=" + to_hstring(page);
 		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
 		//OutputDebugStringW(api.c_str());
 		guid uuid = GuidHelper::CreateNewGuid();
@@ -312,5 +312,26 @@ namespace winrt::bikabika::implementation
 		hstring res = co_await GET(uri, api, uuid);
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
+	}
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Search(hstring keywords, hstring sort, Windows::Data::Json::JsonArray categories, int32_t page)
+	{
+
+		hstring api = L"comics/advanced-search?page=" + to_hstring(page);
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		Windows::Data::Json::JsonObject json;
+		json.SetNamedValue(L"keyword", Windows::Data::Json::JsonValue::CreateStringValue(keywords));
+		if (categories.Size() > 0)
+		{
+			json.SetNamedValue(L"categories", categories);
+		}
+		json.SetNamedValue(L"sort", Windows::Data::Json::JsonValue::CreateStringValue(sort));
+		HttpStringContent jsonContent(
+			json.ToString(),
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[POST]->/auth/sign-in\nReturn:", ress.c_str());
+		co_return ress;
 	}
 }

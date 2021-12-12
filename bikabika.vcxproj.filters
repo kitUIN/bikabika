@@ -4,13 +4,12 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Pages\MainPage.xaml" />
+    <Page Include="MainPage.xaml" />
     <Page Include="LightDictionary.xaml">
       <Filter>View</Filter>
     </Page>
     <Page Include="Pages\SettingsPage.xaml" />
     <Page Include="Pages\ClassificationPage.xaml" />
-    <Page Include="Pages\AccountPage.xaml" />
     <Page Include="ComicsPage.xaml" />
     <Page Include="InfoPage.xaml" />
     <Page Include="PicPage.xaml" />

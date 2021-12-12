@@ -12,9 +12,10 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String>  BookInfo(String bookId);
         Windows.Foundation.IAsyncOperation<String>  Episodes(String bookId, Int32 page);
         Windows.Foundation.IAsyncOperation<String>  Picture(String bookId, Int32 epsId, Int32 page);
-        Windows.Foundation.IAsyncOperation<String>  PersonFavourite(Int32 page);
+        Windows.Foundation.IAsyncOperation<String>  PersonFavourite(String sort, Int32 page);
         Windows.Foundation.IAsyncOperation<String>  PersonComment(Int32 page);
-    
+        Windows.Foundation.IAsyncOperation<String> Search(String keywords, String sort, Windows.Data.Json.JsonArray categories, Int32 page);
+
 
     }
 }

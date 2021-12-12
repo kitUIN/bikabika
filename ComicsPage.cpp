@@ -33,13 +33,35 @@ namespace winrt::bikabika::implementation
 		m_typeBlocks.Append(resourceLoader.GetString(L"SortMode/VD"));
 		return m_typeBlocks;
 	}
-	void winrt::bikabika::implementation::ComicsPage::TypeCombo_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		TypeCombo().SelectedIndex(m_sortType);
-	}
 
+	void ComicsPage::ContentDialogShow(hstring const& mode, hstring const& message)
+	{
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		if (mode == L"Timeout") {
+			auto show{ PicErrorDialog().ShowAsync() };
+		}
+		else {
+			HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
+			HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
+			if (mode == L"Error")
+			{
+				HttpContentDialog().Content(box_value(message));
+			}
+			else if (mode == L"Unknown")
+			{
+				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
+				HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+			}
+			else if (mode == L"1005")
+			{
+				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+			}
+			auto show{ HttpContentDialog().ShowAsync() };
+		}
+	}
 	Windows::Foundation::IAsyncAction ComicsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
+		extern bool loadComicFlag;
 		extern bool animeFlag;
 		animeFlag = true;
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
@@ -47,16 +69,48 @@ namespace winrt::bikabika::implementation
 		OutputDebugStringW(L"\n");
 		OutputDebugStringW(to_hstring(m_pageNumBox.Pages()).c_str());
 		OutputDebugStringW(L"\n");*/
-		
-		
-		if (m_pageNumBox.Title()!= params.GetAt(0))
+		m_GoType = params.GetAt(0);
+		if (m_GoType == L"Comic")
 		{
-			co_await Goto(1, params.GetAt(0), params.GetAt(1));
+			if (m_pageNumBox.Title() != params.GetAt(1)|| loadComicFlag)
+			{
+				co_await Goto(1, params.GetAt(1), params.GetAt(2));
+				m_sortMode = params.GetAt(2);
+			}
+			m_pageNumBox.Title(params.GetAt(1));
 		}
-		m_pageNumBox.Title(params.GetAt(0));
-		m_sortMode = params.GetAt(1);
+		else if (m_GoType == L"Search" || loadComicFlag)
+		{
+			if (m_pageNumBox.Title() != params.GetAt(1))
+			{
+				co_await GotoSearch(params.GetAt(1), params.GetAt(2), m_categories, 1);
+				m_sortMode = params.GetAt(2);
+			}
+			m_pageNumBox.Title(params.GetAt(1));
+
+		}
+		else if (m_GoType == L"History" || loadComicFlag)
+		{
+			
+		}
+		else if (m_GoType == L"Favourite" || loadComicFlag)
+		{
+			if (m_pageNumBox.Title() != params.GetAt(1))
+			{
+				co_await GotoFavourite(params.GetAt(2), 1);
+				m_sortMode = params.GetAt(2);
+			}
+			m_pageNumBox.Title(params.GetAt(1));
+			
+		}
+		loadComicFlag = false;
         __super::OnNavigatedTo(e);
-		
+		if (m_sortMode == L"ua") m_sortType = 0;
+		else if (m_sortMode == L"dd") m_sortType = 1;
+		else if (m_sortMode == L"da") m_sortType = 2;
+		else if (m_sortMode == L"ld") m_sortType = 3;
+		else if (m_sortMode == L"vd") m_sortType = 4;
+		TypeCombo().SelectedIndex(m_sortType);
 		
     }
 	Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode) {
@@ -64,22 +118,12 @@ namespace winrt::bikabika::implementation
 			//Progressing().IsActive(true);
 			m_comicBlocks.Clear();
 			hstring res{ co_await m_bikaHttp.Comics(index,title,mode) };
-
-			if (m_sortMode == L"ua") m_sortType = 0;
-			else if (m_sortMode == L"dd") m_sortType = 1;
-			else if (m_sortMode == L"da") m_sortType = 2;
-			else if (m_sortMode == L"ld") m_sortType = 3;
-			else if (m_sortMode == L"vd") m_sortType = 4;
-			//Progressing().IsActive(false);
-			if (res[1] == 'T') {
-				//auto show{ PicErrorDialog().ShowAsync() };
+			if (res[1] == 'T')
+			{
+				ContentDialogShow(L"Timeout", L"");
 			}
 			else if (res[1] == 'E') {
-				/*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-				LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-				LoginContentDialog().Content(box_value(res));
-				LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-				auto show{ co_await LoginContentDialog().ShowAsync() };*/
+				ContentDialogShow(L"Error", res);
 			}
 			else
 			{
@@ -101,32 +145,110 @@ namespace winrt::bikabika::implementation
 					}
 
 				}
+				//缺少鉴权
 				else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
-				{	//缺少鉴权
-					/*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-					LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-					LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
-					LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-					auto show{ co_await LoginContentDialog().ShowAsync() };
-					if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::LoginPage>());
-					*/
+				{
+					ContentDialogShow(L"1005", L"");
 				}
+				//未知
 				else
 				{
-					//未知
-					/*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-					LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-					LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
-					LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-					auto show{ co_await LoginContentDialog().ShowAsync() };
-					*/
+					ContentDialogShow(L"Unknown", res);
 				}
 			}
 
 		}
 	}
 
-
+	Windows::Foundation::IAsyncAction ComicsPage::GotoSearch(hstring const& keywords, hstring  const& mode, Windows::Data::Json::JsonArray const& categories, int32_t const& index) {
+		if (index <= m_pageNumBox.Pages()) {
+			//Progressing().IsActive(true);
+			m_comicBlocks.Clear();
+			hstring res{ co_await m_bikaHttp.Search(keywords, mode, categories, index) };
+			if (res[1] == 'T')
+			{
+				ContentDialogShow(L"Timeout", L"");
+			}
+			else if (res[1] == 'E') {
+				ContentDialogShow(L"Error", res);
+			}
+			else
+			{
+				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+				double code = resp.GetNamedNumber(L"code");
+				if (code == (double)200)
+				{
+					Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+					Windows::Data::Json::JsonObject jsonObject = ca.GetNamedObject(L"comics");
+					m_limit = jsonObject.GetNamedNumber(L"limit");
+					m_total = jsonObject.GetNamedNumber(L"total");
+					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
+					auto pages = jsonObject.GetNamedNumber(L"pages");
+					m_pageNumBox.Pages(pages);
+					Pips().NumberOfPages(pages);
+					for (auto x : jsonObject.GetNamedArray(L"docs"))
+					{
+						m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
+					}
+				}
+				//缺少鉴权
+				else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+				{
+					ContentDialogShow(L"1005", L"");
+				}
+				//未知
+				else
+				{
+					ContentDialogShow(L"Unknown", res);
+				}
+			}
+		}
+	}
+	Windows::Foundation::IAsyncAction ComicsPage::GotoFavourite(hstring  const& mode, int32_t const& index) {
+		if (index <= m_pageNumBox.Pages()) {
+			//Progressing().IsActive(true);
+			m_comicBlocks.Clear();
+			hstring res{ co_await m_bikaHttp.PersonFavourite(mode,index) };
+			
+			if (res[1] == 'T')
+			{
+				ContentDialogShow(L"Timeout", L"");
+			}
+			else if (res[1] == 'E') {
+				ContentDialogShow(L"Error", res);
+			}
+			else
+			{
+				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+				double code = resp.GetNamedNumber(L"code");
+				if (code == (double)200)
+				{
+					Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+					Windows::Data::Json::JsonObject jsonObject = ca.GetNamedObject(L"comics");
+					m_limit = jsonObject.GetNamedNumber(L"limit");
+					m_total = jsonObject.GetNamedNumber(L"total");
+					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
+					auto pages = jsonObject.GetNamedNumber(L"pages");
+					m_pageNumBox.Pages(pages);
+					Pips().NumberOfPages(pages);
+					for (auto x : jsonObject.GetNamedArray(L"docs"))
+					{
+						m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
+					}
+				}
+				//缺少鉴权
+				else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+				{
+					ContentDialogShow(L"1005", L"");
+				}
+				//未知
+				else
+				{
+					ContentDialogShow(L"Unknown", res);
+				}
+			}
+		}
+	}
 
 
 	Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicsPage::PipsPager_SelectedIndexChanged(winrt::Microsoft::UI::Xaml::Controls::PipsPager const& sender, winrt::Microsoft::UI::Xaml::Controls::PipsPagerSelectedIndexChangedEventArgs const& args)
@@ -139,8 +261,18 @@ namespace winrt::bikabika::implementation
 		OutputDebugStringW(L"\n");
 		if (m_pageNumBox.Title() != L"")
 		{
-			
-			co_await Goto(index + 1, m_pageNumBox.Title(), m_sortMode);
+			if (m_GoType == L"Comic")
+			{
+				co_await Goto(index + 1, m_pageNumBox.Title(), m_sortMode);
+			}
+			else if (m_GoType == L"Search")
+			{
+				co_await GotoSearch(m_pageNumBox.Title(), m_sortMode, m_categories, index + 1);
+			}
+			else if (m_GoType == L"Favourite")
+			{
+				co_await GotoFavourite(m_sortMode, index + 1);
+			}
 		}
 
 	}
@@ -171,10 +303,20 @@ namespace winrt::bikabika::implementation
 			//co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
 			if (m_pageNumBox.Title() != L""&& m_pageNumBox.PageIndex() == 1)
 			{
-				co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
+				if (m_GoType == L"Comic")
+				{
+					co_await Goto(1, m_pageNumBox.Title(), m_sortMode);
+				}
+				else if (m_GoType == L"Search")
+				{
+					co_await GotoSearch(m_pageNumBox.Title(), m_sortMode, m_categories,1);
+				}
+				else if (m_GoType == L"Favourite")
+				{
+					co_await GotoFavourite(m_sortMode, 1);
+				}
 			}
 			else {
-				
 				Pips().SelectedPageIndex(0);
 			}
 			

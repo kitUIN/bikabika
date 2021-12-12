@@ -364,11 +364,12 @@ namespace winrt::bikabika::implementation
 		}
 		m_suggestIsChosen = false;
 	}
-
-
+	
 	void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
-
+		extern bool loadComicFlag;
+		loadComicFlag = true;
+		ContentFrame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Search",sender.Text(), to_hstring("dd") })));
 	}
 
 
@@ -376,7 +377,10 @@ namespace winrt::bikabika::implementation
 	{
 		m_suggestIsChosen = true;
 	}
-
+	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	{
+		__super::OnNavigatedTo(e);
+	}
 }
 
 

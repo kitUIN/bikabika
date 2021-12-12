@@ -36,9 +36,12 @@ namespace winrt::bikabika::implementation
         // 本体
         Windows::Foundation::IAsyncOperation<hstring> Picture(hstring bookId, int32_t epsId, int32_t page);
         // 我的收藏
-        Windows::Foundation::IAsyncOperation<hstring> PersonFavourite(int32_t page);
+        Windows::Foundation::IAsyncOperation<hstring> PersonFavourite(hstring sort, int32_t page);
         // 我的评论
         Windows::Foundation::IAsyncOperation<hstring> PersonComment(int32_t page);
+        // 搜索
+        Windows::Foundation::IAsyncOperation<hstring> Search(hstring keywords,hstring sort,Windows::Data::Json::JsonArray categories,int32_t page);
+
 
 
     

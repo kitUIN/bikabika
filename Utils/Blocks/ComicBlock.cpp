@@ -16,11 +16,23 @@ namespace winrt::bikabika::implementation
 		m_id = json.GetNamedString(L"_id");
 		m_title = json.GetNamedString(L"title");
 		if (auto x = json.TryLookup(L"author")) m_author = x.GetString();
-		if (auto y = json.TryLookup(L"totalLikes")) m_totalLikes = y.GetNumber();
-		if (auto z = json.TryLookup(L"totalViews")) m_totalViews = z.GetNumber();
-
-		m_pageCount = json.GetNamedNumber(L"pagesCount");
-		m_epsCount = json.GetNamedNumber(L"epsCount");
+		if (auto y = json.TryLookup(L"totalLikes"))
+		{
+			if (y.ValueType() == winrt::Windows::Data::Json::JsonValueType::Number)
+				m_totalLikes = y.GetNumber();
+			else if(y.ValueType() == winrt::Windows::Data::Json::JsonValueType::String)
+				m_totalLikes = atoi(to_string(y.GetString()).c_str());
+			
+		}
+		if (auto z = json.TryLookup(L"totalViews")) 
+		{
+			if (z.ValueType() == winrt::Windows::Data::Json::JsonValueType::Number)
+				m_totalViews = z.GetNumber();
+			else if (z.ValueType() == winrt::Windows::Data::Json::JsonValueType::String)
+				m_totalLikes = atoi(to_string(z.GetString()).c_str());
+		}
+		if (auto j = json.TryLookup(L"pagesCount")) m_pageCount = j.GetNumber();
+		if (auto k = json.TryLookup(L"epsCount")) m_epsCount = k.GetNumber();
 		if (json.GetNamedBoolean(L"finished"))
 		{
 			m_finished = winrt::Windows::UI::Xaml::Visibility::Visible;
@@ -36,7 +48,13 @@ namespace winrt::bikabika::implementation
 		}
 		 
 		m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
-		m_likesCount = json.GetNamedNumber(L"likesCount");
+		if (auto l = json.TryLookup(L"likesCount"))
+		{
+			if (l.ValueType() == winrt::Windows::Data::Json::JsonValueType::Number)
+				m_likesCount = l.GetNumber();
+			else if (l.ValueType() == winrt::Windows::Data::Json::JsonValueType::String)
+				m_likesCount = atoi(to_string(l.GetString()).c_str());
+		}
 	}
 	hstring ComicBlock::ID()
 	{

@@ -86,7 +86,8 @@ namespace winrt::bikabika::implementation
 	void ClassificationPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		
-		
+		extern bool loadComicFlag;
+		loadComicFlag = true;
 		__super::OnNavigatedTo(e);
 	}
 	
@@ -99,7 +100,7 @@ void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt
 	auto classBlack = e.ClickedItem().as<bikabika::ClassBlock>();
 	
 	if (classBlack.ClassType() == L"2") {
-		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ classBlack.ClassName(), to_hstring("ua") })));
+		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Comic",classBlack.ClassName(), to_hstring("ua")})));
 	}
 
 }

@@ -137,7 +137,7 @@
                 </StackPanel>
                         <StackPanel Grid.Column="2"   Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0" Height="32">
                             <FontIcon Margin="7,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe71c;"/>
-                            <ComboBox Margin="7,0,0,0" SelectionChanged="TypeCombo_SelectionChanged" x:Name="TypeCombo" ItemsSource="{x:Bind TypeBlocks}" Loaded="TypeCombo_Loaded" Width="200"/>
+                            <ComboBox Margin="7,0,0,0" SelectionChanged="TypeCombo_SelectionChanged" x:Name="TypeCombo" ItemsSource="{x:Bind TypeBlocks}" Width="200"/>
                     <FontIcon Margin="17,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xe7c4;" />
 
                     <muxc:NumberBox Height="32"   x:Name="NumberBox1" Value="{x:Bind MyPageNumBox.PageIndex,Mode=OneWay}" ValueChanged="NumberBox1_ValueChanged" AcceptsExpression="True"  Margin="10,0,0,0"/>
@@ -150,5 +150,20 @@
         <Border  Height="20" Width="100" CornerRadius="10"  VerticalAlignment="Bottom" Background="{ThemeResource MyAcrylicBrushLight1}">
             <muxc:PipsPager x:Name="Pips" VerticalAlignment="Bottom" HorizontalAlignment="Center" SelectedIndexChanged="PipsPager_SelectedIndexChanged"  Orientation="Horizontal" PreviousButtonVisibility="VisibleOnPointerOver" NextButtonVisibility="VisibleOnPointerOver" />
         </Border>
+        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
+            Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+            </StackPanel>
+        </ContentDialog >
+        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
     </Grid>
 </Page>

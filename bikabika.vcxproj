@@ -125,10 +125,6 @@
       <DependentUpon>BlankPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="Pages\AccountPage.h">
-      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="LoginPage.h">
       <DependentUpon>LoginPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -171,8 +167,8 @@
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="Pages\MainPage.h">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <ClInclude Include="MainPage.h">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="PicPage.h">
       <DependentUpon>PicPage.xaml</DependentUpon>
@@ -195,9 +191,6 @@
     <Page Include="BlankPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\AccountPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -216,7 +209,7 @@
     <Page Include="LightDictionary.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="LoginPage.xaml">
@@ -334,10 +327,6 @@
       <DependentUpon>BlankPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Pages\AccountPage.cpp">
-      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="LoginPage.cpp">
       <DependentUpon>LoginPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -382,8 +371,8 @@
     <ClCompile Include="App.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="Pages\MainPage.cpp">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <ClCompile Include="MainPage.cpp">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="PicPage.cpp">
@@ -403,10 +392,6 @@
   <ItemGroup>
     <Midl Include="BlankPage.idl">
       <DependentUpon>BlankPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
-    <Midl Include="Pages\AccountPage.idl">
-      <DependentUpon>Pages\AccountPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="App.idl">
@@ -456,8 +441,8 @@
     </Midl>
     <Midl Include="FileCheckTool.idl" />
     <Midl Include="Utils\Blocks\KeywordsBox.idl" />
-    <Midl Include="Pages\MainPage.idl">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <Midl Include="MainPage.idl">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Pages\SettingsPage.idl">
       <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>
