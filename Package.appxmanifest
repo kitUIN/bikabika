@@ -3,7 +3,7 @@
   <Identity
     Name="216498b6-651f-448d-99f4-4633881a4315"
     Publisher="CN=KitUIN"
-    Version="0.1.0.0" />
+    Version="0.1.2.0" />
   <mp:PhoneIdentity PhoneProductId="216498b6-651f-448d-99f4-4633881a4315" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   <Properties>
     <DisplayName>bikabika</DisplayName>
