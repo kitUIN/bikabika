@@ -9,6 +9,7 @@ namespace winrt::bikabika::implementation
 
 	ComicBlock::ComicBlock(winrt::Windows::Data::Json::JsonObject const& json)
 	{
+		m_json = json;
 		extern winrt::hstring serverStream;
 		hstring path = serverStream + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
 
@@ -140,6 +141,11 @@ namespace winrt::bikabika::implementation
 	void ComicBlock::PropertyChanged(winrt::event_token const& token) noexcept
 	{
 		m_propertyChanged.remove(token);
+	}
+
+	winrt::Windows::Data::Json::JsonObject ComicBlock::GetJsonObject()
+	{
+		return m_json;
 	}
 	
 }

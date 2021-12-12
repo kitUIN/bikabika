@@ -89,7 +89,6 @@ namespace winrt::bikabika::implementation
 				{
 					Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
 					Windows::Data::Json::JsonObject jsonObject = ca.GetNamedObject(L"comics");
-					
 					m_limit = jsonObject.GetNamedNumber(L"limit");
 					m_total = jsonObject.GetNamedNumber(L"total");
 					m_pageNumBox.PageIndex(jsonObject.GetNamedNumber(L"page"));
@@ -211,6 +210,7 @@ namespace winrt::bikabika::implementation
 	void winrt::bikabika::implementation::ComicsPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 	{
 		auto comicBlock = e.ClickedItem().as<bikabika::ComicBlock>();
+		m_fileCheckTool.SetHistory(comicBlock.GetJsonObject());
 		auto container = GridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
 		auto root = container.ContentTemplateRoot().as<FrameworkElement>();
 		auto image =  root.FindName(L"ConnectedElement2").as<UIElement>();

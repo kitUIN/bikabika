@@ -50,6 +50,44 @@ namespace winrt::bikabika::implementation
 
 
 	}
+	// 检测history文件
+	Windows::Foundation::IAsyncOperation<bool> FileCheckTool::CheckHistory()
+	{
+
+		bool f = false;
+
+		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+		Windows::Storage::StorageFolder folderDB{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+
+		for (auto const& folder : co_await localFolder.GetFoldersAsync())
+		{
+			if (folder.Name() == L"bikabikadb")
+			{
+				for (auto const& file : co_await folderDB.GetFilesAsync())
+				{
+					if (file.Name() == L"history.json")
+					{
+
+						f = true;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		if (!f)
+		{
+			Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+			OutputDebugStringW(L"\n[Error] history file is not exist -> Get New\n\n");
+			Windows::Storage::StorageFolder folder{ co_await localFolder.CreateFolderAsync(L"bikabikadb", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+			auto historyFile{ co_await folder.CreateFileAsync(L"history.json", Windows::Storage::CreationCollisionOption::OpenIfExists) };
+			// user文件
+			Windows::Data::Json::JsonArray jsonArry;
+			hstring data = jsonArry.Stringify();
+			co_await Windows::Storage::FileIO::WriteTextAsync(historyFile, data);
+		}
+		co_return f;
+	}
 	// 检测User文件
 	Windows::Foundation::IAsyncOperation<bool> FileCheckTool::CheckFileUser()
 	{
@@ -74,7 +112,6 @@ namespace winrt::bikabika::implementation
 				}
 				break;
 			}
-
 		}
 		if (!f)
 		{
@@ -103,16 +140,10 @@ namespace winrt::bikabika::implementation
 			user.SetNamedValue(L"avatar", avatar);
 			user.SetNamedValue(L"isPunched", JsonValue::CreateBooleanValue(false));
 			user.SetNamedValue(L"character", JsonValue::CreateStringValue(L""));
-			
-
 			hstring data = user.Stringify();
 			co_await Windows::Storage::FileIO::WriteTextAsync(accountFile, data);
 		}
-
-
 		co_return f;
-
-
 	}
 	// 检测Keywords文件
 	Windows::Foundation::IAsyncOperation<bool> FileCheckTool::CheckFileKeywords()
@@ -221,5 +252,35 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction FileCheckTool::SetSettings(Windows::Data::Json::JsonObject value)
 	{
 		return Windows::Foundation::IAsyncAction();
+	}
+	Windows::Foundation::IAsyncOperation<Windows::Data::Json::JsonArray> FileCheckTool::GetHistory()
+	{
+		bool f{ co_await CheckHistory() };
+		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+		Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
+		auto historyFile{ co_await folderDB.GetFileAsync(L"history.json") };
+		co_return Windows::Data::Json::JsonArray::Parse(co_await Windows::Storage::FileIO::ReadTextAsync(historyFile));
+
+	}
+	Windows::Foundation::IAsyncAction FileCheckTool::SetHistory(Windows::Data::Json::JsonObject value)
+	{
+		//OutputDebugStringW(value.Stringify().c_str());
+		uint32_t i;
+		auto history = co_await GetHistory();
+		uint32_t n = history.Size();
+		for (i = 0; i < n ;i++)
+		{
+			if (value.ToString() == history.GetAt(i).GetObject().ToString())
+			{
+				history.RemoveAt(i);
+				break;
+			}
+		}
+		history.InsertAt(0, value);
+		hstring data = history.Stringify();
+		Windows::Storage::StorageFolder localFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+		Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
+		auto historyFile{ co_await folderDB.GetFileAsync(L"history.json") };
+		co_await Windows::Storage::FileIO::WriteTextAsync(historyFile, data);
 	}
 }

@@ -9,6 +9,7 @@ namespace winrt::bikabika::implementation
         FileCheckTool() = default;
         
         Windows::Foundation::IAsyncOperation<bool> CheckFileAccount();
+        Windows::Foundation::IAsyncOperation<bool> CheckHistory();
         Windows::Foundation::IAsyncOperation<bool> CheckFileUser();
         Windows::Foundation::IAsyncOperation<bool> CheckFileKeywords();
         Windows::Foundation::IAsyncOperation<bool> CheckFileSettings();
@@ -21,6 +22,8 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncAction SetKeywords(Windows::Data::Json::JsonObject value);
         Windows::Foundation::IAsyncOperation <Windows::Data::Json::JsonObject> GetSettings();
         Windows::Foundation::IAsyncAction SetSettings(Windows::Data::Json::JsonObject value);
+        Windows::Foundation::IAsyncOperation <Windows::Data::Json::JsonArray> GetHistory();
+        Windows::Foundation::IAsyncAction SetHistory(Windows::Data::Json::JsonObject value);
     };
 }
 namespace winrt::bikabika::factory_implementation

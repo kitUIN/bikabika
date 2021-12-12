@@ -56,9 +56,6 @@ namespace winrt::bikabika::implementation
 		bool m_suggestIsChosen = false;
 		bikabika::FileCheckTool m_fileCheckTool;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordsBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
-		Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
 		
 	};
 

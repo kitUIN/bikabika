@@ -1,4 +1,5 @@
 import "Utils/Blocks/UserViewModel.idl";
+import "Utils/Blocks/ComicBlock.idl";
 namespace bikabika
 {
     [default_interface]
@@ -6,5 +7,8 @@ namespace bikabika
     {
         UserPage();
         UserViewModel MainUserViewModel{ get; };
+        Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  FavComicBlocks{ get; };
+        Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  LookComicBlocks{ get; };
+
     }
 }

@@ -10,6 +10,7 @@ namespace winrt::bikabika::implementation
         LoginPage();
         Windows::Foundation::IAsyncAction ReadAccountJson();
         Windows::Foundation::IAsyncAction WriteAccountJson(hstring email, hstring password, hstring token, boolean isCheck);
+        void ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction LoginAccount();
         Windows::Foundation::IAsyncAction SetPerson();
         void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
@@ -18,9 +19,6 @@ namespace winrt::bikabika::implementation
     public:
         bikabika::BikaHttp m_bikaHttp;
         bikabika::FileCheckTool m_fileCheckTool;
-        Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-        Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-
     };
 }
 

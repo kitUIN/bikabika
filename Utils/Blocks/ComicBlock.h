@@ -34,6 +34,7 @@ namespace winrt::bikabika::implementation
         void LikesCount(int32_t value);
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
+        winrt::Windows::Data::Json::JsonObject GetJsonObject();
     private:
         hstring m_id;
         hstring m_title;
@@ -48,7 +49,7 @@ namespace winrt::bikabika::implementation
         winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{L"ms-appx:///gray.png"} } ;
         int32_t m_likesCount;
         winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
-
+        winrt::Windows::Data::Json::JsonObject m_json;
     };
 }
 namespace winrt::bikabika::factory_implementation

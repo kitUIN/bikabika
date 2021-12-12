@@ -29,9 +29,8 @@
 由于UWP软件是无法使用外部代理的，我们需要一些工具来帮助我们实现使用代理的功能。
 
 推荐使用Clash\
-![](https://i.niupic.com/images/2021/12/09/9Lp1.png)
-
-![](https://i.niupic.com/images/2021/12/09/9Lp0.png)
+![1](https://i.niupic.com/images/2021/12/09/9Lp1.png)
+![2](https://i.niupic.com/images/2021/12/09/9Lp0.png)
 
 保存后就可以使用Clash代理了
 
@@ -41,9 +40,10 @@
 
 ![1](https://files.catbox.moe/qlt1kk.jpg)\
 ![2](https://files.catbox.moe/fs2u1u.png)\
-![](https://files.catbox.moe/sqon7p.png)\
-![](https://files.catbox.moe/reyd8v.png)\
-![](https://files.catbox.moe/m3ad21.png)
+![3](https://files.catbox.moe/sqon7p.png)\
+![4](https://files.catbox.moe/reyd8v.png)\
+![5](https://files.catbox.moe/m3ad21.png)
+![6](https://i.niupic.com/images/2021/12/12/9Puv.png)
 
 ## 功能📝
 
@@ -59,7 +59,7 @@
 
     *   [ ] 打卡
 
-    *   [ ] 收藏
+    *   [x] 收藏
 
     *   [ ] 浏览历史
 
@@ -121,6 +121,8 @@
 
 ###
 
+
+
 *   [ ] 点击搜索栏自动出现
 
 *   [ ] 更新关键字列表
@@ -131,13 +133,17 @@
 
 *   [ ] Pic界面 可拖动本页
 
-*   [ ] Info界面 从头开始阅读
-
 *   [ ] Info界面 下载话/全部下载
 
-*   [ ] User界面
-
 *   [ ] Download界面
+
+Alpha 0.1.2
+
+*   [x] User界面
+
+*   [x] User界面 查看收藏
+
+*   [x] Info界面 从头开始阅读
 
 Alpha 0.1.0
 

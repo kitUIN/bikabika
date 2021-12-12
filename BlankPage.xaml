@@ -8,10 +8,6 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel Orientation="Horizontal">
-            <Image  Width="36" Height="36" Margin="0,0,0,0"/>
-            <TextBlock  Text="嗶咔" FontSize="25" FontWeight="Bold" Margin="20,4,0,0"/>
-
-        </StackPanel>
+        <Button x:Name="Button" Click="ClickHandler">Click Me</Button>
     </StackPanel>
 </Page>

@@ -49,7 +49,6 @@
                 
             </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems>
-
                 <muxc:NavigationViewItemHeader Height="5"/>
                 <muxc:NavigationViewItemSeparator/>
                 <muxc:NavigationViewItem Tag="home" x:Uid="NavHome" Icon="Home" Content="主頁"/>
@@ -64,11 +63,7 @@
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame"   Padding="24,12,24,36" Margin="0,24,0,0" IsTabStop="True"
-                   NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated" >
-
-            </Frame>
-            
+            <Frame x:Name="ContentFrame"   Padding="24,12,24,36" Margin="0,24,0,0" IsTabStop="True" NavigationFailed="ContentFrame_NavigationFailed" Navigated="ContentFrame_Navigated" />
         </muxc:NavigationView>
 
         

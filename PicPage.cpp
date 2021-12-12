@@ -29,19 +29,41 @@ namespace winrt::bikabika::implementation
         co_await Goto(m_order, 1);
         
     }
+    void PicPage::ContentDialogShow(hstring const& mode, hstring const& message)
+    {
+        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+        if (mode == L"Timeout") {
+            auto show{ PicErrorDialog().ShowAsync() };
+        }
+        else {
+            HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
+            HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
+            if (mode == L"Error")
+            {
+                HttpContentDialog().Content(box_value(message));
+            }
+            else if (mode == L"Unknown")
+            {
+                Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
+                HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+            }
+            else if (mode == L"1005")
+            {
+                HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+            }
+            auto show{ HttpContentDialog().ShowAsync() };
+        }
+    }
     Windows::Foundation::IAsyncAction PicPage::Goto(int32_t const& order, int32_t const& page)
     {
         
         auto res{ co_await m_bikaHttp.Picture(m_bookId, order, page) };
-        if (res[1] == 'T') {
-            //auto show{ PicErrorDialog().ShowAsync() };
+        if (res[1] == 'T')
+        {
+            ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-            LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-            LoginContentDialog().Content(box_value(res));
-            LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-            auto show{ co_await LoginContentDialog().ShowAsync() };*/
+            ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -72,24 +94,13 @@ namespace winrt::bikabika::implementation
                 
             }
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
-            {	//缺少鉴权
-                /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-                LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-                LoginContentDialog().Content(box_value(resourceLoader.GetString(L"LoginAuthFail/Content")));
-                LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-                auto show{ co_await LoginContentDialog().ShowAsync() };
-                if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None) Frame().Navigate(winrt::xaml_typename<bikabika::Login>());
-                */
+            {
+                ContentDialogShow(L"1005", L"");
             }
+            //未知
             else
             {
-                //未知
-                /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-                LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-                LoginContentDialog().Content(box_value(to_hstring(code) + L":" + resp.GetNamedString(L"message")));
-                LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-                auto show{ co_await LoginContentDialog().ShowAsync() };
-                */
+                ContentDialogShow(L"Unknown", res);
             }
         }
     }

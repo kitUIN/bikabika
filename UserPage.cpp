@@ -12,7 +12,7 @@ namespace winrt::bikabika::implementation
     UserPage::UserPage()
     {
         InitializeComponent();
-		
+		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
     bikabika::UserViewModel UserPage::MainUserViewModel()
@@ -24,7 +24,7 @@ namespace winrt::bikabika::implementation
 		int32_t temp = (level + 1) * 2 - 1;
 		return (temp * temp - 1) * 25;
 	}
-	void UserPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	Windows::Foundation::IAsyncAction UserPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		__super::OnNavigatedTo(e);
 		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
@@ -48,6 +48,92 @@ namespace winrt::bikabika::implementation
 			//OutputDebugStringW(title.c_str());
 			if (img != m_userViewModel.User().Img().UriSource().ToString()) m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
 		}
+		if (!m_firstArrive)
+		{
+			co_await GetFavourite(L"dd", 1);
+			m_firstArrive = true;
+		}
+		co_await GetHistory();
 	}
-	
+	Windows::Foundation::IAsyncAction UserPage::GetHistory()
+	{
+		auto history = co_await m_fileCheckTool.GetHistory();
+		UserLookCounts().Value(history.Size());
+		for (auto s : history)
+		{
+			m_lookComicBlocks.Append(winrt::make<ComicBlock>(s.GetObject()));
+		}
+	}
+	void UserPage::ContentDialogShow(hstring const& mode, hstring const& message)
+	{
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		if (mode == L"Timeout") {
+			auto show{ PicErrorDialog().ShowAsync() };
+		}
+		else {
+			HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
+			HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
+			if (mode == L"Error")
+			{
+				HttpContentDialog().Content(box_value(message));
+			}
+			else if (mode == L"Unknown")
+			{
+				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
+				HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+			}
+			else if (mode == L"1005")
+			{
+				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+			}
+			auto show{ HttpContentDialog().ShowAsync() };
+		}
+	}
+	Windows::Foundation::IAsyncAction UserPage::GetFavourite(hstring const& sort,int32_t const& page)
+	{
+		auto res = co_await m_bikaHttp.PersonFavourite(page);
+		if (res[1] == 'T')
+		{
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (res[1] == 'E') {
+			ContentDialogShow(L"Error", res);
+		}
+		else
+		{
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+			double code = resp.GetNamedNumber(L"code");
+			if (code == (double)200)
+			{
+				Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+				Windows::Data::Json::JsonObject jsonObject = ca.GetNamedObject(L"comics");
+				m_limit = jsonObject.GetNamedNumber(L"limit");
+				m_total = jsonObject.GetNamedNumber(L"total");
+				UserFavouriteCounts().Value(m_total);
+				for (auto x : jsonObject.GetNamedArray(L"docs"))
+				{
+					m_favComicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
+				}
+
+			}
+			//缺少鉴权
+			else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+			{	
+				ContentDialogShow(L"1005", L"");
+			}
+			//未知
+			else
+			{
+				ContentDialogShow(L"Unknown",res);
+			}
+		}
+	}
+	winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> UserPage::FavComicBlocks()
+	{
+		return m_favComicBlocks;
+	}
+	winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> UserPage::LookComicBlocks()
+	{
+		return m_lookComicBlocks;
+	}
 }

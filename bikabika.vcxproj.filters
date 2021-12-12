@@ -11,9 +11,9 @@
     <Page Include="Pages\SettingsPage.xaml" />
     <Page Include="Pages\ClassificationPage.xaml" />
     <Page Include="Pages\AccountPage.xaml" />
-    <Page Include="Pages\ComicsPage.xaml" />
-    <Page Include="Pages\InfoPage.xaml" />
-    <Page Include="Pages\PicPage.xaml" />
+    <Page Include="ComicsPage.xaml" />
+    <Page Include="InfoPage.xaml" />
+    <Page Include="PicPage.xaml" />
     <Page Include="Pages\DownloadPage.xaml" />
     <Page Include="UserPage.xaml" />
     <Page Include="LoginPage.xaml" />

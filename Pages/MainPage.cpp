@@ -26,21 +26,23 @@ using namespace Windows::ApplicationModel::Core;
 namespace winrt::bikabika::implementation
 {
 
-
+	
 	MainPage::MainPage()
 	{
 		
 		InitializeComponent();
+		Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (!serversSettings.Values().HasKey(L"picServer1")) serversSettings.Values().Insert(L"picServer1", box_value(L"https://storage1.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer2")) serversSettings.Values().Insert(L"picServer2", box_value(L"https://s2.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer3")) serversSettings.Values().Insert(L"picServer3", box_value(L"https://s3.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServerCurrent")) serversSettings.Values().Insert(L"picServerCurrent", box_value(L"https://storage1.picacomic.com"));
+		Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
 		if (!localSettings.Values().HasKey(L"launchedWithPrefSize"))
 		{
-			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1350, 1000));
-			ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1350, 1000));
+			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1470, 1000));
+			ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
 			ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
-			auto localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
 			localSettings.Values().Insert(L"launchedWithPrefSize", box_value(true));
 		}
 		ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
@@ -56,7 +58,7 @@ namespace winrt::bikabika::implementation
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"login", winrt::xaml_typename<bikabika::LoginPage>()));
-		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+		//NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
 		auto acc{ UpdateToken() };
 	}
@@ -65,20 +67,12 @@ namespace winrt::bikabika::implementation
 
 
 
-	std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
-
+	
 	void MainPage::NavView_Loaded(
 		Windows::Foundation::IInspectable const& /* sender */,
 		Windows::UI::Xaml::RoutedEventArgs const& /* args */)
 	{
-		//NavView().MenuItems().Append(muxc::NavigationViewItemSeparator());
-		//muxc::NavigationViewItem navigationViewItem;
-		//navigationViewItem.Content(winrt::box_value(L"My content"));
-		//navigationViewItem.Icon(wuxc::SymbolIcon(static_cast<wuxc::Symbol>(0xF1AD)));
-		//navigationViewItem.Tag(winrt::box_value(L"content"));
-		//NavView().MenuItems().Append(navigationViewItem);
 		NavView_Navigate(L"login",Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
-		//NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 	}
 
 	void MainPage::NavView_ItemInvoked(
@@ -332,6 +326,9 @@ namespace winrt::bikabika::implementation
 
 	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
+		Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+
 		if (userData.Values().HasKey(L"personInfo"))
 		{
 			Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));

@@ -75,7 +75,7 @@
         <ScrollViewer Margin="3,38,0,10">
             <StackPanel >
 
-                <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True"  ItemClick="GridV_ItemClick"
+                <GridView x:Name="GridV" SelectionMode="None" HorizontalAlignment="Center" IsItemClickEnabled="True"  ItemClick="GridV_ItemClick"
                 ItemsSource="{x:Bind ComicBlocks}" Margin="0,0,0,0" ItemContainerStyle="{StaticResource MyListBoxItemStyle}"
                 >
                     <GridView.ItemTemplate>

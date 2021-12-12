@@ -121,6 +121,9 @@
     <value>哔咔</value>
     <comment>标题栏</comment>
   </data>
+  <data name="AutoLogining" xml:space="preserve">
+    <value>自动登陆中</value>
+  </data>
   <data name="categories.forum" xml:space="preserve">
     <value>哔咔留言板</value>
     <comment>分类第六个</comment>
@@ -200,16 +203,31 @@
     <value>绝对不是!</value>
     <comment>未知错误第4行</comment>
   </data>
-  <data name="Fail.CloseButtonText" xml:space="preserve">
+  <data name="FailAuth" xml:space="preserve">
+    <value>Token获取失败,请重新登录</value>
+    <comment>因为Token获取失败登陆失败对话框内容</comment>
+  </data>
+  <data name="FailCloseButtonText" xml:space="preserve">
     <value>确定</value>
     <comment>对话框按钮"确定"</comment>
   </data>
-  <data name="Fail.Title" xml:space="preserve">
-    <value>登陆失败</value>
-    <comment>对话框标题"登陆失败"</comment>
-  </data>
   <data name="FailComment" xml:space="preserve">
     <value>该作品不允许评论</value>
+  </data>
+  <data name="FailHttpTitle" xml:space="preserve">
+    <value>请求错误</value>
+  </data>
+  <data name="FailLoginBlank" xml:space="preserve">
+    <value>请输入您的账号和密码</value>
+    <comment>因为用户名空登陆失败对话框内容</comment>
+  </data>
+  <data name="FailLoginPassword" xml:space="preserve">
+    <value>错误的账号或密码,请重试 :(</value>
+    <comment>因为密码错误登陆失败对话框内容</comment>
+  </data>
+  <data name="FailLoginTitle" xml:space="preserve">
+    <value>登陆失败</value>
+    <comment>对话框标题"登陆失败"</comment>
   </data>
   <data name="Favourite.Label" xml:space="preserve">
     <value>收藏</value>
@@ -222,21 +240,12 @@
     <value>加载失败</value>
     <comment>对话框标题加载失败</comment>
   </data>
-  <data name="LoginAuthFail.Content" xml:space="preserve">
-    <value>Token获取失败,请重新登录</value>
-    <comment>因为Token获取失败登陆失败对话框内容</comment>
-  </data>
-  <data name="LoginBlankFail.Content" xml:space="preserve">
-    <value>请输入您的账号和密码</value>
-    <comment>因为用户名空登陆失败对话框内容</comment>
-  </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>登陆</value>
     <comment>登陆按钮</comment>
   </data>
-  <data name="LoginPasswordFail.Content" xml:space="preserve">
-    <value>错误的账号或密码,请重试 :(</value>
-    <comment>因为密码错误登陆失败对话框内容</comment>
+  <data name="Logining" xml:space="preserve">
+    <value>登陆中</value>
   </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
@@ -299,6 +308,10 @@
   </data>
   <data name="UserFavourite.Text" xml:space="preserve">
     <value>我的收藏</value>
+    <comment>用户界面</comment>
+  </data>
+  <data name="UserLook.Text" xml:space="preserve">
+    <value>浏览记录</value>
     <comment>用户界面</comment>
   </data>
 </root>

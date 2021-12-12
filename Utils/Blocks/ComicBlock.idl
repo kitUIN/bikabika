@@ -16,5 +16,6 @@ namespace bikabika
         String Category;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Thumb;
         Int32 LikesCount;
+        Windows.Data.Json.JsonObject GetJsonObject{ get; };
     }
 }

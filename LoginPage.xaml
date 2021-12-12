@@ -41,8 +41,8 @@
                         <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
                         <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
                     </StackPanel>
-                </ContentDialog>
-                <ContentDialog x:Name="LoginContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+                </ContentDialog >
+                <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
             </Grid>
         </ScrollViewer>
     </Grid>

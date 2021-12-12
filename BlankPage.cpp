@@ -24,5 +24,8 @@ namespace winrt::bikabika::implementation
         throw hresult_not_implemented();
     }
 
-
+    void BlankPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
+    {
+        Button().Content(box_value(L"Clicked"));
+    }
 }
