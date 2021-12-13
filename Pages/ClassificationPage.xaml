@@ -4,10 +4,24 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:local="using:bikabika"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d">
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d">
 
     <Grid>
+        <muxc:TeachingTip x:Uid="ErrorTip" Background="{StaticResource SystemAccentColorLight3}" ActionButtonClick="ErrorTip_ActionButtonClick" Title="Loading Error!" x:Name="ErrorTip" PreferredPlacement="BottomRight" IsLightDismissEnabled="False">
+            <muxc:TeachingTip.Content>
+                <TextBlock x:Uid="ErrorText"  Margin="0,10,0,0" Text=" Maybe You Want To Refresh" FontSize="18"   FontWeight="Black"  Foreground="{ThemeResource SystemAccentColorDark3}"/>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="Important"/>
+            </muxc:TeachingTip.IconSource>
+            <muxc:TeachingTip.ActionButtonContent>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72C;" FontWeight="Black" FontSize="16" Foreground="Red"/>
+                    <TextBlock x:Uid="ErrorButton" Margin="30,0,0,0" Text="Yes"/>
+                </StackPanel>
+            </muxc:TeachingTip.ActionButtonContent>
+        </muxc:TeachingTip>
         <ScrollViewer>
             <Grid>
                 <StackPanel>
@@ -36,6 +50,12 @@
                 </StackPanel >
             </Grid>
         </ScrollViewer>
+        <muxc:TeachingTip Background="{StaticResource SystemAccentColorLight3}" x:Name="LayoutMessage" PreferredPlacement="Center"  IsLightDismissEnabled="False">
+            <muxc:TeachingTip.Content>
+                <ProgressRing Padding="10" Height="80" Width="80" IsActive="True" Foreground="{StaticResource SystemAccentColor}"/>
+            </muxc:TeachingTip.Content>
+        </muxc:TeachingTip>
+        
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>
@@ -50,6 +70,12 @@
                 <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+        </ContentDialog >
     </Grid>
 </Page>

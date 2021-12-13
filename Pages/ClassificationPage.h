@@ -19,7 +19,9 @@ namespace winrt::bikabika::implementation
         bikabika::ClassBlockViewModel m_classBlockView{ nullptr };
         bikabika::BikaHttp m_bikaHttp;
         bikabika::FileCheckTool m_fileCheckTool;
-        };
+    public:
+        void ErrorTip_ActionButtonClick(winrt::Microsoft::UI::Xaml::Controls::TeachingTip const& sender, winrt::Windows::Foundation::IInspectable const& args);
+    };
 }
 
 namespace winrt::bikabika::factory_implementation

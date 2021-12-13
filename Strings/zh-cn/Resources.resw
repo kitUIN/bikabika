@@ -194,6 +194,12 @@
     <value>邮箱</value>
     <comment>登陆账号提示</comment>
   </data>
+  <data name="ErrorButton.Text" xml:space="preserve">
+    <value>重新加载</value>
+  </data>
+  <data name="ErrorText.Text" xml:space="preserve">
+    <value>是否需要重新加载？</value>
+  </data>
   <data name="ErrorText1.Text" xml:space="preserve">
     <value>哔咔哔咔被玩坏了!</value>
     <comment>未知错误第1行</comment>
@@ -209,6 +215,9 @@
   <data name="ErrorText4.Text" xml:space="preserve">
     <value>绝对不是!</value>
     <comment>未知错误第4行</comment>
+  </data>
+  <data name="ErrorTip.Title" xml:space="preserve">
+    <value>加载失败QAQ</value>
   </data>
   <data name="FailAuth" xml:space="preserve">
     <value>Token获取失败,请重新登录</value>
@@ -246,6 +255,9 @@
   <data name="LoadFail.Title" xml:space="preserve">
     <value>加载失败</value>
     <comment>对话框标题加载失败</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>加载中.....</value>
   </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>登陆</value>
@@ -334,6 +346,9 @@
   <data name="UserFavourite.Text" xml:space="preserve">
     <value>我的收藏</value>
     <comment>用户界面</comment>
+  </data>
+  <data name="UserInfomation.Text" xml:space="preserve">
+    <value>    “伺服器君是個變態”</value>
   </data>
   <data name="UserLook.Text" xml:space="preserve">
     <value>浏览记录</value>

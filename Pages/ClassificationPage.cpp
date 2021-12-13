@@ -13,8 +13,7 @@ namespace winrt::bikabika::implementation
 	{
 		InitializeComponent();
 		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
-		
-		
+		auto ccc{ Init() };
 	}
 	bikabika::BikaHttp ClassificationPage::BikaHttpAPI()
 	{
@@ -61,11 +60,15 @@ namespace winrt::bikabika::implementation
 				}
 			}
 		}
-
+		ErrorTip().IsOpen(true);
 	}
 	Windows::Foundation::IAsyncAction ClassificationPage::Init()
 	{
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		LayoutMessage().Title(resourceLoader.GetString(L"Loading"));
+		LayoutMessage().IsOpen(true);
 		hstring res{ co_await m_bikaHttp.Categories() };
+		LayoutMessage().IsOpen(false);
 		if (res[1] == 'T')
 		{
 			co_await ContentDialogShow(L"Timeout", L"");
@@ -114,7 +117,7 @@ namespace winrt::bikabika::implementation
 		loadComicFlag = true;
 		__super::OnNavigatedTo(e);
 		m_classBlockView = winrt::make<ClassBlockViewModel>();
-		auto ccc{ Init() };
+		
 	}
 	
 }
@@ -129,4 +132,11 @@ void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt
 		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Comic",classBlack.ClassName(), to_hstring("ua")})));
 	}
 
+}
+
+
+void winrt::bikabika::implementation::ClassificationPage::ErrorTip_ActionButtonClick(winrt::Microsoft::UI::Xaml::Controls::TeachingTip const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+	auto ccc{ Init() };
+	ErrorTip().IsOpen(false);
 }

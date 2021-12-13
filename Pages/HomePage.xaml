@@ -24,6 +24,12 @@
                 <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+        </ContentDialog >
     </Grid>
 </Page>

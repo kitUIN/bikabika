@@ -56,12 +56,14 @@ namespace winrt::bikabika::implementation
 		void CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args);
 
 		void Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-		
+		hstring PicPath();
 	private:
 
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
 		bool m_suggestIsChosen = false;
+		bool m_firstArrive = true;
+		hstring m_picPath = L"ms-appx:///Assets//Picacgs//icon_unknown_error.png";
 		bikabika::BikaHttp m_bikaHttp;
 		bikabika::FileCheckTool m_fileCheckTool;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordsBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();

@@ -36,7 +36,7 @@ namespace winrt::bikabika::implementation
 		if (!serversSettings.Values().HasKey(L"picServer1")) serversSettings.Values().Insert(L"picServer1", box_value(L"https://storage1.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer2")) serversSettings.Values().Insert(L"picServer2", box_value(L"https://s2.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer3")) serversSettings.Values().Insert(L"picServer3", box_value(L"https://s3.picacomic.com"));
-		if (!serversSettings.Values().HasKey(L"picServerCurrent")) serversSettings.Values().Insert(L"picServerCurrent", box_value(L"https://storage1.picacomic.com"));
+		if (!serversSettings.Values().HasKey(L"picServersCurrent")) serversSettings.Values().Insert(L"picServersCurrent", box_value(L"https://storage1.picacomic.com"));
 		Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
 		if (!localSettings.Values().HasKey(L"launchedWithPrefSize"))
 		{
@@ -58,6 +58,9 @@ namespace winrt::bikabika::implementation
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
 		LoginTeachingTip().IsOpen(true);
+		NavHome().IsEnabled(false);
+		NavClassification().IsEnabled(false);
+		NavAccount().IsEnabled(false);
 	}
 
 
@@ -357,6 +360,7 @@ namespace winrt::bikabika::implementation
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 
 		if (mode == L"Timeout") {
+
 			auto show{ PicErrorDialog().ShowAsync() };
 		}
 		else {
@@ -366,13 +370,11 @@ namespace winrt::bikabika::implementation
 			{
 				HttpContentDialog().Content(box_value(message));
 				auto show{ co_await HttpContentDialog().ShowAsync() };
-
 			}
 			else if (mode == L"LoginError")
 			{
 				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginPassword")));
-				auto show{ co_await HttpContentDialog().ShowAsync() };
-
+				auto show{ HttpContentDialog().ShowAsync() };
 			}
 			else if (mode == L"Unknown")
 			{
@@ -397,7 +399,7 @@ namespace winrt::bikabika::implementation
 			else if (mode == L"Blank")
 			{
 				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginBlank")));
-				auto show{ co_await HttpContentDialog().ShowAsync() };
+				auto show{ HttpContentDialog().ShowAsync() };
 			}
 			
 		}
@@ -434,7 +436,12 @@ namespace winrt::bikabika::implementation
 				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LayoutMessage().Title(resourceLoader.GetString(L"Logining"));
 				LayoutMessage().IsOpen(true);
+
+				NavHome().IsEnabled(true);
+				NavClassification().IsEnabled(true);
+				NavAccount().IsEnabled(true);
 				co_await SetPerson();
+				
 			}
 			//未知
 			else
@@ -481,6 +488,8 @@ namespace winrt::bikabika::implementation
 				{
 					Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
 					hstring name = personInfo.GetNamedString(L"name");
+					hstring slogan = L"\"" + to_hstring(personInfo.GetNamedString(L"slogan")) + L"\"";
+					UserInfomation().Text(slogan);
 					if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
 					hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
 					if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
@@ -490,7 +499,11 @@ namespace winrt::bikabika::implementation
 					}
 				}
 				NavView().SelectedItem(NavView().MenuItems().GetAt(1));
-				ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+				if (m_firstArrive) {
+					ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+					m_firstArrive = false;
+				}
+				
 			}
 			//未知
 			else
@@ -526,18 +539,30 @@ namespace winrt::bikabika::implementation
 		}
 		if (auto y = loginData.Values().TryLookup(L"rememberMe"))
 		{
-			RememberCheckBox().IsChecked(unbox_value<bool>(y));
-			if (auto z = loginData.Values().TryLookup(L"password"))
+			if (unbox_value<bool>(y))
 			{
-				Password().Password(unbox_value<hstring>(z));
+				RememberCheckBox().IsChecked(unbox_value<bool>(y));
+				if (auto z = loginData.Values().TryLookup(L"password"))
+				{
+					Password().Password(unbox_value<hstring>(z));
+				}
+				if (auto s = loginData.Values().TryLookup(L"autoLogin"))
+				{
+					AutoCheckBox().IsChecked(unbox_value<bool>(s));
+				}
 			}
-			if (auto s = loginData.Values().TryLookup(L"autoLogin"))
+			else
 			{
-				AutoCheckBox().IsChecked(unbox_value<bool>(s));
+				Password().Password(L"");
 			}
-		}
 
+		}
+		
 		auto bcc{ AutoLogin() };
+	}
+	hstring MainPage::PicPath()
+	{
+		return m_picPath;
 	}
 	//自动登录
 	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
