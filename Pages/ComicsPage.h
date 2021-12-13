@@ -12,7 +12,7 @@ namespace winrt::bikabika::implementation
         
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> ComicBlocks();
         winrt::Windows::Foundation::Collections::IObservableVector<winrt::hstring> TypeBlocks();
-        void ContentDialogShow(hstring const& mode, hstring const& message);
+        Windows::Foundation::IAsyncAction  ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         Windows::Foundation::IAsyncAction PipsPager_SelectedIndexChanged(winrt::Microsoft::UI::Xaml::Controls::PipsPager const& sender, winrt::Microsoft::UI::Xaml::Controls::PipsPagerSelectedIndexChangedEventArgs const& args);
         Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode);

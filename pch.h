@@ -46,12 +46,9 @@
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
-extern winrt::hstring token = L"";
 extern winrt::hstring imageQuality = L"original";//medium
-extern winrt::hstring userName = L"Gentleman";
-extern winrt::hstring userLevel = L"Lv.0";
-extern winrt::hstring userImage = L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png";
-extern winrt::hstring serverStream = L"https://storage1.picacomic.com";
+
 extern bool keywordLoaded = false;
 extern bool animeFlag = true;
 extern bool loadComicFlag = true;
+extern bool m_login = false;

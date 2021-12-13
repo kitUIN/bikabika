@@ -10,8 +10,8 @@ namespace winrt::bikabika::implementation
 	ComicBlock::ComicBlock(winrt::Windows::Data::Json::JsonObject const& json)
 	{
 		m_json = json;
-		extern winrt::hstring serverStream;
-		hstring path = serverStream + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
+		Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		hstring path = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
 
 		m_id = json.GetNamedString(L"_id");
 		m_title = json.GetNamedString(L"title");

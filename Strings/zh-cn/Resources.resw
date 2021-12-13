@@ -121,6 +121,10 @@
     <value>哔咔</value>
     <comment>标题栏</comment>
   </data>
+  <data name="AutoCheckBox.Content" xml:space="preserve">
+    <value>自动登录</value>
+    <comment>登陆</comment>
+  </data>
   <data name="AutoLogining" xml:space="preserve">
     <value>自动登陆中</value>
   </data>

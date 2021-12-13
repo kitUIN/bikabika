@@ -11,8 +11,8 @@ namespace winrt::bikabika::implementation
         m_title = json.GetNamedString(L"title");
         m_creater = winrt::make<CreaterBlock>(json.GetNamedObject(L"_creator"));
         m_description = json.GetNamedString(L"description");
-        extern winrt::hstring serverStream;
-        hstring path = serverStream + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
+        Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+        hstring path = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + json.GetNamedObject(L"thumb").GetNamedString(L"path");
         m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
         m_author = json.GetNamedString(L"author");
         m_chineseTeam = json.GetNamedString(L"chineseTeam");

@@ -13,10 +13,10 @@ namespace winrt::bikabika::implementation
         m_exp = json.GetNamedNumber(L"exp");
         m_level = json.GetNamedNumber(L"level");
         m_role = json.GetNamedString(L"role");
-        extern winrt::hstring serverStream;
         if (auto s = json.TryLookup(L"avatar"))
         {
-            hstring path = serverStream + L"/static/" + s.GetObject().GetNamedString(L"path");
+            Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+            hstring path = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + s.GetObject().GetNamedString(L"path");
             m_thumb = winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ path} };
         }
         for (auto x : json.GetNamedArray(L"characters"))

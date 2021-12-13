@@ -29,7 +29,7 @@ namespace winrt::bikabika::implementation
         co_await Goto(m_order, 1);
         
     }
-    void PicPage::ContentDialogShow(hstring const& mode, hstring const& message)
+    Windows::Foundation::IAsyncAction PicPage::ContentDialogShow(hstring const& mode, hstring const& message)
     {
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         if (mode == L"Timeout") {
@@ -41,18 +41,32 @@ namespace winrt::bikabika::implementation
             if (mode == L"Error")
             {
                 HttpContentDialog().Content(box_value(message));
+                auto show{ co_await HttpContentDialog().ShowAsync() };
+
             }
             else if (mode == L"Unknown")
             {
                 Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
                 HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+                auto show{ co_await HttpContentDialog().ShowAsync() };
+
             }
             else if (mode == L"1005")
             {
                 HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+                extern bool m_login;
+                m_login = false;
+                auto show{ co_await HttpContentDialog().ShowAsync() };
+                if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
+                {
+                    auto loginTeachingTip = Frame().Parent().as<Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<Windows::UI::Xaml::Controls::Grid>().Children().GetAt(3).as<Microsoft::UI::Xaml::Controls::TeachingTip>();
+                    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+                    loginTeachingTip.Title(resourceLoader.GetString(L"LoginButton/Content"));
+                    loginTeachingTip.IsOpen(true);
+                }
             }
-            auto show{ HttpContentDialog().ShowAsync() };
         }
+
     }
     Windows::Foundation::IAsyncAction PicPage::Goto(int32_t const& order, int32_t const& page)
     {
@@ -60,10 +74,10 @@ namespace winrt::bikabika::implementation
         auto res{ co_await m_bikaHttp.Picture(m_bookId, order, page) };
         if (res[1] == 'T')
         {
-            ContentDialogShow(L"Timeout", L"");
+            co_await ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            ContentDialogShow(L"Error", res);
+            co_await ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -80,8 +94,8 @@ namespace winrt::bikabika::implementation
                 for (auto x : json.GetNamedArray(L"docs"))
                 {
                     auto docs = x.GetObject();
-                    extern winrt::hstring serverStream;
-                    hstring path = serverStream + L"/static/" + docs.GetNamedObject(L"media").GetNamedString(L"path");
+                    Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+                    hstring path = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + docs.GetNamedObject(L"media").GetNamedString(L"path");
                     auto pic = winrt::make<PicturesBlock>(path);
                     pic.Order(to_hstring(m_pageOrder));
                     m_picturesBlocks.Append(pic);
@@ -95,12 +109,12 @@ namespace winrt::bikabika::implementation
             }
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                ContentDialogShow(L"1005", L"");
+                co_await ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                ContentDialogShow(L"Unknown", res);
+                co_await ContentDialogShow(L"Unknown", res);
             }
         }
     }

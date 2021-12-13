@@ -43,22 +43,33 @@ namespace winrt::bikabika::implementation
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
 		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		bikabika::UserViewModel MainUserViewModel();
-		Windows::Foundation::IAsyncAction UpdateToken();
 		Windows::Foundation::IAsyncAction UpdateSuggestion();
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
-		void ContentDialogShow(hstring const& mode, hstring const& message);
+		Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
+		Windows::Foundation::IAsyncAction Login();
+		Windows::Foundation::IAsyncAction SetPerson();
+		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
+
+		Windows::Foundation::IAsyncAction AutoLogin();
 		void CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args);
 		void CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);
 		void CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args);
+
+		void Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		
 	private:
 
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
 		bool m_suggestIsChosen = false;
+		bikabika::BikaHttp m_bikaHttp;
 		bikabika::FileCheckTool m_fileCheckTool;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordsBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
 		
+	public:
+		void UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+		void AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 	};
 
 }

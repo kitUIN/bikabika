@@ -10,7 +10,7 @@ namespace winrt::bikabika::implementation
         PicPage();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::PicturesBlock> PicturesBlocks();
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
-        void ContentDialogShow(hstring const& mode, hstring const& message);
+        Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction Goto(int32_t const& order, int32_t const& page);
         void ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e);
         Windows::Foundation::IAsyncAction DownEps_ActionButtonClick(winrt::Microsoft::UI::Xaml::Controls::TeachingTip const& sender, winrt::Windows::Foundation::IInspectable const& args);

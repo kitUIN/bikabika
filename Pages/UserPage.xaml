@@ -10,7 +10,7 @@
 
     <Grid>
         <ScrollViewer>
-            <Grid>
+            <Grid Margin="0,0,10,0">
                 <StackPanel Margin="0,20,0,0" >
                     <Grid>
                         <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">

@@ -78,7 +78,7 @@ namespace winrt::bikabika::implementation
 		string uid = to_string(to_hstring(uuid)).substr(1, 36);
 		remove(uid.begin(), uid.end(), '-');
 		uid.substr(1, 32);
-		extern winrt::hstring token;
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		extern winrt::hstring imageQuality;
 		headers.Insert(L"api-key", L"C69BAF41DA5ABD1FFEDC6D2FEA56B");
 		headers.Insert(L"accept", L"application/vnd.picacomic.com.v1+json");
@@ -94,9 +94,9 @@ namespace winrt::bikabika::implementation
 		headers.Insert(L"User-Agent", L"okhttp/3.8.1");
 		//headers.Insert(L"Content-Type", L"application/json; charset=UTF-8");
 		headers.Insert(L"signature", BikaEncryption(strAPI, L"b1ab87b4800d4d4590a11701b8551afa", t, method, L"c69baf41da5abd1ffedc6d2fea56b", L"~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn"));
-		if (token != L"")
+		if (auto s =loginData.Values().TryLookup(L"token"))
 		{	
-			headers.Insert(L"Authorization", token);
+			headers.Insert(L"Authorization", unbox_value<hstring>(s));
 		}
 		return headers;
 	}

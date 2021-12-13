@@ -7,7 +7,7 @@ namespace winrt::bikabika::implementation
 {
     UserViewModel::UserViewModel()
     {
-        m_user = winrt::make<bikabika::implementation::User>(L"", L"");
+        m_user = winrt::make<bikabika::implementation::User>(L"Picacg", L"Lv.?");
     }
     winrt::bikabika::User UserViewModel::User()
     {

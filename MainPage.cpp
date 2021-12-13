@@ -46,8 +46,6 @@ namespace winrt::bikabika::implementation
 			localSettings.Values().Insert(L"launchedWithPrefSize", box_value(true));
 		}
 		ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
-		
-		
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"home", winrt::xaml_typename<bikabika::HomePage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
@@ -56,11 +54,10 @@ namespace winrt::bikabika::implementation
 			(L"account", winrt::xaml_typename<bikabika::UserPage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
-		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"login", winrt::xaml_typename<bikabika::LoginPage>()));
-		//NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
 		Window::Current().SetTitleBar(AppTitleBar());
-		auto acc{ UpdateToken() };
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
+		LoginTeachingTip().IsOpen(true);
 	}
 
 
@@ -72,7 +69,7 @@ namespace winrt::bikabika::implementation
 		Windows::Foundation::IInspectable const& /* sender */,
 		Windows::UI::Xaml::RoutedEventArgs const& /* args */)
 	{
-		NavView_Navigate(L"login",Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
+		//NavView_Navigate(L"login",Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
 	}
 
 	void MainPage::NavView_ItemInvoked(
@@ -237,19 +234,6 @@ namespace winrt::bikabika::implementation
 		return m_userViewModel;
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::UpdateToken()
-	{
-		bool f{ co_await m_fileCheckTool.CheckFileAccount() };
-		if (f) {
-			Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
-			extern winrt::hstring token;
-			token = account.GetNamedString(L"token");
-			OutputDebugStringW(L"\n自动加载token成功->\n");
-			OutputDebugStringW(token.c_str());
-			OutputDebugStringW(L"\n");
-		}
-		
-	}
 	Windows::Foundation::IAsyncAction MainPage::UpdateSuggestion()
 	{
 		bool flag{ co_await m_fileCheckTool.CheckFileKeywords() };
@@ -326,21 +310,7 @@ namespace winrt::bikabika::implementation
 
 	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
-		Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-
-		if (userData.Values().HasKey(L"personInfo"))
-		{
-			Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
-			hstring name = personInfo.GetNamedString(L"name");
-			if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
-			hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
-			if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
-			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
-			if (img != m_userViewModel.User().Img().UriSource().ToString()) {
-				m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
-			}
-		}
+		
 		extern bool keywordLoaded;
 		if (!keywordLoaded) {
 			auto bcc{ UpdateSuggestion() };
@@ -381,6 +351,232 @@ namespace winrt::bikabika::implementation
 	{
 		__super::OnNavigatedTo(e);
 	}
+	
+	Windows::Foundation::IAsyncAction  MainPage::ContentDialogShow(hstring const& mode, hstring const& message)
+	{
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+
+		if (mode == L"Timeout") {
+			auto show{ PicErrorDialog().ShowAsync() };
+		}
+		else {
+			HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailLoginTitle")));
+			HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
+			if (mode == L"Error")
+			{
+				HttpContentDialog().Content(box_value(message));
+				auto show{ co_await HttpContentDialog().ShowAsync() };
+
+			}
+			else if (mode == L"LoginError")
+			{
+				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginPassword")));
+				auto show{ co_await HttpContentDialog().ShowAsync() };
+
+			}
+			else if (mode == L"Unknown")
+			{
+				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
+				HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+				auto show{ co_await HttpContentDialog().ShowAsync() };
+
+			}
+			else if (mode == L"1005")
+			{
+				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+				extern bool m_login;
+				m_login = false;
+				auto show{ co_await HttpContentDialog().ShowAsync() };
+				if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
+				{
+					Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+					LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
+					LoginTeachingTip().IsOpen(true);
+				}
+			}
+			else if (mode == L"Blank")
+			{
+				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginBlank")));
+				auto show{ co_await HttpContentDialog().ShowAsync() };
+			}
+			
+		}
+	}
+	Windows::Foundation::IAsyncAction MainPage::Login()
+	{
+		
+		auto ress = co_await m_bikaHttp.Login(Email().Text(), Password().Password());
+		LayoutMessage().IsOpen(false);
+		if (ress[1] == 'T')
+		{
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (ress[1] == 'E') {
+			ContentDialogShow(L"Error", ress);
+		}
+		else
+		{
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(ress);
+			double code = resp.GetNamedNumber(L"code");
+			//账号或密码错误
+			if (code == (double)400)
+			{
+				ContentDialogShow(L"LoginError", L"");
+				Password().Password(L"");
+			}
+			//登陆成功
+			else if (code == (double)200)
+			{
+				Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				loginData.Values().Insert(L"token", box_value(resp.GetNamedObject(L"data").GetNamedString(L"token")));
+				loginData.Values().Insert(L"email", box_value(Email().Text()));
+				loginData.Values().Insert(L"password", box_value(Password().Password()));
+				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+				LayoutMessage().Title(resourceLoader.GetString(L"Logining"));
+				LayoutMessage().IsOpen(true);
+				co_await SetPerson();
+			}
+			//未知
+			else
+			{
+				ContentDialogShow(L"Unknown", ress);
+			}
+		}
+
+	}
+	Windows::Foundation::IAsyncAction MainPage::SetPerson()
+	{
+		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		hstring personInfo = co_await m_bikaHttp.PersonInfo();
+		LayoutMessage().IsOpen(false);
+		if (personInfo[1] == 'T') {
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (personInfo[1] == 'E') {
+			ContentDialogShow(L"Error", personInfo);
+		}
+		else {
+			Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(personInfo);
+			double code = personData.GetNamedNumber(L"code");
+			//缺少鉴权
+			if (code == (double)401 && personData.GetNamedString(L"error") == L"1005")
+			{
+				ContentDialogShow(L"1005", L"");
+			}
+			//请求无效
+			else if (code == (double)400)
+			{
+				ContentDialogShow(L"Error", personInfo);
+			}
+			else if (code == (double)200)
+			{
+				Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
+				userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
+				LoginTeachingTip().IsOpen(false);
+				extern bool m_login;
+				m_login = true;
+				Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				if (userData.Values().HasKey(L"personInfo"))
+				{
+					Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
+					hstring name = personInfo.GetNamedString(L"name");
+					if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
+					hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
+					if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
+					hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+					if (img != m_userViewModel.User().Img().UriSource().ToString()) {
+						m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
+					}
+				}
+				NavView().SelectedItem(NavView().MenuItems().GetAt(1));
+				ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+			}
+			//未知
+			else
+			{
+				ContentDialogShow(L"Unknown", personInfo);
+			}
+		}
+
+	}
+	//登录按钮
+	void MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& /*sender*/ , Windows::UI::Xaml::RoutedEventArgs const& /*args*/)
+	{
+		// 账号密码为空
+		if (Email().Text() == L"" || Password().Password() == L"")
+		{
+			ContentDialogShow(L"Blank", L"");
+		}
+		else
+		{
+			Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+			LayoutMessage().Title(resourceLoader.GetString(L"Logining"));
+			LayoutMessage().IsOpen(true);
+			auto login{ Login() };
+		}
+	}
+	void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
+	{
+
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (auto x = loginData.Values().TryLookup(L"email"))
+		{
+			Email().Text(unbox_value<hstring>(x));
+		}
+		if (auto y = loginData.Values().TryLookup(L"rememberMe"))
+		{
+			RememberCheckBox().IsChecked(unbox_value<bool>(y));
+			if (auto z = loginData.Values().TryLookup(L"password"))
+			{
+				Password().Password(unbox_value<hstring>(z));
+			}
+			if (auto s = loginData.Values().TryLookup(L"autoLogin"))
+			{
+				AutoCheckBox().IsChecked(unbox_value<bool>(s));
+			}
+		}
+
+		auto bcc{ AutoLogin() };
+	}
+	//自动登录
+	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
+	{
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (auto x = loginData.Values().TryLookup(L"autoLogin"))
+		{
+			if (unbox_value<bool>(x))
+			{
+				Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
+				if (auto s = loginData.Values().TryLookup(L"rememberMe"))
+				{
+					if (unbox_value<bool>(s))
+					{
+						Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+						LayoutMessage().Title(resourceLoader.GetString(L"AutoLogining"));
+						LayoutMessage().IsOpen(true);
+						co_await Login();
+					}
+				}
+
+			}
+		}
+	}
+	void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+	{
+		extern bool m_login;
+		if (m_login)
+		{
+			ContentFrame().Navigate(xaml_typename<UserPage>());
+		}
+		else
+		{
+			Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+			LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
+			LoginTeachingTip().IsOpen(true);
+		}
+		
+	}
 }
 
 
@@ -391,3 +587,23 @@ namespace winrt::bikabika::implementation
 
 
 
+
+
+
+
+void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (AutoCheckBox().IsChecked().GetBoolean())
+	{
+		RememberCheckBox().IsChecked(true);
+	}
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	loginData.Values().Insert(L"rememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
+}
+
+
+void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	loginData.Values().Insert(L"rememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
+}
