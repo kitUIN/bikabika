@@ -46,7 +46,7 @@ namespace winrt::bikabika::implementation
 			if (slogan != m_userViewModel.User().Slogan()) m_userViewModel.User().Slogan(slogan);
 			hstring levelExp = L"("+to_hstring(personInfo.GetNamedNumber(L"exp"))+L" / "+to_hstring(GetEXP(personInfo.GetNamedNumber(L"level")))+L")";
 			if (levelExp != m_userViewModel.User().LevelExp()) m_userViewModel.User().LevelExp(levelExp);
-			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServerCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
+			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
 			int32_t percent = (int32_t)personInfo.GetNamedNumber(L"exp")*100 / GetEXP(personInfo.GetNamedNumber(L"level"));
 			//OutputDebugStringW(to_hstring(percent).c_str());
 			if (percent != m_userViewModel.User().Percent()) m_userViewModel.User().Percent(percent);

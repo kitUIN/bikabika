@@ -26,6 +26,7 @@ namespace winrt::bikabika::implementation
 
     void HomePage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
     {
+   
         Button().Content(box_value(L"Clicked"));
         /*Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
         loginData.Values().Insert(L"token", box_value(L"sadf"));*/

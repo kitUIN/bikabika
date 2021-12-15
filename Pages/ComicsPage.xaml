@@ -71,7 +71,21 @@
     </Page.Resources>
 
     <Grid Margin="0,3,0,0">
-
+        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
+            Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+            </StackPanel>
+        </ContentDialog >
+        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
         <ScrollViewer Margin="3,38,0,10">
             <StackPanel >
 
@@ -126,8 +140,11 @@
                     </GridView.ItemsPanel>
 
                 </GridView>
+
             </StackPanel >
+
         </ScrollViewer>
+        
         <Border  Height="40" CornerRadius="10"  VerticalAlignment="Top" Background="{ThemeResource MyAcrylicBrushLight1}">
                     <Grid>
                         <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
@@ -150,20 +167,6 @@
         <Border  Height="20" Width="100" CornerRadius="10"  VerticalAlignment="Bottom" Background="{ThemeResource MyAcrylicBrushLight1}">
             <muxc:PipsPager x:Name="Pips" VerticalAlignment="Bottom" HorizontalAlignment="Center" SelectedIndexChanged="PipsPager_SelectedIndexChanged"  Orientation="Horizontal" PreviousButtonVisibility="VisibleOnPointerOver" NextButtonVisibility="VisibleOnPointerOver" />
         </Border>
-        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
-            Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
-        </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+       
     </Grid>
 </Page>

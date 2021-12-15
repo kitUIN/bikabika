@@ -41,8 +41,9 @@ namespace winrt::bikabika::implementation
 		if (!localSettings.Values().HasKey(L"launchedWithPrefSize"))
 		{
 			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1470, 1000));
-			ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
+			//ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
 			ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
+
 			localSettings.Values().Insert(L"launchedWithPrefSize", box_value(true));
 		}
 		ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
@@ -237,23 +238,7 @@ namespace winrt::bikabika::implementation
 		return m_userViewModel;
 	}
 
-	Windows::Foundation::IAsyncAction MainPage::UpdateSuggestion()
-	{
-		bool flag{ co_await m_fileCheckTool.CheckFileKeywords() };
-		if (flag) {
-			m_suggestions.Clear();
-
-			Windows::Data::Json::JsonObject keywords{ co_await m_fileCheckTool.GetKeywords() };
-			auto keyword = keywords.GetNamedArray(L"keywords");
-			OutputDebugStringW(keyword.ToString().c_str());
-			OutputDebugStringW(L"\n");
-			for (auto x : keyword)
-			{
-				m_suggestions.Append(winrt::make<KeywordsBox>(x.GetString(), L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///Assets//Picacgs//tag.png"))));
-			}
-
-		}
-	}
+	
 
 	/*
 	* void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
@@ -311,44 +296,31 @@ namespace winrt::bikabika::implementation
 		//ApplicationView::GetForCurrentView().ExitFullScreenMode();
 	}*/
 
-	void winrt::bikabika::implementation::MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
-	{
-		
-		extern bool keywordLoaded;
-		if (!keywordLoaded) {
-			auto bcc{ UpdateSuggestion() };
-			keywordLoaded = true;
-		}
-	}
+	
 	void  winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
 	{
+		OutputDebugStringW(L"\n\n\n666\n\n\n");
 		if (!m_suggestIsChosen)
 		{
-			
-			//suggestions.Append(L"1");
-			//suggestions.Append(L"2");
-			//suggestions.Append(L"3");
-			//auto suggestions = winrt::single_threaded_observable_vector<bikabika::SuggestBlock>();
-			//suggestions.Append(winrt::make<KeywordsBox>(L"标签标签标签标签", L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///tag.png"))));
-			//suggestions.Append(winrt::make<SuggestBox>(L"33333"));
-			OutputDebugStringW(L"\n\n\n666\n\n\n");
 			sender.ItemsSource(box_value(m_suggestions));
-
 		}
 		m_suggestIsChosen = false;
 	}
-	
 	void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
 		extern bool loadComicFlag;
 		loadComicFlag = true;
 		ContentFrame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Search",sender.Text(), to_hstring("dd") })));
+		sender.Text(L"");
 	}
 
 
 	void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
 	{
 		m_suggestIsChosen = true;
+		hstring s = args.SelectedItem().as<bikabika::KeywordsBox>().GetKeywords();
+		OutputDebugStringW(s.c_str());
+		sender.Text(s);
 	}
 	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
@@ -436,7 +408,6 @@ namespace winrt::bikabika::implementation
 				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 				LayoutMessage().Title(resourceLoader.GetString(L"Logining"));
 				LayoutMessage().IsOpen(true);
-
 				NavHome().IsEnabled(true);
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
@@ -468,7 +439,8 @@ namespace winrt::bikabika::implementation
 			//缺少鉴权
 			if (code == (double)401 && personData.GetNamedString(L"error") == L"1005")
 			{
-				ContentDialogShow(L"1005", L"");
+				co_await Login();
+				//ContentDialogShow(L"1005", L"");
 			}
 			//请求无效
 			else if (code == (double)400)
@@ -498,10 +470,15 @@ namespace winrt::bikabika::implementation
 						m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
 					}
 				}
-				NavView().SelectedItem(NavView().MenuItems().GetAt(1));
+				
+				NavHome().IsEnabled(true);
+				NavClassification().IsEnabled(true);
+				NavAccount().IsEnabled(true);
 				if (m_firstArrive) {
+					NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 					ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
 					m_firstArrive = false;
+					co_await GetKeywords();
 				}
 				
 			}
@@ -529,6 +506,37 @@ namespace winrt::bikabika::implementation
 			auto login{ Login() };
 		}
 	}
+	Windows::Foundation::IAsyncAction MainPage::GetKeywords()
+	{
+		hstring res{ co_await m_bikaHttp.Keywords() };
+		if (res[1] == 'T')
+		{
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (res[1] == 'E') {
+			ContentDialogShow(L"Error", res);
+		}
+		else
+		{
+			Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+			double code = resp.GetNamedNumber(L"code");
+			if (code == (double)200)
+			{
+				Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				auto keywords = resp.GetNamedObject(L"data").GetNamedArray(L"keywords");
+				userData.Values().Insert(L"keywords", box_value(keywords.Stringify()));
+				for (auto x : keywords)
+				{
+					m_suggestions.Append(winrt::make<KeywordsBox>(x.GetString(), L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///Assets//Picacgs//tag.png"))));
+				}
+			}
+			//未知
+			else
+			{
+				ContentDialogShow(L"Unknown", res);
+			}
+		}
+	}
 	void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 	{
 
@@ -537,6 +545,7 @@ namespace winrt::bikabika::implementation
 		{
 			Email().Text(unbox_value<hstring>(x));
 		}
+		
 		if (auto y = loginData.Values().TryLookup(L"rememberMe"))
 		{
 			if (unbox_value<bool>(y))
@@ -548,14 +557,16 @@ namespace winrt::bikabika::implementation
 				}
 				if (auto s = loginData.Values().TryLookup(L"autoLogin"))
 				{
+					OutputDebugStringW(to_hstring(unbox_value<bool>(s)).c_str());
 					AutoCheckBox().IsChecked(unbox_value<bool>(s));
+
 				}
 			}
 			else
 			{
 				Password().Password(L"");
 			}
-
+			
 		}
 		
 		auto bcc{ AutoLogin() };
@@ -580,7 +591,7 @@ namespace winrt::bikabika::implementation
 						Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 						LayoutMessage().Title(resourceLoader.GetString(L"AutoLogining"));
 						LayoutMessage().IsOpen(true);
-						co_await Login();
+						co_await SetPerson();
 					}
 				}
 
@@ -592,6 +603,7 @@ namespace winrt::bikabika::implementation
 		extern bool m_login;
 		if (m_login)
 		{
+			NavView().SelectedItem(NavView().MenuItems().GetAt(3));
 			ContentFrame().Navigate(xaml_typename<UserPage>());
 		}
 		else
@@ -623,12 +635,13 @@ void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Wind
 		RememberCheckBox().IsChecked(true);
 	}
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-	loginData.Values().Insert(L"rememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
+	loginData.Values().Insert(L"autoLogin", box_value(RememberCheckBox().IsChecked().GetBoolean()));
 }
 
 
 void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
+	
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	loginData.Values().Insert(L"rememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
 }

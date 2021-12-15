@@ -83,13 +83,13 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>599831F910ABB08050247AE4CC373E8318F80442</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
-    <AppxPackageDir>E:\VsProjects\repos\bikabika\AppPackages\bikabika\releaseX86</AppxPackageDir>
+    <AppxPackageDir>E:\VsProjects\repos\bikabika\AppPackages\bikabika\release</AppxPackageDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -132,8 +132,8 @@
     <ClInclude Include="Utils\API\BikaHttp.h" />
     <ClInclude Include="Utils\Blocks\ClassBlock.h" />
     <ClInclude Include="Utils\Blocks\ClassBlockViewModel.h" />
-    <ClInclude Include="Pages\ClassificationPage.h">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <ClInclude Include="ClassificationPage.h">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\ComicBlock.h" />
@@ -159,8 +159,8 @@
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="Pages\MainPage.h">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <ClInclude Include="MainPage.h">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="Pages\PicPage.h">
       <DependentUpon>Pages\PicPage.xaml</DependentUpon>
@@ -180,7 +180,7 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\ClassificationPage.xaml">
+    <Page Include="ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ComicsPage.xaml">
@@ -195,7 +195,7 @@
     <Page Include="Pages\InfoPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\PicPage.xaml">
@@ -316,8 +316,8 @@
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlock.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlockViewModel.cpp" />
-    <ClCompile Include="Pages\ClassificationPage.cpp">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <ClCompile Include="ClassificationPage.cpp">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\ComicBlock.cpp" />
@@ -345,8 +345,8 @@
     <ClCompile Include="App.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="Pages\MainPage.cpp">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <ClCompile Include="MainPage.cpp">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="Pages\PicPage.cpp">
@@ -396,8 +396,8 @@
     <Midl Include="Utils\Blocks\TagBlock.idl" />
     <Midl Include="Utils\Blocks\ClassBlock.idl" />
     <Midl Include="Utils\Blocks\ClassBlockViewModel.idl" />
-    <Midl Include="Pages\ClassificationPage.idl">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <Midl Include="ClassificationPage.idl">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\ComicBlock.idl" />
@@ -407,8 +407,8 @@
     </Midl>
     <Midl Include="Utils\Blocks\FileCheckTool.idl" />
     <Midl Include="Utils\Blocks\KeywordsBox.idl" />
-    <Midl Include="Pages\MainPage.idl">
-      <DependentUpon>Pages\MainPage.xaml</DependentUpon>
+    <Midl Include="MainPage.idl">
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>
     <Midl Include="Pages\SettingsPage.idl">
       <DependentUpon>Pages\SettingsPage.xaml</DependentUpon>

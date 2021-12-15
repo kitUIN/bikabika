@@ -43,13 +43,13 @@ namespace winrt::bikabika::implementation
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
 		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		bikabika::UserViewModel MainUserViewModel();
-		Windows::Foundation::IAsyncAction UpdateSuggestion();
+		
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction SetPerson();
 		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
-
+		Windows::Foundation::IAsyncAction GetKeywords();
 		Windows::Foundation::IAsyncAction AutoLogin();
 		void CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args);
 		void CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);

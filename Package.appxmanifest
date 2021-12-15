@@ -20,10 +20,7 @@
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="bikabika.App">
       <uap:VisualElements DisplayName="bikabika" Description="UWP Picacg by C++/Winrt"
         Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="#f4c0d3">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
-          <uap:ShowNameOnTiles>
-            <uap:ShowOn Tile="square310x310Logo"/>
-          </uap:ShowNameOnTiles>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="bika">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#f4c0d3"/>
       </uap:VisualElements>
