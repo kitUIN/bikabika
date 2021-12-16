@@ -75,9 +75,16 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction ComicsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
 		extern bool loadComicFlag;
-		extern bool animeFlag;
-		animeFlag = true;
+
 		auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<hstring>>(e.Parameter());
+		auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
+		if (anim)
+		{
+			if (m_img)
+			{
+				anim.TryStart(m_img);
+			}
+		}
 		if (!Pips().IsEnabled())
 		{
 			Pips().IsEnabled(true);
@@ -107,14 +114,16 @@ namespace winrt::bikabika::implementation
 		else if (m_GoType == L"History"  )
 		{
 			auto history = co_await m_fileCheckTool.GetHistory();
+			//m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
+			m_comicBlocks.Clear();
 			for (auto x : history)
 			{
 				m_comicBlocks.Append(winrt::make<ComicBlock>(x.GetObject()));
 			}
 			m_pageNumBox.Title(params.GetAt(1));
-			Pips().IsEnabled(false);
-			TypeCombo().IsEnabled(false);
-			NumberBox1().IsEnabled(false);
+			Pips().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
+			TypeCombo().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
+			NumberBox1().Visibility(Windows::UI::Xaml::Visibility::Collapsed);
 		}
 		else if (m_GoType == L"Favourite" )
 		{
@@ -374,6 +383,8 @@ namespace winrt::bikabika::implementation
 	}
 	void winrt::bikabika::implementation::ComicsPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 	{
+		extern bool animeFlag;
+		animeFlag = true;
 		auto comicBlock = e.ClickedItem().as<bikabika::ComicBlock>();
 		m_fileCheckTool.SetHistory(comicBlock.GetJsonObject());
 		auto container = GridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
@@ -381,7 +392,7 @@ namespace winrt::bikabika::implementation
 		auto image =  root.FindName(L"ConnectedElement2").as<UIElement>();
 		winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
 		Frame().Navigate(winrt::xaml_typename<bikabika::InfoPage>(),box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(comicBlock.ID()) })) , winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
-
+		m_img = root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>();
 	}
 }
 

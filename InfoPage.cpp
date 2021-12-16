@@ -115,6 +115,12 @@ namespace winrt::bikabika::implementation
             }
         }
     }
+    void InfoPage::OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+    {
+        __super::OnNavigatedFrom(e);
+        auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", Img());
+
+    }
     
     Windows::Foundation::IAsyncAction InfoPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {

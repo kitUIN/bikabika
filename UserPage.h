@@ -28,10 +28,12 @@ namespace winrt::bikabika::implementation
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_lookComicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
         int32_t m_total;
         int32_t m_limit;
+        winrt::Windows::UI::Xaml::Controls::Image m_img;
         bool m_firstArrive = false;
     public:
         void GotoLook_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void Grid_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
 }
 

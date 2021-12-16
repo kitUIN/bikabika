@@ -40,7 +40,7 @@ namespace winrt::bikabika::implementation
         int32_t m_sortType = 0;
         Windows::Data::Json::JsonArray m_categories;
         bikabika::PageNumBox m_pageNumBox{ 1,1 ,L"" };
-        
+        winrt::Windows::UI::Xaml::Controls::Image m_img;
         };
 }
 

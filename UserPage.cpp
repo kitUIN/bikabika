@@ -29,6 +29,14 @@ namespace winrt::bikabika::implementation
 		__super::OnNavigatedTo(e);
 		extern bool loadComicFlag;
 		loadComicFlag = true;
+		auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
+		if (anim)
+		{
+			if (m_img)
+			{
+				anim.TryStart(m_img);
+			}
+		}
 		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (userData.Values().HasKey(L"personInfo"))
@@ -69,6 +77,8 @@ namespace winrt::bikabika::implementation
 			m_lookComicBlocks.Append(winrt::make<ComicBlock>(s.GetObject()));
 			if (m_lookComicBlocks.Size() == 20) break;
 		}
+		
+		
 	}
 	Windows::Foundation::IAsyncAction UserPage::ContentDialogShow(hstring const& mode, hstring const& message)
 	{
@@ -168,5 +178,22 @@ void winrt::bikabika::implementation::UserPage::GotoFav_Click(winrt::Windows::Fo
 {
 
 	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Favourite",L"Favourite", to_hstring("dd") })));
+
+}
+
+
+void winrt::bikabika::implementation::UserPage::Grid_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+	extern bool animeFlag;
+	animeFlag = true;
+	//OutputDebugStringW(L"\nisokkkkkkk\n");
+	auto it = sender.as<winrt::Windows::UI::Xaml::Controls::Grid>().Children().GetAt(0).as<winrt::Windows::UI::Xaml::Controls::Border>().Child().as<winrt::Windows::UI::Xaml::Controls::Grid>();
+	auto bookId = it.Children().GetAt(0).as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
+	auto image = it.Children().GetAt(1).as<UIElement>();
+	winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+	Frame().Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(it.Children().GetAt(1).as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bookId) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+
+	m_img = it.Children().GetAt(1).as<winrt::Windows::UI::Xaml::Controls::Image>();
+
 
 }

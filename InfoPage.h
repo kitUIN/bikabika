@@ -13,6 +13,7 @@ namespace winrt::bikabika::implementation
         InfoPage();
         Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction Eps(int32_t const& page);
+        void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> Episodes();
