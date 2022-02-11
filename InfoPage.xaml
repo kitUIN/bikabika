@@ -140,9 +140,9 @@
                             <Grid  Height="280" Margin="10,0,0,0">
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                                     <StackPanel>
-                                        <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold"/>
-                                        <TextBlock x:Name="Author"  FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                        <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue"/>
+                                        <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold" PointerPressed="Title_PointerPressed"/>
+                                        <TextBlock x:Name="Author" FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}" PointerPressed="Author_Drop"/>
+                                        <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue" PointerPressed="Author_Drop"/>
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Bottom" Margin="10,0,0,0" Orientation="Vertical" >
@@ -175,7 +175,7 @@
                         </StackPanel>
                     </Grid>
                     <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled"  HorizontalScrollBarVisibility="Visible" Height="45">
-                        <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}" >
+                        <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel x:Name="TagsGrid"  Orientation="Horizontal"/>
@@ -183,7 +183,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="local:TagBlock">
-                                    <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Style="{StaticResource TagStyle}"/>
+                                    <Button Content="{x:Bind Tag}" Margin="0,0,10,0" Style="{StaticResource TagStyle}" Click="TagButton_Click"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

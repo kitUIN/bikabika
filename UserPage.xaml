@@ -46,6 +46,12 @@
                                 </StackPanel>
                                 <TextBlock HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan}" />
                             </StackPanel>
+                            
+                        </Border>
+                        <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">
+                            <StackPanel x:Name="UserButtons" Orientation="Vertical">
+                                
+                            </StackPanel>
                         </Border>
                     </Grid>
                     <Border Margin="0,10,0,0" CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight3}">

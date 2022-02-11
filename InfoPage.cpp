@@ -5,7 +5,12 @@
 #endif
 
 using namespace winrt;
+using namespace Windows::ApplicationModel::DataTransfer;
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
+using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
 
 namespace winrt::bikabika::implementation
 {
@@ -13,6 +18,8 @@ namespace winrt::bikabika::implementation
     {
         InitializeComponent();
         NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+
+
     }
 
     Windows::Foundation::IAsyncAction InfoPage::ContentDialogShow(hstring const& mode, hstring const& message)
@@ -463,4 +470,33 @@ void winrt::bikabika::implementation::InfoPage::Favourite_Unchecked(winrt::Windo
     {
         FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipFavourite")));
     }
+}
+
+
+void winrt::bikabika::implementation::InfoPage::TagButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    auto tag = sender.as<winrt::Windows::UI::Xaml::Controls::Button>().Content().as<hstring>();
+    extern bool loadComicFlag;
+    loadComicFlag = true;
+    Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Search",tag, to_hstring("dd") })));
+}
+
+
+
+
+void winrt::bikabika::implementation::InfoPage::Author_Drop(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    auto tag = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
+    extern bool loadComicFlag;
+    loadComicFlag = true;
+    Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Search",tag, to_hstring("dd") })));
+}
+
+
+void winrt::bikabika::implementation::InfoPage::Title_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    
+    auto title = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
+   
+    
 }
