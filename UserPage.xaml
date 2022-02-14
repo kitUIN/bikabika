@@ -48,9 +48,24 @@
                             </StackPanel>
                             
                         </Border>
-                        <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">
-                            <StackPanel x:Name="UserButtons" Orientation="Vertical">
-                                
+                        <Border Background="Transparent" HorizontalAlignment="Right" >
+                            <StackPanel x:Name="UserButtons" Orientation="Vertical" Margin="0,0,10,0">
+                                <AppBarToggleButton x:Name="AutoPunch" x:Uid="AutoPunch" Label="Punch" Height="64" Width="64">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="AutoPunchTip"/>
+                                    </ToolTipService.ToolTip>
+                                    <AppBarToggleButton.Icon>
+                                        <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
+                                    </AppBarToggleButton.Icon>
+                                </AppBarToggleButton>
+                                <AppBarToggleButton x:Name="UserSettings" x:Uid="UserSettings" Label="Settings" Height="64" Width="64">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="UserSettingsTip"/>
+                                    </ToolTipService.ToolTip>
+                                    <AppBarToggleButton.Icon>
+                                        <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
+                                    </AppBarToggleButton.Icon>
+                                </AppBarToggleButton>
                             </StackPanel>
                         </Border>
                     </Grid>

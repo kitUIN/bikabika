@@ -136,14 +136,14 @@ namespace winrt::bikabika::implementation
 			
 		}
 		loadComicFlag = false;
-        __super::OnNavigatedTo(e);
+       
 		if (m_sortMode == L"ua") m_sortType = 0;
 		else if (m_sortMode == L"dd") m_sortType = 1;
 		else if (m_sortMode == L"da") m_sortType = 2;
 		else if (m_sortMode == L"ld") m_sortType = 3;
 		else if (m_sortMode == L"vd") m_sortType = 4;
 		TypeCombo().SelectedIndex(m_sortType);
-		
+		__super::OnNavigatedTo(e);
     }
 	Windows::Foundation::IAsyncAction ComicsPage::Goto(int32_t const& index, hstring const& title, hstring const& mode) {
 		if (index <= m_pageNumBox.Pages()) {

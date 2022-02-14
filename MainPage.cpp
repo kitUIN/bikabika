@@ -37,16 +37,7 @@ namespace winrt::bikabika::implementation
 		if (!serversSettings.Values().HasKey(L"picServer2")) serversSettings.Values().Insert(L"picServer2", box_value(L"https://s2.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServer3")) serversSettings.Values().Insert(L"picServer3", box_value(L"https://s3.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"picServersCurrent")) serversSettings.Values().Insert(L"picServersCurrent", box_value(L"https://storage1.picacomic.com"));
-		Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
-		if (!localSettings.Values().HasKey(L"launchedWithPrefSize"))
-		{
-			ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1470, 1000));
-			//ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
-			ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
-
-			localSettings.Values().Insert(L"launchedWithPrefSize", box_value(true));
-		}
-		ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
+		
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"home", winrt::xaml_typename<bikabika::HomePage>()));
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
@@ -603,7 +594,7 @@ namespace winrt::bikabika::implementation
 		extern bool m_login;
 		if (m_login)
 		{
-			NavView().SelectedItem(NavView().MenuItems().GetAt(3));
+			NavView().SelectedItem(NavView().MenuItems().GetAt(4));
 			ContentFrame().Navigate(xaml_typename<UserPage>());
 		}
 		else

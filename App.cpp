@@ -84,10 +84,12 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
                 rootFrame.Navigate(xaml_typename<bikabika::MainPage>(), box_value(e.Arguments()));
             }
             // Place the frame in the current Window
+            Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
+            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1200, 1000));
+            //ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
+            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
+            
 
-
-            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::Auto);
-            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().TryResizeView(Size(1470, 1000));
 
             Window::Current().Content(rootFrame);
             // Ensure the current window is active
