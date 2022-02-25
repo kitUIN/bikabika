@@ -170,15 +170,21 @@ namespace winrt::bikabika::implementation
 
 void winrt::bikabika::implementation::UserPage::GotoLook_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"History",L"History", to_hstring("dd") })));
+	ComicArgs args;
+	args.ComicType(ComicsType::HISTORY);
+	args.Content(L"History");
+	args.SortMode(winrt::bikabika::SearchSortMode::DD);
+	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
 }
 
 
 void winrt::bikabika::implementation::UserPage::GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-
-	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Favourite",L"Favourite", to_hstring("dd") })));
-
+	ComicArgs args;
+	args.ComicType(ComicsType::FACOURITE);
+	args.Content(L"Favourite");
+	args.SortMode(winrt::bikabika::SearchSortMode::DD);
+	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
 }
 
 

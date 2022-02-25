@@ -85,8 +85,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
             }
             // Place the frame in the current Window
             Windows::Storage::ApplicationDataContainer localSettings = Windows::Storage::ApplicationData::Current().LocalSettings();
-            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1200, 1000));
-            //ApplicationView::GetForCurrentView().SetPreferredMinSize(Size(1470, 1000));
+            Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchViewSize(Size(1300, 1000));
             Windows::UI::ViewManagement::ApplicationView::GetForCurrentView().PreferredLaunchWindowingMode(ApplicationViewWindowingMode::PreferredLaunchViewSize);
             
 

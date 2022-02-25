@@ -122,14 +122,17 @@ namespace winrt::bikabika::implementation
 	
 }
 
-
+//选择
 void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
-	//OutputDebugStringW(L"\n\n------\n\n");
 	auto classBlack = e.ClickedItem().as<bikabika::ClassBlock>();
 	
 	if (classBlack.ClassType() == L"2") {
-		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Comic",classBlack.ClassName(), to_hstring("ua")})));
+		ComicArgs args;
+		args.ComicType(ComicsType::COMIC);
+		args.Content(classBlack.ClassName());
+		args.SortMode(winrt::bikabika::SearchSortMode::UA);
+		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
 	}
 
 }

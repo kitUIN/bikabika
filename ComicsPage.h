@@ -32,7 +32,7 @@ namespace winrt::bikabika::implementation
         bool m_flag2 = false;
         bool m_flag3 = false;
         hstring m_beforeSort = L"ua";
-        hstring m_GoType = L"";
+        ComicsType m_GoType = ComicsType::COMIC;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::ComicBlock> m_comicBlocks = winrt::single_threaded_observable_vector<bikabika::ComicBlock>();
         hstring m_sortMode = L"ua";
         int32_t m_total;

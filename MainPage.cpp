@@ -106,12 +106,9 @@ namespace winrt::bikabika::implementation
 				}
 			}
 		}
-		// Get the page type before navigation so you can prevent duplicate
-		// entries in the backstack.
+
 		Windows::UI::Xaml::Interop::TypeName preNavPageType =
 			ContentFrame().CurrentSourcePageType();
-		
-		// Navigate only if the selected page isn't currently loaded.
 		if (pageTypeName.Name != L"" && preNavPageType.Name != pageTypeName.Name)
 		{
 			ContentFrame().Navigate(pageTypeName, nullptr, transitionInfo);
@@ -287,21 +284,30 @@ namespace winrt::bikabika::implementation
 		//ApplicationView::GetForCurrentView().ExitFullScreenMode();
 	}*/
 
-	
+	// 搜索栏
 	void  winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
 	{
-		OutputDebugStringW(L"\n\n\n666\n\n\n");
 		if (!m_suggestIsChosen)
 		{
 			sender.ItemsSource(box_value(m_suggestions));
 		}
 		m_suggestIsChosen = false;
 	}
+	// 搜索栏提交
 	void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
 		extern bool loadComicFlag;
 		loadComicFlag = true;
-		ContentFrame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(single_threaded_vector<hstring>({ L"Search",sender.Text(), to_hstring("dd") })));
+		auto text = sender.Text();
+		if (text != L"")
+		{
+			ComicArgs args;
+			args.ComicType(ComicsType::SEARCH);
+			args.Content(sender.Text());
+			args.SortMode(winrt::bikabika::SearchSortMode::DD);
+			Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+
+		}
 		sender.Text(L"");
 	}
 

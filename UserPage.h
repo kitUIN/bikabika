@@ -35,6 +35,7 @@ namespace winrt::bikabika::implementation
         void GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void Grid_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
+    
 }
 
 namespace winrt::bikabika::factory_implementation
