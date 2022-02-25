@@ -48,7 +48,7 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Image Source="ms-appx:///Assets//Picacgs//register_name.png" Width="36" Height="36" Margin="0,0,0,0"/>
-                        <TextBlock Text="热门分类" FontSize="25" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
+                        <TextBlock  IsTextSelectionEnabled="True" Text="热门分类" FontSize="25" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
                     </StackPanel>
                     <GridView x:Name="GridV" SelectionMode="None" IsItemClickEnabled="True" ItemClick="GridV_ItemClick"
                 ItemsSource="{x:Bind ClassBlockView.ClassBlocks}" Margin="0,30,0,0">

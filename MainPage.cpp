@@ -47,14 +47,12 @@ namespace winrt::bikabika::implementation
 		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
 			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
 		Window::Current().SetTitleBar(AppTitleBar());
-		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
 		LoginTeachingTip().IsOpen(true);
 		NavHome().IsEnabled(false);
 		NavClassification().IsEnabled(false);
 		NavAccount().IsEnabled(false);
 	}
-
 
 
 
@@ -323,9 +321,10 @@ namespace winrt::bikabika::implementation
 	{
 		__super::OnNavigatedTo(e);
 	}
-	
+	// 弹出窗
 	Windows::Foundation::IAsyncAction  MainPage::ContentDialogShow(hstring const& mode, hstring const& message)
 	{
+		
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 
 		if (mode == L"Timeout") {
@@ -472,8 +471,8 @@ namespace winrt::bikabika::implementation
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
 				if (m_firstArrive) {
-					NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 					ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
+					NavView().SelectedItem(NavView().MenuItems().GetAt(2));
 					m_firstArrive = false;
 					co_await GetKeywords();
 				}

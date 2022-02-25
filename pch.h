@@ -14,6 +14,7 @@
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.ApplicationModel.Resources.h>
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "winrt/Microsoft.UI.Xaml.Automation.Peers.h"
 #include "winrt/Microsoft.UI.Xaml.Controls.h"
 #include "winrt/Microsoft.UI.Xaml.Controls.Primitives.h"

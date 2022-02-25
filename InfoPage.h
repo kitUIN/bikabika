@@ -6,6 +6,7 @@
 #include "Utils/Blocks/TagBlock.h"
 #include "Utils/Blocks/CreaterBlock.h"
 #include "Utils/Blocks/EpisodeBlock.h"
+#include "MainPage.h"
 namespace winrt::bikabika::implementation
 {
     struct InfoPage : InfoPageT<InfoPage>
@@ -29,6 +30,7 @@ namespace winrt::bikabika::implementation
 
 
     private:
+        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
         hstring m_id;

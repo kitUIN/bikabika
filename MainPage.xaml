@@ -10,6 +10,7 @@
     >
     <Page.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <AcrylicBrush x:Key="NavigationViewExpandedPaneBackground" TintColor="{ThemeResource SystemAccentColorLight1}" TintOpacity=".6"/>
@@ -18,9 +19,8 @@
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
-
     </Page.Resources>
-
+    
     <Grid >
         <muxc:TeachingTip Background="{StaticResource SystemAccentColorLight3}" x:Name="LayoutMessage" PreferredPlacement="Center"  IsLightDismissEnabled="False">
             <muxc:TeachingTip.Content>

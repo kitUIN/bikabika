@@ -175,6 +175,10 @@
   <data name="CommentsTip.Content" xml:space="preserve">
     <value>展开评论面板</value>
   </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>复制成功</value>
+    <comment>复制成功</comment>
+  </data>
   <data name="CreaterTip.Content" xml:space="preserve">
     <value>点击查看上传者信息</value>
   </data>

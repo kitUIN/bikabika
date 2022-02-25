@@ -19,10 +19,10 @@ namespace winrt::bikabika::implementation
         InitializeComponent();
         NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
-
+    
     Windows::Foundation::IAsyncAction InfoPage::ContentDialogShow(hstring const& mode, hstring const& message)
     {
-        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+        
         if (mode == L"Timeout") {
             auto show{ PicErrorDialog().ShowAsync() };
         }
@@ -51,7 +51,6 @@ namespace winrt::bikabika::implementation
                 if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
                 {
                     auto loginTeachingTip = Frame().Parent().as<Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<Windows::UI::Xaml::Controls::Grid>().Children().GetAt(3).as<Microsoft::UI::Xaml::Controls::TeachingTip>();
-                    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
                     loginTeachingTip.Title(resourceLoader.GetString(L"LoginButton/Content"));
                     loginTeachingTip.IsOpen(true);
                 }
@@ -144,16 +143,16 @@ namespace winrt::bikabika::implementation
         m_tags.Clear();
         animeFlag = false;
         m_eps = winrt::single_threaded_observable_vector<bikabika::EpisodeBlock>();
+        LayoutMessage().Title(resourceLoader.GetString(L"Loading"));
+        LayoutMessage().IsOpen(true);
         auto res{ co_await m_bikaHttp.BookInfo(m_id) };
-        if (res[1] == 'T') {
-            //auto show{ PicErrorDialog().ShowAsync() };
+        LayoutMessage().IsOpen(false);
+        if (res[1] == 'T')
+        {
+            ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            /*auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-            LoginContentDialog().Title(box_value(resourceLoader.GetString(L"LoadFail/Title")));
-            LoginContentDialog().Content(box_value(res));
-            LoginContentDialog().CloseButtonText(resourceLoader.GetString(L"Fail/CloseButtonText"));
-            auto show{ co_await LoginContentDialog().ShowAsync() };*/
+            ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -214,7 +213,7 @@ namespace winrt::bikabika::implementation
                 Finished().Visibility(m_finished);
                 m_updatedAt = json.GetNamedString(L"updated_at");
                 m_createdAt = json.GetNamedString(L"created_at");
-                CreateDate().Text(m_createdAt);
+                CreateDate().Text(to_hstring(to_string(m_updatedAt).substr(0, 10)) +L" "+ to_hstring(to_string(m_updatedAt).substr(11, 8)));
                 m_allowDownload = json.GetNamedBoolean(L"allowDownload");
                 m_allowComment = json.GetNamedBoolean(L"allowComment");
                 Comments().IsEnabled(m_allowComment);
@@ -247,7 +246,6 @@ namespace winrt::bikabika::implementation
             }
 
         }
-        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         if (Favourite().IsChecked().GetBoolean())
         {
             FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipUnfavourite")));
@@ -308,10 +306,9 @@ namespace winrt::bikabika::implementation
     void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
     {
         Comments().IsChecked(false);
-        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-    }
+     }
 
-
+    //爱心
     Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Like_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
     {
         Like().IsChecked(!Like().IsChecked().GetBoolean());
@@ -329,7 +326,6 @@ namespace winrt::bikabika::implementation
             double code = resp.GetNamedNumber(L"code");
             if (code == (double)200)
             {
-                Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
                 Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
                 hstring action = ca.GetNamedString(L"action");
                 if (action == L"like")
@@ -356,7 +352,7 @@ namespace winrt::bikabika::implementation
         }
     }
 
-
+    //收藏
     Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Favourite_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
     {
 
@@ -376,8 +372,7 @@ namespace winrt::bikabika::implementation
             double code = resp.GetNamedNumber(L"code");
             if (code == (double)200)
             {
-                Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-                Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
+               Windows::Data::Json::JsonObject ca = resp.GetNamedObject(L"data");
                 hstring action = ca.GetNamedString(L"action");
                 if (action == L"favourite")
                 {
@@ -418,7 +413,6 @@ namespace winrt::bikabika::implementation
 // 爱心
 void winrt::bikabika::implementation::InfoPage::Like_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
     if (sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean())
     {
         LikeTip().Content(box_value(resourceLoader.GetString(L"TipUnlike")));
@@ -432,7 +426,7 @@ void winrt::bikabika::implementation::InfoPage::Like_Checked(winrt::Windows::Fou
 // 收藏
 void winrt::bikabika::implementation::InfoPage::Favourite_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-    Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+   
     if (sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean())
     {
         FavouriteTip().Content(box_value(resourceLoader.GetString(L"TipUnfavourite")));
@@ -463,7 +457,9 @@ void winrt::bikabika::implementation::InfoPage::TagButton_Click(winrt::Windows::
 // 按下作者
 void winrt::bikabika::implementation::InfoPage::Author_Drop(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
-    auto tag = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
+    if (e.GetCurrentPoint(sender.as<TextBlock>()).Properties().IsLeftButtonPressed())
+    {
+        auto tag = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
     extern bool loadComicFlag;
     loadComicFlag = true;
     ComicArgs args;
@@ -472,14 +468,21 @@ void winrt::bikabika::implementation::InfoPage::Author_Drop(winrt::Windows::Foun
     args.SortMode(winrt::bikabika::SearchSortMode::DD);
     args.IsAnime(false);
     Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+    }
+    
 
 }
 
 // 按下标题
 void winrt::bikabika::implementation::InfoPage::Title_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
-    //todo 点击标题复制
     auto title = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
-   
-    
+    DataPackage dataPackage = DataPackage();
+    dataPackage.SetText(title);
+    if (Clipboard::SetContentWithOptions(dataPackage, nullptr))
+    {
+        
+    }
 }
+    
+

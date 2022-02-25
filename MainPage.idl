@@ -9,5 +9,6 @@ namespace bikabika
         UserViewModel MainUserViewModel{ get; };
         Windows.UI.Xaml.Controls.PersonPicture UsersPic{ get; };
         String PicPath{ get; };
+        Windows.Foundation.IAsyncAction ContentDialogShow(String mode, String message);
     }
 }

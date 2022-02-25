@@ -17,10 +17,10 @@
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True"  x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold" />
+                <TextBlock IsTextSelectionEnabled="True"  x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock IsTextSelectionEnabled="True"  x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True"  x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
         <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
@@ -31,20 +31,20 @@
                         <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">
                             <StackPanel x:Name="Users" Orientation="Vertical">
                                 <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Center">
-                                    <TextBlock Text="{x:Bind MainUserViewModel.User.Level}" FontWeight="Bold"  Margin="3,1,10,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
-                                    <TextBlock  Text="{x:Bind MainUserViewModel.User.LevelExp}"  FontSize="15" FontWeight="Bold"/>
+                                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind MainUserViewModel.User.Level}" FontWeight="Bold"  Margin="3,1,10,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
+                                    <TextBlock IsTextSelectionEnabled="True"   Text="{x:Bind MainUserViewModel.User.LevelExp}"  FontSize="15" FontWeight="Bold"/>
                                 </StackPanel>
                                 <Grid>
                                     <muxc:ProgressRing Width="148" Height="148" Value="{x:Bind MainUserViewModel.User.Percent}" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray"/>
                                     <PersonPicture VerticalAlignment="Center" HorizontalAlignment="Center"  x:Name="UsersPic" ProfilePicture="{x:Bind MainUserViewModel.User.Img}"  Width="120" Height="120"/>
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <TextBlock Text="{x:Bind MainUserViewModel.User.Name}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold"/>
+                                    <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Name}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold"/>
                                     <Border VerticalAlignment="Center" CornerRadius="10" BorderThickness="1.5" Padding="4" Opacity="0.9"  Background="{ThemeResource SystemAccentColorDark1}">
-                                        <TextBlock Text="{x:Bind MainUserViewModel.User.Title}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="13" FontWeight="Bold" />
+                                        <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Title}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="13" FontWeight="Bold" />
                                     </Border>
                                 </StackPanel>
-                                <TextBlock HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan}" />
+                                <TextBlock IsTextSelectionEnabled="True"  HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan}" />
                             </StackPanel>
                             
                         </Border>

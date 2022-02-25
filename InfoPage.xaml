@@ -192,7 +192,7 @@
                     <Border CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" BorderBrush="{StaticResource SystemAccentColorDark1}" Background="{ThemeResource MyAcrylicBrushLight3}">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="18"  Margin="3,10,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" x:Name="Description"/>
+                                <TextBlock  IsTextSelectionEnabled="True" FontSize="18"  Margin="3,10,0,10" HorizontalAlignment="Left" TextWrapping="Wrap" x:Name="Description"/>
                                 <Border CornerRadius="10" HorizontalAlignment="Left" BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
 
                                     <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
@@ -243,7 +243,7 @@
                                     <PersonPicture x:Name="Creater" Margin="10,0,0,0" HorizontalAlignment="Left" Width="64" Height="64" ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png"/>
                                     <StackPanel Margin="10,0,0,0">
                                         <TextBlock VerticalAlignment="Center" x:Name="CreaterName" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark1}"/>
-                                        <TextBlock VerticalAlignment="Center" x:Name="CreateDate" FontSize="16" Foreground="Gray" Margin="0,0,30,0"/>
+                                        <TextBlock  IsTextSelectionEnabled="True" VerticalAlignment="Center" x:Name="CreateDate" FontSize="16" Foreground="Gray" Margin="0,0,30,0"/>
                                         <TextBlock VerticalAlignment="Center" x:Uid="UpdateTime" Text="更新" FontSize="15" FontWeight="Bold" Foreground="Gray"/>
                                     </StackPanel>
                                 </StackPanel>
@@ -285,15 +285,15 @@
                                 <StackPanel Orientation="Vertical" Margin="10,0,0,0" HorizontalAlignment="Center">
                                     <TextBlock x:Name="UsersName"  Text="name" VerticalAlignment="Center" MaxWidth="200" TextWrapping = "Wrap" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}"/>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" x:Name="UsersLevel" Text="Lv.5" FontSize="13"/>
+                                        <TextBlock IsTextSelectionEnabled="True"  VerticalAlignment="Center" x:Name="UsersLevel" Text="Lv.5" FontSize="13"/>
                                         <Border VerticalAlignment="Center" CornerRadius="10" BorderThickness="1.5" Padding="4" Opacity="0.9"  Background="{ThemeResource SystemAccentColorDark1}">
-                                            <TextBlock x:Name="UsersTitle" FontWeight="Bold" FontSize="10"/>
+                                            <TextBlock IsTextSelectionEnabled="True"  x:Name="UsersTitle" FontWeight="Bold" FontSize="10"/>
                                         </Border>
                                     </StackPanel>
 
                                 </StackPanel>
                             </StackPanel>
-                            <TextBlock Margin="0,6,0,0" x:Name="UserInfomation"/>
+                            <TextBlock  IsTextSelectionEnabled="True" Margin="0,6,0,0" x:Name="UserInfomation"/>
                         </StackPanel>
                     </muxc:TeachingTip.Content>
                     <muxc:TeachingTip.IconSource>
@@ -302,6 +302,11 @@
                 </muxc:TeachingTip>
             </Grid>
         </ScrollViewer>
+        <muxc:TeachingTip Background="{StaticResource SystemAccentColorLight3}" x:Name="LayoutMessage" PreferredPlacement="Center"  IsLightDismissEnabled="False">
+            <muxc:TeachingTip.Content>
+                <ProgressRing Padding="10" Height="80" Width="80" IsActive="True" Foreground="{StaticResource SystemAccentColor}"/>
+            </muxc:TeachingTip.Content>
+        </muxc:TeachingTip>
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>
