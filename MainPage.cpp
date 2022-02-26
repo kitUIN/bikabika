@@ -221,6 +221,16 @@ namespace winrt::bikabika::implementation
 		}
 	}
 
+	void MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	{
+		//bug Comics 会自动弹出搜索框
+		/*if (ContentFrame().CurrentSourcePageType() == winrt::xaml_typename<bikabika::ComicsPage>())
+		{
+			CatSearch().ItemsSource(box_value(winrt::single_threaded_observable_vector<bikabika::KeywordsBox>()));
+
+		}*/
+	}
+
 	bikabika::UserViewModel MainPage::MainUserViewModel()
 	{
 		return m_userViewModel;
@@ -287,11 +297,14 @@ namespace winrt::bikabika::implementation
 	// 搜索栏
 	void  winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
 	{
-		if (!m_suggestIsChosen)
+		if (sender.Text()!=L""&&(args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput || (args.Reason() == AutoSuggestionBoxTextChangeReason::ProgrammaticChange && sender.Text() == L" ")))
 		{
-			sender.ItemsSource(box_value(m_suggestions));
+			if (!m_suggestIsChosen)
+			{
+				sender.ItemsSource(box_value(m_suggestions));
+			}
+			m_suggestIsChosen = false;
 		}
-		m_suggestIsChosen = false;
 	}
 	// 搜索栏提交
 	void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
@@ -301,14 +314,45 @@ namespace winrt::bikabika::implementation
 		auto text = sender.Text();
 		if (text != L"")
 		{
+			Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			
+			if (userData.Values().HasKey(L"SearchHistorys"))
+			{
+				int i;
+				bool f = false;
+				auto y = Windows::Data::Json::JsonArray::Parse(unbox_value<hstring>(userData.Values().Lookup(L"SearchHistorys")));
+				for (i = 0; i < y.Size(); i++) 
+				{
+					if (text == y.GetStringAt(i))
+					{
+						f = true;
+						break;
+					}
+				}
+				if(f)
+				{
+					y.RemoveAt(i);
+					m_suggestions.RemoveAt(i);
+				}
+				y.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
+				userData.Values().Insert(L"SearchHistorys", box_value(y.Stringify()));
+				m_suggestions.InsertAt(0, winrt::make<KeywordsBox>(text, L"历史记录", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///Assets//Picacgs//history.png"))));
+
+				
+			}
+			else {
+				Windows::Data::Json::JsonArray json;
+				userData.Values().Insert(L"SearchHistorys", box_value(json.Stringify()));
+			}
 			ComicArgs args;
 			args.ComicType(ComicsType::SEARCH);
-			args.Content(sender.Text());
+			args.Content(text);
 			args.SortMode(winrt::bikabika::SearchSortMode::DD);
-			Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
-
+			sender.ItemsSource(box_value(winrt::single_threaded_observable_vector<bikabika::KeywordsBox>()));
+			ContentFrame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
 		}
 		sender.Text(L"");
+		ClearCatSearchHistory().Visibility(Visibility::Collapsed);
 	}
 
 
@@ -316,7 +360,6 @@ namespace winrt::bikabika::implementation
 	{
 		m_suggestIsChosen = true;
 		hstring s = args.SelectedItem().as<bikabika::KeywordsBox>().GetKeywords();
-		OutputDebugStringW(s.c_str());
 		sender.Text(s);
 	}
 	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
@@ -502,7 +545,7 @@ namespace winrt::bikabika::implementation
 		}
 	}
 	Windows::Foundation::IAsyncAction MainPage::GetKeywords()
-	{
+	{   
 		hstring res{ co_await m_bikaHttp.Keywords() };
 		if (res[1] == 'T')
 		{
@@ -518,10 +561,28 @@ namespace winrt::bikabika::implementation
 			if (code == (double)200)
 			{
 				Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				if (userData.Values().HasKey(L"SearchHistorys"))
+				{
+					auto y = Windows::Data::Json::JsonArray::Parse(unbox_value<hstring>(userData.Values().Lookup(L"SearchHistorys")));
+					
+					for (auto z : y)
+					{
+						OutputDebugStringW(z.GetString().c_str());
+						OutputDebugStringW(L"\n");
+						m_suggestions.Append(winrt::make<KeywordsBox>(z.GetString(), L"历史记录", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///Assets//Picacgs//history.png"))));
+					}
+				}
+				else {
+					Windows::Data::Json::JsonArray json;
+					userData.Values().Insert(L"SearchHistorys", box_value(json.Stringify()));
+					OutputDebugStringW(L"[NEW]SearchHistorys\n");
+				}
 				auto keywords = resp.GetNamedObject(L"data").GetNamedArray(L"keywords");
 				userData.Values().Insert(L"keywords", box_value(keywords.Stringify()));
+				m_suggestionSize = 0;
 				for (auto x : keywords)
 				{
+					m_suggestionSize++;
 					m_suggestions.Append(winrt::make<KeywordsBox>(x.GetString(), L"大家都在搜", L"[TAG]", winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage(winrt::Windows::Foundation::Uri(L"ms-appx:///Assets//Picacgs//tag.png"))));
 				}
 			}
@@ -552,7 +613,7 @@ namespace winrt::bikabika::implementation
 				}
 				if (auto s = loginData.Values().TryLookup(L"autoLogin"))
 				{
-					OutputDebugStringW(to_hstring(unbox_value<bool>(s)).c_str());
+					
 					AutoCheckBox().IsChecked(unbox_value<bool>(s));
 
 				}
@@ -609,7 +670,9 @@ namespace winrt::bikabika::implementation
 		}
 		
 	}
+
 }
+
 
 
 
@@ -639,4 +702,27 @@ void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::
 	
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	loginData.Values().Insert(L"rememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
+}
+
+
+
+void winrt::bikabika::implementation::MainPage::CatSearch_GettingFocus(winrt::Windows::UI::Xaml::UIElement const& sender, winrt::Windows::UI::Xaml::Input::GettingFocusEventArgs const& args)
+{
+	CatSearch().Text(L" ");
+	CatSearch().ItemsSource(box_value(m_suggestions));
+	CatSearch().Text(L"");
+	ClearCatSearchHistory().Visibility(Visibility::Visible);
+}
+
+void winrt::bikabika::implementation::MainPage::ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	Windows::Data::Json::JsonArray json;
+	userData.Values().Insert(L"SearchHistorys", box_value(json.Stringify()));
+	int clearAll = m_suggestions.Size() - m_suggestionSize;
+	for(int i=0;i< clearAll;i++)
+	{
+		m_suggestions.RemoveAt(0);
+	}
+
 }

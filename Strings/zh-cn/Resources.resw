@@ -167,6 +167,9 @@
     <value>搜索</value>
     <comment>分类搜索栏</comment>
   </data>
+  <data name="ClearHistory.Content" xml:space="preserve">
+    <value>清除历史记录</value>
+  </data>
   <data name="Comment.Text" xml:space="preserve">
     <value>评论</value>
     <comment>用户界面</comment>

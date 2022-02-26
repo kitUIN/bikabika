@@ -4,7 +4,7 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Pages\MainPage.xaml" />
+    <Page Include="MainPage.xaml" />
     <Page Include="Pages\SettingsPage.xaml" />
     <Page Include="Pages\ClassificationPage.xaml" />
     <Page Include="Pages\ComicsPage.xaml" />
@@ -274,6 +274,8 @@
     <Image Include="Assets\Picacgs\chat_bg_image.png" />
     <Image Include="Assets\Picacgs\register_name.png" />
     <Image Include="Assets\Picacgs\userlogo.png" />
+    <Image Include="Assets\Picacgs\exit.png" />
+    <Image Include="Assets\Picacgs\push_in.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

@@ -260,7 +260,6 @@ namespace winrt::bikabika::implementation
 		Windows::Storage::StorageFolder folderDB{ co_await localFolder.GetFolderAsync(L"bikabikadb") };
 		auto historyFile{ co_await folderDB.GetFileAsync(L"history.json") };
 		co_return Windows::Data::Json::JsonArray::Parse(co_await Windows::Storage::FileIO::ReadTextAsync(historyFile));
-
 	}
 	Windows::Foundation::IAsyncAction FileCheckTool::SetHistory(Windows::Data::Json::JsonObject value)
 	{

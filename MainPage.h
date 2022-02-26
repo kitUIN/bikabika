@@ -62,6 +62,7 @@ namespace winrt::bikabika::implementation
 		bikabika::UserViewModel m_userViewModel;
 		bool m_suggestIsChosen = false;
 		bool m_firstArrive = true;
+		int32_t m_suggestionSize = 0;
 		hstring m_picPath = L"ms-appx:///Assets//Picacgs//icon_unknown_error.png";
 		bikabika::BikaHttp m_bikaHttp;
 		bikabika::FileCheckTool m_fileCheckTool;
@@ -71,6 +72,8 @@ namespace winrt::bikabika::implementation
 		void UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
 		void AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void CatSearch_GettingFocus(winrt::Windows::UI::Xaml::UIElement const& sender, winrt::Windows::UI::Xaml::Input::GettingFocusEventArgs const& args);
+		void ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 	};
 
 }
