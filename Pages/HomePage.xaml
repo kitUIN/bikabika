@@ -18,10 +18,10 @@
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
         <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">

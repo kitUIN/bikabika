@@ -79,13 +79,19 @@
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+        </ContentDialog >
         <ScrollViewer Margin="3,38,0,10">
             <StackPanel >
 
@@ -148,7 +154,7 @@
         <Border  Height="40" CornerRadius="10"  VerticalAlignment="Top" Background="{ThemeResource MyAcrylicBrushLight1}">
                     <Grid>
                         <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,0,0,0">
-                    <TextBlock Text="{x:Bind MyPageNumBox.Title,Mode=OneWay}" FontSize="25" Margin="10,0,0,3" FontWeight="ExtraBlack" VerticalAlignment="Center" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind MyPageNumBox.Title,Mode=OneWay}" FontSize="25" Margin="10,0,0,3" FontWeight="ExtraBlack" VerticalAlignment="Center" Foreground="{ThemeResource SystemAccentColorDark3}"/>
 
                     
                 </StackPanel>

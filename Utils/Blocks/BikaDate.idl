@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    runtimeclass BikaDate
+    {
+        BikaDate(String date);
+        String SetTimeZone;
+        String GetDateTime{ get; };
+    }
+}

@@ -6,6 +6,7 @@
 #include "Utils/Blocks/TagBlock.h"
 #include "Utils/Blocks/CreaterBlock.h"
 #include "Utils/Blocks/EpisodeBlock.h"
+#include "Utils/Blocks/CommetsViewModel.h"
 #include "MainPage.h"
 namespace winrt::bikabika::implementation
 {
@@ -18,21 +19,25 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> Episodes();
-       
+        bikabika::CommetsViewModel CommentBlocks();
+        void CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json);
+        Windows::Foundation::IAsyncAction CommentsRequest(int32_t const& page);
         void MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
         void CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
-        void Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        Windows::Foundation::IAsyncAction  Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args);
         Windows::Foundation::IAsyncAction Like_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         Windows::Foundation::IAsyncAction Favourite_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-
+        Windows::Foundation::IAsyncAction ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e);
 
 
     private:
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
+        bool m_commentsLoad = false;
+        bool m_commentsContinue = false;
         hstring m_id;
         hstring m_title;
         bikabika::CreaterBlock m_creater{ nullptr };
@@ -62,6 +67,11 @@ namespace winrt::bikabika::implementation
         int32_t m_epsLimit;
         int32_t m_epsPage;
         int32_t m_epsPages;
+        int32_t m_commentsTotal;
+        int32_t m_commentsLimit;
+        int32_t m_commentsPage;
+        int32_t m_commentsPages;
+        bikabika::CommetsViewModel m_comments;
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<bikabika::EpisodeBlock>();
 
 
@@ -71,6 +81,7 @@ namespace winrt::bikabika::implementation
         void TagButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void Author_Drop(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void Title_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void UsersName_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
 }
 

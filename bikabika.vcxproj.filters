@@ -4,14 +4,14 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage.xaml" />
+    <Page Include="Pages\MainPage.xaml" />
     <Page Include="Pages\SettingsPage.xaml" />
-    <Page Include="ClassificationPage.xaml" />
-    <Page Include="ComicsPage.xaml" />
-    <Page Include="InfoPage.xaml" />
+    <Page Include="Pages\ClassificationPage.xaml" />
+    <Page Include="Pages\ComicsPage.xaml" />
+    <Page Include="Pages\InfoPage.xaml" />
     <Page Include="Pages\PicPage.xaml" />
     <Page Include="Pages\DownloadPage.xaml" />
-    <Page Include="UserPage.xaml" />
+    <Page Include="Pages\UserPage.xaml" />
     <Page Include="Pages\HomePage.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -31,7 +31,10 @@
     <Midl Include="Utils\Blocks\InfoBlock.idl" />
     <Midl Include="Utils\Blocks\EpisodeBlock.idl" />
     <Midl Include="Utils\Blocks\PicturesBlock.idl" />
-    <Midl Include="ComicArgs.idl" />
+    <Midl Include="Utils\Blocks\ComicArgs.idl" />
+    <Midl Include="Utils\Blocks\CommentBlock.idl" />
+    <Midl Include="Utils\Blocks\BikaDate.idl" />
+    <Midl Include="Utils\Blocks\CommetsViewModel.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -52,7 +55,10 @@
     <ClCompile Include="Utils\Blocks\InfoBlock.cpp" />
     <ClCompile Include="Utils\Blocks\EpisodeBlock.cpp" />
     <ClCompile Include="Utils\Blocks\PicturesBlock.cpp" />
-    <ClCompile Include="ComicArgs.cpp" />
+    <ClCompile Include="Utils\Blocks\ComicArgs.cpp" />
+    <ClCompile Include="Utils\Blocks\CommentBlock.cpp" />
+    <ClCompile Include="Utils\Blocks\BikaDate.cpp" />
+    <ClCompile Include="Utils\Blocks\CommetsViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -71,7 +77,10 @@
     <ClInclude Include="Utils\Blocks\InfoBlock.h" />
     <ClInclude Include="Utils\Blocks\EpisodeBlock.h" />
     <ClInclude Include="Utils\Blocks\PicturesBlock.h" />
-    <ClInclude Include="ComicArgs.h" />
+    <ClInclude Include="Utils\Blocks\ComicArgs.h" />
+    <ClInclude Include="Utils\Blocks\CommentBlock.h" />
+    <ClInclude Include="Utils\Blocks\BikaDate.h" />
+    <ClInclude Include="Utils\Blocks\CommetsViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

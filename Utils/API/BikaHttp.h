@@ -45,6 +45,10 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncOperation<hstring> Favourite(hstring bookId);
         // Ï²»¶Âþ»­
         Windows::Foundation::IAsyncOperation<hstring> Like(hstring bookId);
+        // ÆÀÂÛ
+        Windows::Foundation::IAsyncOperation<hstring> Comments(hstring bookId, int32_t page);
+        // ·¢ËÍÆÀÂÛ
+        Windows::Foundation::IAsyncOperation<hstring> SendComments(hstring bookId, hstring content);
 
 
 

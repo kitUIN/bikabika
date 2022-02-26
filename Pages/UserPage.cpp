@@ -92,6 +92,7 @@ namespace winrt::bikabika::implementation
 			if (mode == L"Error")
 			{
 				HttpContentDialog().Content(box_value(message));
+
 				auto show{ co_await HttpContentDialog().ShowAsync() };
 
 			}
@@ -99,19 +100,18 @@ namespace winrt::bikabika::implementation
 			{
 				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
 				HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+				HttpContentDialog().IsTextScaleFactorEnabled(true);
 				auto show{ co_await HttpContentDialog().ShowAsync() };
 
 			}
 			else if (mode == L"1005")
 			{
 				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
-				extern bool m_login;
-				m_login = false;
+				HttpContentDialog().IsTextScaleFactorEnabled(true);
 				auto show{ co_await HttpContentDialog().ShowAsync() };
 				if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
 				{
 					auto loginTeachingTip = Frame().Parent().as<Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<Windows::UI::Xaml::Controls::Grid>().Children().GetAt(3).as<Microsoft::UI::Xaml::Controls::TeachingTip>();
-					Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 					loginTeachingTip.Title(resourceLoader.GetString(L"LoginButton/Content"));
 					loginTeachingTip.IsOpen(true);
 				}

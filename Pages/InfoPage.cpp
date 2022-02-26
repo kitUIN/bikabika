@@ -3,7 +3,7 @@
 #if __has_include("InfoPage.g.cpp")
 #include "InfoPage.g.cpp"
 #endif
-
+#pragma warning( disable : 4996 )
 using namespace winrt;
 using namespace Windows::ApplicationModel::DataTransfer;
 using namespace Windows::Foundation;
@@ -18,11 +18,11 @@ namespace winrt::bikabika::implementation
     {
         InitializeComponent();
         NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+
     }
-    
+
     Windows::Foundation::IAsyncAction InfoPage::ContentDialogShow(hstring const& mode, hstring const& message)
     {
-        
         if (mode == L"Timeout") {
             auto show{ PicErrorDialog().ShowAsync() };
         }
@@ -32,6 +32,7 @@ namespace winrt::bikabika::implementation
             if (mode == L"Error")
             {
                 HttpContentDialog().Content(box_value(message));
+                
                 auto show{ co_await HttpContentDialog().ShowAsync() };
 
             }
@@ -39,12 +40,14 @@ namespace winrt::bikabika::implementation
             {
                 Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
                 HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+                HttpContentDialog().IsTextScaleFactorEnabled(true);
                 auto show{ co_await HttpContentDialog().ShowAsync() };
 
             }
             else if (mode == L"1005")
             {
                 HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+                HttpContentDialog().IsTextScaleFactorEnabled(true);
                 extern bool m_login;
                 m_login = false;
                 auto show{ co_await HttpContentDialog().ShowAsync() };
@@ -56,8 +59,8 @@ namespace winrt::bikabika::implementation
                 }
             }
         }
-        
     }
+
     Windows::Foundation::IAsyncAction InfoPage::Eps(int32_t const& page)
     {
         auto res{ co_await m_bikaHttp.Episodes(m_id,page) };
@@ -123,12 +126,18 @@ namespace winrt::bikabika::implementation
     {
         //bug 多次使用标签搜索后返回导致动画img冲突
         //todo 改用标签页
+        
         //winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"BackConnectedAnimation", Img());
         __super::OnNavigatedFrom(e);
     }
     
     Windows::Foundation::IAsyncAction InfoPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
+        // 评论区初始化
+        m_commentsLoad = false;
+        m_comments.CommentBlock().Clear();
+        CommentsView().IsPaneOpen(false);
+        
         auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<winrt::Windows::Foundation::IInspectable>>(e.Parameter());
         auto img = winrt::unbox_value<winrt::Windows::UI::Xaml::Media::ImageSource>(params.GetAt(0));
 		m_id = winrt::unbox_value<hstring>(params.GetAt(1));
@@ -213,7 +222,8 @@ namespace winrt::bikabika::implementation
                 Finished().Visibility(m_finished);
                 m_updatedAt = json.GetNamedString(L"updated_at");
                 m_createdAt = json.GetNamedString(L"created_at");
-                CreateDate().Text(to_hstring(to_string(m_updatedAt).substr(0, 10)) +L" "+ to_hstring(to_string(m_updatedAt).substr(11, 8)));
+                bikabika::BikaDate datetime{ m_createdAt };
+                CreateDate().Text(datetime.GetDateTime());
                 m_allowDownload = json.GetNamedBoolean(L"allowDownload");
                 m_allowComment = json.GetNamedBoolean(L"allowComment");
                 Comments().IsEnabled(m_allowComment);
@@ -236,15 +246,19 @@ namespace winrt::bikabika::implementation
                 CommentCounts().Value(m_commentsCount);
                 co_await Eps(1);
             }
+            //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-
+                co_await ContentDialogShow(L"1005", L"");
             }
+            //未知
             else
             {
-
+                co_await ContentDialogShow(L"Unknown", res);
             }
 
+
+           
         }
         if (Favourite().IsChecked().GetBoolean())
         {
@@ -273,6 +287,11 @@ namespace winrt::bikabika::implementation
     {
         return m_eps;
     }
+    bikabika::CommetsViewModel InfoPage::CommentBlocks()
+    {
+        return m_comments;
+    }
+
 
     void winrt::bikabika::implementation::InfoPage::MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
     {
@@ -294,15 +313,57 @@ namespace winrt::bikabika::implementation
         auto epi = e.ClickedItem().as<bikabika::EpisodeBlock>();
         Frame().Navigate(winrt::xaml_typename<bikabika::PicPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(epi.BookId()),box_value(epi.ID()),box_value(epi.Order()),box_value(epi.Total()) })));
     }
-
-    void winrt::bikabika::implementation::InfoPage::Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    // 评论区请求
+    Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::CommentsRequest(int32_t const& page)
     {
-        auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
-        CommentsView().IsPaneOpen(f);
-
+        LayoutMessage().Title(resourceLoader.GetString(L"CommentsLoading"));
+        LayoutMessage().IsOpen(true);
+        hstring res{ co_await m_bikaHttp.Comments(m_id,page) };
+        
+        if (res[1] == 'T')
+        {
+            co_await ContentDialogShow(L"Timeout", L"");
+        }
+        else if (res[1] == 'E') {
+            co_await ContentDialogShow(L"Error", res);
+        }
+        else
+        {
+            Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+            double code = resp.GetNamedNumber(L"code");
+            if (code == (double)200)
+            {
+                CommentsFormat(resp);
+            }
+            //缺少鉴权
+            else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+            {
+                co_await ContentDialogShow(L"1005", L"");
+            }
+            //未知
+            else
+            {
+                co_await ContentDialogShow(L"Unknown", res);
+            }
+        }
+        LayoutMessage().IsOpen(false);
+        m_commentsContinue = false;
     }
 
+    // 评论区
+    Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::Comments_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+    {
+        
+        auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
+        CommentsView().IsPaneOpen(f);
+        // 评论预加载
+        if (f && !m_commentsLoad) {
+            co_await CommentsRequest(1);
+            m_commentsLoad = true;
+        }
+    }
 
+    // 评论区
     void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
     {
         Comments().IsChecked(false);
@@ -395,7 +456,41 @@ namespace winrt::bikabika::implementation
             }
         }
     }
+    void InfoPage::CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json)
+    {
+        auto data = json.GetNamedObject(L"data");
+        if (!m_commentsLoad) {
+            for (auto x : data.GetNamedArray(L"topComments"))
+            {
+                auto tempBlock = winrt::make<CommentBlock>(x.GetObject());
+                tempBlock.Top(Windows::UI::Xaml::Visibility::Visible);
+                m_comments.CommentBlock().Append(tempBlock);
+            }
+        }
+        auto comments = data.GetNamedObject(L"comments");
+        m_commentsTotal = comments.GetNamedNumber(L"total");
+        m_commentsLimit = comments.GetNamedNumber(L"limit");
+        m_commentsPage = atoi(to_string(comments.GetNamedString(L"page")).c_str());
+        m_commentsPages = comments.GetNamedNumber(L"pages");
+        for (auto x : comments.GetNamedArray(L"docs"))
+        {
+            m_comments.CommentBlock().Append(winrt::make<CommentBlock>(x.GetObject()));
+        }
+    }
 
+    // 检测划到评论区最底部
+    Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e)
+    {
+        auto sv = sender.as<winrt::Windows::UI::Xaml::Controls::ScrollViewer>();
+        if (sv.VerticalOffset() + sv.ActualHeight() + 2 >= sv.ExtentHeight()) {
+            if (Comments().IsChecked().GetBoolean() && m_commentsPage < m_commentsPages&&!m_commentsContinue)
+            {
+                m_commentsContinue = true;
+                co_await CommentsRequest(m_commentsPage+1);
+            }
+        }
+
+    }
 }
 
 
@@ -457,17 +552,22 @@ void winrt::bikabika::implementation::InfoPage::TagButton_Click(winrt::Windows::
 // 按下作者
 void winrt::bikabika::implementation::InfoPage::Author_Drop(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
+    auto author = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
     if (e.GetCurrentPoint(sender.as<TextBlock>()).Properties().IsLeftButtonPressed())
     {
-        auto tag = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
-    extern bool loadComicFlag;
-    loadComicFlag = true;
-    ComicArgs args;
-    args.ComicType(ComicsType::SEARCH);
-    args.Content(tag);
-    args.SortMode(winrt::bikabika::SearchSortMode::DD);
-    args.IsAnime(false);
-    Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+        extern bool loadComicFlag;
+        loadComicFlag = true;
+        ComicArgs args;
+        args.ComicType(ComicsType::SEARCH);
+        args.Content(author);
+        args.SortMode(winrt::bikabika::SearchSortMode::DD);
+        args.IsAnime(false);
+        Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+    }
+    else {
+        DataPackage dataPackage = DataPackage();
+        dataPackage.SetText(author);
+        Clipboard::SetContentWithOptions(dataPackage, nullptr);
     }
     
 
@@ -479,10 +579,29 @@ void winrt::bikabika::implementation::InfoPage::Title_PointerPressed(winrt::Wind
     auto title = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
     DataPackage dataPackage = DataPackage();
     dataPackage.SetText(title);
-    if (Clipboard::SetContentWithOptions(dataPackage, nullptr))
-    {
-        
-    }
+    Clipboard::SetContentWithOptions(dataPackage, nullptr);
 }
     
 
+
+// 点击上传者名字
+void winrt::bikabika::implementation::InfoPage::UsersName_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    auto author = sender.as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
+    if (e.GetCurrentPoint(sender.as<TextBlock>()).Properties().IsLeftButtonPressed())
+    {
+        extern bool loadComicFlag;
+        loadComicFlag = true;
+        ComicArgs args;
+        args.ComicType(ComicsType::SEARCH);
+        args.Content(author);
+        args.SortMode(winrt::bikabika::SearchSortMode::DD);
+        args.IsAnime(false);
+        Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+    }
+    else {
+        DataPackage dataPackage = DataPackage();
+        dataPackage.SetText(author);
+        Clipboard::SetContentWithOptions(dataPackage, nullptr);
+    }
+}

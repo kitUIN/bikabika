@@ -1,0 +1,10 @@
+import "Utils/Blocks/CommentBlock.idl";
+namespace bikabika
+{
+    runtimeclass CommetsViewModel
+    {
+        CommetsViewModel();
+        Windows.Foundation.Collections.IObservableVector<bikabika.CommentBlock> CommentBlock{ get; };
+
+    }
+}

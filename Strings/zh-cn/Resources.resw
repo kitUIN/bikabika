@@ -121,6 +121,9 @@
     <value>哔咔</value>
     <comment>标题栏</comment>
   </data>
+  <data name="AuthorTip.Content" xml:space="preserve">
+    <value>左键搜索，右键复制</value>
+  </data>
   <data name="AutoCheckBox.Content" xml:space="preserve">
     <value>自动登录</value>
     <comment>登陆</comment>
@@ -171,6 +174,9 @@
   <data name="Comments.Label" xml:space="preserve">
     <value>评论</value>
     <comment>漫画详细页</comment>
+  </data>
+  <data name="CommentsLoading" xml:space="preserve">
+    <value>加载评论区中...</value>
   </data>
   <data name="CommentsTip.Content" xml:space="preserve">
     <value>展开评论面板</value>
@@ -342,6 +348,9 @@
   </data>
   <data name="TipUnlike" xml:space="preserve">
     <value>点击收回爱心</value>
+  </data>
+  <data name="TitleTip.Content" xml:space="preserve">
+    <value>左键复制</value>
   </data>
   <data name="UpdateTime.Text" xml:space="preserve">
     <value>更新</value>

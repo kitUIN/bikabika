@@ -122,7 +122,7 @@
                 <muxc:SymbolIconSource Symbol="AddFriend" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
-        
+
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>
@@ -131,10 +131,10 @@
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Name="ErrorText1" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Name="ErrorText2" x:Uid="ErrorText2" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Name="ErrorText3" x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Name="ErrorText4" x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
         <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">

@@ -80,50 +80,95 @@
             </Setter>
         </Style>
         <Style x:Name="MyListBoxItemStyle2" TargetType="ListViewItem">
-                <Setter Property="Template">
-                    <Setter.Value>
+            <Setter Property="Template">
+                <Setter.Value>
                     <ControlTemplate TargetType="ListViewItem">
-                            <Grid Background="{TemplateBinding Background}">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup>
-                                        <!--缺省样式-->
-                                        <VisualState x:Name="Normal">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames 
+                        <Grid Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <!--缺省样式-->
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames 
                                                     Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight1}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                                
-                                            </Storyboard>
-                                        </VisualState>
-                                        <!--设置鼠标悬停样式-->
-                                        <VisualState x:Name="PointerOver">
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames 
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight1}" />
+                                            </ObjectAnimationUsingKeyFrames>
+
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--设置鼠标悬停样式-->
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames 
                                                     Storyboard.TargetName="ContentBackground"
                                                      Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                            </Storyboard>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
                             <Border CornerRadius="10" BorderThickness="1.5" Padding="10" Opacity="0.9"  x:Name="ContentBackground">
-                                        <ContentPresenter
+                                <ContentPresenter
                                 Content="{TemplateBinding Content}"
                                 Margin="{TemplateBinding Padding}" />
-                                    </Border>
-                                
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Name="CommentsBoxItemStyle" TargetType="GridViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <!--缺省样式-->
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight2}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Margin">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="2,2,0,0" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--设置鼠标悬停样式-->
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentBackground"
+                                                     Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border Height="200"  Width="480" BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground1" >
+                                <Border BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground">
+                                    <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                Margin="{TemplateBinding Padding}" />
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
     <Grid>
-        <ScrollViewer>
+        <ScrollViewer x:Name="InfoPageScrollViewer" ViewChanged="ScrollViewer_ViewChanged">
             <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
 
                 <StackPanel VerticalAlignment="Top" Orientation="Vertical">
@@ -140,8 +185,16 @@
                             <Grid  Height="280" Margin="10,0,0,0">
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                                     <StackPanel>
-                                        <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold" PointerPressed="Title_PointerPressed"/>
-                                        <TextBlock x:Name="Author" FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}" PointerPressed="Author_Drop"/>
+                                        <TextBlock x:Name="Title" MaxLines="3" Width="500" FontSize="17" TextWrapping="Wrap" FontWeight="Bold" PointerPressed="Title_PointerPressed">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Uid="TitleTip"/>
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                        <TextBlock x:Name="Author" FontSize="15" Foreground="{ThemeResource SystemAccentColorDark3}" PointerPressed="Author_Drop">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Uid="AuthorTip"/>
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
                                         <TextBlock x:Name="ChineseTeam" Text="Unknown" FontSize="15" Foreground="CornflowerBlue" PointerPressed="Author_Drop"/>
                                     </StackPanel>
                                 </StackPanel>
@@ -197,7 +250,6 @@
 
                                     <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                                         <Grid>
-
                                             <AppBarToggleButton Width="64" x:Name="Comments" x:Uid="Comments" Height="64" Label="评论" Unchecked="Comments_Checked"  Checked="Comments_Checked">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="CommentsTip"/>
@@ -264,17 +316,42 @@
                         </ListView>
                     </Border>
                 </StackPanel>
-                <SplitView x:Name="CommentsView" PaneBackground="{ThemeResource MyAcrylicBrushLight2}"
-           IsPaneOpen="False" PaneClosed="CommentsView_PaneClosed" OpenPaneLength="400" DisplayMode="Overlay">
+                <SplitView x:Name="CommentsView" PaneBackground="{ThemeResource MyAcrylicBrushLight3}"
+           IsPaneOpen="False" PaneClosed="CommentsView_PaneClosed" OpenPaneLength="500" DisplayMode="Inline">
                     <SplitView.Pane>
-                        <ScrollViewer>
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock Text="评论区" x:Name="PaneHeader" Margin="60,12,0,0" />
+                        <GridView x:Name="CommentsGridV" SelectionMode="None" HorizontalAlignment="Center" IsItemClickEnabled="True"
+                                      ItemContainerStyle="{StaticResource CommentsBoxItemStyle}" ItemsSource="{x:Bind CommentBlocks.CommentBlock}">
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="local:CommentBlock" >
+                                    <Grid Width="460" Height="200">
+                                        <StackPanel Orientation="Vertical"  VerticalAlignment="Top">
+                                            <StackPanel Orientation="Horizontal">
+                                                <PersonPicture Margin="1,10,0,0" VerticalAlignment="Top" ProfilePicture="{x:Bind Creater.Thumb,Mode=OneWay}" Width="64" Height="64"/>
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock Text="{x:Bind Creater.Name,Mode=OneWay}" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
+                                                    <TextBlock Margin="10,10,0,0" IsTextSelectionEnabled="True" Text="{x:Bind Content,Mode=OneWay}" MaxWidth="380" TextWrapping = "Wrap" FontSize="18" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,15" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                            <Grid>
+                                                <FontIcon Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB51;"/>
+                                                <FontIcon Visibility="{x:Bind IsLiked,Mode=OneWay}"  Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                            </Grid>
+                                            <TextBlock Margin="3,0,0,0"  Text="{x:Bind LikesCount,Mode=OneWay}" FontSize="13"/>
+                                            <FontIcon Margin="20,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;"/>
+                                            <TextBlock Margin="3,0,0,0" Text="{x:Bind CommentsCount,Mode=OneWay}" FontSize="13"/>
+                                        </StackPanel>
+                                        <TextBlock Margin="0,0,5,17" Text="{x:Bind CreatedAt,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" Foreground="Gray"/>
+                                        <Border Visibility="{x:Bind Top,Mode=OneWay}" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                            <TextBlock Text="置顶" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                        </Border>
 
-                                <SymbolIcon Symbol="Setting" />
-                                <TextBlock Text="还没做好" Margin="24,0,0,0" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </ScrollViewer>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+
                     </SplitView.Pane>
                 </SplitView>
                 <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Target="{x:Bind CreaterBorder}" Title="Change themes without hassle" Background="{ThemeResource MyAcrylicBrushLight2}">
@@ -283,7 +360,11 @@
                             <StackPanel Orientation="Horizontal">
                                 <PersonPicture x:Name="UsersPic" ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png" Width="64" Height="64"/>
                                 <StackPanel Orientation="Vertical" Margin="10,0,0,0" HorizontalAlignment="Center">
-                                    <TextBlock x:Name="UsersName"  Text="name" VerticalAlignment="Center" MaxWidth="200" TextWrapping = "Wrap" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}"/>
+                                    <TextBlock x:Name="UsersName" PointerPressed="UsersName_PointerPressed"  Text="name" VerticalAlignment="Center" MaxWidth="200" TextWrapping = "Wrap" FontSize="16" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark2}">
+                                        <ToolTipService.ToolTip>
+                                                <ToolTip x:Uid="AuthorTip"/>
+                                            </ToolTipService.ToolTip>
+                                    </TextBlock>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock IsTextSelectionEnabled="True"  VerticalAlignment="Center" x:Name="UsersLevel" Text="Lv.5" FontSize="13"/>
                                         <Border VerticalAlignment="Center" CornerRadius="10" BorderThickness="1.5" Padding="4" Opacity="0.9"  Background="{ThemeResource SystemAccentColorDark1}">
@@ -315,13 +396,19 @@
                 </DataTemplate>
             </ContentDialog.TitleTemplate>
             <StackPanel HorizontalAlignment="Center">
-                <TextBlock x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock x:Uid="ErrorText3" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock x:Uid="ErrorText4" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
+                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
             </StackPanel>
         </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}" />
+        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+        </ContentDialog >
     </Grid>
     <VisualStateManager.VisualStateGroups>
         <VisualStateGroup>

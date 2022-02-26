@@ -256,6 +256,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
+	// 漫画
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::BookInfo(hstring bookId)
 	{
 
@@ -268,6 +269,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/"+ api+L"\nReturn:", res.c_str());
 		co_return res;
 	}
+	// 分话
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Episodes(hstring bookId,int32_t page)
 	{
 
@@ -280,7 +282,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
-	
+	// 漫画本体
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Picture(hstring bookId, int32_t epsId, int32_t page)
 	{
 
@@ -293,6 +295,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
+	// 我的收藏
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::PersonFavourite(hstring sort, int32_t page)
 	{
 		hstring api = L"users/favourite?s="+sort+ L"&page=" + to_hstring(page);
@@ -303,6 +306,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
+	// 我的评论
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::PersonComment(int32_t page)
 	{
 		hstring api = L"users/my-comments?page=" + to_hstring(page);
@@ -313,6 +317,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[GET]->/" + api + L"\nReturn:", res.c_str());
 		co_return res;
 	}
+	// 搜索
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Search(hstring keywords, hstring sort, Windows::Data::Json::JsonArray categories, int32_t page)
 	{
 
@@ -334,6 +339,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	// 收藏
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Favourite(hstring bookId)
 	{
 
@@ -348,6 +354,7 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	// 爱心
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Like(hstring bookId)
 	{
 
@@ -362,4 +369,32 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	// 获取评论
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::Comments(hstring bookId, int32_t page)
+	{
+		hstring api = L"comics/" + to_hstring(bookId) + L"/comments?page="+ to_hstring(page);
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		auto ress = co_await GET(uri, api, uuid);
+		HttpLogOut(L"[Get]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+	// 发表评论
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::SendComments(hstring bookId, hstring content)
+	{
+		hstring api = L"comics/" + to_hstring(bookId) + L"/comments";
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"{\"content\":\""+content+L"\"}",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+
+
+
+
 }
