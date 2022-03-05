@@ -144,50 +144,6 @@ namespace winrt::bikabika::implementation
 			E_FAIL, winrt::hstring(L"Failed to load Page ") + args.SourcePageType().Name);
 	}
 
-	void MainPage::On_Navigated(
-		Windows::Foundation::IInspectable const& /* sender */,
-		Windows::UI::Xaml::Navigation::NavigationEventArgs const& args)
-	{
-		//NavView().IsBackEnabled(ContentFrame().CanGoBack());
-
-		//if (ContentFrame().SourcePageType().Name ==
-		//	winrt::xaml_typename<bikabika::SettingsPage>().Name)
-		//{
-		//	// SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
-		//	NavView().SelectedItem(NavView().SettingsItem().as<muxc::NavigationViewItem>());
-		//	NavView().Header(winrt::box_value(L"Settings"));
-		//}
-		//else if (ContentFrame().SourcePageType().Name != L"")
-		//{
-		//	//m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ L"https://storage1.picacomic.com/static/0788a77a-81e4-46a5-9206-c424226bed07.jpg" } });
-		//	for (auto&& eachPage : m_pages)
-		//	{
-		//		if (eachPage.second.Name == args.SourcePageType().Name)
-		//		{
-		//			for (auto&& eachMenuItem : NavView().MenuItems())
-		//			{
-		//				auto navigationViewItem =
-		//					eachMenuItem.try_as<muxc::NavigationViewItem>();
-		//				{
-		//					if (navigationViewItem)
-		//					{
-		//						winrt::hstring hstringValue =
-		//							winrt::unbox_value_or<winrt::hstring>(
-		//								navigationViewItem.Tag(), L"");
-		//						if (hstringValue == eachPage.first)
-		//						{
-		//							NavView().SelectedItem(navigationViewItem);
-		//							NavView().Header(navigationViewItem.Content());
-		//						}
-		//					}
-		//				}
-		//			}
-		//			break;
-		//		}
-		//	}
-		//}
-	}
-
 
 	bikabika::UserViewModel MainPage::MainUserViewModel()
 	{
@@ -417,6 +373,7 @@ namespace winrt::bikabika::implementation
 				NavHome().IsEnabled(true);
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
+				co_await PunchIn();
 				co_await SetPerson();
 				
 			}
@@ -463,9 +420,14 @@ namespace winrt::bikabika::implementation
 			}
 		}
 	}
+	int32_t MainPage::GetEXP(int32_t const& level)
+	{
+		int32_t temp = (level + 1) * 2 - 1;
+		return (temp * temp - 1) * 25;
+	}
 	Windows::Foundation::IAsyncAction MainPage::SetPerson()
 	{
-		co_await PunchIn();
+		
 		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		hstring personInfo = co_await m_bikaHttp.PersonInfo();
 		LayoutMessage().IsOpen(false);
@@ -495,8 +457,6 @@ namespace winrt::bikabika::implementation
 				auto personInfo = personData.GetNamedObject(L"data").GetNamedObject(L"user");
 				userData.Values().Insert(L"personInfo", box_value(personInfo.Stringify()));
 				LoginTeachingTip().IsOpen(false);
-				extern bool m_login;
-				m_login = true;
 				Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
 				if (userData.Values().HasKey(L"personInfo"))
 				{
@@ -504,18 +464,19 @@ namespace winrt::bikabika::implementation
 					hstring name = personInfo.GetNamedString(L"name");
 					hstring slogan = L"\"" + to_hstring(personInfo.GetNamedString(L"slogan")) + L"\"";
 					m_userViewModel.User().Slogan(slogan);
-					if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
-					hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
-					if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
+					m_userViewModel.User().Title(personInfo.GetNamedString(L"title"));
+					m_userViewModel.User().Name(name);
+					m_userViewModel.User().Level(L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level")));
 					hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
-					if (img != m_userViewModel.User().Img().UriSource().ToString()) {
-						m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
-					}
+					m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
+					hstring levelExp = L"(" + to_hstring(personInfo.GetNamedNumber(L"exp")) + L" / " + to_hstring(GetEXP(personInfo.GetNamedNumber(L"level"))) + L")";
+					m_userViewModel.User().LevelExp(levelExp);
+					int32_t percent = (int32_t)personInfo.GetNamedNumber(L"exp") * 100 / GetEXP(personInfo.GetNamedNumber(L"level"));
+					m_userViewModel.User().Percent(percent);
 				}
 				NavHome().IsEnabled(true);
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
-				
 				if (m_firstArrive) {
 					Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 					winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
@@ -529,9 +490,10 @@ namespace winrt::bikabika::implementation
 					ContentTabView().TabItems().Append(newItem);
 					ContentTabView().SelectedItem(newItem);
 					m_firstArrive = false;
+					extern bool m_login;
+					m_login = true;
 					co_await GetKeywords();
 				}
-				
 			}
 			//未知
 			else
@@ -650,6 +612,7 @@ namespace winrt::bikabika::implementation
 		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		if (auto x = loginData.Values().TryLookup(L"autoLogin"))
 		{
+			
 			if (unbox_value<bool>(x))
 			{
 				Windows::Data::Json::JsonObject account{ co_await m_fileCheckTool.GetAccount() };
@@ -660,6 +623,7 @@ namespace winrt::bikabika::implementation
 						Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 						LayoutMessage().Title(resourceLoader.GetString(L"AutoLogining"));
 						LayoutMessage().IsOpen(true);
+						co_await PunchIn();
 						co_await SetPerson();
 					}
 				}
@@ -794,4 +758,59 @@ void winrt::bikabika::implementation::MainPage::Flyout_Opened(winrt::Windows::Fo
 	CatSearch().Text(L" ");
 	CatSearch().ItemsSource(box_value(m_suggestions));
 	CatSearch().Text(L"");
+}
+
+// 登出
+void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	extern bool m_login;
+	m_login = false;
+	m_firstArrive = true;
+	ContentTabView().TabItems().Clear();
+	Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	userData.Values().Remove(L"personInfo");
+	RememberCheckBox().IsChecked(false);
+	AutoCheckBox().IsChecked(false);
+	NavHome().IsEnabled(false);
+	NavClassification().IsEnabled(false);
+	NavAccount().IsEnabled(false);
+	m_userViewModel.User().Name(L"Picacg");
+	m_userViewModel.User().Level(L"Lv.?");
+	m_userViewModel.User().Slogan(L"");
+	m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png"} });
+	LoginTeachingTip().IsOpen(true);
+}
+
+// 修改签名
+void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	hstring setSlogan = resourceLoader.GetString(L"SetSlogan");
+	SetBox().PlaceholderText(setSlogan);
+	Set().Text(setSlogan + L":");
+	ChangeTip().Title(setSlogan);
+	ChangeTip().IsOpen(true);
+	
+}
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if(SetBox().PlaceholderText()==L"设置签名")
+	{
+		LayoutMessage().Title(resourceLoader.GetString(L"Submiting"));
+		LayoutMessage().IsOpen(true);
+		hstring personInfo = co_await m_bikaHttp.SetSlogan(SetBox().Text());
+		LayoutMessage().IsOpen(false);
+		if (personInfo[1] == 'T') {
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (personInfo[1] == 'E') {
+			ContentDialogShow(L"Error", personInfo);
+		}
+		else {
+			ChangeTip().IsOpen(false);
+		}
+		co_await SetPerson();
+	}
+	
 }

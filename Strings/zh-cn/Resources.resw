@@ -320,6 +320,9 @@
   <data name="Search.Content" xml:space="preserve">
     <value>搜索</value>
   </data>
+  <data name="SetSlogan" xml:space="preserve">
+    <value>设置签名</value>
+  </data>
   <data name="SortMode.DA" xml:space="preserve">
     <value>旧到新</value>
     <comment>筛选框</comment>
@@ -339,6 +342,12 @@
   <data name="SortMode.VD" xml:space="preserve">
     <value>最多指名</value>
     <comment>筛选框</comment>
+  </data>
+  <data name="SubmitButton.Content" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Submiting" xml:space="preserve">
+    <value>提交中...</value>
   </data>
   <data name="TipComment" xml:space="preserve">
     <value>点击展开评论区</value>

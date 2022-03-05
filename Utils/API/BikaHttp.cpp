@@ -160,6 +160,36 @@ namespace winrt::bikabika::implementation
 		}
 		
 	}
+	IAsyncOperation<hstring>  BikaHttp::PUT(Uri requestUri, HttpStringContent jsonContent, hstring strAPI, guid uuid)
+	{   //POST类型
+		HttpClient httpClient;
+		HttpRequestMessage httpRequestMessage;
+		//HttpResponseMessage httpResponseMessage;
+		time_t t = time(NULL);
+		httpRequestMessage.Method(HttpMethod::Put());
+		httpRequestMessage.RequestUri(requestUri);
+		httpRequestMessage.Headers() = SetHeader(httpRequestMessage.Headers(), strAPI, uuid, t, L"PUT");
+		httpRequestMessage.Content(jsonContent);
+		try
+		{
+			HttpResponseMessage res{ co_await httpClient.SendRequestAsync(httpRequestMessage) };
+			co_return co_await res.Content().ReadAsStringAsync();
+		}
+		catch (winrt::hresult_error const& ex)
+		{
+			winrt::hstring message = ex.message();
+			winrt::hresult hr = ex.code(); // HRESULT_FROM_WIN32(WININET_E_CANNOT_CONNECT).
+			if (hr == WININET_E_CANNOT_CONNECT) {
+				OutputDebugStringW(message.c_str());
+				co_return L"[TimeOut]" + message;
+			}
+			else
+			{
+				co_return L"[ERROR]" + message;
+			}
+		}
+
+	}
 	//登陆获取token
 	IAsyncOperation<hstring> BikaHttp::Login(hstring account, hstring password)
 	{   
@@ -408,6 +438,19 @@ namespace winrt::bikabika::implementation
 		co_return ress;
 	}
 
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::SetSlogan(hstring slogan)
+	{
 
+		hstring api = L"users/profile";
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"{\"slogan\":\"" + slogan + L"\"}",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await PUT(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Put]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
 
 }

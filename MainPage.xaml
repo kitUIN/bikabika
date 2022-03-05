@@ -39,10 +39,10 @@
             </muxc:NavigationView.FooterMenuItems>
             <muxc:NavigationView.MenuItems >
                 <muxc:NavigationViewItem  Visibility="Collapsed" ></muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Name="NavBigImg">
+                <muxc:NavigationViewItem x:Name="NavBigImg" Tag="NavBigImg" PointerPressed="UsersPic_PointerPressed">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout x:Name="menu">
-                            <MenuFlyoutItem x:Uid="SwitchAccounts" Text="切换账号">
+                            <MenuFlyoutItem x:Uid="SwitchAccounts" Text="切换账号" Click="LogOut_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="People" />
                                 </MenuFlyoutItem.Icon>
@@ -51,7 +51,7 @@
                                 <MenuFlyoutSubItem.Icon>
                                     <SymbolIcon Symbol="Setting" />
                                 </MenuFlyoutSubItem.Icon>
-                                <MenuFlyoutItem x:Uid="ChangeSignature" Text="修改签名" >
+                                <MenuFlyoutItem x:Name="ChangeSignature" x:Uid="ChangeSignature" Text="修改签名" Click="ChangeSignature_Click">
                                     <MenuFlyoutItem.Icon>
                                         <SymbolIcon Symbol="ContactInfo" />
                                     </MenuFlyoutItem.Icon>
@@ -62,14 +62,14 @@
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyoutSubItem>
-                            <MenuFlyoutItem x:Uid="LogOut"  Text="登出" >
+                            <MenuFlyoutItem x:Name="LogOut" x:Uid="LogOut"  Text="登出" Click="LogOut_Click">
                                 <MenuFlyoutItem.Icon>
                                     <SymbolIcon Symbol="ClosePane" />
                                 </MenuFlyoutItem.Icon>
                             </MenuFlyoutItem>
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
-                    <StackPanel Margin="0,20,0,0" PointerPressed="UsersPic_PointerPressed">
+                    <StackPanel Margin="0,20,0,0">
                         <StackPanel x:Name="Users" Orientation="Vertical">
                             <PersonPicture x:Name="UsersPic"  ProfilePicture="{x:Bind MainUserViewModel.User.Img, Mode=OneWay}" Width="120" Height="120"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -174,7 +174,20 @@
                 <muxc:SymbolIconSource Symbol="AddFriend" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
-
+        <muxc:TeachingTip PreferredPlacement="Center"  IsLightDismissEnabled="False" x:Name="ChangeTip" x:Uid="ChangeTip"  Title="Change" Background="{ThemeResource MyAcrylicBrushLight3}">
+            <muxc:TeachingTip.Content>
+                <StackPanel Margin="0,10,0,0" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock   x:Name="Set" Text="Set:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <TextBox x:Name="SetBox"  Width="200" Background="{StaticResource SystemAccentColorLight3}" PlaceholderText = "Set"/>
+                    </StackPanel>
+                    <Button x:Name="SubmitButton" x:Uid="SubmitButton" Click="Button_Click" Content="Submit" Background="{StaticResource SystemAccentColorLight2}" Margin="0,0,0,0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="ContactInfo" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
             Background="{StaticResource SystemAccentColorLight2}">
             <ContentDialog.TitleTemplate>

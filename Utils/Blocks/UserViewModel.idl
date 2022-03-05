@@ -6,5 +6,6 @@ namespace bikabika
     {
         UserViewModel();
         User User{ get; };
+        void Clear();
     }
 }

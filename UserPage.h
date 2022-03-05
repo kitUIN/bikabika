@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "UserPage.g.h"
+#include "MainPage.h"
 #include "Utils/API/BikaHttp.h"
 #include "Utils/Blocks/FileCheckTool.h"
 #include "Utils/Blocks/UserViewModel.h"
@@ -21,6 +22,7 @@ namespace winrt::bikabika::implementation
 
 
     private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
         bikabika::UserViewModel m_userViewModel;
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;

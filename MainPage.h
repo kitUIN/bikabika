@@ -38,6 +38,7 @@ namespace winrt::bikabika::implementation
 		Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction PunchIn();
+		int32_t GetEXP(int32_t const& level);
 		Windows::Foundation::IAsyncAction SetPerson();
 		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
 		Windows::Foundation::IAsyncAction GetKeywords();
@@ -73,6 +74,9 @@ namespace winrt::bikabika::implementation
 		void NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args);
 		void NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args);
 		void Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e);
+		void LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 	};
 
 }

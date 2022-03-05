@@ -9,6 +9,7 @@ namespace winrt::bikabika::implementation
         UserViewModel();
 
         winrt::bikabika::User User();
+        void Clear();
     private:
         winrt::bikabika::User m_user{ nullptr };
     };

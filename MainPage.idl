@@ -10,6 +10,6 @@ namespace bikabika
         static MainPage Current{ get; };
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         Windows.Foundation.IAsyncAction ContentDialogShow(String mode, String message);
-
+        Windows.Foundation.IAsyncAction SetPerson();
     }
 }

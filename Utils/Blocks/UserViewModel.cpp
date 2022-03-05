@@ -14,4 +14,7 @@ namespace winrt::bikabika::implementation
     {
         return m_user;
     }
+    void UserViewModel::Clear()
+    {
+     }
 }

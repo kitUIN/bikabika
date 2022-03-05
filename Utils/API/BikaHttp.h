@@ -18,6 +18,7 @@ namespace winrt::bikabika::implementation
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> GET(winrt::Windows::Foundation::Uri requestUri, winrt::hstring strAPI, winrt::guid uuid);
         //POST类型
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring>  POST(winrt::Windows::Foundation::Uri requestUri, winrt::Windows::Web::Http::HttpStringContent jsonContent, winrt::hstring strAPI, winrt::guid uuid);
+        winrt::Windows::Foundation::IAsyncOperation<hstring> PUT(winrt::Windows::Foundation::Uri requestUri, winrt::Windows::Web::Http::HttpStringContent jsonContent, hstring strAPI, guid uuid);
         void HttpLogOut(winrt::hstring s1, winrt::hstring s2);
         //登陆获取token
         winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Login(winrt::hstring account, winrt::hstring password);
@@ -51,6 +52,8 @@ namespace winrt::bikabika::implementation
         Windows::Foundation::IAsyncOperation<hstring> SendComments(hstring bookId, hstring content);
 
         Windows::Foundation::IAsyncOperation<hstring> PunchIn();
+
+        Windows::Foundation::IAsyncOperation<hstring> SetSlogan(hstring slogan);
 
 
 

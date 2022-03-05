@@ -12,18 +12,13 @@ namespace winrt::bikabika::implementation
     UserPage::UserPage()
     {
         InitializeComponent();
-		NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
     }
 
     bikabika::UserViewModel UserPage::MainUserViewModel()
     {
-        return m_userViewModel;
+        return rootPage.MainUserViewModel();
     }
-	int32_t UserPage::GetEXP(int32_t const& level)
-	{
-		int32_t temp = (level + 1) * 2 - 1;
-		return (temp * temp - 1) * 25;
-	}
+	
 	Windows::Foundation::IAsyncAction UserPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		__super::OnNavigatedTo(e);
@@ -37,29 +32,7 @@ namespace winrt::bikabika::implementation
 				anim.TryStart(m_img);
 			}
 		}
-		auto serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		auto userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		if (userData.Values().HasKey(L"personInfo"))
-		{
-			Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
-			hstring name = personInfo.GetNamedString(L"name");
-			if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
-			hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
-			if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
-			hstring title = to_hstring(personInfo.GetNamedString(L"title"));
-			//OutputDebugStringW(title.c_str());
-			if (title != m_userViewModel.User().Title()) m_userViewModel.User().Title(title);
-			//OutputDebugStringW(m_userViewModel.User().Title().c_str());
-			hstring slogan = L"\"" +to_hstring(personInfo.GetNamedString(L"slogan"))+ L"\"";
-			if (slogan != m_userViewModel.User().Slogan()) m_userViewModel.User().Slogan(slogan);
-			hstring levelExp = L"("+to_hstring(personInfo.GetNamedNumber(L"exp"))+L" / "+to_hstring(GetEXP(personInfo.GetNamedNumber(L"level")))+L")";
-			if (levelExp != m_userViewModel.User().LevelExp()) m_userViewModel.User().LevelExp(levelExp);
-			hstring img = unbox_value<winrt::hstring>(serversSettings.Values().Lookup(L"picServersCurrent")) + L"/static/" + personInfo.GetNamedObject(L"avatar").GetNamedString(L"path");
-			int32_t percent = (int32_t)personInfo.GetNamedNumber(L"exp")*100 / GetEXP(personInfo.GetNamedNumber(L"level"));
-			//OutputDebugStringW(to_hstring(percent).c_str());
-			if (percent != m_userViewModel.User().Percent()) m_userViewModel.User().Percent(percent);
-			if (img != m_userViewModel.User().Img().UriSource().ToString()) m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
-		}
+
 		if (!m_firstArrive)
 		{
 			co_await GetFavourite(L"dd", 1);
@@ -184,7 +157,11 @@ void winrt::bikabika::implementation::UserPage::GotoFav_Click(winrt::Windows::Fo
 	args.ComicType(ComicsType::FACOURITE);
 	args.Content(L"Favourite");
 	args.SortMode(winrt::bikabika::SearchSortMode::DD);
-	Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
+	frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+	rootPage.CreateNewTab(frame, L"Favourite", symbol);
 }
 
 
@@ -194,13 +171,16 @@ void winrt::bikabika::implementation::UserPage::Grid_PointerPressed(winrt::Windo
 	animeFlag = true;
 	//OutputDebugStringW(L"\nisokkkkkkk\n");
 	auto it = sender.as<winrt::Windows::UI::Xaml::Controls::Grid>().Children().GetAt(0).as<winrt::Windows::UI::Xaml::Controls::Border>().Child().as<winrt::Windows::UI::Xaml::Controls::Grid>();
+	auto title = it.Children().GetAt(2).as<winrt::Windows::UI::Xaml::Controls::Border>().Child().as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
 	auto bookId = it.Children().GetAt(0).as<winrt::Windows::UI::Xaml::Controls::TextBlock>().Text();
 	auto image = it.Children().GetAt(1).as<UIElement>();
-	winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
-	Frame().Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(it.Children().GetAt(1).as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bookId) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
-
 	m_img = it.Children().GetAt(1).as<winrt::Windows::UI::Xaml::Controls::Image>();
-
+	winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::PreviewLink);
+	frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(it.Children().GetAt(1).as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bookId) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+	rootPage.CreateNewTab(frame, title, symbol);
 
 }
 
