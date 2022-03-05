@@ -50,6 +50,8 @@ namespace winrt::bikabika::implementation
         // ·¢ËÍÆÀÂÛ
         Windows::Foundation::IAsyncOperation<hstring> SendComments(hstring bookId, hstring content);
 
+        Windows::Foundation::IAsyncOperation<hstring> PunchIn();
+
 
 
     

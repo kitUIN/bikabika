@@ -37,6 +37,7 @@ namespace winrt::bikabika::implementation
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
 		Windows::Foundation::IAsyncAction Login();
+		Windows::Foundation::IAsyncAction PunchIn();
 		Windows::Foundation::IAsyncAction SetPerson();
 		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
 		Windows::Foundation::IAsyncAction GetKeywords();

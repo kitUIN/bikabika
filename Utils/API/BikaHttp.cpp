@@ -393,7 +393,20 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
-
+	// ´ò¿¨
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::PunchIn()
+	{
+		hstring api = L"users/punch-in";
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
 
 
 

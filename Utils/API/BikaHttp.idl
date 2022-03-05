@@ -19,6 +19,7 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String> Like(String bookId);
         Windows.Foundation.IAsyncOperation<String> Comments(String bookId, Int32 page);
         Windows.Foundation.IAsyncOperation<String> SendComments(String bookId, String content);
+        Windows.Foundation.IAsyncOperation<String> PunchIn();
 
     }
 }

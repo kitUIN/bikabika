@@ -188,17 +188,12 @@ namespace winrt::bikabika::implementation
 		//}
 	}
 
-	void MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
-	{
-		//bug Comics 会自动弹出搜索框
-	}
 
 	bikabika::UserViewModel MainPage::MainUserViewModel()
 	{
 		return m_userViewModel;
 	}
 
-	//todo 划分为标签页
 
 	/*
 	* void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
@@ -433,8 +428,44 @@ namespace winrt::bikabika::implementation
 		}
 
 	}
+	Windows::Foundation::IAsyncAction MainPage::PunchIn()
+	{
+		hstring personInfo = co_await m_bikaHttp.PunchIn();
+		LayoutMessage().IsOpen(false);
+		if (personInfo[1] == 'T') {
+			ContentDialogShow(L"Timeout", L"");
+		}
+		else if (personInfo[1] == 'E') {
+			ContentDialogShow(L"Error", personInfo);
+		}
+		else {
+			Windows::Data::Json::JsonObject personData = Windows::Data::Json::JsonObject::Parse(personInfo);
+			double code = personData.GetNamedNumber(L"code");
+			//缺少鉴权
+			if (code == (double)401 && personData.GetNamedString(L"error") == L"1005")
+			{
+				co_await Login();
+				//ContentDialogShow(L"1005", L"");
+			}
+			//请求无效
+			else if (code == (double)400)
+			{
+				ContentDialogShow(L"Error", personInfo);
+			}
+			else if (code == (double)200)
+			{
+				
+			}
+			//未知
+			else
+			{
+				ContentDialogShow(L"Unknown", personInfo);
+			}
+		}
+	}
 	Windows::Foundation::IAsyncAction MainPage::SetPerson()
 	{
+		co_await PunchIn();
 		auto resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		hstring personInfo = co_await m_bikaHttp.PersonInfo();
 		LayoutMessage().IsOpen(false);
@@ -484,6 +515,7 @@ namespace winrt::bikabika::implementation
 				NavHome().IsEnabled(true);
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
+				
 				if (m_firstArrive) {
 					Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 					winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;

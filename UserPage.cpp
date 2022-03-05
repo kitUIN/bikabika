@@ -203,3 +203,9 @@ void winrt::bikabika::implementation::UserPage::Grid_PointerPressed(winrt::Windo
 
 
 }
+
+
+void winrt::bikabika::implementation::UserPage::AutoPunch_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+
+}

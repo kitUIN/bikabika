@@ -129,8 +129,8 @@
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="Pages\UserPage.h">
-      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
+    <ClInclude Include="UserPage.h">
+      <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\API\BikaHttp.h" />
@@ -208,7 +208,7 @@
     <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\UserPage.xaml">
+    <Page Include="UserPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -320,8 +320,8 @@
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Pages\UserPage.cpp">
-      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
+    <ClCompile Include="UserPage.cpp">
+      <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
@@ -383,8 +383,8 @@
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="Pages\UserPage.idl">
-      <DependentUpon>Pages\UserPage.xaml</DependentUpon>
+    <Midl Include="UserPage.idl">
+      <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\API\BikaHttp.idl" />

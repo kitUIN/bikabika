@@ -56,7 +56,7 @@
                         </Border>
                         <Border Background="Transparent" HorizontalAlignment="Right" >
                             <StackPanel x:Name="UserButtons" Orientation="Vertical" Margin="0,0,10,0">
-                                <AppBarToggleButton x:Name="AutoPunch" x:Uid="AutoPunch" Label="Punch" Height="64" Width="64">
+                                <AppBarToggleButton x:Name="AutoPunch" x:Uid="AutoPunch" Label="Punch" Height="64" Width="64" Checked="AutoPunch_Checked">
                                     <ToolTipService.ToolTip>
                                         <ToolTip x:Name="AutoPunchTip"/>
                                     </ToolTipService.ToolTip>
