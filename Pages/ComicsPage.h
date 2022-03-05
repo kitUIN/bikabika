@@ -1,8 +1,9 @@
 ﻿#pragma once
 
-#include "Generated Files/ComicsPage.g.h"
+#include "ComicsPage.g.h"
 #include "Utils/Blocks/ComicBlock.h"
 #include "Utils/Blocks/PageNumBox.h"
+#include "MainPage.h"
 namespace winrt::bikabika::implementation
 {
     struct ComicsPage : ComicsPageT<ComicsPage>
@@ -25,6 +26,7 @@ namespace winrt::bikabika::implementation
         void GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
     private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
         bool m_numberBoxFlag = true;

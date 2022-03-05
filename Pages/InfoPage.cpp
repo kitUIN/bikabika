@@ -311,7 +311,12 @@ namespace winrt::bikabika::implementation
     void winrt::bikabika::implementation::InfoPage::ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
     {
         auto epi = e.ClickedItem().as<bikabika::EpisodeBlock>();
-        Frame().Navigate(winrt::xaml_typename<bikabika::PicPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(epi.BookId()),box_value(epi.ID()),box_value(epi.Order()),box_value(epi.Total()) })));
+        winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+        winrt::Windows::UI::Xaml::Controls::Frame frame;
+        symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::Pictures);
+        frame.Navigate(winrt::xaml_typename<bikabika::PicPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(epi.BookId()),box_value(epi.ID()),box_value(epi.Order()),box_value(epi.Total()) })));
+        rootPage.CreateNewTab(frame, epi.Title(), symbol);
+
     }
     // 评论区请求
     Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::CommentsRequest(int32_t const& page)
@@ -543,8 +548,11 @@ void winrt::bikabika::implementation::InfoPage::TagButton_Click(winrt::Windows::
     args.Content(tag);
     args.SortMode(winrt::bikabika::SearchSortMode::DD);
     args.IsAnime(false);
-    Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
-    
+    winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+    winrt::Windows::UI::Xaml::Controls::Frame frame;
+    symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
+    frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+    rootPage.CreateNewTab(frame, tag, symbol);
 }
 
 

@@ -3,6 +3,7 @@
 #include "MainPage.h"
 
 #include "MainPage.g.cpp"
+using namespace winrt::Windows::UI::Xaml::Media;
 
 
 
@@ -25,7 +26,7 @@ using namespace Windows::ApplicationModel::Core;
 
 namespace winrt::bikabika::implementation
 {
-
+	bikabika::MainPage MainPage::current{ nullptr };
 	
 	MainPage::MainPage()
 	{
@@ -40,31 +41,19 @@ namespace winrt::bikabika::implementation
 		if (!serversSettings.Values().HasKey(L"picServersCurrent")) serversSettings.Values().Insert(L"picServersCurrent", box_value(L"https://storage1.picacomic.com"));
 		if (!serversSettings.Values().HasKey(L"imageQuality")) settingsData.Values().Insert(L"imageQuality", box_value(L"original"));
 		
-		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"home", winrt::xaml_typename<bikabika::HomePage>()));
-		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"classification", winrt::xaml_typename<bikabika::ClassificationPage>()));
-		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"account", winrt::xaml_typename<bikabika::UserPage>()));
-		m_pages.push_back(std::make_pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>
-			(L"settings", winrt::xaml_typename<bikabika::SettingsPage>()));
-		Window::Current().SetTitleBar(AppTitleBar());
-		LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
+		MainPage::current = *this;
+		
+			// 隐藏标题栏 
+		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
+		coreTitleBar.ExtendViewIntoTitleBar(true);
+		
+		Window::Current().SetTitleBar(CustomDragRegion());
+		
 		LoginTeachingTip().IsOpen(true);
 		NavHome().IsEnabled(false);
 		NavClassification().IsEnabled(false);
 		NavAccount().IsEnabled(false);
-	}
-
-
-
-
-	
-	void MainPage::NavView_Loaded(
-		Windows::Foundation::IInspectable const& /* sender */,
-		Windows::UI::Xaml::RoutedEventArgs const& /* args */)
-	{
-		//NavView_Navigate(L"login",Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
+		
 	}
 
 	void MainPage::NavView_ItemInvoked(
@@ -85,78 +74,68 @@ namespace winrt::bikabika::implementation
 	}
 
 
-
-	void MainPage::NavView_Navigate(
-		std::wstring navItemTag,
-		Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
+	
+	void MainPage::NavView_Navigate(std::wstring navItemTag,Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
 	{
-		Windows::UI::Xaml::Interop::TypeName pageTypeName;
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+		winrt::Windows::UI::Xaml::Controls::Frame frame;
+
 		if (navItemTag == L"settings")
 		{
-			pageTypeName = winrt::xaml_typename<bikabika::SettingsPage>();
+			newItem.Header(box_value(resourceLoader.GetString(L"NavSettings/Content")));
+			symbol.Symbol(Symbol::Setting);
+			frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());
 		}
-		else
+		else if (navItemTag == L"home")
 		{
-			for (auto&& eachPage : m_pages)
+			frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
+			newItem.Header(box_value(resourceLoader.GetString(L"NavHome/Content")));
+			symbol.Symbol(Symbol::Home);
+		}
+		else if (navItemTag == L"classification")
+		{
+			frame.Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
+			newItem.Header(box_value(resourceLoader.GetString(L"NavClassification/Content")));
+			symbol.Symbol(Symbol::AllApps);
+		}
+		else if (navItemTag == L"account")
+		{
+			frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
+			newItem.Header(box_value(resourceLoader.GetString(L"NavAccount/Content")));
+			symbol.Symbol(Symbol::Contact);
+		}
+		else if (navItemTag == L"download")
+		{
+			frame.Navigate(winrt::xaml_typename<bikabika::DownloadPage>());
+			newItem.Header(box_value(resourceLoader.GetString(L"NavHome/Content")));
+			symbol.Symbol(Symbol::Home);
+		}
+		else return;
+		newItem.IconSource(symbol);
+		newItem.Content(frame);
+		ContentTabView().TabItems().Append(newItem);
+		ContentTabView().SelectedItem(newItem);
+		NavView().SelectedItem(NavView().MenuItems().GetAt(0));
+		
+	}
+	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title,Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
+	{
+		
+		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+		newItem.Header(box_value(title));
+		newItem.IconSource(symbol);
+		newItem.Content(frame);
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [newItem, this]()
 			{
-				if (eachPage.first == navItemTag)
-				{
-					pageTypeName = eachPage.second;
-					break;
-				}
-			}
-		}
-
-		Windows::UI::Xaml::Interop::TypeName preNavPageType =
-			ContentFrame().CurrentSourcePageType();
-		if (pageTypeName.Name != L"" && preNavPageType.Name != pageTypeName.Name)
-		{
-			ContentFrame().Navigate(pageTypeName, nullptr, transitionInfo);
-		}
+				ContentTabView().TabItems().Append(newItem);
+				ContentTabView().SelectedItem(newItem);
+				NavView().SelectedItem(NavView().MenuItems().GetAt(0));
+			});
+		
 	}
 
-	void MainPage::NavView_BackRequested(
-		muxc::NavigationView const& /* sender */,
-		muxc::NavigationViewBackRequestedEventArgs const& /* args */)
-	{
-		TryGoBack();
-	}
-
-	void MainPage::CoreDispatcher_AcceleratorKeyActivated(
-		Windows::UI::Core::CoreDispatcher const& /* sender */,
-		Windows::UI::Core::AcceleratorKeyEventArgs const& args)
-	{
-		// When Alt+Left are pressed navigate back
-		if (args.EventType() == Windows::UI::Core::CoreAcceleratorKeyEventType::SystemKeyDown
-			&& args.VirtualKey() == Windows::System::VirtualKey::Left
-			&& args.KeyStatus().IsMenuKeyDown
-			&& !args.Handled())
-		{
-			args.Handled(TryGoBack());
-		}
-	}
-
-	void MainPage::CoreWindow_PointerPressed(
-		Windows::UI::Core::CoreWindow const& /* sender */,
-		Windows::UI::Core::PointerEventArgs const& args)
-	{
-
-		// Handle mouse back button.
-		if (args.CurrentPoint().Properties().IsXButton1Pressed())
-		{
-			args.Handled(TryGoBack());
-		}
-	}
-
-	void MainPage::System_BackRequested(
-		Windows::Foundation::IInspectable const& /* sender */,
-		Windows::UI::Core::BackRequestedEventArgs const& args)
-	{
-		if (!args.Handled())
-		{
-			args.Handled(TryGoBack());
-		}
-	}
 	void MainPage::ContentFrame_NavigationFailed(
 		Windows::Foundation::IInspectable const& /* sender */,
 		Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
@@ -164,71 +143,54 @@ namespace winrt::bikabika::implementation
 		throw winrt::hresult_error(
 			E_FAIL, winrt::hstring(L"Failed to load Page ") + args.SourcePageType().Name);
 	}
-	bool MainPage::TryGoBack()
-	{
-		if (!ContentFrame().CanGoBack())
-			return false;
-		// Don't go back if the nav pane is overlayed.
-		if (NavView().IsPaneOpen() &&
-			(NavView().DisplayMode() == muxc::NavigationViewDisplayMode::Compact ||
-				NavView().DisplayMode() == muxc::NavigationViewDisplayMode::Minimal))
-			return false;
-		ContentFrame().GoBack();
-		return true;
-	}
 
 	void MainPage::On_Navigated(
 		Windows::Foundation::IInspectable const& /* sender */,
 		Windows::UI::Xaml::Navigation::NavigationEventArgs const& args)
 	{
-		NavView().IsBackEnabled(ContentFrame().CanGoBack());
+		//NavView().IsBackEnabled(ContentFrame().CanGoBack());
 
-		if (ContentFrame().SourcePageType().Name ==
-			winrt::xaml_typename<bikabika::SettingsPage>().Name)
-		{
-			// SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
-			NavView().SelectedItem(NavView().SettingsItem().as<muxc::NavigationViewItem>());
-			NavView().Header(winrt::box_value(L"Settings"));
-		}
-		else if (ContentFrame().SourcePageType().Name != L"")
-		{
-			//m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ L"https://storage1.picacomic.com/static/0788a77a-81e4-46a5-9206-c424226bed07.jpg" } });
-			for (auto&& eachPage : m_pages)
-			{
-				if (eachPage.second.Name == args.SourcePageType().Name)
-				{
-					for (auto&& eachMenuItem : NavView().MenuItems())
-					{
-						auto navigationViewItem =
-							eachMenuItem.try_as<muxc::NavigationViewItem>();
-						{
-							if (navigationViewItem)
-							{
-								winrt::hstring hstringValue =
-									winrt::unbox_value_or<winrt::hstring>(
-										navigationViewItem.Tag(), L"");
-								if (hstringValue == eachPage.first)
-								{
-									NavView().SelectedItem(navigationViewItem);
-									NavView().Header(navigationViewItem.Content());
-								}
-							}
-						}
-					}
-					break;
-				}
-			}
-		}
+		//if (ContentFrame().SourcePageType().Name ==
+		//	winrt::xaml_typename<bikabika::SettingsPage>().Name)
+		//{
+		//	// SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
+		//	NavView().SelectedItem(NavView().SettingsItem().as<muxc::NavigationViewItem>());
+		//	NavView().Header(winrt::box_value(L"Settings"));
+		//}
+		//else if (ContentFrame().SourcePageType().Name != L"")
+		//{
+		//	//m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ L"https://storage1.picacomic.com/static/0788a77a-81e4-46a5-9206-c424226bed07.jpg" } });
+		//	for (auto&& eachPage : m_pages)
+		//	{
+		//		if (eachPage.second.Name == args.SourcePageType().Name)
+		//		{
+		//			for (auto&& eachMenuItem : NavView().MenuItems())
+		//			{
+		//				auto navigationViewItem =
+		//					eachMenuItem.try_as<muxc::NavigationViewItem>();
+		//				{
+		//					if (navigationViewItem)
+		//					{
+		//						winrt::hstring hstringValue =
+		//							winrt::unbox_value_or<winrt::hstring>(
+		//								navigationViewItem.Tag(), L"");
+		//						if (hstringValue == eachPage.first)
+		//						{
+		//							NavView().SelectedItem(navigationViewItem);
+		//							NavView().Header(navigationViewItem.Content());
+		//						}
+		//					}
+		//				}
+		//			}
+		//			break;
+		//		}
+		//	}
+		//}
 	}
 
 	void MainPage::ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		//bug Comics 会自动弹出搜索框
-		/*if (ContentFrame().CurrentSourcePageType() == winrt::xaml_typename<bikabika::ComicsPage>())
-		{
-			CatSearch().ItemsSource(box_value(winrt::single_threaded_observable_vector<bikabika::KeywordsBox>()));
-
-		}*/
 	}
 
 	bikabika::UserViewModel MainPage::MainUserViewModel()
@@ -349,13 +311,24 @@ namespace winrt::bikabika::implementation
 			args.Content(text);
 			args.SortMode(winrt::bikabika::SearchSortMode::DD);
 			sender.ItemsSource(box_value(winrt::single_threaded_observable_vector<bikabika::KeywordsBox>()));
-			ContentFrame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+			Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+			winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+			newItem.Header(box_value(sender.Text()));
+			winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+			symbol.Symbol(Symbol::List);
+			newItem.IconSource(symbol);
+			winrt::Windows::UI::Xaml::Controls::Frame frame;
+			frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+			newItem.Content(frame);
+			ContentTabView().TabItems().Append(newItem);
+			ContentTabView().SelectedItem(newItem);
+			SearchFlyout().Hide();
 		}
 		sender.Text(L"");
-		ClearCatSearchHistory().Visibility(Visibility::Collapsed);
+		//ClearCatSearchHistory().Visibility(Visibility::Collapsed);
 	}
 
-
+	
 	void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
 	{
 		m_suggestIsChosen = true;
@@ -499,7 +472,7 @@ namespace winrt::bikabika::implementation
 					Windows::Data::Json::JsonObject personInfo = winrt::Windows::Data::Json::JsonObject::Parse(unbox_value<winrt::hstring>(userData.Values().TryLookup(L"personInfo")));
 					hstring name = personInfo.GetNamedString(L"name");
 					hstring slogan = L"\"" + to_hstring(personInfo.GetNamedString(L"slogan")) + L"\"";
-					UserInfomation().Text(slogan);
+					m_userViewModel.User().Slogan(slogan);
 					if (name != m_userViewModel.User().Name()) m_userViewModel.User().Name(name);
 					hstring level = L"Lv." + to_hstring(personInfo.GetNamedNumber(L"level"));
 					if (level != m_userViewModel.User().Level()) m_userViewModel.User().Level(level);
@@ -508,13 +481,21 @@ namespace winrt::bikabika::implementation
 						m_userViewModel.User().Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Windows::Foundation::Uri{ img} });
 					}
 				}
-				
 				NavHome().IsEnabled(true);
 				NavClassification().IsEnabled(true);
 				NavAccount().IsEnabled(true);
 				if (m_firstArrive) {
-					ContentFrame().Navigate(winrt::xaml_typename<bikabika::HomePage>());
-					NavView().SelectedItem(NavView().MenuItems().GetAt(2));
+					Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+					winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+					newItem.Header(box_value(resourceLoader.GetString(L"NavHome/Content")));
+					winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+					symbol.Symbol(Symbol::Home);
+					newItem.IconSource(symbol);
+					winrt::Windows::UI::Xaml::Controls::Frame frame;
+					frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
+					newItem.Content(frame);
+					ContentTabView().TabItems().Append(newItem);
+					ContentTabView().SelectedItem(newItem);
 					m_firstArrive = false;
 					co_await GetKeywords();
 				}
@@ -657,17 +638,35 @@ namespace winrt::bikabika::implementation
 	void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 	{
 		extern bool m_login;
+		if (m_login) {
+			menu().ShowAt(sender.as<FrameworkElement>());
+		}
+		else {
+			LoginTeachingTip().IsOpen(true);
+		}
+		
+		/*extern bool m_login;
 		if (m_login)
 		{
-			NavView().SelectedItem(NavView().MenuItems().GetAt(4));
-			ContentFrame().Navigate(xaml_typename<UserPage>());
+			
+			Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+			winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+			newItem.Header(box_value(resourceLoader.GetString(L"NavAccount/Content")));
+			winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+			symbol.Symbol(Symbol::Contact);
+			newItem.IconSource(symbol);
+			winrt::Windows::UI::Xaml::Controls::Frame frame;
+			frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
+			newItem.Content(frame);
+			ContentTabView().TabItems().Append(newItem);
+			ContentTabView().SelectedItem(newItem);
 		}
 		else
 		{
 			Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 			LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
 			LoginTeachingTip().IsOpen(true);
-		}
+		}*/
 		
 	}
 
@@ -706,14 +705,6 @@ void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::
 
 
 
-void winrt::bikabika::implementation::MainPage::CatSearch_GettingFocus(winrt::Windows::UI::Xaml::UIElement const& sender, winrt::Windows::UI::Xaml::Input::GettingFocusEventArgs const& args)
-{
-	CatSearch().Text(L" ");
-	CatSearch().ItemsSource(box_value(m_suggestions));
-	CatSearch().Text(L"");
-	ClearCatSearchHistory().Visibility(Visibility::Visible);
-}
-
 void winrt::bikabika::implementation::MainPage::ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
@@ -725,4 +716,50 @@ void winrt::bikabika::implementation::MainPage::ClearCatSearchHistory_Click(winr
 		m_suggestions.RemoveAt(0);
 	}
 
+}
+
+
+void winrt::bikabika::implementation::MainPage::ContentTabView_TabCloseRequested(winrt::Microsoft::UI::Xaml::Controls::TabView const& sender, winrt::Microsoft::UI::Xaml::Controls::TabViewTabCloseRequestedEventArgs const& args)
+{
+	uint32_t tabIndexFromControl;
+	if(sender.TabItems().IndexOf(args.Tab(), tabIndexFromControl))
+	{
+		sender.TabItems().RemoveAt(tabIndexFromControl);
+	}
+	
+	
+}
+
+
+
+void winrt::bikabika::implementation::MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
+{
+	ContentTabView().Width(sender.as<Controls::Frame>().ActualWidth());
+	
+}
+
+
+void winrt::bikabika::implementation::MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+	ContentFrame().Margin(Thickness{ 53,0,0,0 });
+	APPTitle().Visibility(Visibility::Collapsed);
+	NavSmallImg().Visibility(Visibility::Visible);
+	NavBigImg().Visibility(Visibility::Collapsed);
+}
+
+
+void winrt::bikabika::implementation::MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+	ContentFrame().Margin(Thickness{ 185,0,0,0 });
+	APPTitle().Visibility(Visibility::Visible);
+	NavSmallImg().Visibility(Visibility::Collapsed);
+	NavBigImg().Visibility(Visibility::Visible);
+}
+
+
+void winrt::bikabika::implementation::MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
+{
+	CatSearch().Text(L" ");
+	CatSearch().ItemsSource(box_value(m_suggestions));
+	CatSearch().Text(L"");
 }

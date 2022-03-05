@@ -3,6 +3,7 @@
 #include "ClassificationPage.g.h"
 #include "Utils/Blocks/ClassBlockViewModel.h"
 
+#include "MainPage.h"
 namespace winrt::bikabika::implementation
 {
     struct ClassificationPage : ClassificationPageT<ClassificationPage>
@@ -16,10 +17,12 @@ namespace winrt::bikabika::implementation
         void  GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
     private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
         bikabika::ClassBlockViewModel m_classBlockView{ nullptr };
         bikabika::BikaHttp m_bikaHttp;
         bikabika::FileCheckTool m_fileCheckTool;
     public:
+
         void ErrorTip_ActionButtonClick(winrt::Microsoft::UI::Xaml::Controls::TeachingTip const& sender, winrt::Windows::Foundation::IInspectable const& args);
     };
 }

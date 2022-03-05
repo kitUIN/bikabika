@@ -3,7 +3,6 @@
 #include "MainPage.g.h"
 #include "Utils/Blocks/UserViewModel.h"
 #include "Utils/Blocks/KeywordsBox.h"
-
 namespace muxc
 {
 	using namespace winrt::Microsoft::UI::Xaml::Controls;
@@ -21,25 +20,16 @@ namespace winrt::bikabika::implementation
 	{
 		MainPage();
 
-		void NavView_Loaded(
-			Windows::Foundation::IInspectable const& /* sender */,
-			Windows::UI::Xaml::RoutedEventArgs const& /* args */);
-
 		void NavView_ItemInvoked(
 			Windows::Foundation::IInspectable const& /* sender */,
 			muxc::NavigationViewItemInvokedEventArgs const& args);
-		// NavView_SelectionChanged is not used in this example, but is shown for completeness.
-		// You'll typically handle either ItemInvoked or SelectionChanged to perform navigation,
-		// but not both.
 		void NavView_Navigate(
 			std::wstring navItemTag,
 			Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo);
-		void NavView_BackRequested(muxc::NavigationView const&, muxc::NavigationViewBackRequestedEventArgs const&);
-		void CoreDispatcher_AcceleratorKeyActivated(Windows::UI::Core::CoreDispatcher const&, Windows::UI::Core::AcceleratorKeyEventArgs const& args);
-		void CoreWindow_PointerPressed(Windows::UI::Core::CoreWindow const&, Windows::UI::Core::PointerEventArgs const& args);
-		void System_BackRequested(Windows::Foundation::IInspectable const&, Windows::UI::Core::BackRequestedEventArgs const& args);
+		// 新建标签页
+		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
+		
 		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
-		bool TryGoBack();
 		void On_Navigated(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationEventArgs const& args);
 		void ContentFrame_Navigated(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 		bikabika::UserViewModel MainUserViewModel();
@@ -57,6 +47,7 @@ namespace winrt::bikabika::implementation
 		void Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		hstring PicPath();
 	private:
+		static bikabika::MainPage current;
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		std::vector<std::pair<std::wstring, Windows::UI::Xaml::Interop::TypeName>> m_pages;
 		bikabika::UserViewModel m_userViewModel;
@@ -67,13 +58,20 @@ namespace winrt::bikabika::implementation
 		bikabika::BikaHttp m_bikaHttp;
 		bikabika::FileCheckTool m_fileCheckTool;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordsBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordsBox>();
-		
 	public:
+		static bikabika::MainPage Current() { return current; }
+		
 		void UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
 		void AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void CatSearch_GettingFocus(winrt::Windows::UI::Xaml::UIElement const& sender, winrt::Windows::UI::Xaml::Input::GettingFocusEventArgs const& args);
 		void ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ContentTabView_TabCloseRequested(winrt::Microsoft::UI::Xaml::Controls::TabView const& sender, winrt::Microsoft::UI::Xaml::Controls::TabViewTabCloseRequestedEventArgs const& args);
+		void Frame_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
+		void Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
+		void NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args);
+		void NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args);
+		void Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e);
 	};
 
 }

@@ -82,12 +82,12 @@ namespace winrt::bikabika::implementation
 		extern winrt::hstring imageQuality;
 		headers.Insert(L"api-key", L"C69BAF41DA5ABD1FFEDC6D2FEA56B");
 		headers.Insert(L"accept", L"application/vnd.picacomic.com.v1+json");
-		headers.Insert(L"app-channel", L"2");
+		headers.Insert(L"app-channel", L"3");
 		headers.Insert(L"time", to_hstring(t));
 		headers.Insert(L"signature", L"encrypt");
 		headers.Insert(L"app-version", L"2.2.1.2.3.4");
 		headers.Insert(L"nonce", L"b1ab87b4800d4d4590a11701b8551afa");
-		headers.Insert(L"app-uuid", L"418e56fb-60fb-352b-8fca-c6e8f0737ce6");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
+		headers.Insert(L"app-uuid", L"defaultUuid");//418e56fb-60fb-352b-8fca-c6e8f0737ce6
 		headers.Insert(L"app-platform", L"android");
 		headers.Insert(L"image-quality", imageQuality);
 		headers.Insert(L"app-build-version", L"45");

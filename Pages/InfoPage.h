@@ -33,6 +33,7 @@ namespace winrt::bikabika::implementation
 
 
     private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;

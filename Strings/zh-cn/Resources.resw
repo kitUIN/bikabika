@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="APPTitle.Text" xml:space="preserve">
-    <value>哔咔</value>
+    <value>哔咔哔咔</value>
     <comment>标题栏</comment>
   </data>
   <data name="AuthorTip.Content" xml:space="preserve">
@@ -279,6 +279,9 @@
   <data name="Logining" xml:space="preserve">
     <value>登陆中</value>
   </data>
+  <data name="LoginTeachingTip.Title" xml:space="preserve">
+    <value>登录</value>
+  </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
     <comment>左侧导航栏第三个元素</comment>
@@ -313,6 +316,9 @@
   <data name="RememberCheckBox.Content" xml:space="preserve">
     <value>记住密码</value>
     <comment>登录时记住我</comment>
+  </data>
+  <data name="Search.Content" xml:space="preserve">
+    <value>搜索</value>
   </data>
   <data name="SortMode.DA" xml:space="preserve">
     <value>旧到新</value>

@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "ClassificationPage.h"
+
 #if __has_include("ClassificationPage.g.cpp")
 #include "ClassificationPage.g.cpp"
 #endif
@@ -130,11 +131,15 @@ void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt
 	auto classBlack = e.ClickedItem().as<bikabika::ClassBlock>();
 	
 	if (classBlack.ClassType() == L"2") {
-		ComicArgs args;
+		bikabika::ComicArgs args;
 		args.ComicType(ComicsType::COMIC);
 		args.Content(classBlack.ClassName());
 		args.SortMode(winrt::bikabika::SearchSortMode::UA);
-		Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+		winrt::Windows::UI::Xaml::Controls::Frame frame;
+		symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
+		frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+		rootPage.CreateNewTab(frame,classBlack.ClassName(), symbol);
 	}
 
 }

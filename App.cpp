@@ -94,9 +94,7 @@ void App::OnLaunched(LaunchActivatedEventArgs const& e)
             // Ensure the current window is active
             Window::Current().Activate();
 
-            // 隐藏标题栏 
-            auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
-            coreTitleBar.ExtendViewIntoTitleBar(true);
+            
             
             // 亚克力
             ApplicationViewTitleBar tTitleBar = ApplicationView::GetForCurrentView().TitleBar();

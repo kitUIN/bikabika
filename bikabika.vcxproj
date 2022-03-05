@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -123,7 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Utils\Blocks\CommetsViewModel.h" />
     <ClInclude Include="Utils\Blocks\BikaDate.h" />
-    <ClInclude Include="Utils\Blocks\ComicArgs.h" />
+    <ClInclude Include="Utils\Args\ComicArgs.h" />
     <ClInclude Include="Utils\Blocks\CommentBlock.h" />
     <ClInclude Include="Pages\HomePage.h">
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
@@ -136,8 +136,8 @@
     <ClInclude Include="Utils\API\BikaHttp.h" />
     <ClInclude Include="Utils\Blocks\ClassBlock.h" />
     <ClInclude Include="Utils\Blocks\ClassBlockViewModel.h" />
-    <ClInclude Include="Pages\ClassificationPage.h">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <ClInclude Include="ClassificationPage.h">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\Blocks\ComicBlock.h" />
@@ -184,7 +184,7 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\ClassificationPage.xaml">
+    <Page Include="ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ComicsPage.xaml">
@@ -260,6 +260,7 @@
     <Image Include="Assets\Picacgs\register_bday.png" />
     <Image Include="Assets\Picacgs\register_gender.png" />
     <Image Include="Assets\Picacgs\register_name.png" />
+    <Image Include="Assets\Picacgs\search.png" />
     <Image Include="Assets\Picacgs\splash_img.jpg" />
     <Image Include="Assets\Picacgs\userlogo.png" />
     <Image Include="Assets\SmallTile.scale-100.png" />
@@ -313,7 +314,7 @@
   <ItemGroup>
     <ClCompile Include="Utils\Blocks\CommetsViewModel.cpp" />
     <ClCompile Include="Utils\Blocks\BikaDate.cpp" />
-    <ClCompile Include="Utils\Blocks\ComicArgs.cpp" />
+    <ClCompile Include="Utils\Args\ComicArgs.cpp" />
     <ClCompile Include="Utils\Blocks\CommentBlock.cpp" />
     <ClCompile Include="Pages\HomePage.cpp">
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
@@ -326,8 +327,8 @@
     <ClCompile Include="Utils\API\BikaHttp.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlock.cpp" />
     <ClCompile Include="Utils\Blocks\ClassBlockViewModel.cpp" />
-    <ClCompile Include="Pages\ClassificationPage.cpp">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <ClCompile Include="ClassificationPage.cpp">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\Blocks\ComicBlock.cpp" />
@@ -377,7 +378,7 @@
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
-    <Midl Include="Utils\Blocks\ComicArgs.idl" />
+    <Midl Include="Utils\Args\ComicArgs.idl" />
     <Midl Include="Pages\HomePage.idl">
       <DependentUpon>Pages\HomePage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -410,8 +411,8 @@
     <Midl Include="Utils\Blocks\TagBlock.idl" />
     <Midl Include="Utils\Blocks\ClassBlock.idl" />
     <Midl Include="Utils\Blocks\ClassBlockViewModel.idl" />
-    <Midl Include="Pages\ClassificationPage.idl">
-      <DependentUpon>Pages\ClassificationPage.xaml</DependentUpon>
+    <Midl Include="ClassificationPage.idl">
+      <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="Utils\Blocks\ComicBlock.idl" />
@@ -442,15 +443,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="packages\Microsoft.UI.Xaml.2.7.0\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('packages\Microsoft.UI.Xaml.2.7.0\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.210930.14\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('packages\Microsoft.UI.Xaml.2.7.0\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.UI.Xaml.2.7.0\build\native\Microsoft.UI.Xaml.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.CppWinRT.2.0.220224.4\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>

@@ -5,10 +5,10 @@ namespace bikabika
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
     {
         MainPage();
-        Windows.UI.Xaml.Controls.TextBlock UserName{ get; };
         UserViewModel MainUserViewModel{ get; };
-        Windows.UI.Xaml.Controls.PersonPicture UsersPic{ get; };
         String PicPath{ get; };
+        static MainPage Current{ get; };
+        void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         Windows.Foundation.IAsyncAction ContentDialogShow(String mode, String message);
 
     }
