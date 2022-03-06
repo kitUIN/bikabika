@@ -17,15 +17,13 @@
                     <Color x:Key="SystemAccentColorLight1">#f2c5d6</Color>
                     <Color x:Key="SystemAccentColorLight2">#ffdeeb</Color>
                     <Color x:Key="SystemAccentColorLight3">#fff0f6</Color>
-                    <AcrylicBrush x:Key="MyAcrylicBrushDark3" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorDark}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorDark3}"/>
+                    <AcrylicBrush x:Key="MyAcrylicBrushDark3" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorDark3}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorDark3}"/>
                     <AcrylicBrush x:Key="MyAcrylicBrushDark2" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorDark2}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorDark2}"/>
                     <AcrylicBrush x:Key="MyAcrylicBrushDark1" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorDark1}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorDark1}"/>
                     <AcrylicBrush x:Key="MyAcrylicBrush" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColor}"/>
                     <AcrylicBrush x:Key="MyAcrylicBrushLight1" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight1}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorLight1}"/>
-
                     <AcrylicBrush x:Key="MyAcrylicBrushLight2" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight2}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorLight2}"/>
                     <AcrylicBrush x:Key="MyAcrylicBrushLight3" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight3}" TintOpacity="0.8" FallbackColor="{ThemeResource SystemAccentColorLight3}"/>
-
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

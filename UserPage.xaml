@@ -8,6 +8,52 @@
     mc:Ignorable="d">
     <Page.Resources>
         <Flyout x:Key="UserFlyout" Placement="Left" Closed="Flyout_Closed">
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="IsTabStop" Value="True"/>
+                    <Setter Property="TabFocusNavigation" Value="Cycle"/>
+                    <Setter Property="TabNavigation" Value="Cycle"/>
+                    <Setter Property="Background" Value="{ThemeResource MyAcrylicBrushLight3}"/>
+                    <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeHighBrush}"/>
+                    <Setter Property="BorderThickness" Value="{ThemeResource FlyoutBorderThemeThickness}"/>
+                    <Setter Property="Padding" Value="{ThemeResource FlyoutContentThemePadding}"/>
+                    <Setter Property="MinWidth" Value="{ThemeResource FlyoutThemeMinWidth}"/>
+                    <Setter Property="MaxWidth" Value="{ThemeResource FlyoutThemeMaxWidth}"/>
+                    <Setter Property="MinHeight" Value="{ThemeResource FlyoutThemeMinHeight}"/>
+                    <Setter Property="MaxHeight" Value="{ThemeResource FlyoutThemeMaxHeight}"/>
+                    <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="FlyoutPresenter">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                     BorderBrush="{TemplateBinding BorderBrush}"
+                     BorderThickness="{TemplateBinding BorderThickness}">
+                                    <ScrollViewer x:Name="ScrollViewer" 
+                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                        AutomationProperties.AccessibilityView="Raw">
+                                        <ContentPresenter Content="{TemplateBinding Content}" 
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
             <StackPanel Margin="0,6,0,0" MinWidth="400">
                 <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
                     <Grid >
@@ -16,8 +62,8 @@
                                 <ToolTip x:Uid="Edit"/>
                             </ToolTipService.ToolTip>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock  x:Uid="FlyoutImg"/>
-                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                                <TextBlock  x:Uid="FlyoutImg" FontWeight="Bold"/>
+                                <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="DodgerBlue"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                             </StackPanel>
                         </Button>
                         <PersonPicture VerticalAlignment="Center"  HorizontalAlignment="Right"  ProfilePicture="{x:Bind MainUserViewModel.User.Img,Mode=OneWay}" Width="64" Height="64"/>
@@ -29,8 +75,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="UnEdit"/>
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutName"/>
-                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutName" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock  VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Name,Mode=OneWay}"/>
                     </Grid>
@@ -41,8 +87,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="UnEdit"/>
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutEmail"/>
-                            <FontIcon Margin="3,0,0,0"  Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutEmail" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Email,Mode=OneWay}" />
                     </Grid>
@@ -54,8 +100,8 @@
                                 <ToolTip x:Uid="Edit"/>
                             </ToolTipService.ToolTip>
                             <StackPanel  Orientation="Horizontal">
-                                <TextBlock  x:Uid="FlyoutPassword"/>
-                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                                <TextBlock  x:Uid="FlyoutPassword" FontWeight="Bold"/>
+                                <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                             </StackPanel>
                         </Button>
                         <TextBlock x:Uid="FlyoutUPassword" VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap"/>
@@ -67,9 +113,9 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="Edit"/>
                             </ToolTipService.ToolTip>
-                            <StackPanel  Orientation="Horizontal">
-                                <TextBlock  x:Uid="FlyoutSlogan"/>
-                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <StackPanel  Orientation="Horizontal" >
+                                <TextBlock  x:Uid="FlyoutSlogan" FontWeight="Bold"/>
+                                <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                             </StackPanel>
                         </Button>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Slogan,Mode=OneWay}"/>
@@ -81,8 +127,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="UnEdit"/>
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutCreateAt"/>
-                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutCreateAt" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.CreatedAt,Mode=OneWay}"/>
                     </Grid>
@@ -93,8 +139,8 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="UnEdit"/>
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutBirthday"/>
-                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutBirthday" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Birthday,Mode=OneWay}"/>
                     </Grid>
@@ -103,10 +149,10 @@
                     <Grid >
                         <StackPanel   Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"  Orientation="Horizontal">
                             <ToolTipService.ToolTip>
-                                <ToolTip x:Uid="UnEdit"/>
+                                <ToolTip x:Uid="UnEdit" />
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutPunchIned"/>
-                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutPunchIned" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.IsPunchedString,Mode=OneWay}"/>
                     </Grid>
@@ -117,16 +163,13 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="UnEdit"/>
                             </ToolTipService.ToolTip>
-                            <TextBlock  x:Uid="FlyoutVerified"/>
-                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            <TextBlock  x:Uid="FlyoutVerified" FontWeight="Bold"/>
+                            <FontIcon Margin="3,0,0,0" FontWeight="Bold" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
                         </StackPanel>
                         <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.VerifiedString,Mode=OneWay}"/>
                     </Grid>
                 </Border>
             </StackPanel>
-
-
-
         </Flyout>
     </Page.Resources>
 

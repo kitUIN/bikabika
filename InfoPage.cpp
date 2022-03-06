@@ -11,7 +11,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
-
+using namespace winrt::Windows::UI::Xaml::Controls::Primitives;
 namespace winrt::bikabika::implementation
 {
     InfoPage::InfoPage()
@@ -122,22 +122,13 @@ namespace winrt::bikabika::implementation
             }
         }
     }
-    void InfoPage::OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
-    {
-        //bug 多次使用标签搜索后返回导致动画img冲突
-        //todo 改用标签页
-        
-        //winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"BackConnectedAnimation", Img());
-        __super::OnNavigatedFrom(e);
-    }
+
     
     Windows::Foundation::IAsyncAction InfoPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
         // 评论区初始化
-        m_commentsLoad = false;
+        m_commentsFirstLoad = false;
         m_comments.CommentBlock().Clear();
-        CommentsView().IsPaneOpen(false);
-        
         auto params = winrt::unbox_value<winrt::Windows::Foundation::Collections::IVector<winrt::Windows::Foundation::IInspectable>>(e.Parameter());
         auto img = winrt::unbox_value<winrt::Windows::UI::Xaml::Media::ImageSource>(params.GetAt(0));
 		m_id = winrt::unbox_value<hstring>(params.GetAt(1));
@@ -360,19 +351,16 @@ namespace winrt::bikabika::implementation
     {
         
         auto f = sender.as<winrt::Windows::UI::Xaml::Controls::AppBarToggleButton>().IsChecked().GetBoolean();
-        CommentsView().IsPaneOpen(f);
+        
+        FlyoutBase::ShowAttachedFlyout(sender.as<FrameworkElement>());
         // 评论预加载
-        if (f && !m_commentsLoad) {
+        if (f && !m_commentsFirstLoad) {
             co_await CommentsRequest(1);
-            m_commentsLoad = true;
+            m_commentsFirstLoad = true;
         }
     }
 
-    // 评论区
-    void winrt::bikabika::implementation::InfoPage::CommentsView_PaneClosed(winrt::Windows::UI::Xaml::Controls::SplitView const& sender, winrt::Windows::Foundation::IInspectable const& args)
-    {
-        Comments().IsChecked(false);
-     }
+
 
     //爱心
     Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Like_Unchecked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
@@ -464,7 +452,7 @@ namespace winrt::bikabika::implementation
     void InfoPage::CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json)
     {
         auto data = json.GetNamedObject(L"data");
-        if (!m_commentsLoad) {
+        if (!m_commentsFirstLoad) {
             for (auto x : data.GetNamedArray(L"topComments"))
             {
                 auto tempBlock = winrt::make<CommentBlock>(x.GetObject());
@@ -570,7 +558,11 @@ void winrt::bikabika::implementation::InfoPage::Author_Drop(winrt::Windows::Foun
         args.Content(author);
         args.SortMode(winrt::bikabika::SearchSortMode::DD);
         args.IsAnime(false);
-        Frame().Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+        winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+        winrt::Windows::UI::Xaml::Controls::Frame frame;
+        symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
+        frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
+        rootPage.CreateNewTab(frame, author, symbol);
     }
     else {
         DataPackage dataPackage = DataPackage();
@@ -612,4 +604,9 @@ void winrt::bikabika::implementation::InfoPage::UsersName_PointerPressed(winrt::
         dataPackage.SetText(author);
         Clipboard::SetContentWithOptions(dataPackage, nullptr);
     }
+}
+// 评论区自动关闭
+void winrt::bikabika::implementation::InfoPage::CommentFlyout_Closed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
+{
+    Comments().IsChecked(false);
 }

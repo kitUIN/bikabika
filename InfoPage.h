@@ -15,7 +15,6 @@ namespace winrt::bikabika::implementation
         InfoPage();
         Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction Eps(int32_t const& page);
-        void OnNavigatedFrom(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::EpisodeBlock> Episodes();
@@ -37,7 +36,7 @@ namespace winrt::bikabika::implementation
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         bikabika::FileCheckTool m_fileCheckTool;
         bikabika::BikaHttp m_bikaHttp;
-        bool m_commentsLoad = false;
+        bool m_commentsFirstLoad = false;
         bool m_commentsContinue = false;
         hstring m_id;
         hstring m_title;
@@ -83,6 +82,7 @@ namespace winrt::bikabika::implementation
         void Author_Drop(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void Title_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void UsersName_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void CommentFlyout_Closed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e);
     };
 }
 

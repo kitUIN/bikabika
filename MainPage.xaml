@@ -18,6 +18,7 @@
                     <AcrylicBrush x:Key="NavigationViewDefaultPaneBackground" BackgroundSource="HostBackdrop" TintColor="{ThemeResource SystemAccentColorLight1}" TintOpacity=".6"/>
                     <AcrylicBrush x:Key="NavigationViewTopPaneBackground" BackgroundSource="Backdrop" TintColor="{ThemeResource SystemAccentColor}" TintOpacity=".6"/>
                     <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent"/>
+                    
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

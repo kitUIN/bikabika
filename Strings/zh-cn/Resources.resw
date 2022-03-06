@@ -184,6 +184,12 @@
   <data name="CommentsTip.Content" xml:space="preserve">
     <value>展开评论面板</value>
   </data>
+  <data name="CommentSubmit.Text" xml:space="preserve">
+    <value>发射</value>
+  </data>
+  <data name="CommentTitle.Text" xml:space="preserve">
+    <value>评论区</value>
+  </data>
   <data name="CopySuccess" xml:space="preserve">
     <value>复制成功</value>
     <comment>复制成功</comment>

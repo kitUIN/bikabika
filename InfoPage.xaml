@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
+        
         <Style x:Key="TagStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource SystemAccentColor}"/>
             <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark3}"/>
@@ -154,7 +155,7 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <Border Height="200"  Width="480" BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground1" >
+                            <Border Height="200"  Width="420" BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground1" >
                                 <Border BorderThickness="2"  CornerRadius="10" x:Name="ContentBackground">
                                     <ContentPresenter
                                 Content="{TemplateBinding Content}"
@@ -250,7 +251,111 @@
 
                                     <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                                         <Grid>
-                                            <AppBarToggleButton Width="64" x:Name="Comments" x:Uid="Comments" Height="64" Label="评论" Unchecked="Comments_Checked"  Checked="Comments_Checked">
+                                            <AppBarToggleButton Width="64" x:Name="Comments" x:Uid="Comments" Height="64" Label="Comments" Checked="Comments_Checked">
+                                                <FlyoutBase.AttachedFlyout >
+                                                    <Flyout x:Name="CommentFlyout" Placement="Left" Closed="CommentFlyout_Closed" AllowFocusOnInteraction="True" >
+                                                        <Flyout.FlyoutPresenterStyle>
+                                                            <Style TargetType="FlyoutPresenter">
+                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                                                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                                                                <Setter Property="IsTabStop" Value="True"/>
+                                                                <Setter Property="TabNavigation" Value="Cycle"/>
+                                                                <Setter Property="Background" Value="{ThemeResource MyAcrylicBrushLight3}"/>
+                                                                <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeHighBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="{ThemeResource FlyoutBorderThemeThickness}"/>
+                                                                <Setter Property="Padding" Value="{ThemeResource FlyoutContentThemePadding}"/>
+                                                                <Setter Property="MinWidth" Value="{ThemeResource FlyoutThemeMinWidth}"/>
+                                                                <Setter Property="MaxWidth" Value="{ThemeResource FlyoutThemeMaxWidth}"/>
+                                                                <Setter Property="MinHeight" Value="{ThemeResource FlyoutThemeMinHeight}"/>
+                                                                <Setter Property="MaxHeight" Value="{ThemeResource FlyoutThemeMaxHeight}"/>
+                                                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+                                                                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto" />
+                                                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                                                                <Setter Property="ScrollViewer.ZoomMode" Value="Disabled" />
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="FlyoutPresenter">
+                                                                            <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                     BorderBrush="{TemplateBinding BorderBrush}"
+                     BorderThickness="{TemplateBinding BorderThickness}" AllowFocusOnInteraction="True">
+
+                                                                                <Grid AllowFocusOnInteraction="True">
+                                                                                    <ScrollViewer x:Name="ScrollViewer" ViewChanged="ScrollViewer_ViewChanged" AllowFocusOnInteraction="True"
+                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}"
+                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                        AutomationProperties.AccessibilityView="Raw">
+                                                                                        <ContentPresenter Content="{TemplateBinding Content}" AllowFocusOnInteraction="True"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                                                </ScrollViewer>
+                                                                                    <StackPanel AllowFocusOnInteraction="True" VerticalAlignment="Top"  Orientation="Horizontal">
+                                                                                        <SymbolIcon  Margin="10,0,0,0"  Symbol="Comment"/>
+                                                                                        <TextBlock Margin="5,0,0,0" x:Uid="CommentTitle" FontWeight="Black" FontSize="20"/>
+                                                                                    </StackPanel>
+                                                                                    <StackPanel Margin="15,0,15,10" VerticalAlignment="Bottom"  Orientation="Horizontal">
+                                                                                        <TextBox Width="340"/>
+                                                                                        <Button x:Name="CommentSubmit">
+                                                                                            <StackPanel Orientation="Horizontal">
+                                                                                                <SymbolIcon Symbol="Send"/>
+                                                                                                <TextBlock x:Uid="CommentSubmit" FontWeight="Black" FontSize="16"/>
+                                                                                            </StackPanel>
+                                                                                        </Button>
+                                                                                    </StackPanel>
+                                                                                </Grid>
+                                                                        </Border>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </Flyout.FlyoutPresenterStyle>
+                                                        
+                                                            <GridView Margin="0,15,0,0" x:Name="CommentsGridV" SelectionMode="None" HorizontalAlignment="Center" IsItemClickEnabled="True"
+                                      ItemContainerStyle="{StaticResource CommentsBoxItemStyle}" ItemsSource="{x:Bind CommentBlocks.CommentBlock}">
+                                                                <GridView.ItemTemplate>
+                                                                    <DataTemplate x:DataType="local:CommentBlock" >
+                                                                        <Grid Width="420" Height="200">
+                                                                            <StackPanel Orientation="Vertical"  VerticalAlignment="Top">
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <PersonPicture Margin="5,10,0,0" VerticalAlignment="Top" ProfilePicture="{x:Bind Creater.Thumb,Mode=OneWay}" Width="64" Height="64"/>
+                                                                                    <StackPanel Margin="10,5,0,0"  Orientation="Vertical">
+                                                                                        <TextBlock Text="{x:Bind Creater.Name,Mode=OneWay}" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
+                                                                                        <TextBlock Margin="0,5,0,0" IsTextSelectionEnabled="True" Text="{x:Bind Content,Mode=OneWay}" MaxWidth="330" MaxLines="6" TextWrapping = "Wrap" FontSize="16">
+                                                                                        <ToolTipService.ToolTip>
+                                                                                            <ToolTip Content="{x:Bind Content,Mode=OneWay}"/>
+                                                                                        </ToolTipService.ToolTip>
+                                                                                        </TextBlock>
+                                                                                    </StackPanel>
+                                                                                </StackPanel>
+                                                                            </StackPanel>
+                                                                            <StackPanel Margin="5,0,0,15" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                                                                <Grid>
+                                                                                    <FontIcon Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB51;"/>
+                                                                                    <FontIcon Visibility="{x:Bind IsLiked,Mode=OneWay}"  Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                                                                </Grid>
+                                                                                <TextBlock Margin="3,0,0,0"  Text="{x:Bind LikesCount,Mode=OneWay}" FontSize="13"/>
+                                                                                <FontIcon Margin="20,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;"/>
+                                                                                <TextBlock Margin="3,0,0,0" Text="{x:Bind CommentsCount,Mode=OneWay}" FontSize="13"/>
+                                                                            </StackPanel>
+                                                                            <TextBlock FlowDirection="RightToLeft" Margin="0,0,13,15" Text="{x:Bind CreatedAt,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" Foreground="Gray"/>
+                                                                            <Border Visibility="{x:Bind Top,Mode=OneWay}" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                                                                <TextBlock Text="置顶" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                                                            </Border>
+                                                                        </Grid>
+                                                                    </DataTemplate>
+                                                                </GridView.ItemTemplate>
+                                                            </GridView>
+                                                            
+                                                                
+
+                                                    </Flyout>
+                                                </FlyoutBase.AttachedFlyout>
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="CommentsTip"/>
                                                 </ToolTipService.ToolTip>
@@ -316,44 +421,6 @@
                         </ListView>
                     </Border>
                 </StackPanel>
-                <SplitView x:Name="CommentsView" PaneBackground="{ThemeResource MyAcrylicBrushLight3}"
-           IsPaneOpen="False" PaneClosed="CommentsView_PaneClosed" OpenPaneLength="500" DisplayMode="Inline">
-                    <SplitView.Pane>
-                        <GridView x:Name="CommentsGridV" SelectionMode="None" HorizontalAlignment="Center" IsItemClickEnabled="True"
-                                      ItemContainerStyle="{StaticResource CommentsBoxItemStyle}" ItemsSource="{x:Bind CommentBlocks.CommentBlock}">
-                            <GridView.ItemTemplate>
-                                <DataTemplate x:DataType="local:CommentBlock" >
-                                    <Grid Width="460" Height="200">
-                                        <StackPanel Orientation="Vertical"  VerticalAlignment="Top">
-                                            <StackPanel Orientation="Horizontal">
-                                                <PersonPicture Margin="1,10,0,0" VerticalAlignment="Top" ProfilePicture="{x:Bind Creater.Thumb,Mode=OneWay}" Width="64" Height="64"/>
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock Text="{x:Bind Creater.Name,Mode=OneWay}" FontSize="20" FontWeight="Bold" Foreground="{StaticResource SystemAccentColorDark3}"/>
-                                                    <TextBlock Margin="10,10,0,0" IsTextSelectionEnabled="True" Text="{x:Bind Content,Mode=OneWay}" MaxWidth="380" TextWrapping = "Wrap" FontSize="18" />
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </StackPanel>
-                                        <StackPanel Margin="5,0,0,15" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                                            <Grid>
-                                                <FontIcon Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB51;"/>
-                                                <FontIcon Visibility="{x:Bind IsLiked,Mode=OneWay}"  Width="23" FontFamily="Segoe MDL2 Assets" Glyph="&#xEB52;" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                            </Grid>
-                                            <TextBlock Margin="3,0,0,0"  Text="{x:Bind LikesCount,Mode=OneWay}" FontSize="13"/>
-                                            <FontIcon Margin="20,0,0,0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE8BD;"/>
-                                            <TextBlock Margin="3,0,0,0" Text="{x:Bind CommentsCount,Mode=OneWay}" FontSize="13"/>
-                                        </StackPanel>
-                                        <TextBlock Margin="0,0,5,17" Text="{x:Bind CreatedAt,Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontWeight="Bold" Foreground="Gray"/>
-                                        <Border Visibility="{x:Bind Top,Mode=OneWay}" CornerRadius="7" Background="{ThemeResource SystemAccentColorLight1 }" HorizontalAlignment="Right" VerticalAlignment="Top">
-                                            <TextBlock Text="置顶" Padding="3" FontSize="13" FontWeight="Bold" Foreground="{ThemeResource SystemAccentColorDark3}"/>
-                                        </Border>
-
-                                    </Grid>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
-
-                    </SplitView.Pane>
-                </SplitView>
                 <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Target="{x:Bind CreaterBorder}" Title="Change themes without hassle" Background="{ThemeResource MyAcrylicBrushLight2}">
                     <muxc:TeachingTip.Content>
                         <StackPanel Margin="0,6,0,0">
@@ -374,7 +441,7 @@
 
                                 </StackPanel>
                             </StackPanel>
-                            <TextBlock  IsTextSelectionEnabled="True" Margin="0,6,0,0" x:Name="UserInfomation"/>
+                            <TextBlock  IsTextSelectionEnabled="True" TextWrapping="Wrap" Margin="0,6,0,0" x:Name="UserInfomation"/>
                         </StackPanel>
                     </muxc:TeachingTip.Content>
                     <muxc:TeachingTip.IconSource>
