@@ -301,10 +301,10 @@
                                                                                     </StackPanel>
                                                                                     <StackPanel Margin="15,0,15,10" VerticalAlignment="Bottom"  Orientation="Horizontal">
                                                                                         <TextBox Width="340"/>
-                                                                                        <Button x:Name="CommentSubmit">
+                                                                                        <Button x:Name="CommentSubmitButton" Click="CommentSubmit_Click">
                                                                                             <StackPanel Orientation="Horizontal">
-                                                                                                <SymbolIcon Symbol="Send"/>
-                                                                                                <TextBlock x:Uid="CommentSubmit" FontWeight="Black" FontSize="16"/>
+                                                                                                <SymbolIcon Symbol="Send" Foreground="{ThemeResource SystemAccentColorDark3}"/>
+                                                                                                <TextBlock Margin="2,0,0,0" Foreground="{ThemeResource SystemAccentColorDark3}" x:Uid="CommentSubmit" FontWeight="Black" FontSize="16"/>
                                                                                             </StackPanel>
                                                                                         </Button>
                                                                                     </StackPanel>

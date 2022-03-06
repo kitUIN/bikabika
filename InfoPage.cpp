@@ -610,3 +610,43 @@ void winrt::bikabika::implementation::InfoPage::CommentFlyout_Closed(winrt::Wind
 {
     Comments().IsChecked(false);
 }
+
+
+Windows::Foundation::IAsyncAction   winrt::bikabika::implementation::InfoPage::CommentSubmit_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    auto textBox = sender.as<Button>().Parent().as<StackPanel>().Children().GetAt(0).as<TextBox>();
+    if (textBox.Text() != L"")
+    {
+        auto res{ co_await m_bikaHttp.SendComments(m_id,textBox.Text()) };
+        textBox.Text(L"");
+        if (res[1] == 'T')
+        {
+            ContentDialogShow(L"Timeout", L"");
+        }
+        else if (res[1] == 'E') {
+            ContentDialogShow(L"Error", res);
+        }
+        else
+        {
+            Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(res);
+            double code = resp.GetNamedNumber(L"code");
+            if (code == (double)200)
+            {
+                m_comments.CommentBlock().Clear();
+                for (int i = 1; i <= m_commentsPage; i++) {
+                    CommentsRequest(i);
+                }
+            }
+            //缺少鉴权
+            else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
+            {
+                ContentDialogShow(L"1005", L"");
+            }
+            //未知
+            else
+            {
+                ContentDialogShow(L"Unknown", res);
+            }
+        }
+    }
+}

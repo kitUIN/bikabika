@@ -57,6 +57,10 @@ namespace winrt::bikabika::implementation
 
         Windows::Foundation::IAsyncOperation<hstring> SetPassword(hstring oldPassword, hstring newPassword);
 
+        Windows::Foundation::IAsyncOperation<hstring> ReplyComment(hstring commentId, hstring content);
+
+        Windows::Foundation::IAsyncOperation<hstring> GetReplyComment(hstring commentId, int32_t page);
+
 
 
     

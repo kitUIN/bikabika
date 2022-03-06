@@ -22,5 +22,7 @@ namespace bikabika
         Windows.Foundation.IAsyncOperation<String> PunchIn();
         Windows.Foundation.IAsyncOperation<String> SetSlogan(String slogan);
         Windows.Foundation.IAsyncOperation<String> SetPassword(String oldPassword, String newPassword);
+        Windows.Foundation.IAsyncOperation<String> ReplyComment(String commentId, String content);
+        Windows.Foundation.IAsyncOperation<String> GetReplyComment(String commentId, Int32 page);
     }
 }

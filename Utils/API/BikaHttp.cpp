@@ -467,4 +467,31 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Put]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	// 回复评论
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::ReplyComment(hstring commentId,hstring content)
+	{
+
+		hstring api = L"comments/"+commentId;
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"{\"content\":\"" + content + L"\"}",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await POST(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+	// 查看评论回复
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::GetReplyComment(hstring commentId, int32_t page)
+	{
+
+		hstring api = L"comments/" + commentId+L"/childrens?page="+page;
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		auto ress = co_await GET(uri, api, uuid);
+		HttpLogOut(L"[Get]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
+
 }
