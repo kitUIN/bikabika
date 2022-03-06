@@ -287,10 +287,20 @@ namespace winrt::bikabika::implementation
     void winrt::bikabika::implementation::InfoPage::MainGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
     {
         auto width = sender.as<Controls::Grid>().ActualWidth();
-        if (width - 250 > 10) {
-            Title().Width(width - 250);
-            CategoriesString().Width(width - 250);
-            Description().Width(width - 250);
+        if (width > 300)
+        {
+            MainBookInfo().Width(width - 300);
+        }
+        if (width > 310) 
+        {
+            Title().Width(width - 310);
+        }
+        if (width > 320)
+        {
+            CategoriesString().Width(width - 320);
+        }
+        if (width > 50) {
+            Description().Width(width - 50);
         }
     }
     void winrt::bikabika::implementation::InfoPage::CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
