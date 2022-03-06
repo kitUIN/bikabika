@@ -55,6 +55,8 @@ namespace winrt::bikabika::implementation
 
         Windows::Foundation::IAsyncOperation<hstring> SetSlogan(hstring slogan);
 
+        Windows::Foundation::IAsyncOperation<hstring> SetPassword(hstring oldPassword, hstring newPassword);
+
 
 
     

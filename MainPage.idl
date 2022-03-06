@@ -11,5 +11,8 @@ namespace bikabika
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         Windows.Foundation.IAsyncAction ContentDialogShow(String mode, String message);
         Windows.Foundation.IAsyncAction SetPerson();
+        void LogOut();
+        void ChangeSignature();
+        void ChangePassword();
     }
 }

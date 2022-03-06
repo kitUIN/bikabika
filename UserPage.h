@@ -12,7 +12,7 @@ namespace winrt::bikabika::implementation
     {
         UserPage();
         bikabika::UserViewModel MainUserViewModel();
-        int32_t GetEXP(int32_t const& level);
+        void CheckPunchIn();
         Windows::Foundation::IAsyncAction  OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         Windows::Foundation::IAsyncAction GetHistory();
         Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
@@ -22,6 +22,8 @@ namespace winrt::bikabika::implementation
 
 
     private:
+        Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+
         bikabika::MainPage rootPage{ MainPage::Current() };
         bikabika::UserViewModel m_userViewModel;
         bikabika::FileCheckTool m_fileCheckTool;
@@ -37,6 +39,12 @@ namespace winrt::bikabika::implementation
         void GotoFav_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void Grid_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void AutoPunch_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void Punch_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void UserLogOut_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void UserSettings_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void Flyout_Closed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e);
+        void FlyoutPasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void FlyoutSloganButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
     };
     
 }

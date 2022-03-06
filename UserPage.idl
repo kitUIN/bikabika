@@ -9,6 +9,5 @@ namespace bikabika
         UserViewModel MainUserViewModel{ get; };
         Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  FavComicBlocks{ get; };
         Windows.Foundation.Collections.IObservableVector<bikabika.ComicBlock>  LookComicBlocks{ get; };
-
     }
 }

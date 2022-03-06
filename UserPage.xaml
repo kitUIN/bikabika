@@ -6,7 +6,129 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Flyout x:Key="UserFlyout" Placement="Left" Closed="Flyout_Closed">
+            <StackPanel Margin="0,6,0,0" MinWidth="400">
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <Button x:Name="FlyoutImgButton" VerticalAlignment="Center" HorizontalAlignment="Left"  >
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="Edit"/>
+                            </ToolTipService.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  x:Uid="FlyoutImg"/>
+                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue"  FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            </StackPanel>
+                        </Button>
+                        <PersonPicture VerticalAlignment="Center"  HorizontalAlignment="Right"  ProfilePicture="{x:Bind MainUserViewModel.User.Img,Mode=OneWay}" Width="64" Height="64"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutName"/>
+                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock  VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Name,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"  Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutEmail"/>
+                            <FontIcon Margin="3,0,0,0"  Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Email,Mode=OneWay}" />
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <Button x:Name="FlyoutPasswordButton"  VerticalAlignment="Center" HorizontalAlignment="Left" Click="FlyoutPasswordButton_Click" >
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="Edit"/>
+                            </ToolTipService.ToolTip>
+                            <StackPanel  Orientation="Horizontal">
+                                <TextBlock  x:Uid="FlyoutPassword"/>
+                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            </StackPanel>
+                        </Button>
+                        <TextBlock x:Uid="FlyoutUPassword" VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <Button  x:Name="FlyoutSloganButton" VerticalAlignment="Center" HorizontalAlignment="Left" Click="FlyoutSloganButton_Click">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="Edit"/>
+                            </ToolTipService.ToolTip>
+                            <StackPanel  Orientation="Horizontal">
+                                <TextBlock  x:Uid="FlyoutSlogan"/>
+                                <FontIcon Margin="3,0,0,0" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                            </StackPanel>
+                        </Button>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Slogan,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel  Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"   Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutCreateAt"/>
+                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.CreatedAt,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel   Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"  Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutBirthday"/>
+                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.Birthday,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel   Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"  Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutPunchIned"/>
+                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.IsPunchedString,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="10"  BorderThickness="1.5" Padding="10" Opacity="0.9" Background="{ThemeResource MyAcrylicBrushLight2}">
+                    <Grid >
+                        <StackPanel   Margin="5,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"  Orientation="Horizontal">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="UnEdit"/>
+                            </ToolTipService.ToolTip>
+                            <TextBlock  x:Uid="FlyoutVerified"/>
+                            <FontIcon Margin="3,0,0,0" Foreground="Gray" FontFamily="Segoe MDL2 Assets" Glyph="&#xE70F;" FontSize="12"/>
+                        </StackPanel>
+                        <TextBlock VerticalAlignment="Center"  HorizontalAlignment="Right" MaxWidth="200" TextWrapping="Wrap" Text="{x:Bind MainUserViewModel.User.VerifiedString,Mode=OneWay}"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
 
+
+
+        </Flyout>
+    </Page.Resources>
 
     <Grid>
         <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
@@ -31,45 +153,53 @@
             </ContentDialog.TitleTemplate>
         </ContentDialog >
         <ScrollViewer>
-            <Grid Margin="0,0,10,0">
+            <Grid x:Name="MainGrid" Margin="0,0,10,0">
                 <StackPanel Margin="0,20,0,0" >
                     <Grid>
                         <Border CornerRadius="10" Padding="10" Background="{ThemeResource MyAcrylicBrushLight1}">
                             <StackPanel x:Name="Users" Orientation="Vertical">
                                 <StackPanel  Orientation="Horizontal"  HorizontalAlignment="Center">
-                                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind MainUserViewModel.User.Level}" FontWeight="Bold"  Margin="3,1,10,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
-                                    <TextBlock IsTextSelectionEnabled="True"   Text="{x:Bind MainUserViewModel.User.LevelExp}"  FontSize="15" FontWeight="Bold"/>
+                                    <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind MainUserViewModel.User.LevelString,Mode=OneWay}" FontWeight="Bold"  Margin="3,1,10,0" VerticalAlignment="Bottom" MaxWidth="120" FontSize="15"/>
+                                    <TextBlock IsTextSelectionEnabled="True"   Text="{x:Bind MainUserViewModel.User.LevelExp,Mode=OneWay}"  FontSize="15" FontWeight="Bold"/>
                                 </StackPanel>
                                 <Grid>
-                                    <muxc:ProgressRing Width="148" Height="148" Value="{x:Bind MainUserViewModel.User.Percent}" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray"/>
-                                    <PersonPicture VerticalAlignment="Center" HorizontalAlignment="Center"  x:Name="UsersPic" ProfilePicture="{x:Bind MainUserViewModel.User.Img}"  Width="120" Height="120"/>
+                                    <muxc:ProgressRing Width="148" Height="148" Value="{x:Bind MainUserViewModel.User.Percent,Mode=OneWay}" IsIndeterminate="False" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Gray"/>
+                                    <PersonPicture VerticalAlignment="Center" HorizontalAlignment="Center"  x:Name="UsersPic" ProfilePicture="{x:Bind MainUserViewModel.User.Img,Mode=OneWay}"  Width="120" Height="120"/>
                                 </Grid>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Name}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold"/>
+                                    <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Name,Mode=OneWay}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="20" FontWeight="Bold"/>
                                     <Border VerticalAlignment="Center" CornerRadius="10" BorderThickness="1.5" Padding="4" Opacity="0.9"  Background="{ThemeResource SystemAccentColorDark1}">
-                                        <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Title}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="13" FontWeight="Bold" />
+                                        <TextBlock IsTextSelectionEnabled="True"  Text="{x:Bind MainUserViewModel.User.Title,Mode=OneWay}" VerticalAlignment="Center" MaxWidth="120" TextWrapping = "Wrap" FontSize="13" FontWeight="Bold" />
                                     </Border>
                                 </StackPanel>
-                                <TextBlock IsTextSelectionEnabled="True"  HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan}" />
+                                <TextBlock IsTextSelectionEnabled="True"  HorizontalAlignment="Center" x:Name="UserInfomation" Text="{x:Bind MainUserViewModel.User.Slogan,Mode=OneWay}"  TextWrapping="Wrap"/>
                             </StackPanel>
                             
                         </Border>
                         <Border Background="Transparent" HorizontalAlignment="Right" >
                             <StackPanel x:Name="UserButtons" Orientation="Vertical" Margin="0,0,10,0">
-                                <AppBarToggleButton x:Name="AutoPunch" x:Uid="AutoPunch" Label="Punch" Height="64" Width="64" Checked="AutoPunch_Checked">
+                                <AppBarToggleButton x:Name="Punch" x:Uid="Punch" Unchecked="Punch_Checked" Checked="Punch_Checked" Label="Punch" Height="64" Width="64">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="AutoPunchTip"/>
+                                        <ToolTip x:Name="PunchTip" x:Uid="PunchTip"/>
                                     </ToolTipService.ToolTip>
                                     <AppBarToggleButton.Icon>
-                                        <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
+                                        <SymbolIcon Symbol="GoToToday"/>
                                     </AppBarToggleButton.Icon>
                                 </AppBarToggleButton>
-                                <AppBarToggleButton x:Name="UserSettings" x:Uid="UserSettings" Label="Settings" Height="64" Width="64">
+                                <AppBarToggleButton FlyoutBase.AttachedFlyout="{StaticResource UserFlyout}" x:Name="UserSettings" x:Uid="UserSettings" Label="Settings" Checked="UserSettings_Checked"  Height="64" Width="64">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="UserSettingsTip"/>
+                                        <ToolTip x:Uid="UserSettingsTip"/>
                                     </ToolTipService.ToolTip>
                                     <AppBarToggleButton.Icon>
-                                        <FontIcon  FontFamily="Segoe MDL2 Assets" Glyph="&#xe735;" Foreground="LightYellow"/>
+                                        <SymbolIcon Symbol="WebCam"/>
+                                    </AppBarToggleButton.Icon>
+                                </AppBarToggleButton>
+                                <AppBarToggleButton x:Name="UserLogOut" x:Uid="UserLogOut" Label="LogOut" Checked="UserLogOut_Checked" Height="64" Width="64">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Uid="UserLogOutTip"/>
+                                    </ToolTipService.ToolTip>
+                                    <AppBarToggleButton.Icon>
+                                        <SymbolIcon Symbol="ClosePane"/>
                                     </AppBarToggleButton.Icon>
                                 </AppBarToggleButton>
                             </StackPanel>

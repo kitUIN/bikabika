@@ -430,14 +430,14 @@ namespace winrt::bikabika::implementation
 		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
 		guid uuid = GuidHelper::CreateNewGuid();
 		HttpStringContent jsonContent(
-			L"",
+			L"{}",
 			UnicodeEncoding::Utf8,
 			L"application/json");
 		auto ress = co_await POST(uri, jsonContent, api, uuid);
 		HttpLogOut(L"[Post]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
-
+	// ĞŞ¸ÄÇ©Ãû
 	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::SetSlogan(hstring slogan)
 	{
 
@@ -452,5 +452,19 @@ namespace winrt::bikabika::implementation
 		HttpLogOut(L"[Put]->/" + api + L"\nReturn:", ress.c_str());
 		co_return ress;
 	}
+	// ĞŞ¸ÄÃÜÂë
+	Windows::Foundation::IAsyncOperation<hstring> BikaHttp::SetPassword(hstring oldPassword,hstring newPassword)
+	{
 
+		hstring api = L"users/password";
+		Uri uri = Uri{ L"https://picaapi.picacomic.com/" + api };
+		guid uuid = GuidHelper::CreateNewGuid();
+		HttpStringContent jsonContent(
+			L"{\"old_password\":\"" + oldPassword + L"\",\"new_password\":\""+newPassword+L"\"}",
+			UnicodeEncoding::Utf8,
+			L"application/json");
+		auto ress = co_await PUT(uri, jsonContent, api, uuid);
+		HttpLogOut(L"[Put]->/" + api + L"\nReturn:", ress.c_str());
+		co_return ress;
+	}
 }

@@ -207,6 +207,9 @@
     <value>邮箱</value>
     <comment>登陆账号提示</comment>
   </data>
+  <data name="Edit.Content" xml:space="preserve">
+    <value>点击编辑</value>
+  </data>
   <data name="ErrorButton.Text" xml:space="preserve">
     <value>重新加载</value>
   </data>
@@ -261,6 +264,36 @@
   <data name="Favourite.Label" xml:space="preserve">
     <value>收藏</value>
   </data>
+  <data name="FlyoutBirthday.Text" xml:space="preserve">
+    <value>生日</value>
+  </data>
+  <data name="FlyoutCreateAt.Text" xml:space="preserve">
+    <value>账户创建日期</value>
+  </data>
+  <data name="FlyoutEmail.Text" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="FlyoutImg.Text" xml:space="preserve">
+    <value>头像</value>
+  </data>
+  <data name="FlyoutName.Text" xml:space="preserve">
+    <value>绅士名称</value>
+  </data>
+  <data name="FlyoutPassword.Text" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="FlyoutPunchIned.Text" xml:space="preserve">
+    <value>今日打卡</value>
+  </data>
+  <data name="FlyoutSlogan.Text" xml:space="preserve">
+    <value>个人签名</value>
+  </data>
+  <data name="FlyoutUPassword.Text" xml:space="preserve">
+    <value>不可见</value>
+  </data>
+  <data name="FlyoutVerified.Text" xml:space="preserve">
+    <value>账户验证</value>
+  </data>
   <data name="Like.Label" xml:space="preserve">
     <value>爱心</value>
     <comment>漫画详细页</comment>
@@ -290,6 +323,9 @@
     <value>分类</value>
     <comment>左侧导航栏第二个元素</comment>
   </data>
+  <data name="NavDownload.Content" xml:space="preserve">
+    <value>下载</value>
+  </data>
   <data name="NavHome.Content" xml:space="preserve">
     <value>主页</value>
     <comment>左侧导航栏第一个元素</comment>
@@ -297,6 +333,12 @@
   <data name="NavSettings.Content" xml:space="preserve">
     <value>设置</value>
     <comment>左侧导航栏倒数第一个元素</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>旧密码</value>
   </data>
   <data name="Password.Text" xml:space="preserve">
     <value>密码</value>
@@ -310,6 +352,15 @@
     <value>确定</value>
     <comment>未知错误按钮</comment>
   </data>
+  <data name="Punch.Label" xml:space="preserve">
+    <value>打卡</value>
+  </data>
+  <data name="PunchIned" xml:space="preserve">
+    <value>已打卡✔</value>
+  </data>
+  <data name="PunchTip.Content" xml:space="preserve">
+    <value>打卡</value>
+  </data>
   <data name="ReadText" xml:space="preserve">
     <value>开始阅读</value>
   </data>
@@ -319,6 +370,9 @@
   </data>
   <data name="Search.Content" xml:space="preserve">
     <value>搜索</value>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>设置密码</value>
   </data>
   <data name="SetSlogan" xml:space="preserve">
     <value>设置签名</value>
@@ -370,6 +424,15 @@
   <data name="TitleTip.Content" xml:space="preserve">
     <value>左键复制</value>
   </data>
+  <data name="UnEdit.Content" xml:space="preserve">
+    <value>无法编辑</value>
+  </data>
+  <data name="UnPunchIned" xml:space="preserve">
+    <value>未打卡❌</value>
+  </data>
+  <data name="UnVerified" xml:space="preserve">
+    <value>未验证❌</value>
+  </data>
   <data name="UpdateTime.Text" xml:space="preserve">
     <value>更新</value>
     <comment>漫画详细页的 更新</comment>
@@ -381,8 +444,23 @@
   <data name="UserInfomation.Text" xml:space="preserve">
     <value>    “伺服器君是個變態”</value>
   </data>
+  <data name="UserLogOut.Label" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="UserLogOutTip.Content" xml:space="preserve">
+    <value>登出</value>
+  </data>
   <data name="UserLook.Text" xml:space="preserve">
     <value>浏览记录</value>
     <comment>用户界面</comment>
+  </data>
+  <data name="UserSettings.Label" xml:space="preserve">
+    <value>账户设置</value>
+  </data>
+  <data name="UserSettingsTip.Content" xml:space="preserve">
+    <value>账户设置</value>
+  </data>
+  <data name="Verified" xml:space="preserve">
+    <value>已验证✔</value>
   </data>
 </root>

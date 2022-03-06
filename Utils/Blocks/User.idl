@@ -3,8 +3,18 @@ namespace bikabika
     runtimeclass User : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         User(String name,String level);
+        String ID;
         String Name;
+        String CreatedAt;
+        String Birthday;
+        String Email;
         String Level;
+        String LevelString;
+        Boolean  IsPunched;
+        Boolean  Verified;
+        String  IsPunchedString;
+        String  VerifiedString;
+        String  Gender;
         Windows.UI.Xaml.Media.Imaging.BitmapImage Img;
         String ImageSource;
         String Slogan;
@@ -12,5 +22,6 @@ namespace bikabika
         Int32 Percent;
         String Title;
         String LevelExp;
+        void Clear();
     }
 }

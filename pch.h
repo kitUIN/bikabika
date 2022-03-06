@@ -54,4 +54,5 @@ extern winrt::hstring imageQuality = L"original";//medium
 extern bool keywordLoaded = false;
 extern bool animeFlag = true;
 extern bool loadComicFlag = true;
+// 是否登录
 extern bool m_login = false;

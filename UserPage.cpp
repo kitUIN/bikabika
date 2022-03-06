@@ -3,6 +3,8 @@
 #if __has_include("UserPage.g.cpp")
 #include "UserPage.g.cpp"
 #endif
+using namespace winrt::Windows::UI::Xaml::Controls;
+using namespace winrt::Windows::UI::Xaml::Controls::Primitives;
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
@@ -18,11 +20,22 @@ namespace winrt::bikabika::implementation
     {
         return rootPage.MainUserViewModel();
     }
-	
+	// 检测打卡情况
+	void UserPage::CheckPunchIn()
+	{
+		if (MainUserViewModel().User().IsPunched())
+		{
+			hstring punch = resourceLoader.GetString(L"PunchIned");
+			Punch().IsChecked(true);
+			Punch().Label(punch);
+			PunchTip().Content(box_value(punch));
+		}
+	}
 	Windows::Foundation::IAsyncAction UserPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		__super::OnNavigatedTo(e);
 		extern bool loadComicFlag;
+		CheckPunchIn();
 		loadComicFlag = true;
 		auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
 		if (anim)
@@ -185,7 +198,43 @@ void winrt::bikabika::implementation::UserPage::Grid_PointerPressed(winrt::Windo
 }
 
 
-void winrt::bikabika::implementation::UserPage::AutoPunch_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::UserPage::Punch_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 
+	if (!Punch().IsChecked().GetBoolean() && !MainUserViewModel().User().IsPunched()) {
+		
+	}
+	CheckPunchIn();
+}
+
+
+void winrt::bikabika::implementation::UserPage::UserLogOut_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	sender.as<AppBarToggleButton>().IsChecked(false);
+	rootPage.LogOut();
+}
+
+
+void winrt::bikabika::implementation::UserPage::UserSettings_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	FlyoutBase::ShowAttachedFlyout(sender.as<FrameworkElement>());
+}
+
+
+void winrt::bikabika::implementation::UserPage::Flyout_Closed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
+{
+	UserSettings().IsChecked(false);
+
+}
+
+
+void winrt::bikabika::implementation::UserPage::FlyoutPasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	rootPage.ChangePassword();
+}
+
+
+void winrt::bikabika::implementation::UserPage::FlyoutSloganButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	rootPage.ChangeSignature();
 }
