@@ -284,56 +284,60 @@ namespace winrt::bikabika::implementation
 		__super::OnNavigatedTo(e);
 	}
 	// 弹出窗
-	Windows::Foundation::IAsyncAction  MainPage::ContentDialogShow(hstring const& mode, hstring const& message)
+	void  MainPage::ContentDialogShow(hstring const& mode, hstring const& message)
 	{
 		
-		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-		if (mode == L"Timeout") {
-			auto show{ PicErrorDialog().ShowAsync() };
-		}
-		else {
-			HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
-			HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
-			if (mode == L"Error")
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message,this]()->winrt::fire_and_forget
 			{
-				HttpContentDialog().Content(box_value(message));
-				HttpContentDialog().IsTextScaleFactorEnabled(true);
-				auto show{ HttpContentDialog().ShowAsync() };
-
-			}
-			else if (mode == L"Unknown")
-			{
-				Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
-				HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
-				HttpContentDialog().IsTextScaleFactorEnabled(true);
-				auto show{ co_await HttpContentDialog().ShowAsync() };
-
-			}
-			else if (mode == L"1005")
-			{
-				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
-				HttpContentDialog().IsTextScaleFactorEnabled(true);
-				extern bool m_login;
-				m_login = false;
-				auto show{ co_await HttpContentDialog().ShowAsync() };
-				if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
-				{
-					LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
-					LoginTeachingTip().IsOpen(true);
+				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+				if (mode == L"Timeout") {
+					auto show{ PicErrorDialog().ShowAsync() };
 				}
-			}
-			else if (mode == L"Blank")
-			{
-				HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginBlank")));
-				HttpContentDialog().IsTextScaleFactorEnabled(true);
-				auto show{ HttpContentDialog().ShowAsync() };
-			}
-			else if (mode == L"Customize") {
-				HttpContentDialog().Content(box_value(message));
-				HttpContentDialog().IsTextScaleFactorEnabled(true);
-				auto show{ HttpContentDialog().ShowAsync() };
-			}
-		}
+				else {
+					HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
+					HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
+					if (mode == L"Error")
+					{
+						HttpContentDialog().Content(box_value(message));
+						HttpContentDialog().IsTextScaleFactorEnabled(true);
+						auto show{ HttpContentDialog().ShowAsync() };
+
+					}
+					else if (mode == L"Unknown")
+					{
+						Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
+						HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
+						HttpContentDialog().IsTextScaleFactorEnabled(true);
+						auto show{ HttpContentDialog().ShowAsync() };
+
+					}
+					else if (mode == L"1005")
+					{
+						HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
+						HttpContentDialog().IsTextScaleFactorEnabled(true);
+						extern bool m_login;
+						m_login = false;
+						auto show{ co_await HttpContentDialog().ShowAsync() };
+						if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
+						{
+							LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
+							LoginTeachingTip().IsOpen(true);
+						}
+					}
+					else if (mode == L"Blank")
+					{
+						HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginBlank")));
+						HttpContentDialog().IsTextScaleFactorEnabled(true);
+						auto show{ HttpContentDialog().ShowAsync() };
+					}
+					else if (mode == L"Customize") {
+						HttpContentDialog().Content(box_value(message));
+						HttpContentDialog().IsTextScaleFactorEnabled(true);
+						auto show{ HttpContentDialog().ShowAsync() };
+					}
+				}
+			});
+		
 	}
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{

@@ -24,47 +24,7 @@ namespace winrt::bikabika::implementation
 	{
 		return m_classBlockView;
 	}
-	Windows::Foundation::IAsyncAction ClassificationPage::ContentDialogShow(hstring const& mode, hstring const& message)
-	{
-		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-if (mode == L"Timeout") {
-            auto show{ PicErrorDialog().ShowAsync() };
-        }
-        else {
-            HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
-            HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
-            if (mode == L"Error")
-            {
-                HttpContentDialog().Content(box_value(message));
-                
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-
-            }
-            else if (mode == L"Unknown")
-            {
-                Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
-                HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
-                HttpContentDialog().IsTextScaleFactorEnabled(true);
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-
-            }
-            else if (mode == L"1005")
-            {
-                HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
-                HttpContentDialog().IsTextScaleFactorEnabled(true);
-                extern bool m_login;
-                m_login = false;
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-                if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
-                {
-                    auto loginTeachingTip = Frame().Parent().as<Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<Windows::UI::Xaml::Controls::Grid>().Children().GetAt(3).as<Microsoft::UI::Xaml::Controls::TeachingTip>();
-                    loginTeachingTip.Title(resourceLoader.GetString(L"LoginButton/Content"));
-                    loginTeachingTip.IsOpen(true);
-                }
-            }
-        }
-		ErrorTip().IsOpen(true);
-	}
+	
 	Windows::Foundation::IAsyncAction ClassificationPage::Init()
 	{
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
@@ -74,10 +34,10 @@ if (mode == L"Timeout") {
 		LayoutMessage().IsOpen(false);
 		if (res[1] == 'T')
 		{
-			co_await ContentDialogShow(L"Timeout", L"");
+			rootPage.ContentDialogShow(L"Timeout", L"");
 		}
 		else if (res[1] == 'E') {
-			co_await ContentDialogShow(L"Error", res);
+			rootPage.ContentDialogShow(L"Error", res);
 		}
 		else
 		{
@@ -102,12 +62,12 @@ if (mode == L"Timeout") {
 			//缺少鉴权
 			else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
 			{
-				co_await ContentDialogShow(L"1005", L"");
+				rootPage.ContentDialogShow(L"1005", L"");
 			}
 			//未知
 			else
 			{
-				co_await ContentDialogShow(L"Unknown", res);
+				rootPage.ContentDialogShow(L"Unknown", res);
 			}
 		}
 		

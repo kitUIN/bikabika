@@ -17,59 +17,20 @@ namespace winrt::bikabika::implementation
     InfoPage::InfoPage()
     {
         InitializeComponent();
-        NavigationCacheMode(Windows::UI::Xaml::Navigation::NavigationCacheMode::Enabled);
+        
 
     }
 
-    Windows::Foundation::IAsyncAction InfoPage::ContentDialogShow(hstring const& mode, hstring const& message)
-    {
-        if (mode == L"Timeout") {
-            auto show{ PicErrorDialog().ShowAsync() };
-        }
-        else {
-            HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
-            HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
-            if (mode == L"Error")
-            {
-                HttpContentDialog().Content(box_value(message));
-                
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-
-            }
-            else if (mode == L"Unknown")
-            {
-                Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
-                HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
-                HttpContentDialog().IsTextScaleFactorEnabled(true);
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-
-            }
-            else if (mode == L"1005")
-            {
-                HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
-                HttpContentDialog().IsTextScaleFactorEnabled(true);
-                extern bool m_login;
-                m_login = false;
-                auto show{ co_await HttpContentDialog().ShowAsync() };
-                if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
-                {
-                    auto loginTeachingTip = Frame().Parent().as<Microsoft::UI::Xaml::Controls::NavigationView>().Parent().as<Windows::UI::Xaml::Controls::Grid>().Children().GetAt(3).as<Microsoft::UI::Xaml::Controls::TeachingTip>();
-                    loginTeachingTip.Title(resourceLoader.GetString(L"LoginButton/Content"));
-                    loginTeachingTip.IsOpen(true);
-                }
-            }
-        }
-    }
 
     Windows::Foundation::IAsyncAction InfoPage::Eps(int32_t const& page)
     {
         auto res{ co_await m_bikaHttp.Episodes(m_id,page) };
         if (res[1] == 'T')
         {
-            co_await ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            co_await ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -113,12 +74,12 @@ namespace winrt::bikabika::implementation
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                co_await ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                co_await ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
         }
     }
@@ -149,10 +110,10 @@ namespace winrt::bikabika::implementation
         LayoutMessage().IsOpen(false);
         if (res[1] == 'T')
         {
-            ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -240,12 +201,12 @@ namespace winrt::bikabika::implementation
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                co_await ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                co_await ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
 
 
@@ -328,10 +289,10 @@ namespace winrt::bikabika::implementation
         
         if (res[1] == 'T')
         {
-            co_await ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            co_await ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -344,12 +305,12 @@ namespace winrt::bikabika::implementation
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                co_await ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                co_await ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
         }
         LayoutMessage().IsOpen(false);
@@ -379,10 +340,10 @@ namespace winrt::bikabika::implementation
         auto res{ co_await m_bikaHttp.Like(m_id) };
         if (res[1] == 'T')
         {
-            ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -406,12 +367,12 @@ namespace winrt::bikabika::implementation
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
         }
     }
@@ -425,10 +386,10 @@ namespace winrt::bikabika::implementation
         auto res{ co_await m_bikaHttp.Favourite(m_id) };
         if (res[1] == 'T')
         {
-            ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -450,12 +411,12 @@ namespace winrt::bikabika::implementation
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
         }
     }
@@ -631,10 +592,10 @@ Windows::Foundation::IAsyncAction   winrt::bikabika::implementation::InfoPage::C
         textBox.Text(L"");
         if (res[1] == 'T')
         {
-            ContentDialogShow(L"Timeout", L"");
+            rootPage.ContentDialogShow(L"Timeout", L"");
         }
         else if (res[1] == 'E') {
-            ContentDialogShow(L"Error", res);
+            rootPage.ContentDialogShow(L"Error", res);
         }
         else
         {
@@ -650,12 +611,12 @@ Windows::Foundation::IAsyncAction   winrt::bikabika::implementation::InfoPage::C
             //缺少鉴权
             else if (code == (double)401 && resp.GetNamedString(L"error") == L"1005")
             {
-                ContentDialogShow(L"1005", L"");
+                rootPage.ContentDialogShow(L"1005", L"");
             }
             //未知
             else
             {
-                ContentDialogShow(L"Unknown", res);
+                rootPage.ContentDialogShow(L"Unknown", res);
             }
         }
     }

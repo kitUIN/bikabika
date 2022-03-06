@@ -13,7 +13,6 @@ namespace winrt::bikabika::implementation
     struct InfoPage : InfoPageT<InfoPage>
     {
         InfoPage();
-        Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction Eps(int32_t const& page);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::TagBlock> Tags();

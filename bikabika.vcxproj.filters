@@ -4,14 +4,14 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage.xaml" />
+    <Page Include="Pages\MainPage.xaml" />
     <Page Include="Pages\SettingsPage.xaml" />
-    <Page Include="ClassificationPage.xaml" />
+    <Page Include="Pages\ClassificationPage.xaml" />
     <Page Include="Pages\ComicsPage.xaml" />
-    <Page Include="InfoPage.xaml" />
+    <Page Include="Pages\InfoPage.xaml" />
     <Page Include="Pages\PicPage.xaml" />
     <Page Include="Pages\DownloadPage.xaml" />
-    <Page Include="UserPage.xaml" />
+    <Page Include="Pages\UserPage.xaml" />
     <Page Include="Pages\HomePage.xaml" />
   </ItemGroup>
   <ItemGroup>

@@ -8,27 +8,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
-        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
-            Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
-        </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-        </ContentDialog >
+        
         <muxc:TeachingTip x:Uid="ErrorTip" Background="{StaticResource SystemAccentColorLight3}" ActionButtonClick="ErrorTip_ActionButtonClick" Title="Loading Error!" x:Name="ErrorTip" PreferredPlacement="BottomRight" IsLightDismissEnabled="False">
             <muxc:TeachingTip.Content>
                 <TextBlock x:Uid="ErrorText"  Margin="0,10,0,0" Text=" Maybe You Want To Refresh" FontSize="18"   FontWeight="Black"  Foreground="{ThemeResource SystemAccentColorDark3}"/>

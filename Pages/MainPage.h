@@ -33,7 +33,7 @@ namespace winrt::bikabika::implementation
 		bikabika::UserViewModel MainUserViewModel();
 		
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
-		Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
+		void ContentDialogShow(hstring const& mode, hstring const& message);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction  PunchIn();
 		int32_t GetEXP(int32_t const& level);

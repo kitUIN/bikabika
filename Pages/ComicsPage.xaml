@@ -71,27 +71,7 @@
     </Page.Resources>
 
     <Grid Margin="0,3,0,0">
-        <ContentDialog x:Name="PicErrorDialog" x:Uid="PicErrorDialog" 
-            Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image x:Name="ErrorPic" x:Uid="ErrorPic" Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-            <StackPanel HorizontalAlignment="Center">
-                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText1" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock IsTextSelectionEnabled="True" x:Uid="ErrorText2" HorizontalAlignment="Center"/>
-                <TextBlock IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
-                <TextBlock  IsTextSelectionEnabled="True" HorizontalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
-        </ContentDialog >
-        <ContentDialog x:Name="HttpContentDialog" x:Uid="HttpContentDialog" Background="{StaticResource SystemAccentColorLight2}">
-            <ContentDialog.TitleTemplate>
-                <DataTemplate>
-                    <Image Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" Width="270" Height="270" HorizontalAlignment="Center"/>
-                </DataTemplate>
-            </ContentDialog.TitleTemplate>
-        </ContentDialog >
+        
         <ScrollViewer Margin="3,38,0,10">
             <StackPanel >
 

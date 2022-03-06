@@ -3,6 +3,7 @@
 #include "PicPage.g.h"
 #include "Utils/Blocks/PicturesBlock.h"
 #include "Utils/Blocks/EpisodeBlock.h"
+#include "MainPage.h"
 namespace winrt::bikabika::implementation
 {
     struct PicPage : PicPageT<PicPage>
@@ -10,12 +11,12 @@ namespace winrt::bikabika::implementation
         PicPage();
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::PicturesBlock> PicturesBlocks();
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
-        Windows::Foundation::IAsyncAction ContentDialogShow(hstring const& mode, hstring const& message);
         Windows::Foundation::IAsyncAction Goto(int32_t const& order, int32_t const& page);
         void ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e);
         Windows::Foundation::IAsyncAction DownEps_ActionButtonClick(winrt::Microsoft::UI::Xaml::Controls::TeachingTip const& sender, winrt::Windows::Foundation::IInspectable const& args);
 
     private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
         winrt::Windows::Foundation::Collections::IObservableVector<bikabika::PicturesBlock> m_picturesBlocks= winrt::single_threaded_observable_vector<bikabika::PicturesBlock>();
         hstring m_id;
         int32_t m_order;
