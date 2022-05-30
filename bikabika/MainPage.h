@@ -20,6 +20,7 @@ namespace winrt::bikabika::implementation
 
 		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
 		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
+		void LayoutMessageShow(hstring const& message,bool const& isOpen);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction  PunchIn();
 		int32_t GetEXP(int32_t const& level);
@@ -62,6 +63,7 @@ namespace winrt::bikabika::implementation
 	private:
 		static bikabika::MainPage current;
 		BikaClient::BikaHttpClient m_bikaClient;
+		BikaClient::Blocks::UserBlock m_user{nullptr};
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		bool _suggestIsChosen = false;
 		bool m_login = false;

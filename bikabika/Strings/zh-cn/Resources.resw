@@ -271,6 +271,14 @@
     <value>关闭</value>
     <comment>错误消息提示框的右数第一个按钮内容</comment>
   </data>
+  <data name="FailMessage.Message.Login.Blank" xml:space="preserve">
+    <value>账号密码不允许为空</value>
+    <comment>错误消息内容:登陆失败</comment>
+  </data>
+  <data name="FailMessage.Message.Login.Error" xml:space="preserve">
+    <value>用户名或密码错误</value>
+    <comment>错误消息内容:登陆失败</comment>
+  </data>
   <data name="FailMessage.Message.NoAuth" xml:space="preserve">
     <value>缺少访问权限,请登录</value>
     <comment>错误消息内容:未登录</comment>

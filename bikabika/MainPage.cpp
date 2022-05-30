@@ -21,9 +21,11 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media::Imaging;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Numerics;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
+
 using namespace winrt::Windows::UI::Xaml::Media;
 
 namespace winrt::bikabika::implementation
@@ -35,21 +37,16 @@ namespace winrt::bikabika::implementation
 
 		InitializeComponent();
 		MainPage::current = *this;
-
+		// 隐藏标题栏
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);
 		Window::Current().SetTitleBar(CustomDragRegion());
-		/*Windows::Storage::ApplicationDataContainer serversSettings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Servers", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		Windows::Storage::ApplicationDataContainer userData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"User", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		Windows::Storage::ApplicationDataContainer settingsData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
 
-
-		// 隐藏标题栏
-
-		/*LoginTeachingTip().IsOpen(true);
+		// 登录初始化
+		LoginTeachingTip().IsOpen(true);
 		NavHome().IsEnabled(false);
 		NavClassification().IsEnabled(false);
-		NavAccount().IsEnabled(false);*/
+		NavAccount().IsEnabled(false);
 
 	}
 	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
@@ -70,7 +67,6 @@ namespace winrt::bikabika::implementation
 
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
-		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		ContentDialog dialog;
 		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 		dialog.IsTextScaleFactorEnabled(true);
@@ -119,10 +115,95 @@ namespace winrt::bikabika::implementation
 		dialog.ShowAsync();
 	}
 
+	void MainPage::LayoutMessageShow(hstring const& message, bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [message, isOpen, this]()
+			{
+				LayoutMessage().Title(message);
+				LayoutMessage().IsOpen(isOpen);
+			});
+	}
+
+	Windows::Foundation::IAsyncAction MainPage::Login()
+	{
+
+		auto res = co_await m_bikaClient.Login(Email().Text(), Password().Password());
+		if (res.Code()== -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200) {
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			IVector<hstring> emails{ winrt::single_threaded_vector<hstring>() };
+
+			loginData.Values().Insert(L"Last", box_value(Email().Text()));
+			if (loginData.Values().HasKey(L"emails"))
+			{
+				emails = loginData.Values().Lookup(L"emails").as<IVector<hstring>>();
+			}
+			emails.Append(Email().Text());
+			loginData.Values().Insert(L"emails", box_value(emails));
+
+			if (loginData.Values().HasKey(L"rememberMe") && loginData.Values().Lookup(L"rememberMe").as<bool>())
+			{
+				IMap<hstring, hstring> passwords{ winrt::single_threaded_map<winrt::hstring, winrt::hstring>() };
+				if (loginData.Values().HasKey(L"passwords"))
+				{
+					passwords = loginData.Values().Lookup(L"passwords").as<IMap<hstring, hstring>>();
+				}
+				passwords.Insert(Email().Text(), Password().Password());
+				loginData.Values().Insert(L"passwords", box_value(passwords));
+			}
+			else if (loginData.Values().HasKey(L"passwords"))
+			{
+				IMap<hstring, hstring> passwords = loginData.Values().Lookup(L"passwords").as<IMap<hstring, hstring>>();
+				if (passwords.HasKey(Email().Text()))
+				{
+					passwords.Remove(Email().Text());
+				}
+			}
+
+			co_await SetPerson();
+			if (m_user.IsPunched()) {
+				co_await PunchIn();
+				co_await SetPerson();
+			}
+		}
+		else if(res.Code()==401&&res.Error()==L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+
+		}
+		else if (res.Code() == 400)
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Error"));
+			Password().Password(L"");
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+			Password().Password(L"");
+		}
+	}
+
+	Windows::Foundation::IAsyncAction MainPage::PunchIn()
+	{
+		return Windows::Foundation::IAsyncAction();
+	}
+
 
 	void MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
 	{
-
+		// 账号密码为空
+		if (Email().Text() == L"" || Password().Password() == L"")
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Blank"));
+		}
+		else
+		{
+			LayoutMessageShow(resourceLoader.GetString(L"Logining"),true);
+			auto login{ Login() };
+		}
 	}
 	void MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
 	{
@@ -224,6 +305,7 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::LoginButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
 	{
+
 	}
 	void MainPage::SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
 	{
@@ -239,6 +321,14 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+	}
+	Windows::Foundation::IAsyncAction MainPage::SetPerson()
+	{
+
+		NavHome().IsEnabled(true);
+		NavClassification().IsEnabled(true);
+		NavAccount().IsEnabled(true);
+		return Windows::Foundation::IAsyncAction();
 	}
 	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
 	{
