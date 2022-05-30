@@ -7,3 +7,5 @@
 *.txt
 /packages/Microsoft.Windows.CppWinRT.2.0.210806.1
 /packages
+/bikabika/x64/Debug
+/x64/Debug/bikabika

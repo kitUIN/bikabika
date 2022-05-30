@@ -4,6 +4,8 @@ namespace bikabika
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
     {
         MainPage();
-        Int32 MyProperty;
+        static MainPage Current{ get; };
+        void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
+        void ContentDialogShow(String mode, String message);
     }
 }

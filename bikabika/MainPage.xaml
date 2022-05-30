@@ -2,12 +2,462 @@
     x:Class="bikabika.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="ClickHandler">Click Me</Button>
-    </StackPanel>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <AcrylicBrush
+                        x:Key="NavigationViewExpandedPaneBackground"
+                        TintColor="{ThemeResource SystemAccentColorLight1}"
+                        TintOpacity=".6" />
+                    <AcrylicBrush
+                        x:Key="NavigationViewDefaultPaneBackground"
+                        BackgroundSource="HostBackdrop"
+                        TintColor="{ThemeResource SystemAccentColorLight1}"
+                        TintOpacity=".6" />
+                    <AcrylicBrush
+                        x:Key="NavigationViewTopPaneBackground"
+                        BackgroundSource="Backdrop"
+                        TintColor="{ThemeResource SystemAccentColor}"
+                        TintOpacity=".6" />
+                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent" />
+
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <muxc:TeachingTip
+            x:Name="LayoutMessage"
+            Width="300"
+            Background="{StaticResource SystemAccentColorLight3}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <ProgressRing
+                    Width="80"
+                    Height="80"
+                    Padding="10"
+                    Foreground="{StaticResource SystemAccentColor}"
+                    IsActive="True" />
+            </muxc:TeachingTip.Content>
+        </muxc:TeachingTip>
+        <muxc:NavigationView
+            x:Name="NavView"
+            AlwaysShowHeader="False"
+            Background="{ThemeResource MyAcrylicBrush}"
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleButtonVisible="True"
+            IsSettingsVisible="True"
+            IsTitleBarAutoPaddingEnabled="True"
+            ItemInvoked="NavView_ItemInvoked"
+            OpenPaneLength="180"
+            PaneClosing="NavView_PaneClosed"
+            PaneDisplayMode="Left"
+            PaneOpening="NavView_PaneOpened">
+
+            <muxc:NavigationView.FooterMenuItems />
+
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem Visibility="Collapsed" />
+                <muxc:NavigationViewItem
+                    x:Name="NavBigImg"
+                    PointerPressed="UsersPic_PointerPressed"
+                    Tag="NavBigImg">
+                    <FlyoutBase.AttachedFlyout>
+                        <MenuFlyout x:Name="menu">
+                            <MenuFlyoutItem
+                                x:Uid="SwitchAccounts"
+                                Click="LogOut_Click"
+                                Text="切换账号">
+                                <MenuFlyoutItem.Icon>
+                                    <SymbolIcon Symbol="People" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutSubItem Text="账户设置">
+                                <MenuFlyoutSubItem.Icon>
+                                    <SymbolIcon Symbol="Setting" />
+                                </MenuFlyoutSubItem.Icon>
+                                <MenuFlyoutItem
+                                    x:Name="ChangeSignature"
+                                    x:Uid="ChangeSignature"
+                                    Click="ChangeSignature_Click"
+                                    Text="修改签名">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="ContactInfo" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                                <MenuFlyoutItem
+                                    x:Name="ChangePassword"
+                                    x:Uid="ChangePassword"
+                                    Click="ChangePassword_Click"
+                                    Text="修改密码">
+                                    <MenuFlyoutItem.Icon>
+                                        <SymbolIcon Symbol="Edit" />
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyoutSubItem>
+                            <MenuFlyoutItem
+                                x:Name="LogOut"
+                                x:Uid="LogOut"
+                                Click="LogOut_Click"
+                                Text="登出">
+                                <MenuFlyoutItem.Icon>
+                                    <SymbolIcon Symbol="ClosePane" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <StackPanel Margin="0,20,0,0">
+                        <StackPanel x:Name="Users" Orientation="Vertical">
+                            <PersonPicture
+                                x:Name="UsersPic"
+                                Width="120"
+                                Height="120" />
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <Grid>
+                                    <TextBlock
+                                        x:Name="UserName"
+                                        x:Uid="DefaultUserName"
+                                        MaxWidth="120"
+                                        VerticalAlignment="Center"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource SystemAccentColorDark2}"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+                                <Grid Margin="1,0,0,0">
+                                    <TextBlock
+                                        x:Name="UserLevel"
+                                        x:Uid="DefaultUserLevel"
+                                        MaxWidth="120"
+                                        Margin="3,1,0,0"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="15" />
+                                </Grid>
+                            </StackPanel>
+                            <Grid Margin="0,5,0,10">
+                                <TextBlock
+                                    x:Name="UserInfomation"
+                                    x:Uid="UserInfomation"
+                                    MaxWidth="140"
+                                    HorizontalAlignment="Center"
+                                    Foreground="Gray"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem
+                    x:Name="NavSmallImg"
+                    PointerPressed="UsersPic_PointerPressed"
+                    Tag="NavSmallImg"
+                    Visibility="Collapsed">
+                    <PersonPicture
+                        Width="30"
+                        Height="30"
+                        Margin="-8,0,0,0" />
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItemHeader Height="5" />
+                <muxc:NavigationViewItemSeparator />
+                <muxc:NavigationViewItem
+                    x:Name="NavHome"
+                    x:Uid="NavHome"
+                    Content="主頁"
+                    Icon="Home"
+                    Tag="home" />
+                <muxc:NavigationViewItem
+                    x:Name="NavClassification"
+                    x:Uid="NavClassification"
+                    Content="分類"
+                    Tag="classification">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE71D;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+                <muxc:NavigationViewItem
+                    x:Name="NavAccount"
+                    x:Uid="NavAccount"
+                    Content="我的"
+                    Tag="account">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77B;" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+            </muxc:NavigationView.MenuItems>
+
+        </muxc:NavigationView>
+
+        <Grid
+            x:Name="AppTitleBar"
+            Width="200"
+            Height="44"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="Transparent">
+            <StackPanel Orientation="Horizontal">
+                <Image
+                    Width="36"
+                    Height="36"
+                    Margin="5,0,0,0"
+                    Source="ms-appx:///Assets//Picacgs//picacomic_2.png" />
+                <TextBlock
+                    x:Name="APPTitle"
+                    x:Uid="APPTitle"
+                    Margin="10,4,0,0"
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Text="嗶咔嗶咔" />
+            </StackPanel>
+
+        </Grid>
+        <Frame
+            x:Name="ContentFrame"
+            Margin="185,0,0,0"
+            NavigationFailed="ContentFrame_NavigationFailed"
+            SizeChanged="Grid_SizeChanged">
+            <muxc:TabView
+                x:Name="ContentTabView"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Left"
+                CloseButtonOverlayMode="OnPointerOver"
+                IsAddTabButtonVisible="False"
+                TabCloseRequested="ContentTabView_TabCloseRequested"
+                TabWidthMode="Equal">
+                <muxc:TabView.TabStripHeader>
+                    <Button Margin="0,7,0,0">
+                        <Button.Flyout>
+                            <Flyout
+                                x:Name="SearchFlyout"
+                                Opened="Flyout_Opened"
+                                Placement="BottomEdgeAlignedRight">
+                                <StackPanel Width="310" Orientation="Horizontal">
+                                    <Button x:Name="ClearCatSearchHistory" Click="ClearCatSearchHistory_Click">
+                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
+                                    </Button>
+                                    <AutoSuggestBox
+                                        x:Name="CatSearch"
+                                        x:Uid="CatSearch"
+                                        Width="260"
+                                        Margin="5,0,0,0"
+                                        PlaceholderText="Search"
+                                        QueryIcon="Find"
+                                        QuerySubmitted="CatSearch_QuerySubmitted"
+                                        SuggestionChosen="CatSearch_SuggestionChosen"
+                                        TextChanged="CatSearch_TextChanged" />
+
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="16"
+                            Glyph="&#xE721;" />
+                    </Button>
+                </muxc:TabView.TabStripHeader>
+                <muxc:TabView.TabStripFooter>
+                    <Grid
+                        x:Name="CustomDragRegion"
+                        MinWidth="180"
+                        Background="Transparent" />
+                </muxc:TabView.TabStripFooter>
+            </muxc:TabView>
+        </Frame>
+        <muxc:TeachingTip
+            x:Name="LoginTeachingTip"
+            x:Uid="LoginTeachingTip"
+            Title="Login"
+            Background="{ThemeResource MyAcrylicBrushLight3}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <StackPanel
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            x:Uid="E-mail"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="E-mail:" />
+                        <TextBox
+                            x:Name="Email"
+                            x:Uid="E-mailBox"
+                            Width="200"
+                            Background="{StaticResource SystemAccentColorLight3}"
+                            PlaceholderText="E-mail" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            x:Uid="Password"
+                            VerticalAlignment="Center"
+                            Text="Password:" />
+                        <PasswordBox
+                            x:Name="Password"
+                            x:Uid="PasswordBox"
+                            Width="200"
+                            Background="{StaticResource SystemAccentColorLight3}"
+                            KeyUp="LoginButton_KeyUp"
+                            Loaded="Password_Loaded"
+                            PlaceholderText="Password" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox
+                            x:Name="RememberCheckBox"
+                            x:Uid="RememberCheckBox"
+                            Checked="RememberCheckBox_Checked"
+                            Content="Remember me"
+                            Unchecked="RememberCheckBox_Checked" />
+                        <CheckBox
+                            x:Name="AutoCheckBox"
+                            x:Uid="AutoCheckBox"
+                            Checked="AutoCheckBox_Checked"
+                            Content="Auto login"
+                            Unchecked="AutoCheckBox_Checked" />
+                    </StackPanel>
+                    <Button
+                        x:Name="LoginButton"
+                        x:Uid="LoginButton"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource SystemAccentColorLight2}"
+                        Click="LoginClickHandler"
+                        Content="Log In" />
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="AddFriend" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="ChangeTip"
+            x:Uid="ChangeTip"
+            Title="Change"
+            Background="{ThemeResource MyAcrylicBrushLight3}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <StackPanel
+                        x:Name="OldStackPanel"
+                        Margin="0,10,0,10"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="Old"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Old:" />
+                        <TextBox
+                            x:Name="OldBox"
+                            Width="200"
+                            Background="{StaticResource SystemAccentColorLight3}"
+                            PlaceholderText="Set" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="0,10,0,10"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="Set"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Set:" />
+                        <TextBox
+                            x:Name="SetBox"
+                            Width="200"
+                            Background="{StaticResource SystemAccentColorLight3}"
+                            KeyUp="SubmitButton_KeyUp"
+                            PlaceholderText="Set" />
+                    </StackPanel>
+                    <Button
+                        x:Name="SubmitButton"
+                        x:Uid="SubmitButton"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        Background="{StaticResource SystemAccentColorLight2}"
+                        Click="Button_Click"
+                        Content="Submit" />
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="ContactInfo" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+        <ContentDialog
+            x:Name="PicErrorDialog"
+            x:Uid="PicErrorDialog"
+            Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image
+                        x:Name="ErrorPic"
+                        x:Uid="ErrorPic"
+                        Width="270"
+                        Height="270"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Assets//Picacgs//icon_unknown_error.png" />
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock
+                    x:Uid="ErrorText1"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    IsTextSelectionEnabled="True" />
+                <TextBlock
+                    x:Uid="ErrorText2"
+                    HorizontalAlignment="Center"
+                    IsTextSelectionEnabled="True" />
+                <TextBlock
+                    x:Uid="ErrorText3"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    IsTextSelectionEnabled="True" />
+                <TextBlock
+                    x:Uid="ErrorText4"
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    IsTextSelectionEnabled="True" />
+            </StackPanel>
+        </ContentDialog>
+        <ContentDialog
+            x:Name="HttpContentDialog"
+            x:Uid="HttpContentDialog"
+            Background="{StaticResource SystemAccentColorLight2}">
+            <ContentDialog.TitleTemplate>
+                <DataTemplate>
+                    <Image
+                        Width="270"
+                        Height="270"
+                        HorizontalAlignment="Center"
+                        Source="ms-appx:///Assets//Picacgs//icon_exclamation_error.png" />
+                </DataTemplate>
+            </ContentDialog.TitleTemplate>
+        </ContentDialog>
+
+    </Grid>
 </Page>
+

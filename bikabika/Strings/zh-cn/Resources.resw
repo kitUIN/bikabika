@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="APPTitle.Text" xml:space="preserve">
+    <value>哔咔哔咔</value>
+    <comment>标题栏</comment>
+  </data>
+  <data name="AuthorTip.Content" xml:space="preserve">
+    <value>左键搜索，右键复制</value>
+  </data>
+  <data name="AutoCheckBox.Content" xml:space="preserve">
+    <value>自动登录</value>
+    <comment>登陆</comment>
+  </data>
+  <data name="AutoLogining" xml:space="preserve">
+    <value>自动登陆中</value>
+  </data>
+  <data name="categories.forum" xml:space="preserve">
+    <value>哔咔留言板</value>
+    <comment>分类第六个</comment>
+  </data>
+  <data name="categories.game" xml:space="preserve">
+    <value>游戏推荐</value>
+    <comment>分类第三个</comment>
+  </data>
+  <data name="categories.help" xml:space="preserve">
+    <value>点击救哔咔</value>
+    <comment>分类第四个</comment>
+  </data>
+  <data name="categories.latest" xml:space="preserve">
+    <value>最近更新</value>
+    <comment>分类第七个</comment>
+  </data>
+  <data name="categories.leaderboard" xml:space="preserve">
+    <value>哔咔排行榜</value>
+    <comment>分类第二个</comment>
+  </data>
+  <data name="categories.random" xml:space="preserve">
+    <value>随机本子</value>
+    <comment>分类第八个</comment>
+  </data>
+  <data name="categories.smalltool" xml:space="preserve">
+    <value>哔咔小程序</value>
+    <comment>分类第五个</comment>
+  </data>
+  <data name="categories.support" xml:space="preserve">
+    <value>支持哔咔</value>
+    <comment>分类第一个</comment>
+  </data>
+  <data name="CatSearch.PlaceholderText" xml:space="preserve">
+    <value>搜索</value>
+    <comment>分类搜索栏</comment>
+  </data>
+  <data name="ClearHistory.Content" xml:space="preserve">
+    <value>清除历史记录</value>
+  </data>
+  <data name="Comment.Text" xml:space="preserve">
+    <value>评论</value>
+    <comment>用户界面</comment>
+  </data>
+  <data name="Comments.Label" xml:space="preserve">
+    <value>评论</value>
+    <comment>漫画详细页</comment>
+  </data>
+  <data name="CommentsLoading" xml:space="preserve">
+    <value>加载评论区中...</value>
+  </data>
+  <data name="CommentsTip.Content" xml:space="preserve">
+    <value>展开评论面板</value>
+  </data>
+  <data name="CommentSubmit.Text" xml:space="preserve">
+    <value>发射</value>
+  </data>
+  <data name="CommentTitle.Text" xml:space="preserve">
+    <value>评论区</value>
+  </data>
+  <data name="CopySuccess" xml:space="preserve">
+    <value>复制成功</value>
+    <comment>复制成功</comment>
+  </data>
+  <data name="CreaterTip.Content" xml:space="preserve">
+    <value>点击查看上传者信息</value>
+  </data>
+  <data name="DefaultUserLevel.Text" xml:space="preserve">
+    <value>Lv.5</value>
+    <comment>左侧导航栏默认等级</comment>
+  </data>
+  <data name="DefaultUserName.Text" xml:space="preserve">
+    <value>不知名绅士</value>
+    <comment>左侧导航栏默认用户名</comment>
+  </data>
+  <data name="E-mail.Text" xml:space="preserve">
+    <value>邮箱</value>
+    <comment>登陆账号显示</comment>
+  </data>
+  <data name="E-mailBox.PlaceholderText" xml:space="preserve">
+    <value>邮箱</value>
+    <comment>登陆账号提示</comment>
+  </data>
+  <data name="Edit.Content" xml:space="preserve">
+    <value>点击编辑</value>
+  </data>
+  <data name="ErrorButton.Text" xml:space="preserve">
+    <value>重新加载</value>
+  </data>
+  <data name="ErrorText.Text" xml:space="preserve">
+    <value>是否需要重新加载？</value>
+  </data>
+  <data name="ErrorText1.Text" xml:space="preserve">
+    <value>哔咔哔咔被玩坏了!</value>
+    <comment>未知错误第1行</comment>
+  </data>
+  <data name="ErrorText2.Text" xml:space="preserve">
+    <value>  </value>
+    <comment>未知错误第2行</comment>
+  </data>
+  <data name="ErrorText3.Text" xml:space="preserve">
+    <value>这肯定不是哔咔的问题!</value>
+    <comment>未知错误第3行</comment>
+  </data>
+  <data name="ErrorText4.Text" xml:space="preserve">
+    <value>绝对不是!</value>
+    <comment>未知错误第4行</comment>
+  </data>
+  <data name="ErrorTip.Title" xml:space="preserve">
+    <value>加载失败QAQ</value>
+  </data>
+  <data name="FailAuth" xml:space="preserve">
+    <value>Token获取失败,请重新登录</value>
+    <comment>因为Token获取失败登陆失败对话框内容</comment>
+  </data>
+  <data name="FailCloseButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>对话框按钮"确定"</comment>
+  </data>
+  <data name="FailComment" xml:space="preserve">
+    <value>该作品不允许评论</value>
+  </data>
+  <data name="FailHttpTitle" xml:space="preserve">
+    <value>请求错误</value>
+  </data>
+  <data name="FailLoginBlank" xml:space="preserve">
+    <value>请输入您的账号和密码</value>
+    <comment>因为用户名空登陆失败对话框内容</comment>
+  </data>
+  <data name="FailLoginPassword" xml:space="preserve">
+    <value>错误的账号或密码,请重试 :(</value>
+    <comment>因为密码错误登陆失败对话框内容</comment>
+  </data>
+  <data name="FailLoginTitle" xml:space="preserve">
+    <value>登陆失败</value>
+    <comment>对话框标题"登陆失败"</comment>
+  </data>
+  <data name="Favourite.Label" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="FlyoutBirthday.Text" xml:space="preserve">
+    <value>生日</value>
+  </data>
+  <data name="FlyoutCreateAt.Text" xml:space="preserve">
+    <value>账户创建日期</value>
+  </data>
+  <data name="FlyoutEmail.Text" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="FlyoutImg.Text" xml:space="preserve">
+    <value>头像</value>
+  </data>
+  <data name="FlyoutName.Text" xml:space="preserve">
+    <value>绅士名称</value>
+  </data>
+  <data name="FlyoutPassword.Text" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="FlyoutPunchIned.Text" xml:space="preserve">
+    <value>今日打卡</value>
+  </data>
+  <data name="FlyoutSlogan.Text" xml:space="preserve">
+    <value>个人签名</value>
+  </data>
+  <data name="FlyoutUPassword.Text" xml:space="preserve">
+    <value>不可见</value>
+  </data>
+  <data name="FlyoutVerified.Text" xml:space="preserve">
+    <value>账户验证</value>
+  </data>
+  <data name="Like.Label" xml:space="preserve">
+    <value>爱心</value>
+    <comment>漫画详细页</comment>
+  </data>
+  <data name="LoadFail.Title" xml:space="preserve">
+    <value>加载失败</value>
+    <comment>对话框标题加载失败</comment>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>加载中.....</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>登陆</value>
+    <comment>登陆按钮</comment>
+  </data>
+  <data name="Logining" xml:space="preserve">
+    <value>登陆中</value>
+  </data>
+  <data name="LoginTeachingTip.Title" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="NavAccount.Content" xml:space="preserve">
+    <value>我的</value>
+    <comment>左侧导航栏第三个元素</comment>
+  </data>
+  <data name="NavClassification.Content" xml:space="preserve">
+    <value>分类</value>
+    <comment>左侧导航栏第二个元素</comment>
+  </data>
+  <data name="NavDownload.Content" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="NavHome.Content" xml:space="preserve">
+    <value>主页</value>
+    <comment>左侧导航栏第一个元素</comment>
+  </data>
+  <data name="NavSettings.Content" xml:space="preserve">
+    <value>设置</value>
+    <comment>左侧导航栏倒数第一个元素</comment>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>新密码</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>旧密码</value>
+  </data>
+  <data name="Password.Text" xml:space="preserve">
+    <value>密码</value>
+    <comment>登陆密码显示</comment>
+  </data>
+  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
+    <value>密码</value>
+    <comment>登陆密码提示</comment>
+  </data>
+  <data name="PicErrorDialog.CloseButtonText" xml:space="preserve">
+    <value>确定</value>
+    <comment>未知错误按钮</comment>
+  </data>
+  <data name="Punch.Label" xml:space="preserve">
+    <value>打卡</value>
+  </data>
+  <data name="PunchIned" xml:space="preserve">
+    <value>已打卡✔</value>
+  </data>
+  <data name="PunchTip.Content" xml:space="preserve">
+    <value>打卡</value>
+  </data>
+  <data name="ReadText" xml:space="preserve">
+    <value>开始阅读</value>
+  </data>
+  <data name="RememberCheckBox.Content" xml:space="preserve">
+    <value>记住密码</value>
+    <comment>登录时记住我</comment>
+  </data>
+  <data name="Search.Content" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SetPassword" xml:space="preserve">
+    <value>设置密码</value>
+  </data>
+  <data name="SetSlogan" xml:space="preserve">
+    <value>设置签名</value>
+  </data>
+  <data name="SortMode.DA" xml:space="preserve">
+    <value>旧到新</value>
+    <comment>筛选框</comment>
+  </data>
+  <data name="SortMode.DD" xml:space="preserve">
+    <value>新到旧</value>
+    <comment>筛选框</comment>
+  </data>
+  <data name="SortMode.LD" xml:space="preserve">
+    <value>最多爱心</value>
+    <comment>筛选框</comment>
+  </data>
+  <data name="SortMode.UA" xml:space="preserve">
+    <value>默认排序</value>
+    <comment>筛选框</comment>
+  </data>
+  <data name="SortMode.VD" xml:space="preserve">
+    <value>最多指名</value>
+    <comment>筛选框</comment>
+  </data>
+  <data name="SubmitButton.Content" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="Submiting" xml:space="preserve">
+    <value>提交中...</value>
+  </data>
+  <data name="TipComment" xml:space="preserve">
+    <value>点击展开评论区</value>
+  </data>
+  <data name="TipFavourite" xml:space="preserve">
+    <value>点击收藏</value>
+  </data>
+  <data name="TipLike" xml:space="preserve">
+    <value>点击给予爱心</value>
+  </data>
+  <data name="TipUncomment" xml:space="preserve">
+    <value>点击关闭评论区</value>
+  </data>
+  <data name="TipUnfavourite" xml:space="preserve">
+    <value>点击不收藏</value>
+  </data>
+  <data name="TipUnlike" xml:space="preserve">
+    <value>点击收回爱心</value>
+  </data>
+  <data name="TitleTip.Content" xml:space="preserve">
+    <value>左键复制</value>
+  </data>
+  <data name="UnEdit.Content" xml:space="preserve">
+    <value>无法编辑</value>
+  </data>
+  <data name="UnPunchIned" xml:space="preserve">
+    <value>未打卡❌</value>
+  </data>
+  <data name="UnVerified" xml:space="preserve">
+    <value>未验证❌</value>
+  </data>
+  <data name="UpdateTime.Text" xml:space="preserve">
+    <value>更新</value>
+    <comment>漫画详细页的 更新</comment>
+  </data>
+  <data name="UserFavourite.Text" xml:space="preserve">
+    <value>我的收藏</value>
+    <comment>用户界面</comment>
+  </data>
+  <data name="UserInfomation.Text" xml:space="preserve">
+    <value>    “伺服器君是個變態”</value>
+  </data>
+  <data name="UserLogOut.Label" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="UserLogOutTip.Content" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="UserLook.Text" xml:space="preserve">
+    <value>浏览记录</value>
+    <comment>用户界面</comment>
+  </data>
+  <data name="UserSettings.Label" xml:space="preserve">
+    <value>账户设置</value>
+  </data>
+  <data name="UserSettingsTip.Content" xml:space="preserve">
+    <value>账户设置</value>
+  </data>
+  <data name="Verified" xml:space="preserve">
+    <value>已验证✔</value>
+  </data>
+</root>

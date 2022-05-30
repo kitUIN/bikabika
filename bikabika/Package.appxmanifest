@@ -18,11 +18,11 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="bikabika.App">
-      <uap:VisualElements DisplayName="bikabika" Description="Project for a single page C++/WinRT Universal Windows Platform (UWP) app with no predefined layout"
+      <uap:VisualElements DisplayName="bikabika" Description="哔咔漫画UWP版"
         Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="#f4c0d3"/>
       </uap:VisualElements>
     </Application>
   </Applications>

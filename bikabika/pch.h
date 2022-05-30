@@ -64,3 +64,8 @@
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.Media.Imaging.h>
 #include <winrt/Windows.UI.Xaml.Data.h>
+#include <winrt/BikaClient.h>
+#include <winrt/BikaClient.Blocks.h>
+#include <winrt/BikaClient.Date.h>
+#include <winrt/BikaClient.Utils.h>
+#include <winrt/BikaClient.Responses.h>

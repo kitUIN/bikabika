@@ -41,6 +41,95 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\LargeTile.scale-100.png" />
+    <Image Include="Assets\LargeTile.scale-125.png" />
+    <Image Include="Assets\LargeTile.scale-150.png" />
+    <Image Include="Assets\LargeTile.scale-200.png" />
+    <Image Include="Assets\LargeTile.scale-400.png" />
+    <Image Include="Assets\logo.png" />
+    <Image Include="Assets\logo2.png" />
+    <Image Include="Assets\SmallTile.scale-100.png" />
+    <Image Include="Assets\SmallTile.scale-125.png" />
+    <Image Include="Assets\SmallTile.scale-150.png" />
+    <Image Include="Assets\SmallTile.scale-200.png" />
+    <Image Include="Assets\SmallTile.scale-400.png" />
+    <Image Include="Assets\SplashScreen.scale-100.png" />
+    <Image Include="Assets\SplashScreen.scale-125.png" />
+    <Image Include="Assets\SplashScreen.scale-150.png" />
+    <Image Include="Assets\SplashScreen.scale-400.png" />
+    <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png" />
+    <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png" />
+    <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <Image Include="Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Image Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Image Include="Assets\Square44x44Logo.altform-unplated_targetsize-32.png" />
+    <Image Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Image Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Image Include="Assets\Square44x44Logo.scale-100.png" />
+    <Image Include="Assets\Square44x44Logo.scale-125.png" />
+    <Image Include="Assets\Square44x44Logo.scale-150.png" />
+    <Image Include="Assets\Square44x44Logo.scale-400.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-32.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Image Include="Assets\Square150x150Logo.scale-100.png" />
+    <Image Include="Assets\Square150x150Logo.scale-125.png" />
+    <Image Include="Assets\Square150x150Logo.scale-150.png" />
+    <Image Include="Assets\Square150x150Logo.scale-400.png" />
+    <Image Include="Assets\StoreLogo.backup.png" />
+    <Image Include="Assets\StoreLogo.scale-100.png" />
+    <Image Include="Assets\StoreLogo.scale-125.png" />
+    <Image Include="Assets\StoreLogo.scale-150.png" />
+    <Image Include="Assets\StoreLogo.scale-200.png" />
+    <Image Include="Assets\StoreLogo.scale-400.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Image Include="Assets\Picacgs\cat_forum.jpg" />
+    <Image Include="Assets\Picacgs\cat_game.jpg" />
+    <Image Include="Assets\Picacgs\cat_latest.jpg" />
+    <Image Include="Assets\Picacgs\cat_leaderboard.jpg" />
+    <Image Include="Assets\Picacgs\cat_love_pica.jpg" />
+    <Image Include="Assets\Picacgs\cat_random.jpg" />
+    <Image Include="Assets\Picacgs\cat_support.jpg" />
+    <Image Include="Assets\Picacgs\chat_bg_image.png" />
+    <Image Include="Assets\Picacgs\exit.png" />
+    <Image Include="Assets\Picacgs\history.png" />
+    <Image Include="Assets\Picacgs\ic_launcher.png" />
+    <Image Include="Assets\Picacgs\icon_256.png" />
+    <Image Include="Assets\Picacgs\icon_adult.png" />
+    <Image Include="Assets\Picacgs\icon_announcement.png" />
+    <Image Include="Assets\Picacgs\icon_block.png" />
+    <Image Include="Assets\Picacgs\icon_block_gray.png" />
+    <Image Include="Assets\Picacgs\icon_empty.png" />
+    <Image Include="Assets\Picacgs\icon_exclamation_error.png" />
+    <Image Include="Assets\Picacgs\icon_exp.png" />
+    <Image Include="Assets\Picacgs\icon_exp_gray.png" />
+    <Image Include="Assets\Picacgs\icon_game_recommend.png" />
+    <Image Include="Assets\Picacgs\icon_leave.png" />
+    <Image Include="Assets\Picacgs\icon_no_comment.png" />
+    <Image Include="Assets\Picacgs\icon_question_error.png" />
+    <Image Include="Assets\Picacgs\icon_success.png" />
+    <Image Include="Assets\Picacgs\icon_unknown_error.png" />
+    <Image Include="Assets\Picacgs\login_lock.png" />
+    <Image Include="Assets\Picacgs\login_mail.png" />
+    <Image Include="Assets\Picacgs\logo_round.png" />
+    <Image Include="Assets\Picacgs\picacomic_2.png" />
+    <Image Include="Assets\Picacgs\placeholder_avatar.png" />
+    <Image Include="Assets\Picacgs\placeholder_avatar_2.png" />
+    <Image Include="Assets\Picacgs\placeholder_transparent.png" />
+    <Image Include="Assets\Picacgs\push_in.png" />
+    <Image Include="Assets\Picacgs\register_bday.png" />
+    <Image Include="Assets\Picacgs\register_gender.png" />
+    <Image Include="Assets\Picacgs\register_name.png" />
+    <Image Include="Assets\Picacgs\search.png" />
+    <Image Include="Assets\Picacgs\splash_img.jpg" />
+    <Image Include="Assets\Picacgs\tag.png" />
+    <Image Include="Assets\Picacgs\userlogo.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -56,5 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-cn\Resources.resw" />
   </ItemGroup>
 </Project>
