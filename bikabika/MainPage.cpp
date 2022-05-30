@@ -19,14 +19,16 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Media::Imaging;
+using namespace Windows::Data::Json;
 using namespace Windows::Foundation;
+
+using namespace winrt::Windows::UI::Xaml::Media;
 using namespace Windows::Foundation::Numerics;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
 
-using namespace winrt::Windows::UI::Xaml::Media;
 
 namespace winrt::bikabika::implementation
 {
@@ -100,18 +102,19 @@ namespace winrt::bikabika::implementation
 			title.Text(resourceLoader.GetString(L"FailMessage/Message/NoAuth"));
 			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
 			dialog.PrimaryButtonText(resourceLoader.GetString(L"FailMessage/PrimaryButton/NoAuth"));
-			//dialog.PrimaryButtonClick({this,&MainPage::AutoLogin });
+			//dialog.PrimaryButtonClick({this,&MainPage:: });
 			dialog.DefaultButton(ContentDialogButton::Primary);
 			dialog.IsPrimaryButtonEnabled(true);
 		}
 		else
 		{
 			title.Text(resourceLoader.GetString(L"FailMessage/Title/Unknown"));
+			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
 			dialog.Content(box_value(message));
 		}
 		grid.Children().Append(img);
 		grid.Children().Append(title);
-		dialog.Content(box_value(grid));
+		dialog.Title(box_value(grid));
 		dialog.ShowAsync();
 	}
 
@@ -123,7 +126,14 @@ namespace winrt::bikabika::implementation
 				LayoutMessage().IsOpen(isOpen);
 			});
 	}
-
+	winrt::event_token MainPage::PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
+	{
+		return m_propertyChanged.add(handler);
+	}
+	void MainPage::PropertyChanged(winrt::event_token const& token) noexcept
+	{
+		m_propertyChanged.remove(token);
+	}
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{
 
@@ -134,40 +144,47 @@ namespace winrt::bikabika::implementation
 		}
 		else if (res.Code() == 200) {
 			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-			IVector<hstring> emails{ winrt::single_threaded_vector<hstring>() };
+			JsonObject tokens;
+			if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+			{
+				if (loginData.Values().HasKey(L"tokens"))
+				{
+					tokens = JsonObject::Parse(loginData.Values().Lookup(L"tokens").as<hstring>());
+				}
+				tokens.Insert(Email().Text(), JsonValue::CreateStringValue(res.Token()));
+				loginData.Values().Insert(L"tokens", box_value(tokens.Stringify()));
+			}
 
-			loginData.Values().Insert(L"Last", box_value(Email().Text()));
+			JsonObject emails;
+			JsonObject passwords;
+			JsonArray emailArray;
+			emails.Insert(L"Last", JsonValue::CreateStringValue(Email().Text()));
 			if (loginData.Values().HasKey(L"emails"))
 			{
-				emails = loginData.Values().Lookup(L"emails").as<IVector<hstring>>();
+				emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+				emailArray = emails.GetNamedArray(L"emailArry");
 			}
-			emails.Append(Email().Text());
-			loginData.Values().Insert(L"emails", box_value(emails));
+			emailArray.Append(JsonValue::CreateStringValue(Email().Text()));
+			emails.Insert(L"emailArry", emailArray);
+			loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
 
-			if (loginData.Values().HasKey(L"rememberMe") && loginData.Values().Lookup(L"rememberMe").as<bool>())
+			if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
 			{
-				IMap<hstring, hstring> passwords{ winrt::single_threaded_map<winrt::hstring, winrt::hstring>() };
 				if (loginData.Values().HasKey(L"passwords"))
 				{
-					passwords = loginData.Values().Lookup(L"passwords").as<IMap<hstring, hstring>>();
+					passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
 				}
-				passwords.Insert(Email().Text(), Password().Password());
-				loginData.Values().Insert(L"passwords", box_value(passwords));
-			}
-			else if (loginData.Values().HasKey(L"passwords"))
-			{
-				IMap<hstring, hstring> passwords = loginData.Values().Lookup(L"passwords").as<IMap<hstring, hstring>>();
-				if (passwords.HasKey(Email().Text()))
-				{
-					passwords.Remove(Email().Text());
-				}
+				passwords.Insert(Email().Text(), JsonValue::CreateStringValue(Password().Password()));
+				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
 			}
 
+
 			co_await SetPerson();
-			if (m_user.IsPunched()) {
-				co_await PunchIn();
-				co_await SetPerson();
-			}
+			/*if (m_user.IsPunched()) {
+				PunchIn();
+				SetPerson();
+			}*/
+			LayoutMessageShow(L"", false);
 		}
 		else if(res.Code()==401&&res.Error()==L"1005")
 		{
@@ -268,9 +285,21 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+		if (sender.as<CheckBox>().IsChecked().GetBoolean())
+		{
+			RememberCheckBox().IsChecked(true);
+		}
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		loginData.Values().Insert(L"AutoLogin", box_value(AutoCheckBox().IsChecked().GetBoolean()));
 	}
 	void MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+		if (!sender.as<CheckBox>().IsChecked().GetBoolean())
+		{
+			AutoCheckBox().IsChecked(false);
+		}
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		loginData.Values().Insert(L"RememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
 	}
 	void MainPage::ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
@@ -305,7 +334,10 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::LoginButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
 	{
-
+		if (e.Key() == Windows::System::VirtualKey::Enter)
+		{
+			LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+		}
 	}
 	void MainPage::SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
 	{
@@ -321,14 +353,57 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+
+	}
+	BikaClient::Blocks::UserBlock MainPage::User()
+	{
+		return m_user;
+	}
+	void MainPage::User(BikaClient::Blocks::UserBlock const& value)
+	{
+		m_user = value;
+		m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"User" });
 	}
 	Windows::Foundation::IAsyncAction MainPage::SetPerson()
 	{
+		auto res = co_await m_bikaClient.PersonInfo();
+		if (res.Code() == -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200) {
+			NavHome().IsEnabled(true);
+			NavClassification().IsEnabled(true);
+			NavAccount().IsEnabled(true);
+			User(res.User());
+			if (m_firstArrive) {
+				winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
+				newItem.Header(box_value(resourceLoader.GetString(L"NavHome/Content")));
+				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+				symbol.Symbol(Symbol::Home);
+				newItem.IconSource(symbol);
+				winrt::Windows::UI::Xaml::Controls::Frame frame;
+				frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
+				newItem.Content(frame);
+				ContentTabView().TabItems().Append(newItem);
+				ContentTabView().SelectedItem(newItem);
+				m_firstArrive = false;
+				m_login = true;
+				//co_await GetKeywords();
+			}
+		}
+		else if (res.Code() == 401 && res.Error() == L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
 
-		NavHome().IsEnabled(true);
-		NavClassification().IsEnabled(true);
-		NavAccount().IsEnabled(true);
-		return Windows::Foundation::IAsyncAction();
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+			Password().Password(L"");
+		}
+		LayoutMessageShow(L"", false);
+		LoginTeachingTip().IsOpen(false);
 	}
 	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
 	{

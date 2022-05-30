@@ -59,17 +59,19 @@ namespace winrt::bikabika::implementation
 		void CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args);
 		void CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args);
 		void Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		BikaClient::Blocks::UserBlock User();
+		void User(BikaClient::Blocks::UserBlock const& value);
+		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
+		void PropertyChanged(winrt::event_token const& token) noexcept;
 		static bikabika::MainPage Current() { return current; }
 	private:
 		static bikabika::MainPage current;
+		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-		bool _suggestIsChosen = false;
 		bool m_login = false;
-		bool _firstArrive = true;
-		int32_t _suggestionSize = 0;
-		hstring _picPath = L"ms-appx:///Assets//Picacgs//icon_unknown_error.png";
+		bool m_firstArrive = true;
 	};
 
 }

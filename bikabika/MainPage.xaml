@@ -121,7 +121,8 @@
                             <PersonPicture
                                 x:Name="UsersPic"
                                 Width="120"
-                                Height="120" />
+                                Height="120"
+                                ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Grid>
                                     <TextBlock
@@ -132,6 +133,7 @@
                                         FontSize="20"
                                         FontWeight="Bold"
                                         Foreground="{StaticResource SystemAccentColorDark2}"
+                                        Text="{x:Bind User.Name, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                 </Grid>
                                 <Grid Margin="1,0,0,0">
@@ -141,7 +143,8 @@
                                         MaxWidth="120"
                                         Margin="3,1,0,0"
                                         VerticalAlignment="Bottom"
-                                        FontSize="15" />
+                                        FontSize="15"
+                                        Text="{x:Bind User.LevelString, Mode=OneWay}" />
                                 </Grid>
                             </StackPanel>
                             <Grid Margin="0,5,0,10">
@@ -151,6 +154,7 @@
                                     MaxWidth="140"
                                     HorizontalAlignment="Center"
                                     Foreground="Gray"
+                                    Text="{x:Bind User.Slogan, Mode=OneWay}"
                                     TextWrapping="Wrap" />
                             </Grid>
                         </StackPanel>
