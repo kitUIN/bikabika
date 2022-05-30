@@ -134,10 +134,19 @@ namespace winrt::bikabika::implementation
 	{
 		m_propertyChanged.remove(token);
 	}
+	bool MainPage::IsLogin()
+	{
+		return m_login;
+	}
+	void MainPage::IsLogin(bool const& value)
+	{
+		m_login = value;
+	}
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{
-
+		m_login = false;
 		auto res = co_await m_bikaClient.Login(Email().Text(), Password().Password());
+		LayoutMessageShow(L"", false);
 		if (res.Code()== -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
@@ -158,12 +167,12 @@ namespace winrt::bikabika::implementation
 			JsonObject emails;
 			JsonObject passwords;
 			JsonArray emailArray;
-			emails.Insert(L"Last", JsonValue::CreateStringValue(Email().Text()));
 			if (loginData.Values().HasKey(L"emails"))
 			{
 				emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
 				emailArray = emails.GetNamedArray(L"emailArry");
 			}
+			emails.Insert(L"Last", JsonValue::CreateStringValue(Email().Text()));
 			emailArray.Append(JsonValue::CreateStringValue(Email().Text()));
 			emails.Insert(L"emailArry", emailArray);
 			loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
@@ -178,13 +187,11 @@ namespace winrt::bikabika::implementation
 				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
 			}
 
-
 			co_await SetPerson();
 			/*if (m_user.IsPunched()) {
 				PunchIn();
 				SetPerson();
 			}*/
-			LayoutMessageShow(L"", false);
 		}
 		else if(res.Code()==401&&res.Error()==L"1005")
 		{
@@ -252,9 +259,9 @@ namespace winrt::bikabika::implementation
 		}
 		else if (navItemTag == L"home")
 		{
-			/*frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
+			frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
 			title = resourceLoader.GetString(L"NavHome/Content");
-			symbol.Symbol(Symbol::Home);*/
+			symbol.Symbol(Symbol::Home);
 		}
 		else if (navItemTag == L"classification")
 		{
@@ -309,12 +316,21 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
 	{
+		ContentTabView().Width(sender.as<Controls::Frame>().ActualWidth());
 	}
 	void MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
 	{
+		ContentFrame().Margin(Thickness{ 53,0,0,0 });
+		APPTitle().Visibility(Visibility::Collapsed);
+		NavSmallImg().Visibility(Visibility::Visible);
+		NavBigImg().Visibility(Visibility::Collapsed);
 	}
 	void MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
 	{
+		ContentFrame().Margin(Thickness{ 185,0,0,0 });
+		APPTitle().Visibility(Visibility::Visible);
+		NavSmallImg().Visibility(Visibility::Collapsed);
+		NavBigImg().Visibility(Visibility::Visible);
 	}
 	void MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
 	{
@@ -351,8 +367,39 @@ namespace winrt::bikabika::implementation
 	void MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
 	{
 	}
+	/// <summary>
+	/// 邮箱与密码与自动登录控制
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
 	void MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (loginData.Values().HasKey(L"emails"))
+		{
+			JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+			if (emails.HasKey(L"Last"))
+			{
+				Email().Text(emails.GetNamedString(L"Last"));
+			}
+		}
+		if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
+		{
+			if (loginData.Values().HasKey(L"passwords"))
+			{
+				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+				if (passwords.HasKey(Email().Text()))
+				{
+					Password().Password(passwords.GetNamedString(Email().Text()));
+					AutoCheckBox().IsChecked(true);
+				}
+			}
+		}
+		if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+		{
+			LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
+			auto login{ Login() };
+		}
 
 	}
 	BikaClient::Blocks::UserBlock MainPage::User()
@@ -402,12 +449,6 @@ namespace winrt::bikabika::implementation
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 			Password().Password(L"");
 		}
-		LayoutMessageShow(L"", false);
 		LoginTeachingTip().IsOpen(false);
-	}
-	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
-	{
-		m_login = false;
-		return Windows::Foundation::IAsyncAction();
 	}
 }

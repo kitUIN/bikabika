@@ -63,6 +63,8 @@ namespace winrt::bikabika::implementation
 		void User(BikaClient::Blocks::UserBlock const& value);
 		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
 		void PropertyChanged(winrt::event_token const& token) noexcept;
+		bool IsLogin();
+		void IsLogin(bool const& value);
 		static bikabika::MainPage Current() { return current; }
 	private:
 		static bikabika::MainPage current;

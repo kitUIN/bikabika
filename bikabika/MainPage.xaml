@@ -119,15 +119,12 @@
                     <StackPanel Margin="0,20,0,0">
                         <StackPanel x:Name="Users" Orientation="Vertical">
                             <PersonPicture
-                                x:Name="UsersPic"
                                 Width="120"
                                 Height="120"
                                 ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Grid>
                                     <TextBlock
-                                        x:Name="UserName"
-                                        x:Uid="DefaultUserName"
                                         MaxWidth="120"
                                         VerticalAlignment="Center"
                                         FontSize="20"
@@ -138,8 +135,6 @@
                                 </Grid>
                                 <Grid Margin="1,0,0,0">
                                     <TextBlock
-                                        x:Name="UserLevel"
-                                        x:Uid="DefaultUserLevel"
                                         MaxWidth="120"
                                         Margin="3,1,0,0"
                                         VerticalAlignment="Bottom"
@@ -149,8 +144,6 @@
                             </StackPanel>
                             <Grid Margin="0,5,0,10">
                                 <TextBlock
-                                    x:Name="UserInfomation"
-                                    x:Uid="UserInfomation"
                                     MaxWidth="140"
                                     HorizontalAlignment="Center"
                                     Foreground="Gray"
@@ -169,7 +162,8 @@
                     <PersonPicture
                         Width="30"
                         Height="30"
-                        Margin="-8,0,0,0" />
+                        Margin="-8,0,0,0"
+                        ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
                 </muxc:NavigationViewItem>
                 <muxc:NavigationViewItemHeader Height="5" />
                 <muxc:NavigationViewItemSeparator />
