@@ -1,9 +1,0 @@
-namespace bikabika
-{
-    [default_interface]
-    runtimeclass DownloadPage : Windows.UI.Xaml.Controls.Page
-    {
-        DownloadPage();
-        Int32 MyProperty;
-    }
-}
