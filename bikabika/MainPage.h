@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "MainPage.g.h"
+#include "Utils/KeywordBox.h"
 namespace muxc
 {
 	using namespace winrt::Microsoft::UI::Xaml::Controls;
@@ -23,10 +24,8 @@ namespace winrt::bikabika::implementation
 		void LayoutMessageShow(hstring const& message,bool const& isOpen);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction  PunchIn();
-		int32_t GetEXP(int32_t const& level);
 		Windows::Foundation::IAsyncAction SetPerson();
 		Windows::Foundation::IAsyncAction GetKeywords();
-		Windows::Foundation::IAsyncAction AutoLogin();
 		void ChangeSignature();
 		void ChangePassword();
 		void LogOut();
@@ -65,15 +64,20 @@ namespace winrt::bikabika::implementation
 		void PropertyChanged(winrt::event_token const& token) noexcept;
 		bool IsLogin();
 		void IsLogin(bool const& value);
+		void KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		static bikabika::MainPage Current() { return current; }
-	private:
+		private:
 		static bikabika::MainPage current;
+		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
+
 		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
 		bool m_login = false;
+		bool m_suggestIsChosen = false;
 		bool m_firstArrive = true;
+
 	};
 
 }

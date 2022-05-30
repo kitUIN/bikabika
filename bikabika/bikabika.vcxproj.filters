@@ -12,15 +12,24 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
+    <Midl Include="Utils\KeywordBox.idl">
+      <Filter>Utils</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainPage.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Utils\KeywordBox.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Utils\KeywordBox.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LargeTile.scale-400.png">
@@ -327,6 +336,9 @@
     </Filter>
     <Filter Include="Pages">
       <UniqueIdentifier>{76ab8c1f-5ed2-4673-8afb-80b41bb092a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{ef152c4b-1e0b-42a3-9f78-1764a54b699f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

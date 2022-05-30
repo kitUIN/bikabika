@@ -9,6 +9,7 @@
 #include "MainPage.h"
 #include "MainPage.g.cpp"
 
+
 using namespace std;
 using namespace winrt;
 using namespace Windows::UI;
@@ -53,7 +54,7 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
 	{
-
+		LayoutMessageShow(L"", false);
 		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
 		newItem.Header(box_value(title));
 		newItem.IconSource(symbol);
@@ -69,10 +70,14 @@ namespace winrt::bikabika::implementation
 
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
+
+		auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight2")).as<Color>();
 		ContentDialog dialog;
 		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 		dialog.IsTextScaleFactorEnabled(true);
-		Grid grid;
+		dialog.Background(SolidColorBrush{ color });
+		StackPanel grid;
+		grid.Orientation(Orientation::Vertical);
 		TextBlock title;
 		Image img;
 		img.Height(270);
@@ -88,6 +93,14 @@ namespace winrt::bikabika::implementation
 			stackPanel.Orientation(Orientation::Vertical);
 			stackPanel.HorizontalAlignment(HorizontalAlignment::Center);
 			TextBlock content1, content2, content3, content4;
+			content1.FontWeight(Text::FontWeights::Bold());
+			content1.HorizontalAlignment(HorizontalAlignment::Center);
+			content2.FontWeight(Text::FontWeights::Bold());
+			content2.HorizontalAlignment(HorizontalAlignment::Center);
+			content3.FontWeight(Text::FontWeights::Bold());
+			content3.HorizontalAlignment(HorizontalAlignment::Center);
+			content4.FontWeight(Text::FontWeights::Bold());
+			content4.HorizontalAlignment(HorizontalAlignment::Center);
 			content1.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/One"));
 			content3.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Two"));
 			content4.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Three"));
@@ -112,8 +125,8 @@ namespace winrt::bikabika::implementation
 			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
 			dialog.Content(box_value(message));
 		}
-		grid.Children().Append(img);
 		grid.Children().Append(title);
+		grid.Children().Append(img);
 		dialog.Title(box_value(grid));
 		dialog.ShowAsync();
 	}
@@ -142,16 +155,34 @@ namespace winrt::bikabika::implementation
 	{
 		m_login = value;
 	}
+	void MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+	{
+		auto stack = sender.as<Button>().Parent().as<Grid>();
+		hstring keywordType = stack.Children().GetAt(1).as<StackPanel>().Children().GetAt(0).as<TextBlock>().Text();
+		hstring keyword = stack.Children().GetAt(0).as<StackPanel>().Children().GetAt(1).as<TextBlock>().Text();
+		//OutputDebugStringW(keyword.c_str());
+		//OutputDebugStringW(keywordType.c_str());
+		for (uint32_t kIndex=0; kIndex<m_suggestions.Size(); kIndex++)
+		{
+			auto x = m_suggestions.GetAt(kIndex);
+			if (x.Keyword() == keyword && x.KeywordType() == keywordType)
+			{
+				m_suggestions.RemoveAt(kIndex);
+			}
+		}
+		CatSearch().ItemsSource(box_value(m_suggestions));
+	}
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{
 		m_login = false;
 		auto res = co_await m_bikaClient.Login(Email().Text(), Password().Password());
-		LayoutMessageShow(L"", false);
+
 		if (res.Code()== -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
 		}
-		else if (res.Code() == 200) {
+		else if (res.Code() == 200)
+		{
 			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 			JsonObject tokens;
 			if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
@@ -308,11 +339,15 @@ namespace winrt::bikabika::implementation
 		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		loginData.Values().Insert(L"RememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
 	}
-	void MainPage::ClearCatSearchHistory_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-	}
+
 	void MainPage::ContentTabView_TabCloseRequested(winrt::Microsoft::UI::Xaml::Controls::TabView const& sender, winrt::Microsoft::UI::Xaml::Controls::TabViewTabCloseRequestedEventArgs const& args)
 	{
+		uint32_t tabIndexFromControl;
+		if (sender.TabItems().IndexOf(args.Tab(), tabIndexFromControl))
+		{
+			sender.TabItems().RemoveAt(tabIndexFromControl);
+		}
+
 	}
 	void MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
 	{
@@ -334,6 +369,9 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
 	{
+		CatSearch().Text(L" ");
+		CatSearch().ItemsSource(box_value(m_suggestions));
+		CatSearch().Text(L"");
 	}
 	void MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
@@ -360,12 +398,53 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
 	{
+		if (sender.Text() != L"" && (args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput || (args.Reason() == AutoSuggestionBoxTextChangeReason::ProgrammaticChange && sender.Text() == L" ")))
+		{
+			if (!m_suggestIsChosen)
+			{
+				sender.ItemsSource(box_value(m_suggestions));
+			}
+			m_suggestIsChosen = false;
+		}
 	}
 	void MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
+		Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		hstring text = sender.Text();
+		if (historys.Values().HasKey(L"Search"))
+		{
+			int i;
+			bool f = false;
+			JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
+			for (i = 0; i < searchHistorys.Size(); i++)
+			{
+				if (text == searchHistorys.GetStringAt(i))
+				{
+					f = true;
+					break;
+				}
+			}
+			if (f)
+			{
+				searchHistorys.RemoveAt(i);
+				m_suggestions.RemoveAt(i);
+			}
+			searchHistorys.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
+			historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
+			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, L"历史记录",L"\xE81C"));
+		}
+		else {
+			Windows::Data::Json::JsonArray json;
+			json.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
+			historys.Values().Insert(L"Search", box_value(json.Stringify()));
+			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, L"历史记录", L"\xE81C"));
+		}
 	}
 	void MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
 	{
+		m_suggestIsChosen = true;
+		hstring s = args.SelectedItem().as<bikabika::KeywordBox>().Keyword();
+		sender.Text(s);
 	}
 	/// <summary>
 	/// 邮箱与密码与自动登录控制
@@ -414,11 +493,14 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction MainPage::SetPerson()
 	{
 		auto res = co_await m_bikaClient.PersonInfo();
+		LayoutMessageShow(L"", false);
+		LoginTeachingTip().IsOpen(false);
 		if (res.Code() == -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
 		}
-		else if (res.Code() == 200) {
+		else if (res.Code() == 200)
+		{
 			NavHome().IsEnabled(true);
 			NavClassification().IsEnabled(true);
 			NavAccount().IsEnabled(true);
@@ -436,7 +518,7 @@ namespace winrt::bikabika::implementation
 				ContentTabView().SelectedItem(newItem);
 				m_firstArrive = false;
 				m_login = true;
-				//co_await GetKeywords();
+				co_await GetKeywords();
 			}
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
@@ -449,6 +531,49 @@ namespace winrt::bikabika::implementation
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 			Password().Password(L"");
 		}
-		LoginTeachingTip().IsOpen(false);
+
+	}
+	Windows::Foundation::IAsyncAction MainPage::GetKeywords()
+	{
+		auto res =  co_await m_bikaClient.Keywords() ;
+		if (res.Code() == -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200)
+		{
+			Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			if (historys.Values().HasKey(L"Search"))
+			{
+				auto y = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
+
+				for (auto z : y)
+				{
+					m_suggestions.Append(winrt::make<KeywordBox>(z.GetString(), L"历史记录", L"\xE81C"));
+				}
+			}
+			for (auto x : res.Keywords())
+			{
+				m_suggestions.Append(winrt::make<bikabika::implementation::KeywordBox>(x.Tag(), L"大家都在搜",L"\xE8EC"));
+			}
+		}
+		else if (res.Code() == 401 && res.Error() == L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+
+		}
+		else if (res.Code() == 400)
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Error"));
+			Password().Password(L"");
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+			Password().Password(L"");
+		}
+
 	}
 }
+
+

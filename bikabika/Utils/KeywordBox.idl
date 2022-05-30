@@ -1,0 +1,10 @@
+namespace bikabika
+{
+	runtimeclass KeywordBox
+	{
+		KeywordBox(String keyword, String keywordType, String icon);
+		String Keyword{ get; };
+		String KeywordType{ get; };
+		String Icon{ get; };
+	}
+}

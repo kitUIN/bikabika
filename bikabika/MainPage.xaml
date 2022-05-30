@@ -2,6 +2,7 @@
     x:Class="bikabika.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:block="using:BikaClient.Blocks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -240,10 +241,8 @@
                                 x:Name="SearchFlyout"
                                 Opened="Flyout_Opened"
                                 Placement="BottomEdgeAlignedRight">
-                                <StackPanel Width="310" Orientation="Horizontal">
-                                    <Button x:Name="ClearCatSearchHistory" Click="ClearCatSearchHistory_Click">
-                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE74D;" />
-                                    </Button>
+                                <StackPanel Width="280" Orientation="Horizontal">
+
                                     <AutoSuggestBox
                                         x:Name="CatSearch"
                                         x:Uid="CatSearch"
@@ -253,8 +252,38 @@
                                         QueryIcon="Find"
                                         QuerySubmitted="CatSearch_QuerySubmitted"
                                         SuggestionChosen="CatSearch_SuggestionChosen"
-                                        TextChanged="CatSearch_TextChanged" />
+                                        TextChanged="CatSearch_TextChanged">
+                                        <AutoSuggestBox.ItemTemplate>
+                                            <DataTemplate x:DataType="local:KeywordBox">
+                                                <Grid Width="225">
+                                                    <StackPanel
+                                                        Height="25"
+                                                        HorizontalAlignment="Left"
+                                                        Orientation="Horizontal">
+                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Icon}" />
+                                                        <TextBlock
+                                                            Width="300"
+                                                            Margin="15,0,0,0"
+                                                            Text="{x:Bind Keyword}"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                    <StackPanel
+                                                        Height="25"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        FlowDirection="RightToLeft">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            FontStyle="Italic"
+                                                            Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                            Text="{x:Bind KeywordType}" />
+                                                    </StackPanel>
 
+                                                </Grid>
+                                            </DataTemplate>
+                                        </AutoSuggestBox.ItemTemplate>
+                                    </AutoSuggestBox>
                                 </StackPanel>
                             </Flyout>
                         </Button.Flyout>
