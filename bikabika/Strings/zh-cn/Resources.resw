@@ -267,6 +267,42 @@
     <value>登陆失败</value>
     <comment>对话框标题"登陆失败"</comment>
   </data>
+  <data name="FailMessage.CloseButton.Normal" xml:space="preserve">
+    <value>关闭</value>
+    <comment>错误消息提示框的右数第一个按钮内容</comment>
+  </data>
+  <data name="FailMessage.Message.NoAuth" xml:space="preserve">
+    <value>缺少访问权限,请登录</value>
+    <comment>错误消息内容:未登录</comment>
+  </data>
+  <data name="FailMessage.Message.TimeOut.One" xml:space="preserve">
+    <value>哔咔哔咔被玩坏了!</value>
+    <comment>错误消息内容:连接超时</comment>
+  </data>
+  <data name="FailMessage.Message.TimeOut.Three" xml:space="preserve">
+    <value>绝对不是</value>
+    <comment>错误消息内容:连接超时</comment>
+  </data>
+  <data name="FailMessage.Message.TimeOut.Two" xml:space="preserve">
+    <value>这肯定不是哔咔的问题!</value>
+    <comment>错误消息内容:连接超时</comment>
+  </data>
+  <data name="FailMessage.PrimaryButton.NoAuth" xml:space="preserve">
+    <value>重新登录</value>
+    <comment>错误消息提示框的左数第一个按钮内容</comment>
+  </data>
+  <data name="FailMessage.Title.NoAuth" xml:space="preserve">
+    <value>无权限</value>
+    <comment>错误消息标题:未登录</comment>
+  </data>
+  <data name="FailMessage.Title.TimeOut" xml:space="preserve">
+    <value>连接超时</value>
+    <comment>错误消息标题:连接超时</comment>
+  </data>
+  <data name="FailMessage.Title.Unknown" xml:space="preserve">
+    <value>未知错误</value>
+    <comment>错误消息标题:未知错误</comment>
+  </data>
   <data name="Favourite.Label" xml:space="preserve">
     <value>收藏</value>
   </data>

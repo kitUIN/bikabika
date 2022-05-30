@@ -67,64 +67,62 @@ namespace winrt::bikabika::implementation
 			});
 
 	}
-	void  MainPage::ContentDialogShow(hstring const& mode, hstring const& message)
+
+	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
-
-		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()->winrt::fire_and_forget
-			{
-				Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
-				if (mode == L"Timeout") {
-					auto show{ PicErrorDialog().ShowAsync() };
-				}
-				else {
-					HttpContentDialog().Title(box_value(resourceLoader.GetString(L"FailHttpTitle")));
-					HttpContentDialog().CloseButtonText(resourceLoader.GetString(L"FailCloseButtonText"));
-					if (mode == L"Error")
-					{
-						HttpContentDialog().Content(box_value(message));
-						HttpContentDialog().IsTextScaleFactorEnabled(true);
-						auto show{ HttpContentDialog().ShowAsync() };
-
-					}
-					else if (mode == L"Unknown")
-					{
-						Windows::Data::Json::JsonObject resp = Windows::Data::Json::JsonObject::Parse(message);
-						HttpContentDialog().Content(box_value(to_hstring(resp.GetNamedNumber(L"code")) + L":" + resp.GetNamedString(L"message")));
-						HttpContentDialog().IsTextScaleFactorEnabled(true);
-						auto show{ HttpContentDialog().ShowAsync() };
-
-					}
-					else if (mode == L"1005")
-					{
-						HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailAuth")));
-						HttpContentDialog().IsTextScaleFactorEnabled(true);
-						m_login = false;
-						auto show{ co_await HttpContentDialog().ShowAsync() };
-						if (show == winrt::Windows::UI::Xaml::Controls::ContentDialogResult::None)
-						{
-							LoginTeachingTip().Title(resourceLoader.GetString(L"LoginButton/Content"));
-							LoginTeachingTip().IsOpen(true);
-						}
-					}
-					else if (mode == L"Blank")
-					{
-						HttpContentDialog().Content(box_value(resourceLoader.GetString(L"FailLoginBlank")));
-						HttpContentDialog().IsTextScaleFactorEnabled(true);
-						auto show{ HttpContentDialog().ShowAsync() };
-					}
-					else if (mode == L"Customize") {
-						HttpContentDialog().Content(box_value(message));
-						HttpContentDialog().IsTextScaleFactorEnabled(true);
-						auto show{ HttpContentDialog().ShowAsync() };
-					}
-				}
-			});
-
+		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
+		ContentDialog dialog;
+		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
+		dialog.IsTextScaleFactorEnabled(true);
+		Grid grid;
+		TextBlock title;
+		Image img;
+		img.Height(270);
+		img.Width(270);
+		img.VerticalAlignment(VerticalAlignment::Center);
+		img.HorizontalAlignment(HorizontalAlignment::Center);
+		title.VerticalAlignment(VerticalAlignment::Top);
+		title.HorizontalAlignment(HorizontalAlignment::Left);
+		if (mode == bikabika::BikaHttpStatus::TIMEOUT) {
+			title.Text(resourceLoader.GetString(L"FailMessage/Title/TimeOut"));
+			img.Source(BitmapImage{Uri{ L"ms-appx:///Assets//Picacgs//icon_unknown_error.png" }});
+			StackPanel stackPanel;
+			stackPanel.Orientation(Orientation::Vertical);
+			stackPanel.HorizontalAlignment(HorizontalAlignment::Center);
+			TextBlock content1, content2, content3, content4;
+			content1.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/One"));
+			content3.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Two"));
+			content4.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Three"));
+			stackPanel.Children().Append(content1);
+			stackPanel.Children().Append(content2);
+			stackPanel.Children().Append(content3);
+			stackPanel.Children().Append(content4);
+			dialog.Content(box_value(stackPanel));
+		}
+		else if (mode == bikabika::BikaHttpStatus::NOAUTH)
+		{
+			title.Text(resourceLoader.GetString(L"FailMessage/Message/NoAuth"));
+			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+			dialog.PrimaryButtonText(resourceLoader.GetString(L"FailMessage/PrimaryButton/NoAuth"));
+			//dialog.PrimaryButtonClick({this,&MainPage::AutoLogin });
+			dialog.DefaultButton(ContentDialogButton::Primary);
+			dialog.IsPrimaryButtonEnabled(true);
+		}
+		else
+		{
+			title.Text(resourceLoader.GetString(L"FailMessage/Title/Unknown"));
+			dialog.Content(box_value(message));
+		}
+		grid.Children().Append(img);
+		grid.Children().Append(title);
+		dialog.Content(box_value(grid));
+		dialog.ShowAsync();
 	}
 
 
 	void MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
 	{
+
 	}
 	void MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
 	{
@@ -241,5 +239,10 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 	{
+	}
+	Windows::Foundation::IAsyncAction MainPage::AutoLogin()
+	{
+		m_login = false;
+		return Windows::Foundation::IAsyncAction();
 	}
 }

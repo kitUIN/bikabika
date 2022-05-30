@@ -19,7 +19,7 @@ namespace winrt::bikabika::implementation
 
 
 		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
-		void ContentDialogShow(hstring const& mode, hstring const& message);
+		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction  PunchIn();
 		int32_t GetEXP(int32_t const& level);

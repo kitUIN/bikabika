@@ -1,11 +1,17 @@
 namespace bikabika
 {
+    enum BikaHttpStatus
+    {
+        UNKNOWN = 0,
+        TIMEOUT = 1,
+        NOAUTH = 2,
+    };
     [default_interface]
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page
     {
         MainPage();
         static MainPage Current{ get; };
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
-        void ContentDialogShow(String mode, String message);
+        void ContentDialogShow(bikabika.BikaHttpStatus mode, String message);
     }
 }
