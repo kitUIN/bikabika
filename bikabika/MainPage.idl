@@ -14,5 +14,6 @@ namespace bikabika
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         void ContentDialogShow(bikabika.BikaHttpStatus mode, String message);
         BikaClient.Blocks.UserBlock User;
+        void LogOut();
     }
 }

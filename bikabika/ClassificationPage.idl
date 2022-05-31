@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    [default_interface]
+    runtimeclass ClassificationPage : Windows.UI.Xaml.Controls.Page
+    {
+        ClassificationPage();
+        Int32 MyProperty;
+    }
+}

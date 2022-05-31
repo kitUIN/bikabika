@@ -70,7 +70,6 @@ namespace winrt::bikabika::implementation
 			{
 				ContentTabView().TabItems().Append(newItem);
 				ContentTabView().SelectedItem(newItem);
-				NavView().SelectedItem(NavView().MenuItems().GetAt(1));
 			});
 
 	}
@@ -366,7 +365,7 @@ void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Found
 	}
 	else
 	{
-		LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
+		LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
 		auto login{ Login() };
 	}
 }
@@ -381,49 +380,49 @@ void winrt::bikabika::implementation::MainPage::NavView_ItemInvoked(Windows::Fou
 	}
 	else if (args.InvokedItemContainer())
 	{
-		NavView_Navigate(
-			winrt::unbox_value_or<winrt::hstring>(
-				args.InvokedItemContainer().Tag(), L"").c_str(),
-			args.RecommendedNavigationTransitionInfo());
+		NavView_Navigate(winrt::unbox_value_or<winrt::hstring>(args.InvokedItemContainer().Tag(), L"").c_str(), args.RecommendedNavigationTransitionInfo());
 	}
 }
 void winrt::bikabika::implementation::MainPage::NavView_Navigate(std::wstring navItemTag, Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
 {
 	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 	winrt::Windows::UI::Xaml::Controls::Frame frame;
-	hstring title;
+	for (auto item : ContentTabView().TabItems())
+	{
+		if (winrt::unbox_value_or<winrt::hstring>(item.as<winrt::Microsoft::UI::Xaml::Controls::TabViewItem>().Header(), L"") == resourceLoader.GetString(hstring{L"Header/" + navItemTag}))
+		{
+			ContentTabView().SelectedItem(item);
+			return;
+		}
+	}
 	if (navItemTag == L"settings")
 	{
-		/*title = resourceLoader.GetString(L"NavSettings/Content");
+
 		symbol.Symbol(Symbol::Setting);
-		frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());*/
+		frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());
 	}
-	else if (navItemTag == L"home")
+	else if (navItemTag == L"Home")
 	{
 		frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
-		title = resourceLoader.GetString(L"NavHome/Content");
 		symbol.Symbol(Symbol::Home);
 	}
-	else if (navItemTag == L"classification")
+	else if (navItemTag == L"Classification")
 	{
-		//frame.Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
-		title = resourceLoader.GetString(L"NavClassification/Content");
 		symbol.Symbol(Symbol::AllApps);
+		frame.Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
 	}
-	else if (navItemTag == L"account")
+	else if (navItemTag == L"User")
 	{
-		/*frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
-		title = resourceLoader.GetString(L"NavAccount/Content");
-		symbol.Symbol(Symbol::Contact);*/
+		frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
+		symbol.Symbol(Symbol::Contact);
 	}
-	else if (navItemTag == L"download")
+	else if (navItemTag == L"Download")
 	{
-		/*frame.Navigate(winrt::xaml_typename<bikabika::DownloadPage>());
-		title = resourceLoader.GetString(L"NavDownload/Content");
-		symbol.Symbol(Symbol::Home);*/
+		frame.Navigate(winrt::xaml_typename<bikabika::DownloadPage>());
+		symbol.Symbol(Symbol::Download);
 	}
 	else return;
-	CreateNewTab(frame, title, symbol);
+	CreateNewTab(frame, resourceLoader.GetString(hstring{ L"Header/" + navItemTag }) , symbol);
 }
 void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
@@ -645,7 +644,7 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 	}
 	if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
 	{
-		LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
+		LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
 		auto login{ Login() };
 	}
 

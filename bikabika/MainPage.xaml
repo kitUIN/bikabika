@@ -175,28 +175,23 @@
                 <muxc:NavigationViewItem
                     x:Name="NavHome"
                     x:Uid="NavHome"
-                    Content="主頁"
                     Icon="Home"
-                    Tag="home" />
+                    Tag="Home" />
                 <muxc:NavigationViewItem
                     x:Name="NavClassification"
                     x:Uid="NavClassification"
-                    Content="分類"
-                    Tag="classification">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE71D;" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                    Icon="AllApps"
+                    Tag="Classification" />
                 <muxc:NavigationViewItem
                     x:Name="NavAccount"
                     x:Uid="NavAccount"
-                    Content="我的"
-                    Tag="account">
-                    <muxc:NavigationViewItem.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77B;" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-
+                    Icon="Contact"
+                    Tag="User" />
+                <muxc:NavigationViewItem
+                    x:Name="NavDownload"
+                    x:Uid="NavDownload"
+                    Icon="Download"
+                    Tag="Download" />
             </muxc:NavigationView.MenuItems>
 
         </muxc:NavigationView>

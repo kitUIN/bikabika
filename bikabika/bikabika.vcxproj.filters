@@ -8,6 +8,18 @@
     <Page Include="HomePage.xaml">
       <Filter>Pages</Filter>
     </Page>
+    <Page Include="SettingsPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
+    <Page Include="DownloadPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
+    <Page Include="UserPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
+    <Page Include="ClassificationPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />

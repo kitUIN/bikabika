@@ -340,6 +340,26 @@
   <data name="FlyoutVerified.Text" xml:space="preserve">
     <value>账户验证</value>
   </data>
+  <data name="Header.Classification" xml:space="preserve">
+    <value>分类</value>
+    <comment>标题:分类</comment>
+  </data>
+  <data name="Header.Download" xml:space="preserve">
+    <value>下载</value>
+    <comment>标题:下载</comment>
+  </data>
+  <data name="Header.Home" xml:space="preserve">
+    <value>主页</value>
+    <comment>标题:主页</comment>
+  </data>
+  <data name="Header.settings" xml:space="preserve">
+    <value>设置</value>
+    <comment>标题:设置</comment>
+  </data>
+  <data name="Header.User" xml:space="preserve">
+    <value>我的</value>
+    <comment>标题:我的</comment>
+  </data>
   <data name="Keyword.Cancel" xml:space="preserve">
     <value>取消</value>
     <comment>关键字</comment>
@@ -391,30 +411,31 @@
     <value>登陆</value>
     <comment>登陆按钮</comment>
   </data>
-  <data name="Logining" xml:space="preserve">
-    <value>登陆中</value>
-  </data>
   <data name="LoginTeachingTip.Title" xml:space="preserve">
     <value>登录</value>
   </data>
+  <data name="Message.Logining" xml:space="preserve">
+    <value>登录中</value>
+  </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
-    <comment>左侧导航栏第三个元素</comment>
+    <comment>导航栏:我的</comment>
   </data>
   <data name="NavClassification.Content" xml:space="preserve">
     <value>分类</value>
-    <comment>左侧导航栏第二个元素</comment>
+    <comment>导航栏:分类</comment>
   </data>
   <data name="NavDownload.Content" xml:space="preserve">
     <value>下载</value>
+    <comment>导航栏:下载</comment>
   </data>
   <data name="NavHome.Content" xml:space="preserve">
     <value>主页</value>
-    <comment>左侧导航栏第一个元素</comment>
+    <comment>导航栏:主页</comment>
   </data>
   <data name="NavSettings.Content" xml:space="preserve">
     <value>设置</value>
-    <comment>左侧导航栏倒数第一个元素</comment>
+    <comment>导航栏:设置</comment>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>新密码</value>

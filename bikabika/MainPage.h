@@ -31,7 +31,6 @@ namespace winrt::bikabika::implementation
 		void ChangeSignature();
 		void ChangePassword();
 		void LogOut();
-		hstring PicPath();
 		BikaClient::Blocks::UserBlock User();
 		void User(BikaClient::Blocks::UserBlock const& value);
 		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
