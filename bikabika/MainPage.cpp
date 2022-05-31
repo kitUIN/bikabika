@@ -46,6 +46,10 @@ namespace winrt::bikabika::implementation
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);
 		Window::Current().SetTitleBar(CustomDragRegion());
+
+		auto titleBar = ApplicationView::GetForCurrentView().TitleBar();
+		titleBar.ButtonBackgroundColor(Colors::Transparent());
+
 		// 登录初始化
 		LogOut();
 

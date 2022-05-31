@@ -14,18 +14,16 @@ namespace winrt::bikabika::implementation
         InitializeComponent();
     }
 
-    int32_t SettingsPage::MyProperty()
+
+
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::BackGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
+{
+    if (BackGrid().ActualWidth() > 200)
     {
-        throw hresult_not_implemented();
+        ServerSettings().Width(BackGrid().ActualWidth() - 100);
     }
 
-    void SettingsPage::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
-    void SettingsPage::ClickHandler(IInspectable const&, RoutedEventArgs const&)
-    {
-        Button().Content(box_value(L"Clicked"));
-    }
 }

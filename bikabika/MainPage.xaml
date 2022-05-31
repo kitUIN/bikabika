@@ -10,24 +10,28 @@
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
-
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <AcrylicBrush
                         x:Key="NavigationViewExpandedPaneBackground"
-                        TintColor="{ThemeResource SystemAccentColorLight1}"
+                        TintColor="{ThemeResource SystemAccentColor}"
                         TintOpacity=".6" />
                     <AcrylicBrush
                         x:Key="NavigationViewDefaultPaneBackground"
                         BackgroundSource="HostBackdrop"
-                        TintColor="{ThemeResource SystemAccentColorLight1}"
+                        TintColor="{ThemeResource SystemAccentColor}"
                         TintOpacity=".6" />
                     <AcrylicBrush
                         x:Key="NavigationViewTopPaneBackground"
                         BackgroundSource="Backdrop"
-                        TintColor="{ThemeResource SystemAccentColor}"
+                        TintColor="{ThemeResource SystemAccentColorDark1}"
                         TintOpacity=".6" />
-                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent" />
+                    <AcrylicBrush
+                        x:Key="TabViewItemHeaderBackgroundSelected"
+                        BackgroundSource="Backdrop"
+                        TintColor="{ThemeResource SystemAccentColorLight3}"
+                        TintOpacity=".5" />
+                    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{ThemeResource SystemAccentColorDark2}" />
 
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
@@ -53,7 +57,7 @@
         <muxc:NavigationView
             x:Name="NavView"
             AlwaysShowHeader="False"
-            Background="{ThemeResource MyAcrylicBrush}"
+            Background="{ThemeResource MyAcrylicBrushDark1}"
             IsBackButtonVisible="Collapsed"
             IsPaneToggleButtonVisible="True"
             IsSettingsVisible="True"
@@ -129,7 +133,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="20"
                                         FontWeight="Bold"
-                                        Foreground="{StaticResource SystemAccentColorDark2}"
+                                        Foreground="{ThemeResource SystemAccentColorDark3}"
                                         Text="{x:Bind User.Name, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                 </Grid>
@@ -321,6 +325,7 @@
                         Background="Transparent" />
                 </muxc:TabView.TabStripFooter>
             </muxc:TabView>
+
         </Frame>
         <muxc:TeachingTip
             x:Name="LoginTeachingTip"

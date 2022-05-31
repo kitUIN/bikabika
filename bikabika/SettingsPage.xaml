@@ -2,12 +2,46 @@
     x:Class="bikabika.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:bikabika"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
+    <Grid x:Name="BackGrid" SizeChanged="BackGrid_SizeChanged">
+        <StackPanel
+            Margin="20,10,20,10"
+            Padding="10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical">
+            <muxc:Expander
+                x:Name="ServerSettings"
+                Padding="20,5,20,5"
+                IsExpanded="False">
+                <muxc:Expander.Header>
+                    <Grid>
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <SymbolIcon Symbol="ZeroBars" />
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    Margin="10,0,0,0"
+                                    FontSize="18"
+                                    Text="服务器设置" />
+                                <TextBlock Margin="15,1,0,0" Text="访问哔咔服务器网络相关设置" />
+                            </StackPanel>
+                        </StackPanel>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="Button" Click="ClickHandler">Click Me</Button>
-    </StackPanel>
+                    </Grid>
+
+                </muxc:Expander.Header>
+            </muxc:Expander>
+        </StackPanel>
+    </Grid>
+
 </Page>

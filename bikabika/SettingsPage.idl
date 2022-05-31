@@ -4,6 +4,6 @@ namespace bikabika
     runtimeclass SettingsPage : Windows.UI.Xaml.Controls.Page
     {
         SettingsPage();
-        Int32 MyProperty;
+        Windows.UI.Xaml.Controls.Grid BackGrid{ get; };
     }
 }

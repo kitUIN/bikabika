@@ -8,10 +8,10 @@ namespace winrt::bikabika::implementation
     {
         SettingsPage();
 
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
-
-        void ClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
+    private:
+        bikabika::MainPage rootPage{ MainPage::Current() };
+    public:
+        void BackGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e);
     };
 }
 
