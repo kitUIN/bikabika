@@ -205,6 +205,10 @@
     <value>不知名绅士</value>
     <comment>左侧导航栏默认用户名</comment>
   </data>
+  <data name="Delete.Content" xml:space="preserve">
+    <value>删除记录</value>
+    <comment>删除记录</comment>
+  </data>
   <data name="E-mail.Text" xml:space="preserve">
     <value>邮箱</value>
     <comment>登陆账号显示</comment>
@@ -343,6 +347,14 @@
   </data>
   <data name="FlyoutVerified.Text" xml:space="preserve">
     <value>账户验证</value>
+  </data>
+  <data name="Keyword.Keywords" xml:space="preserve">
+    <value>大家都在搜</value>
+    <comment>关键字:大家都在搜</comment>
+  </data>
+  <data name="Keyword.SearchHistory" xml:space="preserve">
+    <value>历史记录</value>
+    <comment>关键字:历史记录</comment>
   </data>
   <data name="Like.Label" xml:space="preserve">
     <value>爱心</value>

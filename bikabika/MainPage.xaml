@@ -248,6 +248,7 @@
                                         x:Uid="CatSearch"
                                         Width="260"
                                         Margin="5,0,0,0"
+                                        CanDrag="True"
                                         PlaceholderText="Search"
                                         QueryIcon="Find"
                                         QuerySubmitted="CatSearch_QuerySubmitted"
@@ -255,30 +256,53 @@
                                         TextChanged="CatSearch_TextChanged">
                                         <AutoSuggestBox.ItemTemplate>
                                             <DataTemplate x:DataType="local:KeywordBox">
-                                                <Grid Width="225">
-                                                    <StackPanel
-                                                        Height="25"
-                                                        HorizontalAlignment="Left"
-                                                        Orientation="Horizontal">
-                                                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Icon}" />
-                                                        <TextBlock
-                                                            Width="300"
-                                                            Margin="15,0,0,0"
-                                                            Text="{x:Bind Keyword}"
-                                                            TextWrapping="Wrap" />
-                                                    </StackPanel>
-                                                    <StackPanel
-                                                        Height="25"
+                                                <Grid Width="220">
+                                                    <Border
+                                                        Width="220"
+                                                        BorderThickness="1.5"
+                                                        CornerRadius="10"
+                                                        Opacity="0.9">
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="{x:Bind Keyword}" />
+                                                        </ToolTipService.ToolTip>
+                                                        <Grid
+                                                            Width="210"
+                                                            Height="50"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center">
+                                                            <StackPanel
+                                                                Margin="0,0,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Orientation="Horizontal">
+                                                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="{x:Bind Icon}" />
+                                                                <TextBlock
+                                                                    Width="100"
+                                                                    Margin="10,0,0,0"
+                                                                    VerticalAlignment="Center"
+                                                                    Loaded="Omit_Loaded"
+                                                                    Text="{x:Bind Keyword}" />
+                                                            </StackPanel>
+                                                            <TextBlock
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Bottom"
+                                                                FontStyle="Italic"
+                                                                Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                                Text="{x:Bind KeywordType}" />
+                                                        </Grid>
+                                                    </Border>
+                                                    <AppBarButton
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Center"
-                                                        FlowDirection="RightToLeft">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Right"
-                                                            VerticalAlignment="Center"
-                                                            FontStyle="Italic"
-                                                            Foreground="{ThemeResource SystemAccentColorDark2}"
-                                                            Text="{x:Bind KeywordType}" />
-                                                    </StackPanel>
+                                                        Click="KeywordClose_Click"
+                                                        Icon="Delete"
+                                                        IsCompact="True">
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip x:Uid="Delete" />
+                                                        </ToolTipService.ToolTip>
+                                                    </AppBarButton>
+
+
 
                                                 </Grid>
                                             </DataTemplate>

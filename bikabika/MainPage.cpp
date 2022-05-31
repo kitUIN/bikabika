@@ -54,7 +54,7 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
 	{
-		LayoutMessageShow(L"", false);
+
 		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
 		newItem.Header(box_value(title));
 		newItem.IconSource(symbol);
@@ -70,7 +70,7 @@ namespace winrt::bikabika::implementation
 
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
-
+		LayoutMessageShow(L"", false);
 		auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight2")).as<Color>();
 		ContentDialog dialog;
 		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
@@ -78,14 +78,19 @@ namespace winrt::bikabika::implementation
 		dialog.Background(SolidColorBrush{ color });
 		StackPanel grid;
 		grid.Orientation(Orientation::Vertical);
+		Border boder;
+		boder.Background(SolidColorBrush{ color });
+		boder.CornerRadius(Windows::UI::Xaml::CornerRadius{ 10,10,10,10 });
+		boder.Padding(Thickness{ 10,5,10,5 });
+		boder.VerticalAlignment(VerticalAlignment::Top);
+		boder.HorizontalAlignment(HorizontalAlignment::Left);
 		TextBlock title;
 		Image img;
 		img.Height(270);
 		img.Width(270);
 		img.VerticalAlignment(VerticalAlignment::Center);
 		img.HorizontalAlignment(HorizontalAlignment::Center);
-		title.VerticalAlignment(VerticalAlignment::Top);
-		title.HorizontalAlignment(HorizontalAlignment::Left);
+		title.FontWeight(Text::FontWeights::Bold());
 		if (mode == bikabika::BikaHttpStatus::TIMEOUT) {
 			title.Text(resourceLoader.GetString(L"FailMessage/Title/TimeOut"));
 			img.Source(BitmapImage{Uri{ L"ms-appx:///Assets//Picacgs//icon_unknown_error.png" }});
@@ -125,7 +130,8 @@ namespace winrt::bikabika::implementation
 			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
 			dialog.Content(box_value(message));
 		}
-		grid.Children().Append(title);
+		boder.Child(title);
+		grid.Children().Append(boder);
 		grid.Children().Append(img);
 		dialog.Title(box_value(grid));
 		dialog.ShowAsync();
@@ -155,23 +161,7 @@ namespace winrt::bikabika::implementation
 	{
 		m_login = value;
 	}
-	void MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		auto stack = sender.as<Button>().Parent().as<Grid>();
-		hstring keywordType = stack.Children().GetAt(1).as<StackPanel>().Children().GetAt(0).as<TextBlock>().Text();
-		hstring keyword = stack.Children().GetAt(0).as<StackPanel>().Children().GetAt(1).as<TextBlock>().Text();
-		//OutputDebugStringW(keyword.c_str());
-		//OutputDebugStringW(keywordType.c_str());
-		for (uint32_t kIndex=0; kIndex<m_suggestions.Size(); kIndex++)
-		{
-			auto x = m_suggestions.GetAt(kIndex);
-			if (x.Keyword() == keyword && x.KeywordType() == keywordType)
-			{
-				m_suggestions.RemoveAt(kIndex);
-			}
-		}
-		CatSearch().ItemsSource(box_value(m_suggestions));
-	}
+
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{
 		m_login = false;
@@ -315,9 +305,6 @@ namespace winrt::bikabika::implementation
 		else return;
 		CreateNewTab(frame, title, symbol);
 	}
-	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
-	{
-	}
 	void MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 	{
 	}
@@ -409,8 +396,10 @@ namespace winrt::bikabika::implementation
 	}
 	void MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
 	{
+
 		Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		hstring text = sender.Text();
+		if (text == L"") return;
 		if (historys.Values().HasKey(L"Search"))
 		{
 			int i;
@@ -431,13 +420,13 @@ namespace winrt::bikabika::implementation
 			}
 			searchHistorys.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
 			historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
-			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, L"历史记录",L"\xE81C"));
+			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
 		}
 		else {
 			Windows::Data::Json::JsonArray json;
 			json.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
 			historys.Values().Insert(L"Search", box_value(json.Stringify()));
-			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, L"历史记录", L"\xE81C"));
+			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
 		}
 	}
 	void MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
@@ -549,12 +538,12 @@ namespace winrt::bikabika::implementation
 
 				for (auto z : y)
 				{
-					m_suggestions.Append(winrt::make<KeywordBox>(z.GetString(), L"历史记录", L"\xE81C"));
+					m_suggestions.Append(winrt::make<KeywordBox>(z.GetString(), resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
 				}
 			}
 			for (auto x : res.Keywords())
 			{
-				m_suggestions.Append(winrt::make<bikabika::implementation::KeywordBox>(x.Tag(), L"大家都在搜",L"\xE8EC"));
+				m_suggestions.Append(winrt::make<bikabika::implementation::KeywordBox>(x.Tag(), resourceLoader.GetString(L"Keyword/Keywords"), L"\xE8EC"));
 			}
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
@@ -574,6 +563,48 @@ namespace winrt::bikabika::implementation
 		}
 
 	}
+
 }
 
+
+
+void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	auto border = sender.as<AppBarButton>().Parent().as<Grid>().Children().GetAt(0).as<Border>();
+	auto grid = border.Child().as<Grid>();
+	hstring keyword = ToolTipService::GetToolTip(border).as<ToolTip>().Content().as<hstring>();
+	hstring keywordType = grid.Children().GetAt(1).as<TextBlock>().Text();
+	for (uint32_t kIndex = 0; kIndex < m_suggestions.Size(); kIndex++)
+	{
+		auto x = m_suggestions.GetAt(kIndex);
+		if (x.Keyword() == keyword && x.KeywordType() == keywordType)
+		{
+			m_suggestions.RemoveAt(kIndex);
+			if (keywordType == resourceLoader.GetString(L"Keyword/SearchHistory"))
+			{
+				Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
+				JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
+				searchHistorys.RemoveAt(kIndex);
+				historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
+			}
+		}
+	}
+	CatSearch().ItemsSource(box_value(m_suggestions));
+}
+void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	TextBlock block = sender.as<TextBlock>();
+	if (block.ActualWidth() > block.Width())
+	{
+		wstring text;
+		int32_t i = 0;
+		for (auto a:block.Text())
+		{
+			if (i == 6)break;
+			text += a;
+			i++;
+		}
+		block.Text(hstring{text+L" ..."});
+	}
+}
 
