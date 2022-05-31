@@ -197,14 +197,6 @@
   <data name="CreaterTip.Content" xml:space="preserve">
     <value>点击查看上传者信息</value>
   </data>
-  <data name="DefaultUserLevel.Text" xml:space="preserve">
-    <value>Lv.5</value>
-    <comment>左侧导航栏默认等级</comment>
-  </data>
-  <data name="DefaultUserName.Text" xml:space="preserve">
-    <value>不知名绅士</value>
-    <comment>左侧导航栏默认用户名</comment>
-  </data>
   <data name="Delete.Content" xml:space="preserve">
     <value>删除记录</value>
     <comment>删除记录</comment>
@@ -347,6 +339,18 @@
   </data>
   <data name="FlyoutVerified.Text" xml:space="preserve">
     <value>账户验证</value>
+  </data>
+  <data name="Keyword.Default.Level" xml:space="preserve">
+    <value>Lv.999</value>
+    <comment>默认关键字:等级</comment>
+  </data>
+  <data name="Keyword.Default.Name" xml:space="preserve">
+    <value>绅士</value>
+    <comment>默认关键字:名字</comment>
+  </data>
+  <data name="Keyword.Default.Slogan" xml:space="preserve">
+    <value>“伺服器君是个变态”</value>
+    <comment>默认关键字:介绍</comment>
   </data>
   <data name="Keyword.Keywords" xml:space="preserve">
     <value>大家都在搜</value>
@@ -502,9 +506,6 @@
   <data name="UserFavourite.Text" xml:space="preserve">
     <value>我的收藏</value>
     <comment>用户界面</comment>
-  </data>
-  <data name="UserInfomation.Text" xml:space="preserve">
-    <value>    “伺服器君是個變態”</value>
   </data>
   <data name="UserLogOut.Label" xml:space="preserve">
     <value>登出</value>

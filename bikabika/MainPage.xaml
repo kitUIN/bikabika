@@ -118,15 +118,17 @@
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <StackPanel Margin="0,20,0,0">
-                        <StackPanel x:Name="Users" Orientation="Vertical">
+                        <StackPanel Orientation="Vertical">
                             <PersonPicture
+                                x:Name="BigUserImg"
                                 Width="120"
                                 Height="120"
                                 ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Grid>
                                     <TextBlock
-                                        MaxWidth="120"
+                                        x:Name="UserName"
+                                        MaxWidth="80"
                                         VerticalAlignment="Center"
                                         FontSize="20"
                                         FontWeight="Bold"
@@ -134,17 +136,18 @@
                                         Text="{x:Bind User.Name, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                 </Grid>
-                                <Grid Margin="1,0,0,0">
+                                <Grid Margin="1,0,0,0" VerticalAlignment="Center">
                                     <TextBlock
-                                        MaxWidth="120"
+                                        x:Name="UserLevel"
+                                        MaxWidth="45"
                                         Margin="3,1,0,0"
-                                        VerticalAlignment="Bottom"
                                         FontSize="15"
                                         Text="{x:Bind User.LevelString, Mode=OneWay}" />
                                 </Grid>
                             </StackPanel>
                             <Grid Margin="0,5,0,10">
                                 <TextBlock
+                                    x:Name="UserSlogan"
                                     MaxWidth="140"
                                     HorizontalAlignment="Center"
                                     Foreground="Gray"

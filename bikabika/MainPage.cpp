@@ -44,7 +44,11 @@ namespace winrt::bikabika::implementation
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);
 		Window::Current().SetTitleBar(CustomDragRegion());
-
+		// 初始化用户
+		BigUserImg().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+		UserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
+		UserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
+		UserSlogan().Text(resourceLoader.GetString(L"Keyword/Default/Slogan"));
 		// 登录初始化
 		LoginTeachingTip().IsOpen(true);
 		NavHome().IsEnabled(false);
@@ -71,7 +75,7 @@ namespace winrt::bikabika::implementation
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
 		LayoutMessageShow(L"", false);
-		auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight2")).as<Color>();
+		auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight3")).as<Color>();
 		ContentDialog dialog;
 		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 		dialog.IsTextScaleFactorEnabled(true);
