@@ -74,7 +74,7 @@
                     SelectsOnInvoked="False"
                     Tag="NavBigImg">
                     <FlyoutBase.AttachedFlyout>
-                        <MenuFlyout x:Name="menu">
+                        <MenuFlyout x:Name="Menu">
                             <MenuFlyoutItem
                                 x:Uid="SwitchAccounts"
                                 Click="LogOut_Click"
@@ -164,6 +164,7 @@
                     Tag="NavSmallImg"
                     Visibility="Collapsed">
                     <PersonPicture
+                        x:Name="SmallUserImg"
                         Width="30"
                         Height="30"
                         Margin="-8,0,0,0"
@@ -454,7 +455,7 @@
                         Margin="0,0,0,0"
                         HorizontalAlignment="Right"
                         Background="{StaticResource SystemAccentColorLight2}"
-                        Click="Button_Click"
+                        Click="SetPassword_Click"
                         Content="Submit" />
                 </StackPanel>
             </muxc:TeachingTip.Content>

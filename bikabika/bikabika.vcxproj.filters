@@ -77,9 +77,6 @@
     <Image Include="Assets\Picacgs\exit.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Picacgs\history.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\Picacgs\ic_launcher.png">
       <Filter>Assets</Filter>
     </Image>
@@ -138,9 +135,6 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Picacgs\logo_round.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\Picacgs\tag.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Picacgs\userlogo.png">

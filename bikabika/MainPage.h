@@ -18,6 +18,8 @@ namespace winrt::bikabika::implementation
 	{
 		MainPage();
 
+		void LoginViewShow(bool const& isOpen);
+
 
 		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
 		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
@@ -30,15 +32,6 @@ namespace winrt::bikabika::implementation
 		void ChangePassword();
 		void LogOut();
 		hstring PicPath();
-		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
-		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
-		void NavView_ItemInvoked(
-			Windows::Foundation::IInspectable const& /* sender */,
-			muxc::NavigationViewItemInvokedEventArgs const& args);
-		void NavView_Navigate(
-			std::wstring navItemTag,
-			Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo);
-		Windows::Foundation::IAsyncAction Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		BikaClient::Blocks::UserBlock User();
 		void User(BikaClient::Blocks::UserBlock const& value);
 		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
@@ -49,7 +42,6 @@ namespace winrt::bikabika::implementation
 		private:
 		static bikabika::MainPage current;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
-
 		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
@@ -60,7 +52,11 @@ namespace winrt::bikabika::implementation
 
 	public:
 		void KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-
+		void LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
+		void ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args);
+		void NavView_ItemInvoked(Windows::Foundation::IInspectable const& /* sender */,muxc::NavigationViewItemInvokedEventArgs const& args);
+		void NavView_Navigate(std::wstring navItemTag,Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo);
+		Windows::Foundation::IAsyncAction SetPassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void LoginButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		void SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);

@@ -158,7 +158,6 @@
     <Image Include="Assets\Picacgs\cat_support.jpg" />
     <Image Include="Assets\Picacgs\chat_bg_image.png" />
     <Image Include="Assets\Picacgs\exit.png" />
-    <Image Include="Assets\Picacgs\history.png" />
     <Image Include="Assets\Picacgs\icon_256.png" />
     <Image Include="Assets\Picacgs\icon_adult.png" />
     <Image Include="Assets\Picacgs\icon_announcement.png" />
@@ -188,7 +187,6 @@
     <Image Include="Assets\Picacgs\register_name.png" />
     <Image Include="Assets\Picacgs\search.png" />
     <Image Include="Assets\Picacgs\splash_img.jpg" />
-    <Image Include="Assets\Picacgs\tag.png" />
     <Image Include="Assets\Picacgs\userlogo.png" />
     <Image Include="Assets\SmallTile.scale-100.png" />
     <Image Include="Assets\SmallTile.scale-125.png" />

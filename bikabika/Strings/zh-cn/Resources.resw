@@ -340,6 +340,10 @@
   <data name="FlyoutVerified.Text" xml:space="preserve">
     <value>账户验证</value>
   </data>
+  <data name="Keyword.Cancel" xml:space="preserve">
+    <value>取消</value>
+    <comment>关键字</comment>
+  </data>
   <data name="Keyword.Default.Level" xml:space="preserve">
     <value>Lv.999</value>
     <comment>默认关键字:等级</comment>
@@ -359,6 +363,18 @@
   <data name="Keyword.SearchHistory" xml:space="preserve">
     <value>历史记录</value>
     <comment>关键字:历史记录</comment>
+  </data>
+  <data name="Keyword.Sure" xml:space="preserve">
+    <value>确定</value>
+    <comment>关键字</comment>
+  </data>
+  <data name="Keyword.Tip.LogOut" xml:space="preserve">
+    <value>您确定要登出当前账户吗？</value>
+    <comment>关键字:提示</comment>
+  </data>
+  <data name="Keyword.Tip.Tip" xml:space="preserve">
+    <value>提示</value>
+    <comment>关键字:提示</comment>
   </data>
   <data name="Like.Label" xml:space="preserve">
     <value>爱心</value>

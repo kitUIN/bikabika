@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+using namespace winrt::Windows::UI::Input;
 
 
 using namespace std;
@@ -44,17 +45,19 @@ namespace winrt::bikabika::implementation
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);
 		Window::Current().SetTitleBar(CustomDragRegion());
-		// 初始化用户
-		BigUserImg().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
-		UserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
-		UserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
-		UserSlogan().Text(resourceLoader.GetString(L"Keyword/Default/Slogan"));
 		// 登录初始化
-		LoginTeachingTip().IsOpen(true);
+		LogOut();
+
 		NavHome().IsEnabled(false);
 		NavClassification().IsEnabled(false);
 		NavAccount().IsEnabled(false);
-
+	}
+	void MainPage::LoginViewShow(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
+			{
+				LoginTeachingTip().IsOpen(isOpen);
+			});
 	}
 	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
 	{
@@ -124,7 +127,7 @@ namespace winrt::bikabika::implementation
 			title.Text(resourceLoader.GetString(L"FailMessage/Message/NoAuth"));
 			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
 			dialog.PrimaryButtonText(resourceLoader.GetString(L"FailMessage/PrimaryButton/NoAuth"));
-			//dialog.PrimaryButtonClick({this,&MainPage:: });
+			dialog.PrimaryButtonClick({ [this](ContentDialog const&, ContentDialogButtonClickEventArgs const&){LoginViewShow(true); } });
 			dialog.DefaultButton(ContentDialogButton::Primary);
 			dialog.IsPrimaryButtonEnabled(true);
 		}
@@ -241,239 +244,23 @@ namespace winrt::bikabika::implementation
 	}
 
 
-	void MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
-	{
-		// 账号密码为空
-		if (Email().Text() == L"" || Password().Password() == L"")
-		{
-			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Blank"));
-		}
-		else
-		{
-			LayoutMessageShow(resourceLoader.GetString(L"Logining"),true);
-			auto login{ Login() };
-		}
-	}
-	void MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
-	{
-	}
-	void MainPage::NavView_ItemInvoked(Windows::Foundation::IInspectable const&, muxc::NavigationViewItemInvokedEventArgs const& args)
-	{
-		if (args.IsSettingsInvoked())
-		{
-			NavView_Navigate(L"settings", args.RecommendedNavigationTransitionInfo());
-		}
-		else if (args.InvokedItemContainer())
-		{
-			NavView_Navigate(
-				winrt::unbox_value_or<winrt::hstring>(
-					args.InvokedItemContainer().Tag(), L"").c_str(),
-				args.RecommendedNavigationTransitionInfo());
-		}
-	}
-	void MainPage::NavView_Navigate(std::wstring navItemTag, Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
-	{
-		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
-		winrt::Windows::UI::Xaml::Controls::Frame frame;
-		hstring title;
-		if (navItemTag == L"settings")
-		{
-			/*title = resourceLoader.GetString(L"NavSettings/Content");
-			symbol.Symbol(Symbol::Setting);
-			frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());*/
-		}
-		else if (navItemTag == L"home")
-		{
-			frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
-			title = resourceLoader.GetString(L"NavHome/Content");
-			symbol.Symbol(Symbol::Home);
-		}
-		else if (navItemTag == L"classification")
-		{
-			//frame.Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
-			title = resourceLoader.GetString(L"NavClassification/Content");
-			symbol.Symbol(Symbol::AllApps);
-		}
-		else if (navItemTag == L"account")
-		{
-			/*frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
-			title = resourceLoader.GetString(L"NavAccount/Content");
-			symbol.Symbol(Symbol::Contact);*/
-		}
-		else if (navItemTag == L"download")
-		{
-			/*frame.Navigate(winrt::xaml_typename<bikabika::DownloadPage>());
-			title = resourceLoader.GetString(L"NavDownload/Content");
-			symbol.Symbol(Symbol::Home);*/
-		}
-		else return;
-		CreateNewTab(frame, title, symbol);
-	}
-	void MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
-	{
-	}
-	void MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		if (sender.as<CheckBox>().IsChecked().GetBoolean())
-		{
-			RememberCheckBox().IsChecked(true);
-		}
-		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		loginData.Values().Insert(L"AutoLogin", box_value(AutoCheckBox().IsChecked().GetBoolean()));
-	}
-	void MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		if (!sender.as<CheckBox>().IsChecked().GetBoolean())
-		{
-			AutoCheckBox().IsChecked(false);
-		}
-		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		loginData.Values().Insert(L"RememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
-	}
 
-	void MainPage::ContentTabView_TabCloseRequested(winrt::Microsoft::UI::Xaml::Controls::TabView const& sender, winrt::Microsoft::UI::Xaml::Controls::TabViewTabCloseRequestedEventArgs const& args)
+	void MainPage::LogOut()
 	{
-		uint32_t tabIndexFromControl;
-		if (sender.TabItems().IndexOf(args.Tab(), tabIndexFromControl))
-		{
-			sender.TabItems().RemoveAt(tabIndexFromControl);
-		}
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [this]()
+			{
+				m_login = false;
+				m_user = BikaClient::Blocks::UserBlock{ nullptr };
+				BigUserImg().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+				SmallUserImg().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+				UserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
+				UserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
+				UserSlogan().Text(resourceLoader.GetString(L"Keyword/Default/Slogan"));
+				LoginViewShow(true);
+			});
 
 	}
-	void MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
-	{
-		ContentTabView().Width(sender.as<Controls::Frame>().ActualWidth());
-	}
-	void MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
-	{
-		ContentFrame().Margin(Thickness{ 53,0,0,0 });
-		APPTitle().Visibility(Visibility::Collapsed);
-		NavSmallImg().Visibility(Visibility::Visible);
-		NavBigImg().Visibility(Visibility::Collapsed);
-	}
-	void MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
-	{
-		ContentFrame().Margin(Thickness{ 185,0,0,0 });
-		APPTitle().Visibility(Visibility::Visible);
-		NavSmallImg().Visibility(Visibility::Collapsed);
-		NavBigImg().Visibility(Visibility::Visible);
-	}
-	void MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
-	{
-		CatSearch().Text(L" ");
-		CatSearch().ItemsSource(box_value(m_suggestions));
-		CatSearch().Text(L"");
-	}
-	void MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-	}
-	void MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-	}
-	Windows::Foundation::IAsyncAction MainPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		return Windows::Foundation::IAsyncAction();
-	}
-	void MainPage::ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-	}
-	void MainPage::LoginButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
-	{
-		if (e.Key() == Windows::System::VirtualKey::Enter)
-		{
-			LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
-		}
-	}
-	void MainPage::SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
-	{
-	}
-	void MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
-	{
-		if (sender.Text() != L"" && (args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput || (args.Reason() == AutoSuggestionBoxTextChangeReason::ProgrammaticChange && sender.Text() == L" ")))
-		{
-			if (!m_suggestIsChosen)
-			{
-				sender.ItemsSource(box_value(m_suggestions));
-			}
-			m_suggestIsChosen = false;
-		}
-	}
-	void MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
-	{
 
-		Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		hstring text = sender.Text();
-		if (text == L"") return;
-		if (historys.Values().HasKey(L"Search"))
-		{
-			int i;
-			bool f = false;
-			JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
-			for (i = 0; i < searchHistorys.Size(); i++)
-			{
-				if (text == searchHistorys.GetStringAt(i))
-				{
-					f = true;
-					break;
-				}
-			}
-			if (f)
-			{
-				searchHistorys.RemoveAt(i);
-				m_suggestions.RemoveAt(i);
-			}
-			searchHistorys.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
-			historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
-			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
-		}
-		else {
-			Windows::Data::Json::JsonArray json;
-			json.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
-			historys.Values().Insert(L"Search", box_value(json.Stringify()));
-			m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
-		}
-	}
-	void MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
-	{
-		m_suggestIsChosen = true;
-		hstring s = args.SelectedItem().as<bikabika::KeywordBox>().Keyword();
-		sender.Text(s);
-	}
-	/// <summary>
-	/// 邮箱与密码与自动登录控制
-	/// </summary>
-	/// <param name="sender"></param>
-	/// <param name="e"></param>
-	void MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-	{
-		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		if (loginData.Values().HasKey(L"emails"))
-		{
-			JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-			if (emails.HasKey(L"Last"))
-			{
-				Email().Text(emails.GetNamedString(L"Last"));
-			}
-		}
-		if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
-		{
-			if (loginData.Values().HasKey(L"passwords"))
-			{
-				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-				if (passwords.HasKey(Email().Text()))
-				{
-					Password().Password(passwords.GetNamedString(Email().Text()));
-					AutoCheckBox().IsChecked(true);
-				}
-			}
-		}
-		if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
-		{
-			LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
-			auto login{ Login() };
-		}
-
-	}
 	BikaClient::Blocks::UserBlock MainPage::User()
 	{
 		return m_user;
@@ -487,7 +274,7 @@ namespace winrt::bikabika::implementation
 	{
 		auto res = co_await m_bikaClient.PersonInfo();
 		LayoutMessageShow(L"", false);
-		LoginTeachingTip().IsOpen(false);
+		LoginViewShow(false);
 		if (res.Code() == -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
@@ -570,7 +357,299 @@ namespace winrt::bikabika::implementation
 
 }
 
+void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
+{
+	// 账号密码为空
+	if (Email().Text() == L"" || Password().Password() == L"")
+	{
+		ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Blank"));
+	}
+	else
+	{
+		LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
+		auto login{ Login() };
+	}
+}
+void winrt::bikabika::implementation::MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
+{
+}
+void winrt::bikabika::implementation::MainPage::NavView_ItemInvoked(Windows::Foundation::IInspectable const&, muxc::NavigationViewItemInvokedEventArgs const& args)
+{
+	if (args.IsSettingsInvoked())
+	{
+		NavView_Navigate(L"settings", args.RecommendedNavigationTransitionInfo());
+	}
+	else if (args.InvokedItemContainer())
+	{
+		NavView_Navigate(
+			winrt::unbox_value_or<winrt::hstring>(
+				args.InvokedItemContainer().Tag(), L"").c_str(),
+			args.RecommendedNavigationTransitionInfo());
+	}
+}
+void winrt::bikabika::implementation::MainPage::NavView_Navigate(std::wstring navItemTag, Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
+{
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	hstring title;
+	if (navItemTag == L"settings")
+	{
+		/*title = resourceLoader.GetString(L"NavSettings/Content");
+		symbol.Symbol(Symbol::Setting);
+		frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());*/
+	}
+	else if (navItemTag == L"home")
+	{
+		frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
+		title = resourceLoader.GetString(L"NavHome/Content");
+		symbol.Symbol(Symbol::Home);
+	}
+	else if (navItemTag == L"classification")
+	{
+		//frame.Navigate(winrt::xaml_typename<bikabika::ClassificationPage>());
+		title = resourceLoader.GetString(L"NavClassification/Content");
+		symbol.Symbol(Symbol::AllApps);
+	}
+	else if (navItemTag == L"account")
+	{
+		/*frame.Navigate(winrt::xaml_typename<bikabika::UserPage>());
+		title = resourceLoader.GetString(L"NavAccount/Content");
+		symbol.Symbol(Symbol::Contact);*/
+	}
+	else if (navItemTag == L"download")
+	{
+		/*frame.Navigate(winrt::xaml_typename<bikabika::DownloadPage>());
+		title = resourceLoader.GetString(L"NavDownload/Content");
+		symbol.Symbol(Symbol::Home);*/
+	}
+	else return;
+	CreateNewTab(frame, title, symbol);
+}
+void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+	PointerPoint currentPoint = e.GetCurrentPoint(NULL);
+	PointerPointProperties props = currentPoint.Properties();
+	if (m_login) {
+		if (props.IsRightButtonPressed()) {
+			Menu().ShowAt(sender.as<FrameworkElement>());
+		}
+		else if (props.IsLeftButtonPressed())
+		{
+			Menu().ShowAt(sender.as<FrameworkElement>());
+		}
+	}
+	else {
+		LoginTeachingTip().IsOpen(true);
+	}
+}
+void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (sender.as<CheckBox>().IsChecked().GetBoolean())
+	{
+		RememberCheckBox().IsChecked(true);
+	}
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	loginData.Values().Insert(L"AutoLogin", box_value(AutoCheckBox().IsChecked().GetBoolean()));
+}
+void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (!sender.as<CheckBox>().IsChecked().GetBoolean())
+	{
+		AutoCheckBox().IsChecked(false);
+	}
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	loginData.Values().Insert(L"RememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
+}
 
+void winrt::bikabika::implementation::MainPage::ContentTabView_TabCloseRequested(winrt::Microsoft::UI::Xaml::Controls::TabView const& sender, winrt::Microsoft::UI::Xaml::Controls::TabViewTabCloseRequestedEventArgs const& args)
+{
+	uint32_t tabIndexFromControl;
+	if (sender.TabItems().IndexOf(args.Tab(), tabIndexFromControl))
+	{
+		sender.TabItems().RemoveAt(tabIndexFromControl);
+	}
+
+}
+void winrt::bikabika::implementation::MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
+{
+	ContentTabView().Width(sender.as<Controls::Frame>().ActualWidth());
+}
+void winrt::bikabika::implementation::MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+	ContentFrame().Margin(Thickness{ 53,0,0,0 });
+	APPTitle().Visibility(Visibility::Collapsed);
+	NavSmallImg().Visibility(Visibility::Visible);
+	NavBigImg().Visibility(Visibility::Collapsed);
+}
+void winrt::bikabika::implementation::MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+{
+	ContentFrame().Margin(Thickness{ 185,0,0,0 });
+	APPTitle().Visibility(Visibility::Visible);
+	NavSmallImg().Visibility(Visibility::Collapsed);
+	NavBigImg().Visibility(Visibility::Visible);
+}
+void winrt::bikabika::implementation::MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
+{
+	CatSearch().Text(L" ");
+	CatSearch().ItemsSource(box_value(m_suggestions));
+	CatSearch().Text(L"");
+}
+void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	ContentDialog dialog = ContentDialog();
+	StackPanel stack;
+	stack.Orientation(Orientation::Horizontal);
+	stack.Children().Append(SymbolIcon{ Symbol::LeaveChat });
+	TextBlock text;
+	text.Text(resourceLoader.GetString(L"Keyword/Tip/Tip"));
+	stack.Children().Append(text);
+	dialog.Title(stack);
+	dialog.Content(box_value(resourceLoader.GetString(L"Keyword/Tip/LogOut")));
+	dialog.PrimaryButtonText(resourceLoader.GetString(L"Keyword/Sure"));
+	dialog.SecondaryButtonText(resourceLoader.GetString(L"Keyword/Cancel"));
+	dialog.DefaultButton(ContentDialogButton::Secondary);
+	dialog.IsPrimaryButtonEnabled(true);
+	dialog.IsSecondaryButtonEnabled(true);
+	dialog.PrimaryButtonClick([this](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+		{
+			loginData.Values().Insert(L"AutoLogin", box_value(false));
+		}
+		LogOut();
+		});
+	dialog.SecondaryButtonClick([](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {
+		return;
+		});
+	dialog.ShowAsync();
+}
+void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+}
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::SetPassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	return Windows::Foundation::IAsyncAction();
+}
+void winrt::bikabika::implementation::MainPage::ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+}
+/// <summary>
+/// 密码框按回车响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void winrt::bikabika::implementation::MainPage::LoginButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
+{
+	if (e.Key() == Windows::System::VirtualKey::Enter)
+	{
+		LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+	}
+}
+void winrt::bikabika::implementation::MainPage::SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
+{
+}
+/// <summary>
+/// 检测搜索框内容更改
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="args"></param>
+void winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args)
+{
+	if (sender.Text() != L"" && (args.Reason() == AutoSuggestionBoxTextChangeReason::UserInput || (args.Reason() == AutoSuggestionBoxTextChangeReason::ProgrammaticChange && sender.Text() == L" ")))
+	{
+		if (!m_suggestIsChosen)
+		{
+			sender.ItemsSource(box_value(m_suggestions));
+		}
+		m_suggestIsChosen = false;
+	}
+}
+/// <summary>
+/// 搜索框提交
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="args"></param>
+void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
+{
+
+	Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	hstring text = sender.Text();
+	if (text == L"") return;
+	if (historys.Values().HasKey(L"Search"))
+	{
+		int i;
+		bool f = false;
+		JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
+		for (i = 0; i < searchHistorys.Size(); i++)
+		{
+			if (text == searchHistorys.GetStringAt(i))
+			{
+				f = true;
+				break;
+			}
+		}
+		if (f)
+		{
+			searchHistorys.RemoveAt(i);
+			m_suggestions.RemoveAt(i);
+		}
+		searchHistorys.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
+		historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
+		m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
+	}
+	else {
+		Windows::Data::Json::JsonArray json;
+		json.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
+		historys.Values().Insert(L"Search", box_value(json.Stringify()));
+		m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
+	}
+}
+/// <summary>
+/// 搜索框建议选择
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="args"></param>
+void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxSuggestionChosenEventArgs const& args)
+{
+	m_suggestIsChosen = true;
+	hstring s = args.SelectedItem().as<bikabika::KeywordBox>().Keyword();
+	sender.Text(s);
+}
+/// <summary>
+/// 邮箱与密码与自动登录控制
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	if (loginData.Values().HasKey(L"emails"))
+	{
+		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+		if (emails.HasKey(L"Last"))
+		{
+			Email().Text(emails.GetNamedString(L"Last"));
+		}
+	}
+	if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
+	{
+		if (loginData.Values().HasKey(L"passwords"))
+		{
+			JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+			if (passwords.HasKey(Email().Text()))
+			{
+				Password().Password(passwords.GetNamedString(Email().Text()));
+				AutoCheckBox().IsChecked(true);
+			}
+		}
+	}
+	if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+	{
+		LayoutMessageShow(resourceLoader.GetString(L"Logining"), true);
+		auto login{ Login() };
+	}
+
+}
 
 void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
