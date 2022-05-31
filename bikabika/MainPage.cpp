@@ -77,71 +77,74 @@ namespace winrt::bikabika::implementation
 
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
-		LayoutMessageShow(L"", false);
-		auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight3")).as<Color>();
-		ContentDialog dialog;
-		dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
-		dialog.IsTextScaleFactorEnabled(true);
-		dialog.Background(SolidColorBrush{ color });
-		StackPanel grid;
-		grid.Orientation(Orientation::Vertical);
-		Border boder;
-		boder.Background(SolidColorBrush{ color });
-		boder.CornerRadius(Windows::UI::Xaml::CornerRadius{ 10,10,10,10 });
-		boder.Padding(Thickness{ 10,5,10,5 });
-		boder.VerticalAlignment(VerticalAlignment::Top);
-		boder.HorizontalAlignment(HorizontalAlignment::Left);
-		TextBlock title;
-		Image img;
-		img.Height(270);
-		img.Width(270);
-		img.VerticalAlignment(VerticalAlignment::Center);
-		img.HorizontalAlignment(HorizontalAlignment::Center);
-		title.FontWeight(Text::FontWeights::Bold());
-		if (mode == bikabika::BikaHttpStatus::TIMEOUT) {
-			title.Text(resourceLoader.GetString(L"FailMessage/Title/TimeOut"));
-			img.Source(BitmapImage{Uri{ L"ms-appx:///Assets//Picacgs//icon_unknown_error.png" }});
-			StackPanel stackPanel;
-			stackPanel.Orientation(Orientation::Vertical);
-			stackPanel.HorizontalAlignment(HorizontalAlignment::Center);
-			TextBlock content1, content2, content3, content4;
-			content1.FontWeight(Text::FontWeights::Bold());
-			content1.HorizontalAlignment(HorizontalAlignment::Center);
-			content2.FontWeight(Text::FontWeights::Bold());
-			content2.HorizontalAlignment(HorizontalAlignment::Center);
-			content3.FontWeight(Text::FontWeights::Bold());
-			content3.HorizontalAlignment(HorizontalAlignment::Center);
-			content4.FontWeight(Text::FontWeights::Bold());
-			content4.HorizontalAlignment(HorizontalAlignment::Center);
-			content1.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/One"));
-			content3.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Two"));
-			content4.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Three"));
-			stackPanel.Children().Append(content1);
-			stackPanel.Children().Append(content2);
-			stackPanel.Children().Append(content3);
-			stackPanel.Children().Append(content4);
-			dialog.Content(box_value(stackPanel));
-		}
-		else if (mode == bikabika::BikaHttpStatus::NOAUTH)
-		{
-			title.Text(resourceLoader.GetString(L"FailMessage/Message/NoAuth"));
-			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
-			dialog.PrimaryButtonText(resourceLoader.GetString(L"FailMessage/PrimaryButton/NoAuth"));
-			dialog.PrimaryButtonClick({ [this](ContentDialog const&, ContentDialogButtonClickEventArgs const&){LoginViewShow(true); } });
-			dialog.DefaultButton(ContentDialogButton::Primary);
-			dialog.IsPrimaryButtonEnabled(true);
-		}
-		else
-		{
-			title.Text(resourceLoader.GetString(L"FailMessage/Title/Unknown"));
-			img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
-			dialog.Content(box_value(message));
-		}
-		boder.Child(title);
-		grid.Children().Append(boder);
-		grid.Children().Append(img);
-		dialog.Title(box_value(grid));
-		dialog.ShowAsync();
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()
+			{
+				LayoutMessage().IsOpen(false);
+				auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight3")).as<Color>();
+				ContentDialog dialog;
+				dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
+				dialog.IsTextScaleFactorEnabled(true);
+				dialog.Background(SolidColorBrush{ color });
+				StackPanel grid;
+				grid.Orientation(Orientation::Vertical);
+				Border boder;
+				boder.Background(SolidColorBrush{ color });
+				boder.CornerRadius(Windows::UI::Xaml::CornerRadius{ 10,10,10,10 });
+				boder.Padding(Thickness{ 10,5,10,5 });
+				boder.VerticalAlignment(VerticalAlignment::Top);
+				boder.HorizontalAlignment(HorizontalAlignment::Left);
+				TextBlock title;
+				Image img;
+				img.Height(270);
+				img.Width(270);
+				img.VerticalAlignment(VerticalAlignment::Center);
+				img.HorizontalAlignment(HorizontalAlignment::Center);
+				title.FontWeight(Text::FontWeights::Bold());
+				if (mode == bikabika::BikaHttpStatus::TIMEOUT) {
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/TimeOut"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_unknown_error.png" } });
+					StackPanel stackPanel;
+					stackPanel.Orientation(Orientation::Vertical);
+					stackPanel.HorizontalAlignment(HorizontalAlignment::Center);
+					TextBlock content1, content2, content3, content4;
+					content1.FontWeight(Text::FontWeights::Bold());
+					content1.HorizontalAlignment(HorizontalAlignment::Center);
+					content2.FontWeight(Text::FontWeights::Bold());
+					content2.HorizontalAlignment(HorizontalAlignment::Center);
+					content3.FontWeight(Text::FontWeights::Bold());
+					content3.HorizontalAlignment(HorizontalAlignment::Center);
+					content4.FontWeight(Text::FontWeights::Bold());
+					content4.HorizontalAlignment(HorizontalAlignment::Center);
+					content1.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/One"));
+					content3.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Two"));
+					content4.Text(resourceLoader.GetString(L"FailMessage/Message/TimeOut/Three"));
+					stackPanel.Children().Append(content1);
+					stackPanel.Children().Append(content2);
+					stackPanel.Children().Append(content3);
+					stackPanel.Children().Append(content4);
+					dialog.Content(box_value(stackPanel));
+				}
+				else if (mode == bikabika::BikaHttpStatus::NOAUTH)
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Message/NoAuth"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					dialog.PrimaryButtonText(resourceLoader.GetString(L"FailMessage/PrimaryButton/NoAuth"));
+					dialog.PrimaryButtonClick({ [this](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {LoginViewShow(true); } });
+					dialog.DefaultButton(ContentDialogButton::Primary);
+					dialog.IsPrimaryButtonEnabled(true);
+				}
+				else
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/Unknown"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					dialog.Content(box_value(message));
+				}
+				boder.Child(title);
+				grid.Children().Append(boder);
+				grid.Children().Append(img);
+				dialog.Title(box_value(grid));
+				dialog.ShowAsync();
+			});
 	}
 
 	void MainPage::LayoutMessageShow(hstring const& message, bool const& isOpen)
@@ -149,6 +152,13 @@ namespace winrt::bikabika::implementation
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [message, isOpen, this]()
 			{
 				LayoutMessage().Title(message);
+				LayoutMessage().IsOpen(isOpen);
+			});
+	}
+	void MainPage::LayoutMessageShow(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
+			{
 				LayoutMessage().IsOpen(isOpen);
 			});
 	}
@@ -181,7 +191,7 @@ namespace winrt::bikabika::implementation
 		else if (res.Code() == 200)
 		{
 			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-			JsonObject tokens;
+			/*JsonObject tokens;
 			if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
 			{
 				if (loginData.Values().HasKey(L"tokens"))
@@ -190,7 +200,7 @@ namespace winrt::bikabika::implementation
 				}
 				tokens.Insert(Email().Text(), JsonValue::CreateStringValue(res.Token()));
 				loginData.Values().Insert(L"tokens", box_value(tokens.Stringify()));
-			}
+			}*/
 
 			JsonObject emails;
 			JsonObject passwords;
@@ -265,6 +275,26 @@ namespace winrt::bikabika::implementation
 		timer.Start();
 	}
 
+	void MainPage::ChangePassword(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen,this]()
+			{
+				OldPasswrod().Text(L"");
+				NewPasswrod().Text(L"");
+				ChangePasswordTip().IsOpen(isOpen);
+
+			});
+	}
+
+	void MainPage::ChangeSignature(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
+			{
+				NewSignature().Text(L"");
+				ChangeSignatureTip().IsOpen(isOpen);
+			});
+	}
+
 	void MainPage::OnTick(Windows::Foundation::IInspectable const& /* sender */,Windows::Foundation::IInspectable const& /* e */)
 	{
 
@@ -293,6 +323,7 @@ namespace winrt::bikabika::implementation
 				Info().Severity(severity);
 				Info().IsOpen(true);
 				StartInfoBar();
+				LayoutMessage().IsOpen(false);
 			});
 	}
 	void MainPage::LogOut()
@@ -324,7 +355,7 @@ namespace winrt::bikabika::implementation
 	Windows::Foundation::IAsyncAction MainPage::SetPerson()
 	{
 		auto res = co_await m_bikaClient.PersonInfo();
-		LayoutMessageShow(L"", false);
+		LayoutMessageShow(false);
 		LoginViewShow(false);
 		if (res.Code() == -1)
 		{
@@ -576,13 +607,20 @@ void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Fou
 }
 void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
+	ChangeSignature(true);
 }
 Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::SetPassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	return Windows::Foundation::IAsyncAction();
 }
+/// <summary>
+/// 菜单栏中修改密码按钮
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
+	ChangePassword(true);
 }
 /// <summary>
 /// 密码框按回车响应
@@ -596,8 +634,17 @@ void winrt::bikabika::implementation::MainPage::LoginButton_KeyUp(winrt::Windows
 		LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
 	}
 }
-void winrt::bikabika::implementation::MainPage::SubmitButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
+/// <summary>
+/// 修改签名框按回车响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void winrt::bikabika::implementation::MainPage::ChangePasswordButton_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
 {
+	if (e.Key() == Windows::System::VirtualKey::Enter)
+	{
+		ChangePasswordButton_Click(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+	}
 }
 /// <summary>
 /// 检测搜索框内容更改
@@ -701,7 +748,11 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 	}
 
 }
-
+/// <summary>
+/// 删除搜索记录
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	auto border = sender.as<AppBarButton>().Parent().as<Grid>().Children().GetAt(0).as<Border>();
@@ -725,6 +776,11 @@ void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Window
 	}
 	CatSearch().ItemsSource(box_value(m_suggestions));
 }
+/// <summary>
+/// 自动转换省略号
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	TextBlock block = sender.as<TextBlock>();
@@ -742,3 +798,96 @@ void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foun
 	}
 }
 
+
+
+
+/// <summary>
+/// 修改签名回车响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+void winrt::bikabika::implementation::MainPage::ChangeSignatureBox_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
+{
+	if (e.Key() == Windows::System::VirtualKey::Enter)
+	{
+		ChangeSignatureButton_Click(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+	}
+}
+
+
+/// <summary>
+/// 修改密码按钮响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::ChangePasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (OldPasswrod().Text() != L"" && NewPasswrod().Text() != L"")
+	{
+		LayoutMessageShow(resourceLoader.GetString(L"Message/Change"), true);
+		auto res = co_await m_bikaClient.SetPassword(OldPasswrod().Text(), NewPasswrod().Text());
+
+		if (res.Code() == -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200)
+		{
+
+			InfoBarMessageShow(resourceLoader.GetString(L"ChangePasswordButton/Content"), resourceLoader.GetString(L"Message/ChangeSuccess"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			if (loginData.Values().HasKey(L"passwords"))
+			{
+				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+				passwords.Insert(m_user.Email(), JsonValue::CreateStringValue(NewPasswrod().Text()));
+				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
+			}
+			ChangePassword(false);
+		}
+		else if (res.Code() == 401 && res.Error() == L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+		}
+		LayoutMessageShow(false);
+	}
+}
+
+/// <summary>
+/// 修改签名按钮响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::ChangeSignatureButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (NewSignature().Text() != L"")
+	{
+		LayoutMessageShow(resourceLoader.GetString(L"Message/Change"), true);
+		auto res = co_await m_bikaClient.SetSlogan(NewSignature().Text());
+
+		if (res.Code() == -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200)
+		{
+			ChangeSignature(false);
+			InfoBarMessageShow(resourceLoader.GetString(L"ChangeSignatureButton/Content"), resourceLoader.GetString(L"Message/ChangeSuccess"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			co_await SetPerson();
+		}
+		else if (res.Code() == 401 && res.Error() == L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+		}
+		LayoutMessageShow(false);
+	}
+}

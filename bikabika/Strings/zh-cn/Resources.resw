@@ -167,6 +167,22 @@
     <value>搜索</value>
     <comment>分类搜索栏</comment>
   </data>
+  <data name="ChangePasswordButton.Content" xml:space="preserve">
+    <value>修改密码</value>
+    <comment>窗口按钮:修改密码</comment>
+  </data>
+  <data name="ChangePasswordTip.Title" xml:space="preserve">
+    <value>更改密码</value>
+    <comment>窗口标题:修改密码</comment>
+  </data>
+  <data name="ChangeSignatureButton.Content" xml:space="preserve">
+    <value>修改签名</value>
+    <comment>窗口按钮:修改签名</comment>
+  </data>
+  <data name="ChangeSignatureTip.Title" xml:space="preserve">
+    <value>修改签名</value>
+    <comment>窗口标题:修改签名</comment>
+  </data>
   <data name="ClearHistory.Content" xml:space="preserve">
     <value>清除历史记录</value>
   </data>
@@ -418,6 +434,14 @@
     <value>自动打卡</value>
     <comment>通知消息:自动打卡</comment>
   </data>
+  <data name="Message.Change" xml:space="preserve">
+    <value>修改中....</value>
+    <comment>通知消息:修改中</comment>
+  </data>
+  <data name="Message.ChangeSuccess" xml:space="preserve">
+    <value>修改成功✔</value>
+    <comment>通知消息:修改成功</comment>
+  </data>
   <data name="Message.Logining" xml:space="preserve">
     <value>登录中</value>
   </data>
@@ -449,11 +473,17 @@
     <value>设置</value>
     <comment>导航栏:设置</comment>
   </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>新密码</value>
+  <data name="NewPasswrod.Text" xml:space="preserve">
+    <value>新密码: </value>
+    <comment>窗口文本:新密码</comment>
   </data>
-  <data name="OldPassword" xml:space="preserve">
-    <value>旧密码</value>
+  <data name="NewSignature.Text" xml:space="preserve">
+    <value>新签名:</value>
+    <comment>窗口文本:签名</comment>
+  </data>
+  <data name="OldPasswrod.Text" xml:space="preserve">
+    <value>旧密码: </value>
+    <comment>窗口文本:旧密码</comment>
   </data>
   <data name="Password.Text" xml:space="preserve">
     <value>密码</value>
