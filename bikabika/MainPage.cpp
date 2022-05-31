@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+using namespace winrt::Windows::UI::Xaml::Media::Animation;
 using namespace winrt::Windows::UI::Input;
 
 
@@ -215,10 +216,10 @@ namespace winrt::bikabika::implementation
 			}
 
 			co_await SetPerson();
-			/*if (m_user.IsPunched()) {
-				PunchIn();
-				SetPerson();
-			}*/
+			if(!m_user.IsPunched()) {
+				co_await PunchIn();
+				co_await SetPerson();
+			}
 		}
 		else if(res.Code()==401&&res.Error()==L"1005")
 		{
@@ -239,13 +240,64 @@ namespace winrt::bikabika::implementation
 
 	Windows::Foundation::IAsyncAction MainPage::PunchIn()
 	{
-		return Windows::Foundation::IAsyncAction();
+		auto res = co_await m_bikaClient.PunchIn();
+		auto action = res.Action();
+
+		if (action == BikaClient::Responses::Actions::OK)
+		{
+			InfoBarMessageShow(resourceLoader.GetString(L"Message/AutoPunchIn"), resourceLoader.GetString(L"Message/PunchIned"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+		}
+		else if (action == BikaClient::Responses::Actions::Fail)
+		{
+			InfoBarMessageShow(resourceLoader.GetString(L"Message/AutoPunchIn"), resourceLoader.GetString(L"Message/PunchIned"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Informational);
+		}
+		else
+		{
+			InfoBarMessageShow(resourceLoader.GetString(L"Message/AutoPunchIn"), res.Message(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Error);
+		}
 	}
 
 
+	void MainPage::StartInfoBar()
+	{
+		timer.Interval(std::chrono::milliseconds{ 100 });
+		auto registrationtoken = timer.Tick({ this, &MainPage::OnTick });
+		timer.Start();
+	}
 
+	void MainPage::OnTick(Windows::Foundation::IInspectable const& /* sender */,Windows::Foundation::IInspectable const& /* e */)
+	{
+
+		if (Info().Opacity() >= 0.1)
+		{
+			Info().Opacity(Info().Opacity() - 0.02);
+		}
+		else
+		{
+			Info().IsOpen(false);
+			timer.Stop();
+		}
+	}
+
+	void MainPage::InfoBarMessageShow(hstring const& title, hstring const& message, winrt::Microsoft::UI::Xaml::Controls::InfoBarSeverity const& severity)
+	{
+
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [title, message, severity, this]()
+			{
+				if (timer.IsEnabled()) timer.Stop();
+				timer = Windows::UI::Xaml::DispatcherTimer();
+				Info().IsOpen(false);
+				Info().Opacity(1.0);
+				Info().Message(message);
+				Info().Title(title);
+				Info().Severity(severity);
+				Info().IsOpen(true);
+				StartInfoBar();
+			});
+	}
 	void MainPage::LogOut()
 	{
+
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [this]()
 			{
 				m_login = false;
@@ -308,7 +360,7 @@ namespace winrt::bikabika::implementation
 		else
 		{
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
-			Password().Password(L"");
+
 		}
 
 	}
@@ -434,7 +486,7 @@ void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::W
 		}
 		else if (props.IsLeftButtonPressed())
 		{
-			Menu().ShowAt(sender.as<FrameworkElement>());
+			NavView_Navigate(L"User", Windows::UI::Xaml::Media::Animation::EntranceNavigationTransitionInfo());
 		}
 	}
 	else {

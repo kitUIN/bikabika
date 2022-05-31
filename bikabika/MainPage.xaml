@@ -233,6 +233,7 @@
                 IsAddTabButtonVisible="False"
                 TabCloseRequested="ContentTabView_TabCloseRequested"
                 TabWidthMode="Equal">
+
                 <muxc:TabView.TabStripHeader>
                     <Button Margin="0,7,0,0">
                         <Button.Flyout>
@@ -458,7 +459,15 @@
                 <muxc:SymbolIconSource Symbol="ContactInfo" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
-
+        <muxc:InfoBar
+            x:Name="Info"
+            Margin="0,0,5,5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            IsClosable="False"
+            IsIconVisible="True"
+            IsOpen="False"
+            Severity="Success" />
 
 
     </Grid>

@@ -25,11 +25,15 @@ namespace winrt::bikabika::implementation
 		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
 		void LayoutMessageShow(hstring const& message,bool const& isOpen);
 		Windows::Foundation::IAsyncAction Login();
-		Windows::Foundation::IAsyncAction  PunchIn();
+		Windows::Foundation::IAsyncAction PunchIn();
+
+		void StartInfoBar();
 		Windows::Foundation::IAsyncAction SetPerson();
 		Windows::Foundation::IAsyncAction GetKeywords();
 		void ChangeSignature();
 		void ChangePassword();
+		void OnTick(Windows::Foundation::IInspectable const&, Windows::Foundation::IInspectable const&);
+		void InfoBarMessageShow(hstring const& title, hstring const& message, winrt::Microsoft::UI::Xaml::Controls::InfoBarSeverity const& severity);
 		void LogOut();
 		BikaClient::Blocks::UserBlock User();
 		void User(BikaClient::Blocks::UserBlock const& value);
@@ -38,7 +42,7 @@ namespace winrt::bikabika::implementation
 		bool IsLogin();
 		void IsLogin(bool const& value);
 		static bikabika::MainPage Current() { return current; }
-		private:
+	private:
 		static bikabika::MainPage current;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
 		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
@@ -48,6 +52,7 @@ namespace winrt::bikabika::implementation
 		bool m_login = false;
 		bool m_suggestIsChosen = false;
 		bool m_firstArrive = true;
+		Windows::UI::Xaml::DispatcherTimer timer;
 
 	public:
 		void KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);

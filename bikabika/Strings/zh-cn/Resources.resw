@@ -414,8 +414,20 @@
   <data name="LoginTeachingTip.Title" xml:space="preserve">
     <value>登录</value>
   </data>
+  <data name="Message.AutoPunchIn" xml:space="preserve">
+    <value>自动打卡</value>
+    <comment>通知消息:自动打卡</comment>
+  </data>
   <data name="Message.Logining" xml:space="preserve">
     <value>登录中</value>
+  </data>
+  <data name="Message.PunchIned" xml:space="preserve">
+    <value>已打卡✔</value>
+    <comment>通知消息:打卡</comment>
+  </data>
+  <data name="Message.UnPunchIned" xml:space="preserve">
+    <value>未打卡❌</value>
+    <comment>通知消息:未打卡</comment>
   </data>
   <data name="NavAccount.Content" xml:space="preserve">
     <value>我的</value>
@@ -457,9 +469,6 @@
   </data>
   <data name="Punch.Label" xml:space="preserve">
     <value>打卡</value>
-  </data>
-  <data name="PunchIned" xml:space="preserve">
-    <value>已打卡✔</value>
   </data>
   <data name="PunchTip.Content" xml:space="preserve">
     <value>打卡</value>
@@ -529,9 +538,6 @@
   </data>
   <data name="UnEdit.Content" xml:space="preserve">
     <value>无法编辑</value>
-  </data>
-  <data name="UnPunchIned" xml:space="preserve">
-    <value>未打卡❌</value>
   </data>
   <data name="UnVerified" xml:space="preserve">
     <value>未验证❌</value>

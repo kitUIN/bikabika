@@ -13,6 +13,7 @@ namespace bikabika
         static MainPage Current{ get; };
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         void ContentDialogShow(bikabika.BikaHttpStatus mode, String message);
+        void InfoBarMessageShow(String title, String message, Microsoft.UI.Xaml.Controls.InfoBarSeverity severity);
         BikaClient.Blocks.UserBlock User;
         void LogOut();
     }
