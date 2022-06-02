@@ -1,0 +1,21 @@
+namespace bikabika
+{
+    enum BikaHttpStatus
+    {
+        UNKNOWN = 0,
+        TIMEOUT = 1,
+        NOAUTH = 2,
+    };
+    [default_interface]
+    runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        MainPage();
+        static MainPage Current{ get; };
+        BikaClient.BikaHttpClient HttpClient{ get; };
+        void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
+        void ContentDialogShow(bikabika.BikaHttpStatus mode, String message);
+        void InfoBarMessageShow(String title, String message, Microsoft.UI.Xaml.Controls.InfoBarSeverity severity);
+        BikaClient.Blocks.UserBlock User;
+        void LogOut();
+    }
+}
