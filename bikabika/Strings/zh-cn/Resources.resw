@@ -413,6 +413,14 @@
     <value>确定</value>
     <comment>关键字</comment>
   </data>
+  <data name="Keyword.Theme.Dark" xml:space="preserve">
+    <value>深色</value>
+    <comment>关键字:深色</comment>
+  </data>
+  <data name="Keyword.Theme.Light" xml:space="preserve">
+    <value>浅色</value>
+    <comment>关键字:浅色</comment>
+  </data>
   <data name="Keyword.Tip.LogOut" xml:space="preserve">
     <value>您确定要登出当前账户吗？</value>
     <comment>关键字:提示</comment>
@@ -528,17 +536,37 @@
   <data name="SetSlogan" xml:space="preserve">
     <value>设置签名</value>
   </data>
+  <data name="SettingAPPVersionDes.Text" xml:space="preserve">
+    <value>当前所对应的哔咔手机APP版本号</value>
+    <comment>设置介绍:应用内核</comment>
+  </data>
+  <data name="SettingAPPVersionName.Text" xml:space="preserve">
+    <value>应用内核</value>
+    <comment>设置标题:应用内核</comment>
+  </data>
   <data name="SettingBikaClientDes.Text" xml:space="preserve">
     <value>访问哔咔的相关网络配置</value>
     <comment>设置介绍:网络设置</comment>
   </data>
   <data name="SettingBikaClientFlowName.Text" xml:space="preserve">
-    <value>分流设置</value>
-    <comment>设置介绍:分流设置</comment>
+    <value>图片分流设置</value>
+    <comment>设置介绍:图片分流设置</comment>
   </data>
   <data name="SettingBikaClientName.Text" xml:space="preserve">
     <value>网络设置</value>
     <comment>设置标题:网络设置</comment>
+  </data>
+  <data name="SettingBikaClientServerFlowName.Text" xml:space="preserve">
+    <value>服务器分流</value>
+    <comment>设置标题:服务器分流</comment>
+  </data>
+  <data name="SettingLogDes.Text" xml:space="preserve">
+    <value>日志生成与打开</value>
+    <comment>设置介绍:日志设置</comment>
+  </data>
+  <data name="SettingLogName.Text" xml:space="preserve">
+    <value>日志设置</value>
+    <comment>设置标题:日志设置</comment>
   </data>
   <data name="SettingThemeDes.Text" xml:space="preserve">
     <value>在这里设置应用程序的主题</value>
@@ -547,6 +575,14 @@
   <data name="SettingThemeName.Text" xml:space="preserve">
     <value>主题设置</value>
     <comment>设置标题:主题设置</comment>
+  </data>
+  <data name="SettingVersionDes.Text" xml:space="preserve">
+    <value>您当前使用的哔咔哔咔UWP版本</value>
+    <comment>设置介绍:应用版本</comment>
+  </data>
+  <data name="SettingVersionName.Text" xml:space="preserve">
+    <value>应用版本</value>
+    <comment>设置标题:应用内核</comment>
   </data>
   <data name="SortMode.DA" xml:space="preserve">
     <value>旧到新</value>

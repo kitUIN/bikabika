@@ -10,6 +10,115 @@
     mc:Ignorable="d">
     <Grid SizeChanged="BackGrid_SizeChanged">
         <StackPanel Margin="0,15,0,0" Orientation="Vertical">
+            <muxc:Expander
+                Width="{x:Bind SettingWidth, Mode=OneWay}"
+                Margin="5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                CornerRadius="8">
+                <muxc:Expander.Header>
+                    <StackPanel
+                        Height="80"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <SymbolIcon Symbol="ZeroBars" />
+                        <StackPanel
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                x:Uid="SettingBikaClientName"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="Bold" />
+                            <TextBlock
+                                x:Uid="SettingBikaClientDes"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="13" />
+                        </StackPanel>
+                    </StackPanel>
+                </muxc:Expander.Header>
+                <muxc:Expander.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Border
+                            Width="{x:Bind SettingConentWidth, Mode=OneWay}"
+                            Height="80"
+                            Margin="5"
+                            Padding="5,10,5,10"
+                            HorizontalAlignment="Center"
+                            Background="{ThemeResource LayerFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Grid>
+                                <StackPanel
+                                    Padding="10,5,10,5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Shuffle" />
+                                    <TextBlock
+                                        x:Uid="SettingBikaClientServerFlowName"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold" />
+                                </StackPanel>
+                                <ComboBox
+                                    Width="200"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Loaded="SettingBikaClientServerFlow_Loaded"
+                                    SelectionChanged="SettingBikaClientServerFlow_SelectionChanged" />
+                            </Grid>
+
+                        </Border>
+                        <Border
+                            Width="{x:Bind SettingConentWidth, Mode=OneWay}"
+                            Height="80"
+                            Margin="5"
+                            Padding="5,10,5,10"
+                            HorizontalAlignment="Center"
+                            Background="{ThemeResource LayerFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8">
+                            <Grid>
+                                <StackPanel
+                                    Padding="10,5,10,5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Shuffle" />
+                                    <TextBlock
+                                        x:Uid="SettingBikaClientFlowName"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold" />
+                                </StackPanel>
+                                <ComboBox
+                                    Width="200"
+                                    Margin="0,0,10,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Loaded="SettingBikaClientFlow_Loaded"
+                                    SelectionChanged="SettingBikaClientFlow_SelectionChanged" />
+                            </Grid>
+
+                        </Border>
+
+                    </StackPanel>
+                </muxc:Expander.Content>
+            </muxc:Expander>
             <Border
                 x:Name="ThemeSetting"
                 Width="{x:Bind SettingWidth, Mode=OneWay}"
@@ -50,137 +159,11 @@
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        PlaceholderText="Pick a color">
-                        <x:String>Light</x:String>
-                        <x:String>Black</x:String>
-                        <x:String>Bika</x:String>
-                    </ComboBox>
+                        Loaded="SettingTheme_Loaded"
+                        SelectionChanged="SettingTheme_SelectionChanged" />
                 </Grid>
-
             </Border>
 
-            <muxc:Expander
-                Width="{x:Bind SettingWidth, Mode=OneWay}"
-                Margin="5"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="{ThemeResource LayerFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                CornerRadius="8">
-                <muxc:Expander.Header>
-                    <StackPanel
-                        Height="80"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <SymbolIcon Symbol="ZeroBars" />
-                        <StackPanel
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center">
-                            <TextBlock
-                                x:Uid="SettingBikaClientName"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="20"
-                                FontWeight="Bold" />
-                            <TextBlock
-                                x:Uid="SettingBikaClientDes"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="13" />
-                        </StackPanel>
-                    </StackPanel>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
-                    <StackPanel Margin="0,0,0,0" Orientation="Vertical">
-                        <Border
-                            Width="{x:Bind SettingConentWidth, Mode=OneWay}"
-                            Height="80"
-                            Margin="5"
-                            Padding="5,10,5,10"
-                            HorizontalAlignment="Center"
-                            Background="{ThemeResource LayerFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                            <Grid>
-                                <StackPanel
-                                    Padding="10,5,10,5"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Shuffle" />
-                                    <TextBlock
-                                        x:Uid="SettingBikaClientFlowName"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontSize="18"
-                                        FontWeight="Bold" />
-
-                                </StackPanel>
-                                <ComboBox
-                                    Width="200"
-                                    Margin="0,0,10,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Loaded="SettingBikaClientFlow_Loaded"
-                                    PlaceholderText="Pick a color"
-                                    SelectionChanged="SettingBikaClientFlow_SelectionChanged" />
-                            </Grid>
-
-                        </Border>
-                        <Border
-                            Width="{x:Bind SettingConentWidth, Mode=OneWay}"
-                            Height="80"
-                            Margin="5"
-                            Padding="5,10,5,10"
-                            HorizontalAlignment="Center"
-                            Background="{ThemeResource LayerFillColorDefaultBrush}"
-                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                            <Grid>
-                                <StackPanel
-                                    Padding="10,5,10,5"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <SymbolIcon Symbol="SlideShow" />
-                                    <StackPanel
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center">
-                                        <TextBlock
-                                            x:Uid="SettingThemeName"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="20"
-                                            FontWeight="Bold" />
-                                        <TextBlock
-                                            x:Uid="SettingThemeDes"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Center"
-                                            FontSize="13" />
-                                    </StackPanel>
-                                </StackPanel>
-                                <ComboBox
-                                    Width="200"
-                                    Margin="0,0,10,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    PlaceholderText="Pick a color">
-                                    <x:String>Light</x:String>
-                                    <x:String>Black</x:String>
-                                    <x:String>Bika</x:String>
-                                </ComboBox>
-                            </Grid>
-
-                        </Border>
-                    </StackPanel>
-                </muxc:Expander.Content>
-            </muxc:Expander>
             <Border
                 Width="{x:Bind SettingWidth, Mode=OneWay}"
                 Height="80"
@@ -197,36 +180,116 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <SymbolIcon Symbol="SlideShow" />
+                        <SymbolIcon Symbol="UnSyncFolder" />
                         <StackPanel
                             Margin="10,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center">
                             <TextBlock
-                                x:Uid="SettingThemeName"
+                                x:Uid="SettingLogName"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 FontWeight="Bold" />
                             <TextBlock
-                                x:Uid="SettingThemeDes"
+                                x:Uid="SettingLogDes"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="13" />
                         </StackPanel>
                     </StackPanel>
-                    <ComboBox
+                    <Button
+                        Width="200"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center" />
+
+                </Grid>
+            </Border>
+            <Border
+                Width="{x:Bind SettingWidth, Mode=OneWay}"
+                Height="80"
+                Margin="5"
+                Padding="5,10,5,10"
+                HorizontalAlignment="Center"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <Grid>
+                    <StackPanel
+                        Padding="10,5,10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <SymbolIcon Symbol="World" />
+                        <StackPanel
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                x:Uid="SettingAPPVersionName"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="Bold" />
+                            <TextBlock
+                                x:Uid="SettingAPPVersionDes"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="13" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Button
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        PlaceholderText="Pick a color">
-                        <x:String>Light</x:String>
-                        <x:String>Black</x:String>
-                        <x:String>Bika</x:String>
-                    </ComboBox>
+                        IsEnabled="False"
+                        Loaded="SettingAPPVersion_Loaded" />
                 </Grid>
-
+            </Border>
+            <Border
+                Width="{x:Bind SettingWidth, Mode=OneWay}"
+                Height="80"
+                Margin="5"
+                Padding="5,10,5,10"
+                HorizontalAlignment="Center"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <Grid>
+                    <StackPanel
+                        Padding="10,5,10,5"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <SymbolIcon Symbol="Tag" />
+                        <StackPanel
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                x:Uid="SettingVersionName"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="Bold" />
+                            <TextBlock
+                                x:Uid="SettingVersionDes"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="13" />
+                        </StackPanel>
+                    </StackPanel>
+                    <Button
+                        Width="200"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Loaded="SettingVersion_Loaded" />
+                </Grid>
             </Border>
         </StackPanel>
 

@@ -7,11 +7,16 @@
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::ApplicationModel;
+using namespace Windows::ApplicationModel::Activation;
+using namespace Windows::ApplicationModel::Core;
+using namespace Windows::UI::ViewManagement;
 namespace winrt::bikabika::implementation
 {
     SettingsPage::SettingsPage()
     {
         InitializeComponent();
+
     }
 
     double SettingsPage::SettingWidth()
@@ -71,4 +76,80 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_Loaded
     m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
     sender.as<ComboBox>().ItemsSource(box_value(m_flows));
     sender.as<ComboBox>().SelectedIndex(0);
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingTheme_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Light"));
+    m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Dark"));
+    sender.as<ComboBox>().ItemsSource(box_value(m_themes));
+    auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
+    if (theme == ElementTheme::Light)
+    {
+        sender.as<ComboBox>().SelectedIndex(0);
+    }
+    else
+    {
+        sender.as<ComboBox>().SelectedIndex(1);
+    }
+
+
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingTheme_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+{
+    auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
+    auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
+    Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+    if (mode == resourceLoader.GetString(L"Keyword/Theme/Light") && theme != ElementTheme::Light)
+    {
+        Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Light);
+        settings.Values().Insert(L"Theme", box_value(L"Light"));
+    }
+    else if (mode == resourceLoader.GetString(L"Keyword/Theme/Dark") && theme != ElementTheme::Dark)
+    {
+        Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
+        settings.Values().Insert(L"Theme", box_value(L"Dark"));
+    }
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingVersion_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    PackageVersion version = Package::Current().Id().Version();
+
+    sender.as<Button>().Content(box_value(to_hstring(version.Major) +L"."+ to_hstring(version.Minor)+L"."+ to_hstring(version.Build)));
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingAPPVersion_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    sender.as<Button>().Content(box_value(rootPage.HttpClient().APPVersion()));
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/One"));
+    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Two"));
+    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
+    sender.as<ComboBox>().ItemsSource(box_value(m_flows));
+    sender.as<ComboBox>().SelectedIndex(2);
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+{
+    auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
+    if (mode == resourceLoader.GetString(L"Keyword/Flow/Two"))
+    {
+
+    }
+    else if (mode == resourceLoader.GetString(L"Keyword/Flow/Three"))
+    {
+
+    }
+
 }

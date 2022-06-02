@@ -27,6 +27,7 @@ namespace winrt::bikabika::implementation
 		void LayoutMessageShow(bool const& isOpen);
 		Windows::Foundation::IAsyncAction Login();
 		Windows::Foundation::IAsyncAction PunchIn();
+		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 
 		void StartInfoBar();
 		void ChangePassword(bool const& isOpen);

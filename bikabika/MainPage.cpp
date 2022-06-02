@@ -17,7 +17,7 @@ using namespace winrt;
 using namespace Windows::UI;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Composition;
-using namespace Windows::UI::ViewManagement;
+
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
 using namespace Windows::UI::Xaml::Controls;
@@ -31,7 +31,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
-
+using namespace Windows::UI::ViewManagement;
 
 namespace winrt::bikabika::implementation
 {
@@ -42,20 +42,7 @@ namespace winrt::bikabika::implementation
 
 		InitializeComponent();
 		MainPage::current = *this;
-		// 隐藏标题栏
-		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
-		coreTitleBar.ExtendViewIntoTitleBar(true);
-		Window::Current().SetTitleBar(CustomDragRegion());
 
-		auto titleBar = ApplicationView::GetForCurrentView().TitleBar();
-		titleBar.ButtonBackgroundColor(Colors::Transparent());
-
-		// 登录初始化
-		LogOut();
-
-		NavHome().IsEnabled(false);
-		NavClassification().IsEnabled(false);
-		NavAccount().IsEnabled(false);
 	}
 	void MainPage::LoginViewShow(bool const& isOpen)
 	{
@@ -84,15 +71,12 @@ namespace winrt::bikabika::implementation
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()
 			{
 				LayoutMessage().IsOpen(false);
-				auto color = Application::Current().Resources().Lookup(box_value(L"SystemAccentColorLight3")).as<Color>();
 				ContentDialog dialog;
 				dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 				dialog.IsTextScaleFactorEnabled(true);
-				dialog.Background(SolidColorBrush{ color });
 				StackPanel grid;
 				grid.Orientation(Orientation::Vertical);
 				Border boder;
-				boder.Background(SolidColorBrush{ color });
 				boder.CornerRadius(Windows::UI::Xaml::CornerRadius{ 10,10,10,10 });
 				boder.Padding(Thickness{ 10,5,10,5 });
 				boder.VerticalAlignment(VerticalAlignment::Top);
@@ -187,14 +171,16 @@ namespace winrt::bikabika::implementation
 	{
 		m_login = false;
 		auto res = co_await m_bikaClient.Login(Email().Text(), Password().Password());
-
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		JsonObject emails;
+		JsonObject passwords;
+		JsonArray emailArray;
 		if (res.Code()== -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
 		}
 		else if (res.Code() == 200)
 		{
-			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 			/*JsonObject tokens;
 			if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
 			{
@@ -205,10 +191,6 @@ namespace winrt::bikabika::implementation
 				tokens.Insert(Email().Text(), JsonValue::CreateStringValue(res.Token()));
 				loginData.Values().Insert(L"tokens", box_value(tokens.Stringify()));
 			}*/
-
-			JsonObject emails;
-			JsonObject passwords;
-			JsonArray emailArray;
 			if (loginData.Values().HasKey(L"emails"))
 			{
 				emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
@@ -244,6 +226,12 @@ namespace winrt::bikabika::implementation
 		{
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Error"));
 			Password().Password(L"");
+			if (loginData.Values().HasKey(L"passwords"))
+			{
+				passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+				passwords.Remove(Email().Text());
+				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
+			}
 		}
 		else
 		{
@@ -269,6 +257,26 @@ namespace winrt::bikabika::implementation
 		{
 			InfoBarMessageShow(resourceLoader.GetString(L"Message/AutoPunchIn"), res.Message(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Error);
 		}
+	}
+
+	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+	{
+		__super::OnNavigatedTo(e);
+
+
+		// 隐藏标题栏
+		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
+		coreTitleBar.ExtendViewIntoTitleBar(true);
+		Window::Current().SetTitleBar(CustomDragRegion());
+
+		auto titleBar = ApplicationView::GetForCurrentView().TitleBar();
+		titleBar.ButtonBackgroundColor(Colors::Transparent());
+
+		// 登录初始化
+		LogOut();
+		NavHome().IsEnabled(false);
+		NavClassification().IsEnabled(false);
+		NavAccount().IsEnabled(false);
 	}
 
 
@@ -730,6 +738,19 @@ void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt
 void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	if (settings.Values().HasKey(L"Theme"))
+	{
+		auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
+		if (settings.Values().Lookup(L"Theme").as<hstring>() == L"Light" && theme != ElementTheme::Dark)
+		{
+			Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Light);
+		}
+		else if(settings.Values().Lookup(L"Theme").as<hstring>() == L"Dark" && theme != ElementTheme::Light)
+		{
+			Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
+		}
+	}
 	if (loginData.Values().HasKey(L"emails"))
 	{
 		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
@@ -737,24 +758,26 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 		{
 			Email().Text(emails.GetNamedString(L"Last"));
 		}
-	}
-	if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
-	{
-		if (loginData.Values().HasKey(L"passwords"))
+		if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
 		{
-			JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-			if (passwords.HasKey(Email().Text()))
+			if (loginData.Values().HasKey(L"passwords"))
 			{
-				Password().Password(passwords.GetNamedString(Email().Text()));
-				AutoCheckBox().IsChecked(true);
+				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+				if (passwords.HasKey(Email().Text()))
+				{
+					Password().Password(passwords.GetNamedString(Email().Text()));
+					AutoCheckBox().IsChecked(true);
+					if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+					{
+						LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
+						auto login{ Login() };
+					}
+				}
 			}
 		}
 	}
-	if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
-	{
-		LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
-		auto login{ Login() };
-	}
+
+
 
 }
 /// <summary>
