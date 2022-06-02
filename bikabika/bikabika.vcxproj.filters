@@ -20,6 +20,9 @@
     <Page Include="ClassificationPage.xaml">
       <Filter>Pages</Filter>
     </Page>
+    <Page Include="Themes\BikaTheme.xaml">
+      <Filter>Themes</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
@@ -346,10 +349,14 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{ef152c4b-1e0b-42a3-9f78-1764a54b699f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Themes">
+      <UniqueIdentifier>{e7fb3a60-7052-4c29-83d0-560e9f77fbda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <None Include="packages.config" />
+    <None Include="bikabika_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />

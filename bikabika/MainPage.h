@@ -33,7 +33,7 @@ namespace winrt::bikabika::implementation
 		void ChangeSignature(bool const& isOpen);
 		Windows::Foundation::IAsyncAction SetPerson();
 		Windows::Foundation::IAsyncAction GetKeywords();
-
+		BikaClient::BikaHttpClient HttpClient();
 		void OnTick(Windows::Foundation::IInspectable const&, Windows::Foundation::IInspectable const&);
 		void InfoBarMessageShow(hstring const& title, hstring const& message, winrt::Microsoft::UI::Xaml::Controls::InfoBarSeverity const& severity);
 		void LogOut();

@@ -1,9 +1,10 @@
 namespace bikabika
 {
     [default_interface]
-    runtimeclass SettingsPage : Windows.UI.Xaml.Controls.Page
+    runtimeclass SettingsPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         SettingsPage();
-        Windows.UI.Xaml.Controls.Grid BackGrid{ get; };
+        Double SettingWidth{ get; };
+        Double SettingConentWidth{ get; };
     }
 }

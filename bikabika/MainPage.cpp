@@ -441,6 +441,11 @@ namespace winrt::bikabika::implementation
 
 	}
 
+	BikaClient::BikaHttpClient MainPage::HttpClient()
+	{
+		return m_bikaClient;
+	}
+
 }
 
 void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
@@ -562,14 +567,14 @@ void winrt::bikabika::implementation::MainPage::Grid_SizeChanged(winrt::Windows:
 }
 void winrt::bikabika::implementation::MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
 {
-	ContentFrame().Margin(Thickness{ 53,0,0,0 });
+	ContentFrame().Margin(Thickness{ 47,0,0,0 });
 	APPTitle().Visibility(Visibility::Collapsed);
 	NavSmallImg().Visibility(Visibility::Visible);
 	NavBigImg().Visibility(Visibility::Collapsed);
 }
 void winrt::bikabika::implementation::MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
 {
-	ContentFrame().Margin(Thickness{ 185,0,0,0 });
+	ContentFrame().Margin(Thickness{ 179,0,0,0 });
 	APPTitle().Visibility(Visibility::Visible);
 	NavSmallImg().Visibility(Visibility::Collapsed);
 	NavBigImg().Visibility(Visibility::Visible);

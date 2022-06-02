@@ -392,6 +392,15 @@
     <value>“伺服器君是个变态”</value>
     <comment>默认关键字:介绍</comment>
   </data>
+  <data name="Keyword.Flow.One" xml:space="preserve">
+    <value>分流一</value>
+  </data>
+  <data name="Keyword.Flow.Three" xml:space="preserve">
+    <value>分流三</value>
+  </data>
+  <data name="Keyword.Flow.Two" xml:space="preserve">
+    <value>分流二</value>
+  </data>
   <data name="Keyword.Keywords" xml:space="preserve">
     <value>大家都在搜</value>
     <comment>关键字:大家都在搜</comment>
@@ -518,6 +527,26 @@
   </data>
   <data name="SetSlogan" xml:space="preserve">
     <value>设置签名</value>
+  </data>
+  <data name="SettingBikaClientDes.Text" xml:space="preserve">
+    <value>访问哔咔的相关网络配置</value>
+    <comment>设置介绍:网络设置</comment>
+  </data>
+  <data name="SettingBikaClientFlowName.Text" xml:space="preserve">
+    <value>分流设置</value>
+    <comment>设置介绍:分流设置</comment>
+  </data>
+  <data name="SettingBikaClientName.Text" xml:space="preserve">
+    <value>网络设置</value>
+    <comment>设置标题:网络设置</comment>
+  </data>
+  <data name="SettingThemeDes.Text" xml:space="preserve">
+    <value>在这里设置应用程序的主题</value>
+    <comment>设置介绍:主题设置</comment>
+  </data>
+  <data name="SettingThemeName.Text" xml:space="preserve">
+    <value>主题设置</value>
+    <comment>设置标题:主题设置</comment>
   </data>
   <data name="SortMode.DA" xml:space="preserve">
     <value>旧到新</value>

@@ -2,8 +2,8 @@
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
   <Identity
     Name="fc4c341a-b06c-4238-a650-5e0b036b004a"
-    Publisher="CN=kulujun"
-    Version="1.0.0.0" />
+    Publisher="CN=kitUIN"
+    Version="0.3.0.0" />
   <mp:PhoneIdentity PhoneProductId="fc4c341a-b06c-4238-a650-5e0b036b004a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   <Properties>
     <DisplayName>bikabika</DisplayName>
