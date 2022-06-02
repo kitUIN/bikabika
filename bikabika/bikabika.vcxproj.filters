@@ -4,7 +4,6 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage.xaml" />
     <Page Include="HomePage.xaml">
       <Filter>Pages</Filter>
     </Page>
@@ -22,6 +21,9 @@
     </Page>
     <Page Include="Themes\BikaTheme.xaml">
       <Filter>Themes</Filter>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <Filter>Pages</Filter>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +364,7 @@
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\zh-cn\Resources.resw">
+    <PRIResource Include="Resources\zh-cn\Resources.resw">
       <Filter>i18n</Filter>
     </PRIResource>
   </ItemGroup>

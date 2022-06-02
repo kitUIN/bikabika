@@ -81,6 +81,7 @@ namespace winrt::bikabika::implementation
 				boder.Padding(Thickness{ 10,5,10,5 });
 				boder.VerticalAlignment(VerticalAlignment::Top);
 				boder.HorizontalAlignment(HorizontalAlignment::Left);
+				dialog.RequestedTheme(Window::Current().Content().as<FrameworkElement>().RequestedTheme());
 				TextBlock title;
 				Image img;
 				img.Height(270);
@@ -310,9 +311,9 @@ namespace winrt::bikabika::implementation
 	void MainPage::OnTick(Windows::Foundation::IInspectable const& /* sender */,Windows::Foundation::IInspectable const& /* e */)
 	{
 
-		if (Info().Opacity() >= 0.1)
+		if (InfoBar().Value() < 100)
 		{
-			Info().Opacity(Info().Opacity() - 0.02);
+			InfoBar().Value(InfoBar().Value() + 3);
 		}
 		else
 		{
@@ -329,10 +330,11 @@ namespace winrt::bikabika::implementation
 				if (timer.IsEnabled()) timer.Stop();
 				timer = Windows::UI::Xaml::DispatcherTimer();
 				Info().IsOpen(false);
-				Info().Opacity(1.0);
+				InfoBar().Value(0);
 				Info().Message(message);
 				Info().Title(title);
 				Info().Severity(severity);
+				InfoBar().Width(Info().ActualWidth() + 100);
 				Info().IsOpen(true);
 				StartInfoBar();
 				LayoutMessage().IsOpen(false);
@@ -622,11 +624,11 @@ void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Fou
 		});
 	dialog.ShowAsync();
 }
-void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	ChangeSignature(true);
 }
-Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::SetPassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::SetPassword_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	return Windows::Foundation::IAsyncAction();
 }
@@ -635,7 +637,7 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Set
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void winrt::bikabika::implementation::MainPage::ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::ChangePassword_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	ChangePassword(true);
 }
@@ -684,7 +686,7 @@ void winrt::bikabika::implementation::MainPage::CatSearch_TextChanged(winrt::Win
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="args"></param>
-void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& args)
+void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::Windows::UI::Xaml::Controls::AutoSuggestBox const& sender, winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxQuerySubmittedEventArgs const& /*args*/)
 {
 
 	Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
@@ -692,7 +694,7 @@ void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::
 	if (text == L"") return;
 	if (historys.Values().HasKey(L"Search"))
 	{
-		int i;
+		uint32_t i;
 		bool f = false;
 		JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
 		for (i = 0; i < searchHistorys.Size(); i++)
@@ -735,7 +737,7 @@ void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
@@ -776,16 +778,13 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 			}
 		}
 	}
-
-
-
 }
 /// <summary>
 /// 删除搜索记录
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	auto border = sender.as<AppBarButton>().Parent().as<Grid>().Children().GetAt(0).as<Border>();
 	auto grid = border.Child().as<Grid>();
@@ -813,7 +812,7 @@ void winrt::bikabika::implementation::MainPage::KeywordClose_Click(winrt::Window
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	TextBlock block = sender.as<TextBlock>();
 	if (block.ActualWidth() > block.Width())

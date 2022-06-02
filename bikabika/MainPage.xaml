@@ -330,6 +330,7 @@
                         Orientation="Horizontal">
                         <TextBlock
                             x:Uid="E-mail"
+                            Margin="0,0,10,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Text="E-mail:" />
@@ -345,6 +346,7 @@
                         Orientation="Horizontal">
                         <TextBlock
                             x:Uid="Password"
+                            Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             Text="Password:" />
                         <PasswordBox
@@ -395,11 +397,17 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="OldPasswrod" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="OldPasswrod"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox x:Name="OldPasswrod" Width="200" />
                     </StackPanel>
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="NewPasswrod" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="NewPasswrod"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox
                             x:Name="NewPasswrod"
                             Width="200"
@@ -428,7 +436,10 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="NewSignature" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="NewSignature"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox
                             x:Name="NewSignature"
                             Width="200"
@@ -446,13 +457,19 @@
         </muxc:TeachingTip>
         <muxc:InfoBar
             x:Name="Info"
-            Margin="0,0,5,5"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
+            Margin="0,20,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             IsClosable="False"
             IsIconVisible="True"
             IsOpen="False"
-            Severity="Success" />
+            Severity="Success">
+            <muxc:ProgressBar
+                x:Name="InfoBar"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Value="50" />
+        </muxc:InfoBar>
 
 
     </Grid>

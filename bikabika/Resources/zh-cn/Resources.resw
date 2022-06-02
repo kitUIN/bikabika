@@ -549,7 +549,7 @@
     <comment>设置介绍:网络设置</comment>
   </data>
   <data name="SettingBikaClientFlowName.Text" xml:space="preserve">
-    <value>图片分流设置</value>
+    <value>图片分流</value>
     <comment>设置介绍:图片分流设置</comment>
   </data>
   <data name="SettingBikaClientName.Text" xml:space="preserve">
@@ -559,6 +559,10 @@
   <data name="SettingBikaClientServerFlowName.Text" xml:space="preserve">
     <value>服务器分流</value>
     <comment>设置标题:服务器分流</comment>
+  </data>
+  <data name="SettingLogButton.Content" xml:space="preserve">
+    <value>生成日志</value>
+    <comment>设置按钮:生成日志</comment>
   </data>
   <data name="SettingLogDes.Text" xml:space="preserve">
     <value>日志生成与打开</value>
