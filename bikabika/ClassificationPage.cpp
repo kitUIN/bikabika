@@ -3,10 +3,13 @@
 #if __has_include("ClassificationPage.g.cpp")
 #include "ClassificationPage.g.cpp"
 #endif
+using namespace winrt::BikaClient::Blocks;
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::Data::Json;
+using namespace Windows::Foundation;
 namespace winrt::bikabika::implementation
 {
     ClassificationPage::ClassificationPage()
@@ -24,9 +27,27 @@ namespace winrt::bikabika::implementation
 		m_categories = value;
 		m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Categories" });
     }
+	CategoriesBlock ClassificationPage::CreateCategoriesBlock(hstring const& title, hstring const& uri)
+	{
+		ImageBlock imageBlock;
+		imageBlock.Img(winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage{ Uri{ uri } });
+		CategoriesBlock categoriesBlock;
+		categoriesBlock.Thumb(imageBlock);
+		categoriesBlock.Title(title);
+		categoriesBlock.IsAuto(true);
+		return categoriesBlock;
+	}
 	Windows::Foundation::IAsyncAction ClassificationPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
-		
+
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Support"),L"ms-appx:///Assets//Picacgs//cat_support.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Leaderboard"),L"ms-appx:///Assets//Picacgs//cat_leaderboard.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Game"),L"ms-appx:///Assets//Picacgs//cat_game.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Help"),L"ms-appx:///Assets//Picacgs//chat_bg_image.png"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Smalltool"),L"ms-appx:///Assets//Picacgs//cat_smalltool.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Forum"),L"ms-appx:///Assets//Picacgs//cat_forum.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Latest"),L"ms-appx:///Assets//Picacgs//cat_latest.jpg"));
+		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Random"),L"ms-appx:///Assets//Picacgs//cat_random.jpg"));
 		__super::OnNavigatedTo(e);
 		auto res = co_await rootPage.HttpClient().Categories();
 		rootPage.LayoutMessageShow(false);
@@ -67,7 +88,21 @@ void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt
 
 	if (!categoriesBlack.IsWeb()) {
 		bikabika::ComicArgs args;
-		args.ComicType(bikabika::ComicsType::COMIC);
+		if (categoriesBlack.IsAuto())
+		{
+			if (categoriesBlack.Title()== resourceLoader.GetString(L"Categories/Latest"))
+			{
+				args.ComicType(bikabika::ComicsType::RECENTLY_UPDATE);
+			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Random"))
+			{
+				args.ComicType(bikabika::ComicsType::RANDOM);
+			}
+		}
+		else
+		{
+			args.ComicType(bikabika::ComicsType::COMIC);
+		}
 		args.Title(categoriesBlack.Title());
 		args.SortMode(winrt::BikaClient::Utils::BikaSort{ winrt::BikaClient::Utils::SortMode::UA });
 		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;

@@ -15,6 +15,11 @@ namespace winrt::bikabika::implementation
     }
 	Windows::Foundation::IAsyncAction ComicPage::Goto(int32_t const& index, hstring const& title, BikaClient::Utils::SortMode const& mode)
 	{
+		if (!TypeCombo().IsEnabled() || !Pips().IsEnabled())
+		{
+			TypeCombo().IsEnabled(true);
+			Pips().IsEnabled(true);
+		}
 		BikaClient::Responses::ComicsResponse res{ nullptr };
 		if (m_comicType == ComicsType::SEARCH)
 		{
@@ -24,9 +29,19 @@ namespace winrt::bikabika::implementation
 		{
 			//auto res = co_await rootPage.HttpClient().Search(index, title, mode);
 		}
+		else if (m_comicType == ComicsType::RECENTLY_UPDATE)
+		{
+			res = co_await rootPage.HttpClient().Comics(index, mode);
+		}
 		else if (m_comicType == ComicsType::HISTORY)
 		{
 
+		}
+		else if (m_comicType == ComicsType::RANDOM)
+		{
+			TypeCombo().IsEnabled(false);
+			Pips().IsEnabled(false);
+			res = co_await rootPage.HttpClient().Random();
 		}
 		else
 		{
@@ -42,33 +57,11 @@ namespace winrt::bikabika::implementation
 			{
 				m_comics.Append(x);
 			}
-			Index(res.Page() - 1);
-			AllPage(res.Pages());
-		}
-		else if (res.Code() == 401 && res.Error() == L"1005")
-		{
-			rootPage.ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
-		}
-		else
-		{
-			rootPage.ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
-		}
-	}
-	Windows::Foundation::IAsyncAction ComicPage::GotoSearch(int32_t const& index, hstring const& title, BikaClient::Utils::SortMode const& mode)
-	{
-		auto res = co_await rootPage.HttpClient().Search(index, title, mode);
-		if (res.Code() == -1)
-		{
-			rootPage.ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
-		}
-		else if (res.Code() == 200)
-		{
-			for (auto x : res.Comics())
+			if (m_comicType != ComicsType::RANDOM)
 			{
-				m_comics.Append(x);
+				Index(res.Page() - 1);
+				AllPage(res.Pages());
 			}
-			Index(res.Page() - 1);
-			AllPage(res.Pages());
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
 		{
@@ -78,7 +71,6 @@ namespace winrt::bikabika::implementation
 		{
 			rootPage.ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 		}
-
 	}
 	void ComicPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{

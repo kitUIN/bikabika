@@ -8,7 +8,6 @@ namespace winrt::bikabika::implementation
     {
         ComicPage();
         Windows::Foundation::IAsyncAction Goto(int32_t const& index, hstring const& title, BikaClient::Utils::SortMode const& mode);
-        Windows::Foundation::IAsyncAction GotoSearch(int32_t const& index, hstring const& title, BikaClient::Utils::SortMode const& mode);
         void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;

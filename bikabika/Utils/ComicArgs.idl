@@ -9,7 +9,11 @@ namespace bikabika
         // 历史记录
         HISTORY = 2,
         // 喜爱的作品
-        FACOURITE = 3
+        FACOURITE = 3,
+        // 最近更新
+	    RECENTLY_UPDATE = 4,
+	    // 随机本子
+	    RANDOM = 5,
     };
     runtimeclass ComicArgs
     {
