@@ -143,6 +143,7 @@
       <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="Utils\ComicArgs.h" />
     <ClInclude Include="Utils\KeywordBox.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
@@ -300,6 +301,7 @@
       <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="Utils\ComicArgs.cpp" />
     <ClCompile Include="Utils\KeywordBox.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -336,6 +338,7 @@
       <DependentUpon>UserPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="Utils\ComicArgs.idl" />
     <Midl Include="Utils\KeywordBox.idl" />
     <Midl Include="MainPage.idl">
       <DependentUpon>MainPage.xaml</DependentUpon>

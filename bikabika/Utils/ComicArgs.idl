@@ -1,0 +1,23 @@
+namespace bikabika
+{
+    enum ComicsType
+    {
+        // 分区
+        COMIC = 0,
+        // 搜索
+        SEARCH = 1,
+        // 历史记录
+        HISTORY = 2,
+        // 喜爱的作品
+        FACOURITE = 3
+    };
+    runtimeclass ComicArgs
+    {
+        ComicArgs();
+        ComicsType ComicType;
+        String Content;
+        BikaClient.Utils.BikaSort SortMode;
+        String SortModeString{ get; };
+        Boolean IsAnime;
+    }
+}

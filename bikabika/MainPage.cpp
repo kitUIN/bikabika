@@ -400,14 +400,11 @@ namespace winrt::bikabika::implementation
 		else if (res.Code() == 401 && res.Error() == L"1005")
 		{
 			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
-
 		}
 		else
 		{
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
-
 		}
-
 	}
 	Windows::Foundation::IAsyncAction MainPage::GetKeywords()
 	{
@@ -458,7 +455,7 @@ namespace winrt::bikabika::implementation
 
 }
 
-void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
+void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Foundation::IInspectable const& /*sender*/, Windows::UI::Xaml::RoutedEventArgs const& /*args*/)
 {
 	// 账号密码为空
 	if (Email().Text() == L"" || Password().Password() == L"")
@@ -471,7 +468,7 @@ void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Found
 		auto login{ Login() };
 	}
 }
-void winrt::bikabika::implementation::MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& args)
+void winrt::bikabika::implementation::MainPage::ContentFrame_NavigationFailed(Windows::Foundation::IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const& /*args*/)
 {
 }
 void winrt::bikabika::implementation::MainPage::NavView_ItemInvoked(Windows::Foundation::IInspectable const&, muxc::NavigationViewItemInvokedEventArgs const& args)
@@ -485,7 +482,7 @@ void winrt::bikabika::implementation::MainPage::NavView_ItemInvoked(Windows::Fou
 		NavView_Navigate(winrt::unbox_value_or<winrt::hstring>(args.InvokedItemContainer().Tag(), L"").c_str(), args.RecommendedNavigationTransitionInfo());
 	}
 }
-void winrt::bikabika::implementation::MainPage::NavView_Navigate(std::wstring navItemTag, Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& transitionInfo)
+void winrt::bikabika::implementation::MainPage::NavView_Navigate(std::wstring navItemTag, Windows::UI::Xaml::Media::Animation::NavigationTransitionInfo const& /*transitionInfo*/)
 {
 	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 	winrt::Windows::UI::Xaml::Controls::Frame frame;
@@ -543,7 +540,7 @@ void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::W
 		LoginTeachingTip().IsOpen(true);
 	}
 }
-void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	if (sender.as<CheckBox>().IsChecked().GetBoolean())
 	{
@@ -552,7 +549,7 @@ void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Wind
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	loginData.Values().Insert(L"AutoLogin", box_value(AutoCheckBox().IsChecked().GetBoolean()));
 }
-void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	if (!sender.as<CheckBox>().IsChecked().GetBoolean())
 	{
@@ -571,31 +568,31 @@ void winrt::bikabika::implementation::MainPage::ContentTabView_TabCloseRequested
 	}
 
 }
-void winrt::bikabika::implementation::MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::Grid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& /*e*/)
 {
 	ContentTabView().Width(sender.as<Controls::Frame>().ActualWidth());
 }
-void winrt::bikabika::implementation::MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+void winrt::bikabika::implementation::MainPage::NavView_PaneClosed(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& /*sender*/, winrt::Windows::Foundation::IInspectable const& /*args*/)
 {
 	ContentFrame().Margin(Thickness{ 47,0,0,0 });
 	APPTitle().Visibility(Visibility::Collapsed);
 	NavSmallImg().Visibility(Visibility::Visible);
 	NavBigImg().Visibility(Visibility::Collapsed);
 }
-void winrt::bikabika::implementation::MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& sender, winrt::Windows::Foundation::IInspectable const& args)
+void winrt::bikabika::implementation::MainPage::NavView_PaneOpened(winrt::Microsoft::UI::Xaml::Controls::NavigationView const& /*sender*/, winrt::Windows::Foundation::IInspectable const& /*args*/)
 {
 	ContentFrame().Margin(Thickness{ 179,0,0,0 });
 	APPTitle().Visibility(Visibility::Visible);
 	NavSmallImg().Visibility(Visibility::Collapsed);
 	NavBigImg().Visibility(Visibility::Visible);
 }
-void winrt::bikabika::implementation::MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e)
+void winrt::bikabika::implementation::MainPage::Flyout_Opened(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::Foundation::IInspectable const& /*e*/)
 {
 	CatSearch().Text(L" ");
 	CatSearch().ItemsSource(box_value(m_suggestions));
 	CatSearch().Text(L"");
 }
-void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	ContentDialog dialog = ContentDialog();
 	StackPanel stack;

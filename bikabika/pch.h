@@ -56,3 +56,4 @@
 #include <winrt/BikaClient.Date.h>
 #include <winrt/BikaClient.Utils.h>
 #include <winrt/BikaClient.Responses.h>
+

@@ -32,6 +32,9 @@
     <Midl Include="Utils\KeywordBox.idl">
       <Filter>Utils</Filter>
     </Midl>
+    <Midl Include="Utils\ComicArgs.idl">
+      <Filter>Utils</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -41,10 +44,16 @@
     <ClCompile Include="Utils\KeywordBox.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\ComicArgs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Utils\KeywordBox.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ComicArgs.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

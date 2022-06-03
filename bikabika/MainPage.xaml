@@ -116,7 +116,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="20"
                                         FontWeight="Bold"
-                                        Foreground="{ThemeResource SystemAccentColorDark3}"
+                                        Foreground="{ThemeResource SystemAccentColorDark1}"
                                         Text="{x:Bind User.Name, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                 </Grid>

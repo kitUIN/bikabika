@@ -203,7 +203,8 @@
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Click="LogButton_Click" />
 
                 </Grid>
             </Border>
@@ -285,11 +286,11 @@
                         </StackPanel>
                     </StackPanel>
                     <Button
+                        x:Name="SettingVersion"
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Loaded="SettingVersion_Loaded" />
+                        VerticalAlignment="Center" />
                 </Grid>
             </Border>
         </StackPanel>
