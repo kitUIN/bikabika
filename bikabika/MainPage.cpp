@@ -263,8 +263,6 @@ namespace winrt::bikabika::implementation
 	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
 		__super::OnNavigatedTo(e);
-
-
 		// 隐藏标题栏
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);

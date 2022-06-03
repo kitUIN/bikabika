@@ -70,6 +70,7 @@
 
                     <!--  Override system generated accent colors  -->
                     <Color x:Key="SystemFrameAccentColor">#FF333333</Color>
+                    <Color x:Key="SystemTabAccentColor">#FF282828</Color>
                     <Color x:Key="SystemNavigationAccentColor">#FF4D4D4D</Color>
                     <Color x:Key="SystemAccentColorLight1">#FFFBA3C4</Color>
                     <Color x:Key="SystemAccentColorLight2">#FFFCB0CD</Color>
@@ -222,6 +223,7 @@
                     <!--  Override system generated accent colors  -->
 
                     <Color x:Key="SystemFrameAccentColor">#FFFEC9DF</Color>
+                    <Color x:Key="SystemTabAccentColor">#FFFFEBF4</Color>
                     <Color x:Key="SystemNavigationAccentColor">#FFFBA3C4</Color>
                     <Color x:Key="SystemAccentColorLight1">#FFFBA3C4</Color>
                     <Color x:Key="SystemAccentColorLight2">#FFFCB0CD</Color>

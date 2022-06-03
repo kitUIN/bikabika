@@ -16,7 +16,7 @@
                         x:Key="NavigationViewExpandedPaneBackground"
                         TintColor="{ThemeResource SystemNavigationAccentColor}"
                         TintOpacity=".6" />
-
+                    <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected" Color="{ThemeResource SystemTabAccentColor}" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
