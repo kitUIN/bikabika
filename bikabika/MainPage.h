@@ -20,7 +20,6 @@ namespace winrt::bikabika::implementation
 
 		void LoginViewShow(bool const& isOpen);
 
-
 		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
 		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
 		void LayoutMessageShow(hstring const& message,bool const& isOpen);
@@ -87,7 +86,7 @@ namespace winrt::bikabika::implementation
 		void ChangeSignatureBox_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangePasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangeSignatureButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-	};
+		};
 
 }
 

@@ -457,21 +457,19 @@
         </muxc:TeachingTip>
         <muxc:InfoBar
             x:Name="Info"
-            Margin="0,20,0,0"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            VerticalAlignment="Bottom"
             IsClosable="False"
             IsIconVisible="True"
             IsOpen="False"
             Severity="Success">
             <muxc:ProgressBar
                 x:Name="InfoBar"
-                HorizontalAlignment="Center"
+                Width="200"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Value="50" />
         </muxc:InfoBar>
-
-
     </Grid>
 </Page>
 

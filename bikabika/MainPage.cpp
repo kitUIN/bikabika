@@ -51,6 +51,8 @@ namespace winrt::bikabika::implementation
 				LoginTeachingTip().IsOpen(isOpen);
 			});
 	}
+
+
 	void MainPage::CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol)
 	{
 
@@ -68,6 +70,7 @@ namespace winrt::bikabika::implementation
 
 	void  MainPage::ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message)
 	{
+
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()
 			{
 				LayoutMessage().IsOpen(false);
@@ -332,7 +335,6 @@ namespace winrt::bikabika::implementation
 				Info().Message(message);
 				Info().Title(title);
 				Info().Severity(severity);
-				InfoBar().Width(Info().ActualWidth() + 100);
 				Info().IsOpen(true);
 				StartInfoBar();
 				LayoutMessage().IsOpen(false);
@@ -920,3 +922,5 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 		LayoutMessageShow(false);
 	}
 }
+
+
