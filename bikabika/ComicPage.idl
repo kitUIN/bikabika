@@ -1,0 +1,12 @@
+namespace bikabika
+{
+
+    runtimeclass ComicPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        ComicPage();
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.ComicBlock> Comics{ get; };
+        Int32 Index;
+        Int32 AllPage;
+        Int32 PipIndex{ get; };
+    }
+}

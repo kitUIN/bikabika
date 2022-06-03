@@ -25,6 +25,9 @@
     <Page Include="MainPage.xaml">
       <Filter>Pages</Filter>
     </Page>
+    <Page Include="ComicPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />

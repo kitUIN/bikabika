@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid>
+    <Grid x:Name="MainRootGrid">
         <muxc:TeachingTip
             x:Name="LayoutMessage"
             Width="300"

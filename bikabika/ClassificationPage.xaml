@@ -2,7 +2,6 @@
     x:Class="bikabika.ClassificationPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
     xmlns:blocks="using:BikaClient.Blocks"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:bikabika"
@@ -12,7 +11,7 @@
         <ScrollViewer>
             <Grid>
                 <StackPanel>
-                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="10,10,0,0" Orientation="Horizontal">
 
                         <Image
                             Width="36"

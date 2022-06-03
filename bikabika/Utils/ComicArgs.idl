@@ -14,8 +14,9 @@ namespace bikabika
     runtimeclass ComicArgs
     {
         ComicArgs();
+        ComicArgs(ComicsType comicType, String title, BikaClient.Utils.BikaSort sortMode);
         ComicsType ComicType;
-        String Content;
+        String Title;
         BikaClient.Utils.BikaSort SortMode;
         String SortModeString{ get; };
         Boolean IsAnime;

@@ -59,6 +59,7 @@ namespace winrt::bikabika::implementation
 		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
 		newItem.Header(box_value(title));
 		newItem.IconSource(symbol);
+		frame.Height(MainRootGrid().ActualHeight() - 40);
 		newItem.Content(frame);
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [newItem, this]()
 			{
@@ -382,16 +383,12 @@ namespace winrt::bikabika::implementation
 			NavAccount().IsEnabled(true);
 			User(res.User());
 			if (m_firstArrive) {
-				winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
-				newItem.Header(box_value(resourceLoader.GetString(L"NavHome/Content")));
 				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 				symbol.Symbol(Symbol::Home);
-				newItem.IconSource(symbol);
 				winrt::Windows::UI::Xaml::Controls::Frame frame;
 				frame.Navigate(winrt::xaml_typename<bikabika::HomePage>());
-				newItem.Content(frame);
-				ContentTabView().TabItems().Append(newItem);
-				ContentTabView().SelectedItem(newItem);
+				CreateNewTab(frame, resourceLoader.GetString(L"NavHome/Content"), symbol);
+				NavView().SelectedItem(NavView().MenuItems().GetAt(5));
 				m_firstArrive = false;
 				m_login = true;
 				co_await GetKeywords();
@@ -496,7 +493,6 @@ void winrt::bikabika::implementation::MainPage::NavView_Navigate(std::wstring na
 	}
 	if (navItemTag == L"settings")
 	{
-
 		symbol.Symbol(Symbol::Setting);
 		frame.Navigate(winrt::xaml_typename<bikabika::SettingsPage>());
 	}
@@ -717,6 +713,12 @@ void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::
 		historys.Values().Insert(L"Search", box_value(json.Stringify()));
 		m_suggestions.InsertAt(0, winrt::make<KeywordBox>(text, resourceLoader.GetString(L"Keyword/SearchHistory"), L"\xE81C"));
 	}
+	SearchFlyout().Hide();
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	symbol.Symbol(Symbol::List);
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	frame.Navigate(winrt::xaml_typename<bikabika::ComicPage>(), box_value(ComicArgs{ ComicsType::SEARCH, text, BikaClient::Utils::BikaSort{ BikaClient::Utils::SortMode::DD } }));
+	CreateNewTab(frame, text, symbol);
 }
 /// <summary>
 /// 搜索框建议选择

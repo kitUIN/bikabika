@@ -26,6 +26,7 @@ namespace winrt::bikabika::implementation
     }
 	Windows::Foundation::IAsyncAction ClassificationPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
+		
 		__super::OnNavigatedTo(e);
 		auto res = co_await rootPage.HttpClient().Categories();
 		rootPage.LayoutMessageShow(false);
@@ -35,7 +36,10 @@ namespace winrt::bikabika::implementation
 		}
 		else if (res.Code() == 200)
 		{
-			Categories(res.Categories());
+			for (auto x : res.Categories())
+			{
+				m_categories.Append(x);
+			}
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
 		{
@@ -61,16 +65,16 @@ void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt
 {
 	auto categoriesBlack = e.ClickedItem().as<BikaClient::Blocks::CategoriesBlock>();
 
-	if (!categoriesBlack.IsWeb()&& categoriesBlack.Active()) {
+	if (!categoriesBlack.IsWeb()) {
 		bikabika::ComicArgs args;
 		args.ComicType(bikabika::ComicsType::COMIC);
-		args.Content(categoriesBlack.Title());
+		args.Title(categoriesBlack.Title());
 		args.SortMode(winrt::BikaClient::Utils::BikaSort{ winrt::BikaClient::Utils::SortMode::UA });
 		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 		winrt::Windows::UI::Xaml::Controls::Frame frame;
 		symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
-		//frame.Navigate(winrt::xaml_typename<bikabika::ComicsPage>(), box_value(args));
-		//rootPage.CreateNewTab(frame, categoriesBlack.Title(), symbol);
+		frame.Navigate(winrt::xaml_typename<bikabika::ComicPage>(), box_value(args));
+		rootPage.CreateNewTab(frame, categoriesBlack.Title(), symbol);
 	}
 
 }

@@ -231,53 +231,8 @@
   <data name="ErrorButton.Text" xml:space="preserve">
     <value>重新加载</value>
   </data>
-  <data name="ErrorText.Text" xml:space="preserve">
-    <value>是否需要重新加载？</value>
-  </data>
-  <data name="ErrorText1.Text" xml:space="preserve">
-    <value>哔咔哔咔被玩坏了!</value>
-    <comment>未知错误第1行</comment>
-  </data>
-  <data name="ErrorText2.Text" xml:space="preserve">
-    <value>  </value>
-    <comment>未知错误第2行</comment>
-  </data>
-  <data name="ErrorText3.Text" xml:space="preserve">
-    <value>这肯定不是哔咔的问题!</value>
-    <comment>未知错误第3行</comment>
-  </data>
-  <data name="ErrorText4.Text" xml:space="preserve">
-    <value>绝对不是!</value>
-    <comment>未知错误第4行</comment>
-  </data>
-  <data name="ErrorTip.Title" xml:space="preserve">
-    <value>加载失败QAQ</value>
-  </data>
-  <data name="FailAuth" xml:space="preserve">
-    <value>Token获取失败,请重新登录</value>
-    <comment>因为Token获取失败登陆失败对话框内容</comment>
-  </data>
-  <data name="FailCloseButtonText" xml:space="preserve">
-    <value>确定</value>
-    <comment>对话框按钮"确定"</comment>
-  </data>
   <data name="FailComment" xml:space="preserve">
     <value>该作品不允许评论</value>
-  </data>
-  <data name="FailHttpTitle" xml:space="preserve">
-    <value>请求错误</value>
-  </data>
-  <data name="FailLoginBlank" xml:space="preserve">
-    <value>请输入您的账号和密码</value>
-    <comment>因为用户名空登陆失败对话框内容</comment>
-  </data>
-  <data name="FailLoginPassword" xml:space="preserve">
-    <value>错误的账号或密码,请重试 :(</value>
-    <comment>因为密码错误登陆失败对话框内容</comment>
-  </data>
-  <data name="FailLoginTitle" xml:space="preserve">
-    <value>登陆失败</value>
-    <comment>对话框标题"登陆失败"</comment>
   </data>
   <data name="FailMessage.CloseButton.Normal" xml:space="preserve">
     <value>关闭</value>
@@ -527,6 +482,10 @@
     <value>记住密码</value>
     <comment>登录时记住我</comment>
   </data>
+  <data name="SealTip.Content" xml:space="preserve">
+    <value>封印分区</value>
+    <comment>提示框:封印分区</comment>
+  </data>
   <data name="Search.Content" xml:space="preserve">
     <value>搜索</value>
   </data>
@@ -588,23 +547,23 @@
     <value>应用版本</value>
     <comment>设置标题:应用内核</comment>
   </data>
-  <data name="SortMode.DA" xml:space="preserve">
+  <data name="sort.da" xml:space="preserve">
     <value>旧到新</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.DD" xml:space="preserve">
+  <data name="sort.dd" xml:space="preserve">
     <value>新到旧</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.LD" xml:space="preserve">
+  <data name="sort.ld" xml:space="preserve">
     <value>最多爱心</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.UA" xml:space="preserve">
+  <data name="sort.ua" xml:space="preserve">
     <value>默认排序</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.VD" xml:space="preserve">
+  <data name="sort.vd" xml:space="preserve">
     <value>最多指名</value>
     <comment>筛选框</comment>
   </data>

@@ -4,6 +4,12 @@
 
 namespace winrt::bikabika::implementation
 {
+    ComicArgs::ComicArgs(winrt::bikabika::ComicsType const& comicType, hstring const& title, BikaClient::Utils::BikaSort const& sortMode)
+    {
+        ComicType(comicType);
+        Title(title);
+        SortMode(sortMode);
+    }
     winrt::bikabika::ComicsType ComicArgs::ComicType()
     {
         return m_comicType;
@@ -15,15 +21,15 @@ namespace winrt::bikabika::implementation
             m_comicType = value;
         }
     }
-    hstring ComicArgs::Content()
+    hstring ComicArgs::Title()
     {
-        return m_content;
+        return m_title;
     }
-    void ComicArgs::Content(hstring const& value)
+    void ComicArgs::Title(hstring const& value)
     {
-        if (value != m_content)
+        if (value != m_title)
         {
-            m_content = value;
+            m_title = value;
         }
     }
     BikaClient::Utils::BikaSort ComicArgs::SortMode()
