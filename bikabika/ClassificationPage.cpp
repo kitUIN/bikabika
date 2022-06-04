@@ -43,7 +43,7 @@ namespace winrt::bikabika::implementation
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Support"),L"ms-appx:///Assets//Picacgs//cat_support.jpg"));
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Leaderboard"),L"ms-appx:///Assets//Picacgs//cat_leaderboard.jpg"));
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Game"),L"ms-appx:///Assets//Picacgs//cat_game.jpg"));
-		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Help"),L"ms-appx:///Assets//Picacgs//chat_bg_image.png"));
+
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Smalltool"),L"ms-appx:///Assets//Picacgs//cat_smalltool.jpg"));
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Forum"),L"ms-appx:///Assets//Picacgs//cat_forum.jpg"));
 		m_categories.Append(CreateCategoriesBlock(resourceLoader.GetString(L"Categories/Latest"),L"ms-appx:///Assets//Picacgs//cat_latest.jpg"));
@@ -82,36 +82,72 @@ namespace winrt::bikabika::implementation
 }
 
 //选择
-void  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::ClassificationPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
 	auto categoriesBlack = e.ClickedItem().as<BikaClient::Blocks::CategoriesBlock>();
-
+	bikabika::ComicArgs args;
 	if (!categoriesBlack.IsWeb()) {
-		bikabika::ComicArgs args;
+
 		if (categoriesBlack.IsAuto())
 		{
 			if (categoriesBlack.Title()== resourceLoader.GetString(L"Categories/Latest"))
 			{
 				args.ComicType(bikabika::ComicsType::RECENTLY_UPDATE);
 			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Leaderboard"))
+			{
+				co_return;
+			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Game"))
+			{
+				co_return;
+			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Smalltool"))
+			{
+				co_return;
+			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Forum"))
+			{
+				co_return;
+			}
 			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Random"))
 			{
 				args.ComicType(bikabika::ComicsType::RANDOM);
 			}
+			else if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Support"))
+			{
+				Windows::System::LauncherOptions launcherOptions;
+				launcherOptions.TreatAsUntrusted(true);
+				co_await Windows::System::Launcher::LaunchUriAsync(Uri{ L"https://donate.wikawika.xyz" });
+				co_return;
+			}
+
 		}
 		else
 		{
+
 			args.ComicType(bikabika::ComicsType::COMIC);
 		}
-		args.Title(categoriesBlack.Title());
-		args.SortMode(winrt::BikaClient::Utils::BikaSort{ winrt::BikaClient::Utils::SortMode::UA });
-		winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
-		winrt::Windows::UI::Xaml::Controls::Frame frame;
-		symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
-		frame.Navigate(winrt::xaml_typename<bikabika::ComicPage>(), box_value(args));
-		rootPage.CreateNewTab(frame, categoriesBlack.Title(), symbol);
-	}
 
+	}
+	else
+	{
+		if (categoriesBlack.Title() == resourceLoader.GetString(L"Categories/Help"))
+		{
+			Windows::System::LauncherOptions launcherOptions;
+			launcherOptions.TreatAsUntrusted(true);
+			co_await Windows::System::Launcher::LaunchUriAsync(Uri{ L"https://donate.wikawika.xyz" });
+
+		}
+		co_return;
+	}
+	args.Title(categoriesBlack.Title());
+	args.SortMode(winrt::BikaClient::Utils::BikaSort{ winrt::BikaClient::Utils::SortMode::UA });
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::List);
+	frame.Navigate(winrt::xaml_typename<bikabika::ComicPage>(), box_value(args));
+	rootPage.CreateNewTab(frame, categoriesBlack.Title(), symbol);
 }
 
 

@@ -187,3 +187,10 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicPage::Pi
 		co_await Goto(index + 1, ComicTitle().Text(), m_sort);
 	}
 }
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicPage::RefreshButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	m_comics.Clear();
+	co_await Goto(m_index + 1, ComicTitle().Text(), m_sort);
+}

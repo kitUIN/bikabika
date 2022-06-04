@@ -108,14 +108,13 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_Select
 void winrt::bikabika::implementation::SettingsPage::SettingTheme_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& /*e*/)
 {
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
-    auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
     Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
-    if (mode == resourceLoader.GetString(L"Keyword/Theme/Light") && theme != ElementTheme::Light)
+    if (mode == resourceLoader.GetString(L"Keyword/Theme/Light"))
     {
         Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Light);
         settings.Values().Insert(L"Theme", box_value(L"Light"));
     }
-    else if (mode == resourceLoader.GetString(L"Keyword/Theme/Dark") && theme != ElementTheme::Dark)
+    else if (mode == resourceLoader.GetString(L"Keyword/Theme/Dark"))
     {
         Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
         settings.Values().Insert(L"Theme", box_value(L"Dark"));

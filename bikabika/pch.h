@@ -49,8 +49,7 @@
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-#include <winrt/Windows.UI.Xaml.Data.h>
+#include <winrt/Windows.System.h>
 #include <winrt/BikaClient.h>
 #include <winrt/BikaClient.Blocks.h>
 #include <winrt/BikaClient.Date.h>

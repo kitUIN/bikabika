@@ -28,6 +28,8 @@ namespace winrt::bikabika::implementation
 		Windows::Foundation::IAsyncAction PunchIn();
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 
+		hstring Omit(hstring const& str, uint32_t const& length);
+
 		void StartInfoBar();
 		void ChangePassword(bool const& isOpen);
 		void ChangeSignature(bool const& isOpen);
@@ -84,7 +86,9 @@ namespace winrt::bikabika::implementation
 		void ChangeSignatureBox_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangePasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangeSignatureButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-		};
+		void ButtonRegister_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void LoginUserSlogan_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+	};
 
 }
 

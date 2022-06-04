@@ -179,6 +179,7 @@ namespace winrt::bikabika::implementation
 		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		JsonObject emails;
 		JsonObject passwords;
+
 		JsonArray emailArray;
 		if (res.Code()== -1)
 		{
@@ -205,8 +206,7 @@ namespace winrt::bikabika::implementation
 			emailArray.Append(JsonValue::CreateStringValue(Email().Text()));
 			emails.Insert(L"emailArry", emailArray);
 			loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
-
-			if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
+			if (RememberCheckBox().IsChecked().GetBoolean())
 			{
 				if (loginData.Values().HasKey(L"passwords"))
 				{
@@ -215,7 +215,7 @@ namespace winrt::bikabika::implementation
 				passwords.Insert(Email().Text(), JsonValue::CreateStringValue(Password().Password()));
 				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
 			}
-
+			m_login = true;
 			co_await SetPerson();
 			if(!m_user.IsPunched()) {
 				co_await PunchIn();
@@ -281,8 +281,24 @@ namespace winrt::bikabika::implementation
 		NavClassification().IsEnabled(false);
 		NavAccount().IsEnabled(false);
 	}
-
-
+	/// <summary>
+	/// 把过长文字转换成带省略号
+	/// </summary>
+	/// <param name="str">原字符</param>
+	/// <param name="length">限定长度</param>
+	/// <returns>带省略号的字符</returns>
+	hstring MainPage::Omit(hstring const& str, uint32_t const& length)
+	{
+		wstring text;
+		uint32_t i = 0;
+		for (auto a : str)
+		{
+			if (i == length) break;
+			text += a;
+			i++;
+		}
+		return hstring{ text + L" ..." };
+	}
 	void MainPage::StartInfoBar()
 	{
 		timer.Interval(std::chrono::milliseconds{ 100 });
@@ -382,6 +398,11 @@ namespace winrt::bikabika::implementation
 			NavClassification().IsEnabled(true);
 			NavAccount().IsEnabled(true);
 			User(res.User());
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			JsonObject userDatas;
+			auto emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+			userDatas.Insert(emails.GetNamedString(L"Last"), JsonObject::Parse(res.User().Json()));
+			loginData.Values().Insert(L"userData",box_value(userDatas.Stringify()));
 			if (m_firstArrive) {
 				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 				symbol.Symbol(Symbol::Home);
@@ -390,7 +411,7 @@ namespace winrt::bikabika::implementation
 				CreateNewTab(frame, resourceLoader.GetString(L"NavHome/Content"), symbol);
 				NavView().SelectedItem(NavView().MenuItems().GetAt(5));
 				m_firstArrive = false;
-				m_login = true;
+
 				co_await GetKeywords();
 			}
 		}
@@ -604,12 +625,10 @@ void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Fou
 	dialog.DefaultButton(ContentDialogButton::Secondary);
 	dialog.IsPrimaryButtonEnabled(true);
 	dialog.IsSecondaryButtonEnabled(true);
+	dialog.RequestedTheme(Window::Current().Content().as<FrameworkElement>().RequestedTheme());
 	dialog.PrimaryButtonClick([this](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {
 		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
-		{
-			loginData.Values().Insert(L"AutoLogin", box_value(false));
-		}
+		AutoCheckBox().IsChecked(false);
 		LogOut();
 		});
 	dialog.SecondaryButtonClick([](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {
@@ -740,6 +759,14 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 {
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
+	{
+		RememberCheckBox().IsChecked(true);
+	}
+	if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+	{
+		AutoCheckBox().IsChecked(true);
+	}
 	if (settings.Values().HasKey(L"Theme"))
 	{
 		auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
@@ -752,6 +779,7 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 			Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
 		}
 	}
+
 	if (loginData.Values().HasKey(L"emails"))
 	{
 		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
@@ -759,7 +787,7 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 		{
 			Email().Text(emails.GetNamedString(L"Last"));
 		}
-		if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
+		if (RememberCheckBox().IsChecked().GetBoolean())
 		{
 			if (loginData.Values().HasKey(L"passwords"))
 			{
@@ -767,8 +795,7 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 				if (passwords.HasKey(Email().Text()))
 				{
 					Password().Password(passwords.GetNamedString(Email().Text()));
-					AutoCheckBox().IsChecked(true);
-					if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+					if (AutoCheckBox().IsChecked().GetBoolean())
 					{
 						LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
 						auto login{ Login() };
@@ -816,15 +843,7 @@ void winrt::bikabika::implementation::MainPage::Omit_Loaded(winrt::Windows::Foun
 	TextBlock block = sender.as<TextBlock>();
 	if (block.ActualWidth() > block.Width())
 	{
-		wstring text;
-		int32_t i = 0;
-		for (auto a:block.Text())
-		{
-			if (i == 6)break;
-			text += a;
-			i++;
-		}
-		block.Text(hstring{text+L" ..."});
+		block.Text(Omit(block.Text(),6));
 	}
 }
 
@@ -923,3 +942,35 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 }
 
 
+
+
+void winrt::bikabika::implementation::MainPage::ButtonRegister_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+
+}
+
+
+void winrt::bikabika::implementation::MainPage::LoginUserSlogan_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	if (loginData.Values().HasKey(L"userData"))
+	{
+		JsonObject userDatas = JsonObject::Parse(loginData.Values().Lookup(L"userData").as<hstring>());
+		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+		BikaClient::Blocks::UserBlock userBlock(userDatas.GetNamedObject(emails.GetNamedString(L"Last")),m_bikaClient.FileServer());
+		LoginUserName().Text(userBlock.Name());
+		LoginUserLevel().Text(userBlock.LevelString());
+		LoginUserTitle().Text(userBlock.Title());
+		LoginUserPic().ProfilePicture(userBlock.Thumb().Img());
+		LoginUserSlogan().Text(Omit(userBlock.Slogan(), 11));
+	}
+	else
+	{
+		LoginUserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
+		LoginUserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
+		LoginUserTitle().Text(resourceLoader.GetString(L"Keyword/Default/Title"));
+		LoginUserSlogan().Text(resourceLoader.GetString(L"Keyword/Default/Slogan"));
+		LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+	}
+}

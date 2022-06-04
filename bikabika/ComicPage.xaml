@@ -204,14 +204,24 @@
                     Margin="0,0,10,0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-                    <Button Name="ExampleButton1">
+                    <Button Name="RefreshButton" Click="RefreshButton_Click">
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Uid="SealTip" />
+                            <ToolTip x:Uid="TipRefresh" />
                         </ToolTipService.ToolTip>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7ED;" />
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="17"
+                            Glyph="&#xE72C;" />
                     </Button>
-
-
+                    <Button Margin="7,0,0,0">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="TipSeal" />
+                        </ToolTipService.ToolTip>
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="17"
+                            Glyph="&#xE72E;" />
+                    </Button>
                     <FontIcon
                         Margin="7,0,0,0"
                         FontFamily="Segoe MDL2 Assets"
