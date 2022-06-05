@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -126,7 +126,7 @@
     <comment>复选框:自动登录</comment>
   </data>
   <data name="BlockPassword.Text" xml:space="preserve">
-    <value>密码</value>
+    <value>密码:</value>
     <comment>文本框:密码</comment>
   </data>
   <data name="BoxPassword.PlaceholderText" xml:space="preserve">
@@ -187,11 +187,11 @@
     <comment>删除记录</comment>
   </data>
   <data name="E-mail.Text" xml:space="preserve">
-    <value>邮箱</value>
+    <value>账户:</value>
     <comment>登陆账号显示</comment>
   </data>
-  <data name="E-mailBox.PlaceholderText" xml:space="preserve">
-    <value>邮箱</value>
+  <data name="BoxE-mail.PlaceholderText" xml:space="preserve">
+    <value>哔咔账户</value>
     <comment>登陆账号提示</comment>
   </data>
   <data name="Edit.Content" xml:space="preserve">
@@ -416,15 +416,15 @@
   </data>
   <data name="NewPasswrod.Text" xml:space="preserve">
     <value>新密码: </value>
-    <comment>窗口文本:新密码</comment>
+    <comment>文本框:新密码</comment>
   </data>
   <data name="NewSignature.Text" xml:space="preserve">
     <value>新签名:</value>
-    <comment>窗口文本:签名</comment>
+    <comment>文本框:签名</comment>
   </data>
   <data name="OldPasswrod.Text" xml:space="preserve">
     <value>旧密码: </value>
-    <comment>窗口文本:旧密码</comment>
+    <comment>文本框:旧密码</comment>
   </data>
   <data name="ReadText" xml:space="preserve">
     <value>开始阅读</value>
@@ -581,11 +581,125 @@
     <value>切换账户</value>
     <comment>提示框:切换账户</comment>
   </data>
+  <data name="BlockAnswer1.Text" xml:space="preserve">
+    <value>回答1:</value>
+    <comment>文本框:回答1</comment>
+  </data>
+  <data name="BlockAnswer2.Text" xml:space="preserve">
+    <value>回答2:</value>
+    <comment>文本框:回答2</comment>
+  </data>
+  <data name="BlockAnswer3.Text" xml:space="preserve">
+    <value>回答3:</value>
+    <comment>文本框:回答3</comment>
+  </data>
+  <data name="BlockBirthday.Text" xml:space="preserve">
+    <value>生日:</value>
+    <comment>文本框:生日</comment>
+  </data>
+  <data name="BlockGender.Text" xml:space="preserve">
+    <value>性别:</value>
+    <comment>文本框:性别</comment>
+  </data>
+  <data name="BlockName.Text" xml:space="preserve">
+    <value>昵称:</value>
+    <comment>文本框:昵称</comment>
+  </data>
+  <data name="BlockPasswordSure.Text" xml:space="preserve">
+    <value>确认密码:</value>
+    <comment>文本框:确认密码</comment>
+  </data>
+  <data name="BlockQuestion1.Text" xml:space="preserve">
+    <value>问题1:</value>
+    <comment>文本框:问题1</comment>
+  </data>
+  <data name="BlockQuestion2.Text" xml:space="preserve">
+    <value>问题2:</value>
+    <comment>文本框:问题2</comment>
+  </data>
+  <data name="BlockQuestion3.Text" xml:space="preserve">
+    <value>问题3:</value>
+    <comment>文本框:问题3</comment>
+  </data>
+  <data name="BoxAnswer1.PlaceholderText" xml:space="preserve">
+    <value>回答1</value>
+    <comment>输入框:回答1</comment>
+  </data>
+  <data name="BoxAnswer2.PlaceholderText" xml:space="preserve">
+    <value>回答2</value>
+    <comment>输入框:回答2</comment>
+  </data>
+  <data name="BoxAnswer3.PlaceholderText" xml:space="preserve">
+    <value>回答3</value>
+    <comment>输入框:回答3</comment>
+  </data>
+  <data name="BoxName.PlaceholderText" xml:space="preserve">
+    <value>昵称</value>
+    <comment>输入框:昵称</comment>
+  </data>
+  <data name="BoxPasswordSure.PlaceholderText" xml:space="preserve">
+    <value>确认密码</value>
+    <comment>输入框:确认密码</comment>
+  </data>
+  <data name="BoxQuestion1.PlaceholderText" xml:space="preserve">
+    <value>问题1(忘记密码用)</value>
+    <comment>输入框:问题1</comment>
+  </data>
+  <data name="BoxQuestion2.PlaceholderText" xml:space="preserve">
+    <value>问题2(忘记密码用)</value>
+    <comment>输入框:问题2</comment>
+  </data>
+  <data name="BoxQuestion3.PlaceholderText" xml:space="preserve">
+    <value>问题3(忘记密码用)</value>
+    <comment>输入框:问题3</comment>
+  </data>
+  <data name="FailMessage.Message.Blank" xml:space="preserve">
+    <value>您有必填项未填</value>
+    <comment>错误消息内容:必填项未填</comment>
+  </data>
+  <data name="FailMessage.Message.NameTooLong" xml:space="preserve">
+    <value>昵称应该在2-50字之间</value>
+  </data>
+  <data name="FailMessage.Message.PasswordSure" xml:space="preserve">
+    <value>前后密码设置不一致</value>
+  </data>
+  <data name="FailMessage.Message.PassWordTooShort" xml:space="preserve">
+    <value>密码长度不能小于8</value>
+    <comment>错误消息内容:密码长度不能小于8</comment>
+  </data>
+  <data name="FailMessage.Title.OldPassWordError" xml:space="preserve">
+    <value>旧密码错误</value>
+    <comment>错误消息内容:旧密码错误</comment>
+  </data>
+  <data name="FailMessage.Title.PassWordTooShort" xml:space="preserve">
+    <value>密码过短</value>
+    <comment>错误消息内容:密码过短</comment>
+  </data>
+  <data name="FailMessage.Title.Write" xml:space="preserve">
+    <value>填写错误</value>
+    <comment>错误消息内容:填写错误</comment>
+  </data>
+  <data name="Keyword.Gender.bot" xml:space="preserve">
+    <value>机器人🤖</value>
+    <comment>关键字:机器人</comment>
+  </data>
+  <data name="Keyword.Gender.f" xml:space="preserve">
+    <value>淑女👧</value>
+    <comment>关键字:女</comment>
+  </data>
+  <data name="Keyword.Gender.m" xml:space="preserve">
+    <value>绅士👦</value>
+    <comment>关键字:男</comment>
+  </data>
   <data name="Keyword.Login" xml:space="preserve">
     <value>登入</value>
     <comment>关键字:登入</comment>
   </data>
+  <data name="Keyword.Message.Register" xml:space="preserve">
+    <value>注册成功</value>
+    <comment>关键字:注册成功</comment>
+  </data>
   <data name="Message.Login.Success" xml:space="preserve">
-    <value>欢迎您:   </value>
+    <value>欢迎您</value>
   </data>
 </root>

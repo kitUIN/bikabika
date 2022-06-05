@@ -5,6 +5,10 @@ namespace bikabika
         UNKNOWN = 0,
         TIMEOUT = 1,
         NOAUTH = 2,
+        OLDPASSWORDERROR = 3,
+        PASSWORDTOOSHORT = 4,
+        BLANK = 5,
+        SUREERROR = 6,
     };
     [default_interface]
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged

@@ -74,6 +74,7 @@ namespace winrt::bikabika::implementation
 
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()
 			{
+				TextBlock content;
 				ContentDialog dialog;
 				dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 				dialog.IsTextScaleFactorEnabled(true);
@@ -92,6 +93,7 @@ namespace winrt::bikabika::implementation
 				img.VerticalAlignment(VerticalAlignment::Center);
 				img.HorizontalAlignment(HorizontalAlignment::Center);
 				title.FontWeight(Text::FontWeights::Bold());
+				content.HorizontalAlignment(HorizontalAlignment::Center);
 				if (mode == bikabika::BikaHttpStatus::TIMEOUT) {
 					title.Text(resourceLoader.GetString(L"FailMessage/Title/TimeOut"));
 					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_unknown_error.png" } });
@@ -124,12 +126,43 @@ namespace winrt::bikabika::implementation
 					dialog.PrimaryButtonClick({ [this](ContentDialog const&, ContentDialogButtonClickEventArgs const&) {LoginViewShow(true); } });
 					dialog.DefaultButton(ContentDialogButton::Primary);
 					dialog.IsPrimaryButtonEnabled(true);
+					content.Text(message);
+					dialog.Content(content);
+				}
+				else if (mode == bikabika::BikaHttpStatus::BLANK)
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/Write"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					content.Text(resourceLoader.GetString(L"FailMessage/Message/Blank"));
+					dialog.Content(content);
+				}
+				else if (mode == bikabika::BikaHttpStatus::SUREERROR)
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/Write"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					content.Text(resourceLoader.GetString(L"FailMessage/Message/PasswordSure"));
+					dialog.Content(content);
+				}
+				else if (mode == bikabika::BikaHttpStatus::OLDPASSWORDERROR)
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/OldPassWordError"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					content.Text(resourceLoader.GetString(L"FailMessage/Title/OldPassWordError"));
+					dialog.Content(content);
+				}
+				else if (mode == bikabika::BikaHttpStatus::PASSWORDTOOSHORT)
+				{
+					title.Text(resourceLoader.GetString(L"FailMessage/Title/PassWordTooShort"));
+					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
+					content.Text(resourceLoader.GetString(L"FailMessage/Message/PassWordTooShort"));
+					dialog.Content(content);
 				}
 				else
 				{
 					title.Text(resourceLoader.GetString(L"FailMessage/Title/Unknown"));
 					img.Source(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//icon_exclamation_error.png" } });
-					dialog.Content(box_value(message));
+					content.Text(message);
+					dialog.Content(content);
 				}
 				boder.Child(title);
 				grid.Children().Append(boder);
@@ -293,11 +326,11 @@ namespace winrt::bikabika::implementation
 		uint32_t i = 0;
 		for (auto a : str)
 		{
-			if (i == length) break;
+			if (i == length) return hstring{ text + L" ..." };
 			text += a;
 			i++;
 		}
-		return hstring{ text + L" ..." };
+		return str;
 	}
 	void MainPage::StartInfoBar()
 	{
@@ -305,7 +338,23 @@ namespace winrt::bikabika::implementation
 		auto registrationtoken = timer.Tick({ this, &MainPage::OnTick });
 		timer.Start();
 	}
-
+	void MainPage::Register(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
+			{
+				RegisterEmail().Text(L"");
+				RegisterName().Text(L"");
+				RegisterPassword().Password(L"");
+				RegisterPasswordSure().Password(L"");
+				Question1Box().Text(L"");
+				Question2Box().Text(L"");
+				Question3Box().Text(L"");
+				Answer1Box().Text(L"");
+				Answer2Box().Text(L"");
+				Answer3Box().Text(L"");
+				RegisterTeachingTip().IsOpen(isOpen);
+			});
+	}
 	void MainPage::ChangePassword(bool const& isOpen)
 	{
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen,this]()
@@ -412,7 +461,7 @@ namespace winrt::bikabika::implementation
 			userDatas.Insert(emails.GetNamedString(L"Last"), JsonObject::Parse(res.User().Json()));
 			loginData.Values().Insert(L"userData",box_value(userDatas.Stringify()));
 			if (m_firstArrive) {
-				InfoBarMessageShow(resourceLoader.GetString(L"Keyword/Login"), resourceLoader.GetString(L"Message/Login/Success")+m_user.Name(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+				InfoBarMessageShow(resourceLoader.GetString(L"Message/Login/Success"), m_user.Name(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 				symbol.Symbol(Symbol::Home);
 				winrt::Windows::UI::Xaml::Controls::Frame frame;
@@ -568,7 +617,7 @@ void winrt::bikabika::implementation::MainPage::UsersPic_PointerPressed(winrt::W
 		}
 	}
 	else {
-		LoginTeachingTip().IsOpen(true);
+		LoginViewShow(true);
 	}
 }
 void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
@@ -970,7 +1019,7 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 
 void winrt::bikabika::implementation::MainPage::ButtonRegister_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-
+	Register(true);
 }
 
 
@@ -1074,4 +1123,146 @@ void winrt::bikabika::implementation::MainPage::ChangeTitleButton_Loaded(winrt::
 {
 	ChangeTitleButton().Content(box_value(resourceLoader.GetString(L"FlyoutChangeTitle/Text")));
 	ChangeTitleButton().IsEnabled(true);
+}
+
+
+void winrt::bikabika::implementation::MainPage::BirthdayDatePicker_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	std::time_t timep;
+	time(&timep);
+	std::tm* m = std::gmtime(&timep);
+	m->tm_year -= 18;
+	// 必须大于十八
+	sender.as<CalendarDatePicker>().MaxDate(clock::from_time_t(mktime(m)));
+	m->tm_mon -= 1;
+	sender.as<CalendarDatePicker>().Date(clock::from_time_t(mktime(m)));
+	m->tm_year = 0;
+	m->tm_mon = 0;
+	m->tm_mday = 0;
+	sender.as<CalendarDatePicker>().MinDate(clock::from_time_t(mktime(m)));
+	RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+	RegisterButton().IsEnabled(true);
+	GenderComboBox().ItemsSource(winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Gender/bot"),resourceLoader.GetString(L"Keyword/Gender/f") ,resourceLoader.GetString(L"Keyword/Gender/m") }));
+	GenderComboBox().SelectedIndex(0);
+}
+
+
+Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::MainPage::RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	JsonObject emails;
+	JsonObject passwords;
+	JsonArray emailArray;
+	LoginViewShow(false);
+	Microsoft::UI::Xaml::Controls::ProgressRing ring;
+	ring.IsActive(true);
+	ring.Width(16);
+	ring.Height(16);
+	LoginButton().Content(ring);
+	RegisterButton().IsEnabled(false);
+	time_t times = winrt::clock::to_time_t(BirthdayDatePicker().Date().as<DateTime>());
+	std::wstringstream wss;
+	wss << std::put_time(std::localtime(&times), L"%Y-%m-%d");
+	BikaClient::Utils::Gender gender;
+	if (GenderComboBox().SelectedIndex() == 0)
+	{
+		gender = BikaClient::Utils::Gender::Bot;
+	}
+	else if (GenderComboBox().SelectedIndex() == 1)
+	{
+		gender = BikaClient::Utils::Gender::Female;
+	}
+	else gender = BikaClient::Utils::Gender::Male;
+	// 不允许为空
+	if (Question1Box().Text() == L""
+		|| Answer1Box().Text() == L""
+		|| Question2Box().Text() == L""
+		|| Answer2Box().Text() == L""
+		|| Question3Box().Text() == L""
+		|| Answer3Box().Text() == L""
+		|| RegisterEmail().Text() == L""
+		|| RegisterPassword().Password() == L""
+		|| RegisterName().Text() == L"")
+	{
+		ContentDialogShow(bikabika::BikaHttpStatus::BLANK, L"");
+		RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+		RegisterButton().IsEnabled(true);
+		return;
+	}
+	// 密码是否正确
+	if (RegisterPassword().Password() == L""
+		|| RegisterPasswordSure().Password() == L""
+		|| RegisterPassword().Password() != RegisterPasswordSure().Password())
+	{
+		ContentDialogShow(bikabika::BikaHttpStatus::SUREERROR, L"");
+		RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+		RegisterButton().IsEnabled(true);
+		return;
+	}
+	// 密码大于8
+	if (RegisterPassword().Password().size() < 8)
+	{
+		ContentDialogShow(bikabika::BikaHttpStatus::PASSWORDTOOSHORT, L"");
+		RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+		RegisterButton().IsEnabled(true);
+		return;
+	}
+	// 昵称[2,50]
+	if (RegisterName().Text().size() < 2|| RegisterName().Text().size() > 50)
+	{
+		ContentDialogShow(bikabika::BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/NameTooLong"));
+		RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+		RegisterButton().IsEnabled(true);
+		return;
+	}
+	auto res = co_await m_bikaClient.Register(RegisterEmail().Text(), RegisterPassword().Password(), RegisterName().Text(), winrt::hstring{ wss.str() }, gender,Question1Box().Text(),Answer1Box().Text(),Question2Box().Text(),Answer2Box().Text(),Question3Box().Text(),Answer3Box().Text());
+	if (res.Code() == -1)
+	{
+		ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+	}
+	else if (res.Code() == 200)
+	{
+
+		if (loginData.Values().HasKey(L"emails"))
+		{
+			emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
+			emailArray = emails.GetNamedArray(L"emailArry");
+		}
+		emails.Insert(L"Last", JsonValue::CreateStringValue(RegisterEmail().Text()));
+		emailArray.Append(JsonValue::CreateStringValue(RegisterEmail().Text()));
+		emails.Insert(L"emailArry", emailArray);
+		loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
+		if (loginData.Values().HasKey(L"passwords"))
+		{
+			passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
+		}
+		passwords.Insert(RegisterEmail().Text(), JsonValue::CreateStringValue(RegisterPassword().Password()));
+		loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
+		Register(false);
+		InfoBarMessageShow(resourceLoader.GetString(L"Keyword/Message/Register"), L"", Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+		LoginViewShow(true);
+	}
+	else if (res.Code() == 401 && res.Error() == L"1005")
+	{
+		ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+	}
+	else
+	{
+		ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+	}
+	RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
+	RegisterButton().IsEnabled(true);
+}
+
+void winrt::bikabika::implementation::MainPage::RegisterEmail_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextBoxTextChangingEventArgs const& e)
+{
+	string str;
+	for (auto x : to_string(sender.as<TextBox>().Text()))
+	{
+		if (x >= '0' && x <= '9' || x >= 'a' && x <= 'z' || x == '.' || x == '_')
+		{
+			str += x;
+		}
+	}
+	sender.as<TextBox>().Text(to_hstring(str));
 }

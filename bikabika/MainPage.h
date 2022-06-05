@@ -31,6 +31,7 @@ namespace winrt::bikabika::implementation
 		hstring Omit(hstring const& str, uint32_t const& length);
 
 		void StartInfoBar();
+		void Register(bool const& isOpen);
 		void ChangePassword(bool const& isOpen);
 		void ChangeTitle(bool const& isOpen);
 		void ChangeSignature(bool const& isOpen);
@@ -94,8 +95,10 @@ namespace winrt::bikabika::implementation
 		void NewTitle_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		void ChangeSignatureButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void ChangePasswordButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-		void LoginButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void ChangeTitleButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void BirthdayDatePicker_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void RegisterEmail_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextBoxTextChangingEventArgs const& e);
 	};
 
 }
