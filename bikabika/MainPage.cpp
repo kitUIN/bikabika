@@ -963,6 +963,8 @@ void winrt::bikabika::implementation::MainPage::LoginUserSlogan_Loaded(winrt::Wi
 		LoginUserLevel().Text(userBlock.LevelString());
 		LoginUserTitle().Text(userBlock.Title());
 		LoginUserPic().ProfilePicture(userBlock.Thumb().Img());
+		hstring slogan = userBlock.Slogan();
+		LoginUserSloganTip().Content(box_value(slogan));
 		LoginUserSlogan().Text(Omit(userBlock.Slogan(), 11));
 	}
 	else
@@ -970,7 +972,9 @@ void winrt::bikabika::implementation::MainPage::LoginUserSlogan_Loaded(winrt::Wi
 		LoginUserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
 		LoginUserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
 		LoginUserTitle().Text(resourceLoader.GetString(L"Keyword/Default/Title"));
-		LoginUserSlogan().Text(resourceLoader.GetString(L"Keyword/Default/Slogan"));
+		hstring slogan = resourceLoader.GetString(L"Keyword/Default/Slogan");
+		LoginUserSlogan().Text(slogan);
+		LoginUserSloganTip().Content(box_value(slogan));
 		LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
 	}
 }

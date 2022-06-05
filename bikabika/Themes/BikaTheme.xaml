@@ -71,7 +71,8 @@
                     <!--  Override system generated accent colors  -->
                     <Color x:Key="SystemFrameAccentColor">#FF333333</Color>
                     <Color x:Key="SystemTabAccentColor">#FF282828</Color>
-                    <Color x:Key="SystemButtonAccentColor">#FF333333</Color>
+                    <Color x:Key="SystemBorderAccentColor">#FF3f3f3f</Color>
+                    <Color x:Key="SystemTipAccentColor">#FF333333</Color>
                     <Color x:Key="SystemNavigationAccentColor">#FF4D4D4D</Color>
                     <Color x:Key="SystemComicItemAccentColor">#FF4D4D4D</Color>
                     <Color x:Key="SystemComicFinishAccentColor">#FF575757</Color>
@@ -85,6 +86,18 @@
                     <Color x:Key="SystemAccentColorDark3">#FFB9527E</Color>
                     <Color x:Key="SystemAccentColorDark4">#FFA43B6A</Color>
                     <Color x:Key="SystemAccentColorDark5">#FF8E2456</Color>
+                    <AcrylicBrush
+                        x:Key="SystemFrameAcrylicAccentColor"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="{ThemeResource SystemFrameAccentColor}"
+                        TintColor="{ThemeResource SystemFrameAccentColor}"
+                        TintOpacity="0.8" />
+                    <AcrylicBrush
+                        x:Key="SystemTipAcrylicAccentColor"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="{ThemeResource SystemTipAccentColor}"
+                        TintColor="{ThemeResource SystemTipAccentColor}"
+                        TintOpacity="0.8" />
                     <AcrylicBrush
                         x:Key="SystemAccentAcrylicColorDark5"
                         BackgroundSource="Backdrop"
@@ -225,12 +238,13 @@
 
                     <!--  Override system generated accent colors  -->
 
-                    <Color x:Key="SystemFrameAccentColor">#FFFEC9DF</Color>
+                    <Color x:Key="SystemFrameAccentColor">#FFfee5ef</Color>
                     <Color x:Key="SystemTabAccentColor">#FFFFEBF4</Color>
-                    <Color x:Key="SystemButtonAccentColor">#FFFFEBF4</Color>
-                    <Color x:Key="SystemNavigationAccentColor">#FFFBA3C4</Color>
-                    <Color x:Key="SystemComicItemAccentColor">#FFfdcde0</Color>
-                    <Color x:Key="SystemComicFinishAccentColor">#FFfbb2ce</Color>
+                    <Color x:Key="SystemBorderAccentColor">#FFfff5fa</Color>
+                    <Color x:Key="SystemTipAccentColor">#FFffe8f2</Color>
+                    <Color x:Key="SystemNavigationAccentColor">#FFFEC9DF</Color>
+                    <Color x:Key="SystemComicItemAccentColor">#FFfdd7e6</Color>
+                    <Color x:Key="SystemComicFinishAccentColor">#FFfbc6db</Color>
                     <Color x:Key="SystemAccentColorLight1">#FFFBA3C4</Color>
                     <Color x:Key="SystemAccentColorLight2">#FFFCB0CD</Color>
                     <Color x:Key="SystemAccentColorLight3">#FFFDBCD6</Color>
@@ -241,6 +255,18 @@
                     <Color x:Key="SystemAccentColorDark3">#FFB9527E</Color>
                     <Color x:Key="SystemAccentColorDark4">#FFA43B6A</Color>
                     <Color x:Key="SystemAccentColorDark5">#FF8E2456</Color>
+                    <AcrylicBrush
+                        x:Key="SystemTipAcrylicAccentColor"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="{ThemeResource SystemTipAccentColor}"
+                        TintColor="{ThemeResource SystemTipAccentColor}"
+                        TintOpacity="0.8" />
+                    <AcrylicBrush
+                        x:Key="SystemFrameAcrylicAccentColor"
+                        BackgroundSource="Backdrop"
+                        FallbackColor="{ThemeResource SystemFrameAccentColor}"
+                        TintColor="{ThemeResource SystemFrameAccentColor}"
+                        TintOpacity="0.8" />
                     <AcrylicBrush
                         x:Key="SystemAccentAcrylicColorDark5"
                         BackgroundSource="Backdrop"

@@ -137,7 +137,6 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::Classificati
 			Windows::System::LauncherOptions launcherOptions;
 			launcherOptions.TreatAsUntrusted(true);
 			co_await Windows::System::Launcher::LaunchUriAsync(Uri{ L"https://donate.wikawika.xyz" });
-
 		}
 		co_return;
 	}

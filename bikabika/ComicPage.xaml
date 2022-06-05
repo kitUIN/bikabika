@@ -18,6 +18,11 @@
                     IsItemClickEnabled="True"
                     ItemsSource="{x:Bind Comics, Mode=OneWay}"
                     SelectionMode="None">
+                    <GridView.Transitions>
+                        <TransitionCollection>
+                            <ContentThemeTransition />
+                        </TransitionCollection>
+                    </GridView.Transitions>
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="blocks:ComicBlock">
                             <StackPanel

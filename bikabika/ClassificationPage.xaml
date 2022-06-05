@@ -32,6 +32,11 @@
                         ItemClick="GridV_ItemClick"
                         ItemsSource="{x:Bind Categories, Mode=OneWay}"
                         SelectionMode="None">
+                        <GridView.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True" />
+                            </TransitionCollection>
+                        </GridView.Transitions>
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="blocks:CategoriesBlock">
                                 <Grid
