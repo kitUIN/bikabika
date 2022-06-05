@@ -1,4 +1,11 @@
-﻿#include "pch.h"
+﻿/*****************************************************************//**
+ * \file   SettingsPage.cpp
+ * \brief  设置界面
+ *
+ * \author kulujun
+ * \date   June 2022
+ *********************************************************************/
+#include "pch.h"
 #include "SettingsPage.h"
 #if __has_include("SettingsPage.g.cpp")
 #include "SettingsPage.g.cpp"

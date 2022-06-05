@@ -74,7 +74,6 @@ namespace winrt::bikabika::implementation
 
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [mode, message, this]()
 			{
-				LayoutMessage().IsOpen(false);
 				ContentDialog dialog;
 				dialog.CloseButtonText(resourceLoader.GetString(L"FailMessage/CloseButton/Normal"));
 				dialog.IsTextScaleFactorEnabled(true);
@@ -179,7 +178,6 @@ namespace winrt::bikabika::implementation
 		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 		JsonObject emails;
 		JsonObject passwords;
-
 		JsonArray emailArray;
 		if (res.Code()== -1)
 		{
@@ -243,6 +241,8 @@ namespace winrt::bikabika::implementation
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 			Password().Password(L"");
 		}
+		LoginButton().Content(box_value(resourceLoader.GetString(L"ButtonLogin/Content")));
+		LoginButton().IsEnabled(true);
 	}
 
 	Windows::Foundation::IAsyncAction MainPage::PunchIn()
@@ -316,7 +316,15 @@ namespace winrt::bikabika::implementation
 
 			});
 	}
+	void MainPage::ChangeTitle(bool const& isOpen)
+	{
+		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
+			{
+				NewTitle().Text(L"");
+				ChangeTitleTip().IsOpen(isOpen);
 
+			});
+	}
 	void MainPage::ChangeSignature(bool const& isOpen)
 	{
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [isOpen, this]()
@@ -404,6 +412,7 @@ namespace winrt::bikabika::implementation
 			userDatas.Insert(emails.GetNamedString(L"Last"), JsonObject::Parse(res.User().Json()));
 			loginData.Values().Insert(L"userData",box_value(userDatas.Stringify()));
 			if (m_firstArrive) {
+				InfoBarMessageShow(resourceLoader.GetString(L"Keyword/Login"), resourceLoader.GetString(L"Message/Login/Success")+m_user.Name(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 				symbol.Symbol(Symbol::Home);
 				winrt::Windows::UI::Xaml::Controls::Frame frame;
@@ -482,7 +491,12 @@ void winrt::bikabika::implementation::MainPage::LoginClickHandler(Windows::Found
 	}
 	else
 	{
-		LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
+		Microsoft::UI::Xaml::Controls::ProgressRing ring;
+		ring.IsActive(true);
+		ring.Width(16);
+		ring.Height(16);
+		LoginButton().Content(ring);
+		LoginButton().IsEnabled(false);
 		auto login{ Login() };
 	}
 }
@@ -755,10 +769,12 @@ void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
+void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	LoginButton().Content(box_value(resourceLoader.GetString(L"Keyword/Login")));
+	LoginButton().IsEnabled(true);
 	if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
 	{
 		RememberCheckBox().IsChecked(true);
@@ -797,8 +813,7 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 					Password().Password(passwords.GetNamedString(Email().Text()));
 					if (AutoCheckBox().IsChecked().GetBoolean())
 					{
-						LayoutMessageShow(resourceLoader.GetString(L"Message/Logining"), true);
-						auto login{ Login() };
+						LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
 					}
 				}
 			}
@@ -874,17 +889,20 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 {
 	if (OldPasswrod().Text() != L"" && NewPasswrod().Text() != L"")
 	{
-		LayoutMessageShow(resourceLoader.GetString(L"Message/Change"), true);
+		Microsoft::UI::Xaml::Controls::ProgressRing ring;
+		ring.IsActive(true);
+		ring.Width(16);
+		ring.Height(16);
+		ChangePasswordButton().Content(ring);
+		ChangePasswordButton().IsEnabled(false);
 		auto res = co_await m_bikaClient.SetPassword(OldPasswrod().Text(), NewPasswrod().Text());
-
 		if (res.Code() == -1)
 		{
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
 		}
 		else if (res.Code() == 200)
 		{
-
-			InfoBarMessageShow(resourceLoader.GetString(L"ChangePasswordButton/Content"), resourceLoader.GetString(L"Message/ChangeSuccess"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			InfoBarMessageShow(resourceLoader.GetString(L"FlyoutChangePassword/Text"), resourceLoader.GetString(L"Message/Change/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 			if (loginData.Values().HasKey(L"passwords"))
 			{
@@ -902,7 +920,8 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 		{
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 		}
-		LayoutMessageShow(false);
+		ChangePasswordButton_Loaded(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+
 	}
 }
 
@@ -916,7 +935,12 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 {
 	if (NewSignature().Text() != L"")
 	{
-		LayoutMessageShow(resourceLoader.GetString(L"Message/Change"), true);
+		Microsoft::UI::Xaml::Controls::ProgressRing ring;
+		ring.IsActive(true);
+		ring.Width(16);
+		ring.Height(16);
+		ChangeSignatureButton().Content(ring);
+		ChangeSignatureButton().IsEnabled(false);
 		auto res = co_await m_bikaClient.SetSlogan(NewSignature().Text());
 
 		if (res.Code() == -1)
@@ -926,7 +950,7 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 		else if (res.Code() == 200)
 		{
 			ChangeSignature(false);
-			InfoBarMessageShow(resourceLoader.GetString(L"ChangeSignatureButton/Content"), resourceLoader.GetString(L"Message/ChangeSuccess"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			InfoBarMessageShow(resourceLoader.GetString(L"FlyoutChangeSignature/Text"), resourceLoader.GetString(L"Message/Change/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 			co_await SetPerson();
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
@@ -937,7 +961,7 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 		{
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 		}
-		LayoutMessageShow(false);
+		ChangeSignatureButton_Loaded(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
 	}
 }
 
@@ -977,4 +1001,77 @@ void winrt::bikabika::implementation::MainPage::LoginUserSlogan_Loaded(winrt::Wi
 		LoginUserSloganTip().Content(box_value(slogan));
 		LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
 	}
+}
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::ButtonChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (NewTitle().Text() != L"")
+	{
+		Microsoft::UI::Xaml::Controls::ProgressRing ring;
+		ring.IsActive(true);
+		ring.Width(16);
+		ring.Height(16);
+		ChangeTitleButton().Content(ring);
+		ChangeTitleButton().IsEnabled(false);
+		auto res = co_await m_bikaClient.SetTitle(m_user.ID(), NewTitle().Text());
+		if (res.Code() == -1)
+		{
+			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+		}
+		else if (res.Code() == 200)
+		{
+			ChangeTitle(false);
+			InfoBarMessageShow(resourceLoader.GetString(L"FlyoutChangeTitle/Text"), resourceLoader.GetString(L"Message/Change/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			co_await SetPerson();
+		}
+		else if (res.Code() == 401 && res.Error() == L"1005")
+		{
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+		}
+		ChangeTitleButton_Loaded(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+	}
+}
+
+
+void winrt::bikabika::implementation::MainPage::ChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	ChangeTitle(true);
+}
+
+
+void winrt::bikabika::implementation::MainPage::NewTitle_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e)
+{
+	if (e.Key() == Windows::System::VirtualKey::Enter)
+	{
+		ButtonChangeTitle_Click(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
+	}
+}
+
+
+void winrt::bikabika::implementation::MainPage::ChangeSignatureButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	NewSignature().PlaceholderText(m_user.Slogan());
+	ChangeSignatureButton().Content(box_value(resourceLoader.GetString(L"FlyoutChangeSignature/Text")));
+	ChangeSignatureButton().IsEnabled(true);
+}
+
+
+void winrt::bikabika::implementation::MainPage::ChangePasswordButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	ChangePasswordButton().Content(box_value(resourceLoader.GetString(L"FlyoutChangePassword/Text")));
+	ChangePasswordButton().IsEnabled(true);
+}
+
+
+
+
+void winrt::bikabika::implementation::MainPage::ChangeTitleButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	ChangeTitleButton().Content(box_value(resourceLoader.GetString(L"FlyoutChangeTitle/Text")));
+	ChangeTitleButton().IsEnabled(true);
 }

@@ -1,4 +1,11 @@
-﻿#include "pch.h"
+﻿/*****************************************************************//**
+ * \file   ComicPage.cpp
+ * \brief  分区页面
+ *
+ * \author kulujun
+ * \date   June 2022
+ *********************************************************************/
+#include "pch.h"
 #include "ComicPage.h"
 #if __has_include("ComicPage.g.cpp")
 #include "ComicPage.g.cpp"

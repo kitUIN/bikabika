@@ -125,9 +125,6 @@
     <value>自动登录</value>
     <comment>复选框:自动登录</comment>
   </data>
-  <data name="AutoLogining" xml:space="preserve">
-    <value>自动登陆中</value>
-  </data>
   <data name="BlockPassword.Text" xml:space="preserve">
     <value>密码</value>
     <comment>文本框:密码</comment>
@@ -136,18 +133,6 @@
     <value>密码</value>
     <comment>输入框:密码</comment>
   </data>
-  <data name="ButtonChangePassword.Content" xml:space="preserve">
-    <value>修改密码</value>
-    <comment>按钮:修改密码</comment>
-  </data>
-  <data name="ButtonChangeSignature.Content" xml:space="preserve">
-    <value>修改签名</value>
-    <comment>按钮:修改签名</comment>
-  </data>
-  <data name="ButtonLogin.Content" xml:space="preserve">
-    <value>登录</value>
-    <comment>按钮:登陆</comment>
-  </data>
   <data name="Categories.Forum" xml:space="preserve">
     <value>哔咔留言板</value>
     <comment>分类第六个</comment>
@@ -155,9 +140,6 @@
   <data name="Categories.Game" xml:space="preserve">
     <value>游戏推荐</value>
     <comment>分类第三个</comment>
-  </data>
-  <data name="Categories.Help" xml:space="preserve">
-    <value>援助嗶咔</value>
   </data>
   <data name="Categories.Latest" xml:space="preserve">
     <value>最近更新</value>
@@ -183,9 +165,6 @@
     <value>搜索</value>
     <comment>分类搜索栏</comment>
   </data>
-  <data name="ClearHistory.Content" xml:space="preserve">
-    <value>清除历史记录</value>
-  </data>
   <data name="Comment.Text" xml:space="preserve">
     <value>评论</value>
     <comment>用户界面</comment>
@@ -203,10 +182,6 @@
   <data name="CommentTitle.Text" xml:space="preserve">
     <value>评论区</value>
   </data>
-  <data name="CopySuccess" xml:space="preserve">
-    <value>复制成功</value>
-    <comment>复制成功</comment>
-  </data>
   <data name="Delete.Content" xml:space="preserve">
     <value>删除记录</value>
     <comment>删除记录</comment>
@@ -221,12 +196,6 @@
   </data>
   <data name="Edit.Content" xml:space="preserve">
     <value>点击编辑</value>
-  </data>
-  <data name="ErrorButton.Text" xml:space="preserve">
-    <value>重新加载</value>
-  </data>
-  <data name="FailComment" xml:space="preserve">
-    <value>该作品不允许评论</value>
   </data>
   <data name="FailMessage.CloseButton.Normal" xml:space="preserve">
     <value>关闭</value>
@@ -413,16 +382,9 @@
     <value>自动打卡</value>
     <comment>通知消息:自动打卡</comment>
   </data>
-  <data name="Message.Change" xml:space="preserve">
-    <value>修改中....</value>
-    <comment>通知消息:修改中</comment>
-  </data>
-  <data name="Message.ChangeSuccess" xml:space="preserve">
+  <data name="Message.Change.Success" xml:space="preserve">
     <value>修改成功✔</value>
     <comment>通知消息:修改成功</comment>
-  </data>
-  <data name="Message.Logining" xml:space="preserve">
-    <value>登录中</value>
   </data>
   <data name="Message.PunchIned" xml:space="preserve">
     <value>已打卡✔</value>
@@ -552,20 +514,6 @@
     <value>最多指名</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SubmitButton.Content" xml:space="preserve">
-    <value>提交</value>
-  </data>
-  <data name="Submiting" xml:space="preserve">
-    <value>提交中...</value>
-  </data>
-  <data name="TipChangePassword.Title" xml:space="preserve">
-    <value>修改密码</value>
-    <comment>提示框:修改密码</comment>
-  </data>
-  <data name="TipChangeSignature.Title" xml:space="preserve">
-    <value>修改签名</value>
-    <comment>提示框:修改签名</comment>
-  </data>
   <data name="TipComment" xml:space="preserve">
     <value>点击展开评论区</value>
   </data>
@@ -613,6 +561,14 @@
   <data name="Verified" xml:space="preserve">
     <value>已验证✔</value>
   </data>
+  <data name="BlockNewTitle.Text" xml:space="preserve">
+    <value>新称号</value>
+    <comment>文本框:新称号</comment>
+  </data>
+  <data name="FlyoutChangeTitle.Text" xml:space="preserve">
+    <value>修改称号</value>
+    <comment>浮出:修改称号</comment>
+  </data>
   <data name="Keyword.Default.Title" xml:space="preserve">
     <value>萌新</value>
     <comment>默认关键字:萌新</comment>
@@ -624,5 +580,12 @@
   <data name="TipSwitchUser.Content" xml:space="preserve">
     <value>切换账户</value>
     <comment>提示框:切换账户</comment>
+  </data>
+  <data name="Keyword.Login" xml:space="preserve">
+    <value>登入</value>
+    <comment>关键字:登入</comment>
+  </data>
+  <data name="Message.Login.Success" xml:space="preserve">
+    <value>欢迎您:   </value>
   </data>
 </root>

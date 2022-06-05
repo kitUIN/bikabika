@@ -32,6 +32,7 @@ namespace winrt::bikabika::implementation
 
 		void StartInfoBar();
 		void ChangePassword(bool const& isOpen);
+		void ChangeTitle(bool const& isOpen);
 		void ChangeSignature(bool const& isOpen);
 		Windows::Foundation::IAsyncAction SetPerson();
 		Windows::Foundation::IAsyncAction GetKeywords();
@@ -88,6 +89,13 @@ namespace winrt::bikabika::implementation
 		Windows::Foundation::IAsyncAction ChangeSignatureButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void ButtonRegister_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void LoginUserSlogan_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction ButtonChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void NewTitle_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
+		void ChangeSignatureButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangePasswordButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void LoginButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangeTitleButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 	};
 
 }

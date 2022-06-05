@@ -73,6 +73,11 @@
                                     Click="ChangeSignature_Click"
                                     Icon="ContactInfo" />
                                 <MenuFlyoutItem
+                                    x:Name="ChangeTitle"
+                                    x:Uid="FlyoutChangeTitle"
+                                    Click="ChangeTitle_Click"
+                                    Icon="ContactPresence" />
+                                <MenuFlyoutItem
                                     x:Name="ChangePassword"
                                     x:Uid="FlyoutChangePassword"
                                     Click="ChangePassword_Click"
@@ -208,6 +213,7 @@
                         <Button.Flyout>
                             <Flyout
                                 x:Name="SearchFlyout"
+                                LightDismissOverlayMode="On"
                                 Opened="Flyout_Opened"
                                 Placement="BottomEdgeAlignedRight">
                                 <StackPanel Width="280" Orientation="Horizontal">
@@ -294,7 +300,6 @@
         </Frame>
         <muxc:TeachingTip
             x:Name="LoginTeachingTip"
-            x:Uid="TipLoginTeaching"
             Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
@@ -437,12 +442,10 @@
                         </Button>
                         <Button
                             x:Name="LoginButton"
-                            x:Uid="ButtonLogin"
                             Width="160"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Click="LoginClickHandler"
-                            Content="Log In" />
+                            Click="LoginClickHandler" />
                     </Grid>
 
                 </StackPanel>
@@ -453,7 +456,7 @@
         </muxc:TeachingTip>
         <muxc:TeachingTip
             x:Name="ChangePasswordTip"
-            x:Uid="TipChangePassword"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
@@ -481,9 +484,13 @@
                             KeyUp="ChangePasswordButton_KeyUp" />
                     </StackPanel>
                     <Button
-                        x:Uid="ButtonChangePassword"
-                        HorizontalAlignment="Right"
-                        Click="ChangePasswordButton_Click" />
+                        x:Name="ChangePasswordButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="ChangePasswordButton_Click"
+                        Loaded="ChangePasswordButton_Loaded" />
                 </StackPanel>
             </muxc:TeachingTip.Content>
             <muxc:TeachingTip.IconSource>
@@ -492,7 +499,7 @@
         </muxc:TeachingTip>
         <muxc:TeachingTip
             x:Name="ChangeSignatureTip"
-            x:Uid="TipChangeSignature"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
@@ -513,13 +520,52 @@
                             KeyUp="ChangeSignatureBox_KeyUp" />
                     </StackPanel>
                     <Button
-                        x:Uid="ButtonChangeSignature"
-                        HorizontalAlignment="Right"
-                        Click="ChangeSignatureButton_Click" />
+                        x:Name="ChangeSignatureButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="ChangeSignatureButton_Click"
+                        Loaded="ChangeSignatureButton_Loaded" />
                 </StackPanel>
             </muxc:TeachingTip.Content>
             <muxc:TeachingTip.IconSource>
                 <muxc:SymbolIconSource Symbol="ContactInfo" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="ChangeTitleTip"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <TextBlock
+                            x:Uid="BlockNewTitle"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="NewTitle"
+                            Width="200"
+                            KeyUp="NewTitle_KeyUp" />
+                    </StackPanel>
+                    <Button
+                        x:Name="ChangeTitleButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Loaded="ChangeTitleButton_Loaded" />
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="ContactPresence" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
         <muxc:InfoBar

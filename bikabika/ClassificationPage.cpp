@@ -1,4 +1,11 @@
-﻿#include "pch.h"
+﻿/*****************************************************************//**
+ * \file   ClassificationPage.cpp
+ * \brief  分类页面
+ * 
+ * \author kulujun
+ * \date   June 2022
+ *********************************************************************/
+#include "pch.h"
 #include "ClassificationPage.h"
 #if __has_include("ClassificationPage.g.cpp")
 #include "ClassificationPage.g.cpp"
