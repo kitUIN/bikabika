@@ -702,6 +702,12 @@
   <data name="Message.Login.Success" xml:space="preserve">
     <value>欢迎您</value>
   </data>
+  <data name="FlyoutDelete.Label" xml:space="preserve">
+    <value>删除账户</value>
+  </data>
+  <data name="FlyoutDelete.ToolTipService.ToolTip" xml:space="preserve">
+    <value>删除账户</value>
+  </data>
   <data name="Message.Login.Switch" xml:space="preserve">
     <value>正在切换账户-&gt;</value>
   </data>
