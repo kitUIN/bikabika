@@ -566,7 +566,7 @@
     <comment>文本框:新称号</comment>
   </data>
   <data name="FlyoutChangeTitle.Text" xml:space="preserve">
-    <value>修改称号</value>
+    <value>修改称号(管理员)</value>
     <comment>浮出:修改称号</comment>
   </data>
   <data name="Keyword.Default.Title" xml:space="preserve">
@@ -713,5 +713,16 @@
   </data>
   <data name="TipSelectUser.Title" xml:space="preserve">
     <value>切换账户</value>
+  </data>
+  <data name="FailMessage.Message.AuthError" xml:space="preserve">
+    <value>您不是管理员,无法使用</value>
+    <comment>错误消息内容:不是管理员</comment>
+  </data>
+  <data name="FlyoutChangeAvatar.Text" xml:space="preserve">
+    <value>修改头像</value>
+    <comment>浮出:修改头像</comment>
+  </data>
+  <data name="Message.Success.Avatar" xml:space="preserve">
+    <value>修改头像成功</value>
   </data>
 </root>

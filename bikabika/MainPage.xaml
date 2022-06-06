@@ -71,6 +71,11 @@
                                 IsEnabled="False" />
                             <MenuFlyoutSubItem x:Uid="FlyoutAccountSettings" Icon="Setting">
                                 <MenuFlyoutItem
+                                    x:Name="ChangeAvatar"
+                                    x:Uid="FlyoutChangeAvatar"
+                                    Click="ChangeAvatar_Click"
+                                    Icon="Contact2" />
+                                <MenuFlyoutItem
                                     x:Name="ChangeSignature"
                                     x:Uid="FlyoutChangeSignature"
                                     Click="ChangeSignature_Click"
@@ -486,7 +491,6 @@
                             <AddDeleteThemeTransition />
                         </TransitionCollection>
                     </GridView.ItemContainerTransitions>
-
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="block:UserBlock">
                             <Border
@@ -890,6 +894,7 @@
                         Margin="0,10,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
+                        Click="ButtonChangeTitle_Click"
                         Loaded="ChangeTitleButton_Loaded" />
                 </StackPanel>
             </muxc:TeachingTip.Content>

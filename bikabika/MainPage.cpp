@@ -33,6 +33,8 @@ using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Pickers;
 
 namespace winrt::bikabika::implementation
 {
@@ -1096,6 +1098,9 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::But
 		else if (res.Code() == 401 && res.Error() == L"1005")
 		{
 			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+		}else if (res.Code() == 400 && res.Error() == L"1015")
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/AuthError"));
 		}
 		else
 		{
@@ -1453,5 +1458,32 @@ void winrt::bikabika::implementation::MainPage::AppBarButton_Click(winrt::Window
 		loginData.Values().Insert(L"emails", box_value(m_emails.Stringify()));
 		loginData.Values().Insert(L"passwords", box_value(m_passwords.Stringify()));
 		loginData.Values().Insert(L"userDatas", box_value(m_userDatas.Stringify()));
+	}
+}
+
+
+
+
+IAsyncAction winrt::bikabika::implementation::MainPage::ChangeAvatar_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	FileOpenPicker openPicker;
+	openPicker.ViewMode(PickerViewMode::Thumbnail);
+	openPicker.SuggestedStartLocation(PickerLocationId::PicturesLibrary);
+	openPicker.FileTypeFilter().ReplaceAll({ L".jpg", L".jpeg", L".png" });
+	StorageFile file = co_await openPicker.PickSingleFileAsync();
+	if (file != nullptr)
+	{
+		Windows::Storage::Streams::IBuffer buffer{ co_await Windows::Storage::FileIO::ReadBufferAsync(file) };
+
+		auto res = co_await m_bikaClient.SetAvatar(buffer, to_hstring(to_string(file.FileType()).substr(1)));
+		if (res.Code() == 200)
+		{
+			co_await SetPerson();
+			InfoBarMessageShow(resourceLoader.GetString(L"Message/Success/Avatar"), L"", Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+		}
+		else
+		{
+			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message() + L":"+ res.Detail());
+		}
 	}
 }

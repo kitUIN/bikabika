@@ -42,6 +42,7 @@
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.Storage.h>
+#include <winrt/Windows.Storage.Pickers.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Web.Syndication.h>
