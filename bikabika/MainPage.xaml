@@ -62,10 +62,11 @@
                     Tag="NavBigImg">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout x:Name="Menu">
-                            <MenuFlyoutItem
+                            <MenuFlyoutSubItem
+                                x:Name="FlyoutSwitchAccounts"
                                 x:Uid="FlyoutSwitchAccounts"
-                                Click="LogOut_Click"
-                                Icon="People" />
+                                Icon="People"
+                                IsEnabled="False" />
                             <MenuFlyoutSubItem x:Uid="FlyoutAccountSettings" Icon="Setting">
                                 <MenuFlyoutItem
                                     x:Name="ChangeSignature"
@@ -213,7 +214,7 @@
                         <Button.Flyout>
                             <Flyout
                                 x:Name="SearchFlyout"
-                                LightDismissOverlayMode="On"
+                                LightDismissOverlayMode="Off"
                                 Opened="Flyout_Opened"
                                 Placement="BottomEdgeAlignedRight">
                                 <StackPanel Width="280" Orientation="Horizontal">
@@ -308,14 +309,17 @@
                     Margin="0,10,0,0"
                     Padding="10"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Loaded="StackPanel_Loaded">
                     <Border
                         Width="240"
                         Padding="10"
                         HorizontalAlignment="Center"
                         Background="{ThemeResource SystemBorderAccentColor}"
                         CornerRadius="10"
-                        Opacity="0.9">
+                        Opacity="0.9"
+                        PointerPressed="Border_PointerPressed">
+
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="TipSwitchUser" />
                         </ToolTipService.ToolTip>
@@ -384,7 +388,8 @@
                             Width="200"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            PlaceholderText="E-mail" />
+                            PlaceholderText="E-mail"
+                            TextChanged="Email_TextChanged" />
 
                     </Grid>
                     <Grid
@@ -453,6 +458,84 @@
             <muxc:TeachingTip.IconSource>
                 <muxc:SymbolIconSource Symbol="AddFriend" />
             </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="SelectUserTip"
+            x:Uid="TipSelectUser"
+            IsLightDismissEnabled="True"
+            PreferredPlacement="Right">
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="Switch" />
+            </muxc:TeachingTip.IconSource>
+            <muxc:TeachingTip.Content>
+                <GridView
+                    x:Name="LoginGridView"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsItemClickEnabled="True"
+                    ItemClick="LoginGridView_ItemClick"
+                    ItemsSource="{x:Bind LoginUsers, Mode=OneWay}"
+                    SelectionMode="Single">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="block:UserBlock">
+                            <Border
+                                Width="240"
+                                Padding="10"
+                                HorizontalAlignment="Center"
+                                Background="{ThemeResource SystemTipAcrylicAccentColor}"
+                                CornerRadius="10"
+                                Opacity="0.9">
+                                <StackPanel Orientation="Horizontal">
+                                    <PersonPicture
+                                        Width="64"
+                                        Height="64"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        ProfilePicture="{x:Bind Thumb.Img, Mode=OneWay}" />
+                                    <StackPanel Margin="10,0,0,0">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource SystemAccentColorDark1}"
+                                            Text="{x:Bind Name, Mode=OneWay}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind LevelString, Mode=OneWay}" />
+                                            <Border
+                                                Margin="10,0,0,0"
+                                                Padding="6,3,6,3"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Background="#ffb401"
+                                                CornerRadius="12">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind Title, Mode=OneWay}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="{x:Bind SloganOmit, Mode=OneWay}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind Slogan, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </muxc:TeachingTip.Content>
         </muxc:TeachingTip>
         <muxc:TeachingTip
             x:Name="RegisterTeachingTip"
@@ -796,8 +879,9 @@
         </muxc:TeachingTip>
         <muxc:InfoBar
             x:Name="Info"
+            Margin="50"
             HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
+            VerticalAlignment="Top"
             IsClosable="False"
             IsIconVisible="True"
             IsOpen="False"

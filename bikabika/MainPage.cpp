@@ -8,6 +8,7 @@
 #include "pch.h"
 #include "MainPage.h"
 #include "MainPage.g.cpp"
+using namespace winrt::BikaClient::Blocks;
 using namespace winrt::Windows::UI::Xaml::Media::Animation;
 using namespace winrt::Windows::UI::Input;
 
@@ -204,78 +205,106 @@ namespace winrt::bikabika::implementation
 		m_login = value;
 	}
 
+	winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> MainPage::LoginUsers()
+	{
+		return m_loginUsers;
+	}
+
 	Windows::Foundation::IAsyncAction MainPage::Login()
 	{
 		m_login = false;
 		auto res = co_await m_bikaClient.Login(Email().Text(), Password().Password());
-		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-		JsonObject emails;
-		JsonObject passwords;
-		JsonArray emailArray;
 		if (res.Code()== -1)
 		{
+			LoginButton().Content(box_value(resourceLoader.GetString(L"ButtonLogin/Content")));
+			LoginButton().IsEnabled(true);
 			ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
 		}
 		else if (res.Code() == 200)
 		{
-			/*JsonObject tokens;
-			if (loginData.Values().HasKey(L"AutoLogin") && loginData.Values().Lookup(L"AutoLogin").as<bool>())
+			FlyoutSwitchAccounts().Items().Clear();
+			m_login = true;
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			JsonArray emailArray = m_emails.GetNamedArray(L"emailArry");
+			OutputDebugStringW(emailArray.Stringify().c_str());
+			m_emails.SetNamedValue(L"Last", JsonValue::CreateStringValue(Email().Text()));
+			bool f = true;
+			for (auto x : emailArray)
 			{
-				if (loginData.Values().HasKey(L"tokens"))
+				if (x.GetString() == Email().Text())
 				{
-					tokens = JsonObject::Parse(loginData.Values().Lookup(L"tokens").as<hstring>());
+					f = false;
+					break;
 				}
-				tokens.Insert(Email().Text(), JsonValue::CreateStringValue(res.Token()));
-				loginData.Values().Insert(L"tokens", box_value(tokens.Stringify()));
-			}*/
-			if (loginData.Values().HasKey(L"emails"))
-			{
-				emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-				emailArray = emails.GetNamedArray(L"emailArry");
 			}
-			emails.Insert(L"Last", JsonValue::CreateStringValue(Email().Text()));
-			emailArray.Append(JsonValue::CreateStringValue(Email().Text()));
-			emails.Insert(L"emailArry", emailArray);
-			loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
+			if(f) emailArray.Append(JsonValue::CreateStringValue(Email().Text()));
+			m_emails.SetNamedValue(L"emailArry", emailArray);
+			loginData.Values().Insert(L"emails", box_value(m_emails.Stringify()));
+			co_await SetPerson();
+			InfoBarMessageShow(resourceLoader.GetString(L"Message/Login/Success"), m_user.Name(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 			if (RememberCheckBox().IsChecked().GetBoolean())
 			{
-				if (loginData.Values().HasKey(L"passwords"))
-				{
-					passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-				}
-				passwords.Insert(Email().Text(), JsonValue::CreateStringValue(Password().Password()));
-				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
+				m_passwords.SetNamedValue(Email().Text(), JsonValue::CreateStringValue(Password().Password()));
+				loginData.Values().Insert(L"passwords", box_value(m_passwords.Stringify()));
 			}
-			m_login = true;
-			co_await SetPerson();
 			if(!m_user.IsPunched()) {
 				co_await PunchIn();
 				co_await SetPerson();
 			}
+			if (emailArray.Size() > 1)
+			{
+				FlyoutSwitchAccounts().IsEnabled(true);
+				for (auto x : emailArray)
+				{
+					if (m_passwords.HasKey(x.GetString()) && m_userDatas.HasKey(x.GetString()) && x.GetString() != m_user.Email())
+					{
+						MenuFlyoutItem newItem;
+						UserBlock userblock = UserBlock(m_userDatas.GetNamedObject(x.GetString()));
+						newItem.Text(userblock.Name());
+						newItem.Icon(SymbolIcon{Symbol::People});
+						newItem.Click([this](Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args)
+							{
+								auto email = m_userDatas.GetNamedString(sender.as<MenuFlyoutItem>().Text());
+								Email().Text(email);
+								Password().Password(m_passwords.GetNamedString(email));
+								//LoginViewShow(true);
+								InfoBarMessageShow(resourceLoader.GetString(L"Message/Login/Switch"), sender.as<MenuFlyoutItem>().Text(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Informational);
+								auto login{ Login() };
+							});
+
+						FlyoutSwitchAccounts().Items().Append(newItem);
+					}
+				}
+			}
+			else
+			{
+				FlyoutSwitchAccounts().IsEnabled(false);
+			}
 		}
 		else if(res.Code()==401&&res.Error()==L"1005")
 		{
-			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
 
+			ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
 		}
 		else if (res.Code() == 400)
 		{
+
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, resourceLoader.GetString(L"FailMessage/Message/Login/Error"));
 			Password().Password(L"");
-			if (loginData.Values().HasKey(L"passwords"))
-			{
-				passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-				passwords.Remove(Email().Text());
-				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
-			}
+			m_passwords.Remove(Email().Text());
+
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+			loginData.Values().Insert(L"passwords", box_value(m_passwords.Stringify()));
 		}
 		else
 		{
+
 			ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
 			Password().Password(L"");
 		}
-		LoginButton().Content(box_value(resourceLoader.GetString(L"ButtonLogin/Content")));
+		LoginButton().Content(box_value(resourceLoader.GetString(L"Keyword/Login")));
 		LoginButton().IsEnabled(true);
+
 	}
 
 	Windows::Foundation::IAsyncAction MainPage::PunchIn()
@@ -299,7 +328,7 @@ namespace winrt::bikabika::implementation
 
 	void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
 	{
-		__super::OnNavigatedTo(e);
+
 		// 隐藏标题栏
 		auto coreTitleBar = CoreApplication::GetCurrentView().TitleBar();
 		coreTitleBar.ExtendViewIntoTitleBar(true);
@@ -307,12 +336,35 @@ namespace winrt::bikabika::implementation
 
 		auto titleBar = ApplicationView::GetForCurrentView().TitleBar();
 		titleBar.ButtonBackgroundColor(Colors::Transparent());
-
+		__super::OnNavigatedTo(e);
 		// 登录初始化
 		LogOut();
 		NavHome().IsEnabled(false);
 		NavClassification().IsEnabled(false);
 		NavAccount().IsEnabled(false);
+
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+
+		if (loginData.Values().HasKey(L"emails")) {
+			JsonObject::TryParse(loginData.Values().Lookup(L"emails").as<hstring>(), m_emails);
+			OutputDebugStringW(m_emails.Stringify().c_str());
+		}
+		else
+		{
+			JsonArray emailArray;
+			m_emails.Insert(L"emailArry", emailArray);
+		}
+		if(loginData.Values().HasKey(L"passwords"))
+		{
+			JsonObject::TryParse(loginData.Values().Lookup(L"passwords").as<hstring>(), m_passwords);
+		}
+		if (loginData.Values().HasKey(L"userData"))
+		{
+			JsonObject::TryParse(loginData.Values().Lookup(L"userData").as<hstring>(), m_userDatas);
+		}
+		OutputDebugStringW(m_emails.Stringify().c_str());
+
+
 	}
 	/// <summary>
 	/// 把过长文字转换成带省略号
@@ -451,17 +503,16 @@ namespace winrt::bikabika::implementation
 		}
 		else if (res.Code() == 200)
 		{
+			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 			NavHome().IsEnabled(true);
 			NavClassification().IsEnabled(true);
 			NavAccount().IsEnabled(true);
 			User(res.User());
-			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-			JsonObject userDatas;
-			auto emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-			userDatas.Insert(emails.GetNamedString(L"Last"), JsonObject::Parse(res.User().Json()));
-			loginData.Values().Insert(L"userData",box_value(userDatas.Stringify()));
+			m_userDatas.SetNamedValue(res.User().Name(), JsonValue::CreateStringValue(res.User().Email()));
+			m_userDatas.SetNamedValue(res.User().Email(), JsonObject::Parse(res.User().Json()));
+			OutputDebugStringW(m_emails.Stringify().c_str());
+			loginData.Values().Insert(L"userData", box_value(m_userDatas.Stringify()));
 			if (m_firstArrive) {
-				InfoBarMessageShow(resourceLoader.GetString(L"Message/Login/Success"), m_user.Name(), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 				winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 				symbol.Symbol(Symbol::Home);
 				winrt::Windows::UI::Xaml::Controls::Frame frame;
@@ -469,7 +520,6 @@ namespace winrt::bikabika::implementation
 				CreateNewTab(frame, resourceLoader.GetString(L"NavHome/Content"), symbol);
 				NavView().SelectedItem(NavView().MenuItems().GetAt(5));
 				m_firstArrive = false;
-
 				co_await GetKeywords();
 			}
 		}
@@ -626,6 +676,7 @@ void winrt::bikabika::implementation::MainPage::AutoCheckBox_Checked(winrt::Wind
 	{
 		RememberCheckBox().IsChecked(true);
 	}
+
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	loginData.Values().Insert(L"AutoLogin", box_value(AutoCheckBox().IsChecked().GetBoolean()));
 }
@@ -635,6 +686,7 @@ void winrt::bikabika::implementation::MainPage::RememberCheckBox_Checked(winrt::
 	{
 		AutoCheckBox().IsChecked(false);
 	}
+
 	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	loginData.Values().Insert(L"RememberMe", box_value(RememberCheckBox().IsChecked().GetBoolean()));
 }
@@ -702,10 +754,6 @@ void winrt::bikabika::implementation::MainPage::LogOut_Click(winrt::Windows::Fou
 void winrt::bikabika::implementation::MainPage::ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 	ChangeSignature(true);
-}
-Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::SetPassword_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
-{
-	return Windows::Foundation::IAsyncAction();
 }
 /// <summary>
 /// 菜单栏中修改密码按钮
@@ -820,10 +868,12 @@ void winrt::bikabika::implementation::MainPage::CatSearch_SuggestionChosen(winrt
 /// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
-	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+
 	LoginButton().Content(box_value(resourceLoader.GetString(L"Keyword/Login")));
 	LoginButton().IsEnabled(true);
+
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
 	if (loginData.Values().HasKey(L"RememberMe") && loginData.Values().Lookup(L"RememberMe").as<bool>())
 	{
 		RememberCheckBox().IsChecked(true);
@@ -844,27 +894,18 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 			Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
 		}
 	}
-
-	if (loginData.Values().HasKey(L"emails"))
+	if (m_emails.HasKey(L"Last"))
 	{
-		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-		if (emails.HasKey(L"Last"))
+		Email().Text(m_emails.GetNamedString(L"Last"));
+	}
+	if (RememberCheckBox().IsChecked().GetBoolean())
+	{
+		if (m_passwords.HasKey(Email().Text()))
 		{
-			Email().Text(emails.GetNamedString(L"Last"));
-		}
-		if (RememberCheckBox().IsChecked().GetBoolean())
-		{
-			if (loginData.Values().HasKey(L"passwords"))
+			Password().Password(m_passwords.GetNamedString(Email().Text()));
+			if (AutoCheckBox().IsChecked().GetBoolean())
 			{
-				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-				if (passwords.HasKey(Email().Text()))
-				{
-					Password().Password(passwords.GetNamedString(Email().Text()));
-					if (AutoCheckBox().IsChecked().GetBoolean())
-					{
-						LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
-					}
-				}
+				LoginClickHandler(sender, Windows::UI::Xaml::RoutedEventArgs{ nullptr });
 			}
 		}
 	}
@@ -952,13 +993,10 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::MainPage::Cha
 		else if (res.Code() == 200)
 		{
 			InfoBarMessageShow(resourceLoader.GetString(L"FlyoutChangePassword/Text"), resourceLoader.GetString(L"Message/Change/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+			m_passwords.Insert(m_user.Email(), JsonValue::CreateStringValue(NewPasswrod().Text()));
+
 			Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-			if (loginData.Values().HasKey(L"passwords"))
-			{
-				JsonObject passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-				passwords.Insert(m_user.Email(), JsonValue::CreateStringValue(NewPasswrod().Text()));
-				loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
-			}
+			loginData.Values().Insert(L"passwords", box_value(m_passwords.Stringify()));
 			ChangePassword(false);
 		}
 		else if (res.Code() == 401 && res.Error() == L"1005")
@@ -1026,30 +1064,7 @@ void winrt::bikabika::implementation::MainPage::ButtonRegister_Click(winrt::Wind
 void winrt::bikabika::implementation::MainPage::LoginUserSlogan_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 
-	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-	if (loginData.Values().HasKey(L"userData"))
-	{
-		JsonObject userDatas = JsonObject::Parse(loginData.Values().Lookup(L"userData").as<hstring>());
-		JsonObject emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-		BikaClient::Blocks::UserBlock userBlock(userDatas.GetNamedObject(emails.GetNamedString(L"Last")),m_bikaClient.FileServer());
-		LoginUserName().Text(userBlock.Name());
-		LoginUserLevel().Text(userBlock.LevelString());
-		LoginUserTitle().Text(userBlock.Title());
-		LoginUserPic().ProfilePicture(userBlock.Thumb().Img());
-		hstring slogan = userBlock.Slogan();
-		LoginUserSloganTip().Content(box_value(slogan));
-		LoginUserSlogan().Text(Omit(userBlock.Slogan(), 11));
-	}
-	else
-	{
-		LoginUserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
-		LoginUserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
-		LoginUserTitle().Text(resourceLoader.GetString(L"Keyword/Default/Title"));
-		hstring slogan = resourceLoader.GetString(L"Keyword/Default/Slogan");
-		LoginUserSlogan().Text(slogan);
-		LoginUserSloganTip().Content(box_value(slogan));
-		LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
-	}
+
 }
 
 
@@ -1149,10 +1164,6 @@ void winrt::bikabika::implementation::MainPage::BirthdayDatePicker_Loaded(winrt:
 
 Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::MainPage::RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
-	JsonObject emails;
-	JsonObject passwords;
-	JsonArray emailArray;
 	LoginViewShow(false);
 	Microsoft::UI::Xaml::Controls::ProgressRing ring;
 	ring.IsActive(true);
@@ -1222,22 +1233,14 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::MainPage::Re
 	}
 	else if (res.Code() == 200)
 	{
-
-		if (loginData.Values().HasKey(L"emails"))
-		{
-			emails = JsonObject::Parse(loginData.Values().Lookup(L"emails").as<hstring>());
-			emailArray = emails.GetNamedArray(L"emailArry");
-		}
-		emails.Insert(L"Last", JsonValue::CreateStringValue(RegisterEmail().Text()));
+		Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+		auto emailArray = m_emails.GetNamedArray(L"emailArry");
+		m_emails.Insert(L"Last", JsonValue::CreateStringValue(RegisterEmail().Text()));
 		emailArray.Append(JsonValue::CreateStringValue(RegisterEmail().Text()));
-		emails.Insert(L"emailArry", emailArray);
-		loginData.Values().Insert(L"emails", box_value(emails.Stringify()));
-		if (loginData.Values().HasKey(L"passwords"))
-		{
-			passwords = JsonObject::Parse(loginData.Values().Lookup(L"passwords").as<hstring>());
-		}
-		passwords.Insert(RegisterEmail().Text(), JsonValue::CreateStringValue(RegisterPassword().Password()));
-		loginData.Values().Insert(L"passwords", box_value(passwords.Stringify()));
+		m_emails.Insert(L"emailArry", emailArray);
+		loginData.Values().Insert(L"emails", box_value(m_emails.Stringify()));
+		m_passwords.Insert(RegisterEmail().Text(), JsonValue::CreateStringValue(RegisterPassword().Password()));
+		loginData.Values().Insert(L"passwords", box_value(m_passwords.Stringify()));
 		Register(false);
 		InfoBarMessageShow(resourceLoader.GetString(L"Keyword/Message/Register"), L"", Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
 		LoginViewShow(true);
@@ -1265,4 +1268,136 @@ void winrt::bikabika::implementation::MainPage::RegisterEmail_TextChanged(winrt:
 		}
 	}
 	sender.as<TextBox>().Text(to_hstring(str));
+}
+
+
+void winrt::bikabika::implementation::MainPage::Border_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+	SelectUserTip().Target(sender.as<FrameworkElement>());
+	SelectUserTip().IsOpen(true);
+
+}
+
+
+void winrt::bikabika::implementation::MainPage::StackPanel_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+	if (m_emails.HasKey(L"Last"))
+	{
+		JsonArray emailArray = m_emails.GetNamedArray(L"emailArry");
+		if (emailArray.Size() > 0)
+		{
+			for (auto x : emailArray)
+			{
+				hstring email = x.GetString();
+				for (uint32_t i = 0; i < m_loginUsers.Size(); i++)
+				{
+					if (m_loginUsers.GetAt(i).Email() == email)
+					{
+						m_loginUsers.RemoveAt(i);
+						break;
+					}
+				}
+				if (m_userDatas.HasKey(email))
+				{
+					m_loginUsers.Append(UserBlock(m_userDatas.GetNamedObject(email), m_bikaClient.FileServer()));
+				}
+			}
+		}
+	}
+
+	if (m_emails.HasKey(L"Last")&&m_userDatas.HasKey(m_emails.GetNamedString(L"Last")))
+	{
+		BikaClient::Blocks::UserBlock userBlock(m_userDatas.GetNamedObject(m_emails.GetNamedString(L"Last")), m_bikaClient.FileServer());
+		LoginUserName().Text(userBlock.Name());
+		LoginUserLevel().Text(userBlock.LevelString());
+		LoginUserTitle().Text(userBlock.Title());
+		LoginUserPic().ProfilePicture(userBlock.Thumb().Img());
+		hstring slogan = userBlock.Slogan();
+		LoginUserSloganTip().Content(box_value(slogan));
+		LoginUserSlogan().Text(Omit(userBlock.Slogan(), 11));
+		for (auto x : LoginGridView().Items())
+		{
+			if (m_emails.GetNamedString(L"Last") == x.as<UserBlock>().Email())
+			{
+				LoginGridView().SelectedItem(x);
+			}
+		}
+	}
+	else
+	{
+		LoginUserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
+		LoginUserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
+		LoginUserTitle().Text(resourceLoader.GetString(L"Keyword/Default/Title"));
+		hstring slogan = resourceLoader.GetString(L"Keyword/Default/Slogan");
+		LoginUserSlogan().Text(slogan);
+		LoginUserSloganTip().Content(box_value(slogan));
+		LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+	}
+}
+
+
+void winrt::bikabika::implementation::MainPage::LoginGridView_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+{
+	auto user = e.ClickedItem().as<UserBlock>();
+	m_emails.SetNamedValue(L"Last", JsonValue::CreateStringValue(user.Email()));
+	Windows::Storage::ApplicationDataContainer loginData = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"LoginData", Windows::Storage::ApplicationDataCreateDisposition::Always);
+	loginData.Values().Insert(L"emails", box_value(m_emails.Stringify()));
+	OutputDebugStringW(user.Email().c_str());
+	Email().Text(user.Email());
+	if (m_passwords.HasKey(Email().Text()))
+	{
+		Password().Password(m_passwords.GetNamedString(Email().Text()));
+	}
+}
+
+
+void winrt::bikabika::implementation::MainPage::Email_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextChangedEventArgs const& e)
+{
+	JsonArray emailArray = m_emails.GetNamedArray(L"emailArry");
+	hstring text = sender.as<TextBox>().Text();
+	if (emailArray.Size() > 0)
+	{
+		bool f = false;
+		for (auto x : emailArray)
+		{
+			if (x.GetString() == text && m_userDatas.HasKey(text))
+			{
+				f = true;
+
+			}
+
+		}
+		if (f)
+		{
+			BikaClient::Blocks::UserBlock userBlock(m_userDatas.GetNamedObject(text), m_bikaClient.FileServer());
+			if (userBlock.Name() != LoginUserName().Text())
+			{
+				LoginUserName().Text(userBlock.Name());
+				LoginUserLevel().Text(userBlock.LevelString());
+				LoginUserTitle().Text(userBlock.Title());
+				LoginUserPic().ProfilePicture(userBlock.Thumb().Img());
+				hstring slogan = userBlock.Slogan();
+				LoginUserSloganTip().Content(box_value(slogan));
+				LoginUserSlogan().Text(Omit(userBlock.Slogan(), 11));
+			}
+		}
+		else if (LoginUserName().Text() != resourceLoader.GetString(L"Keyword/Default/Name"))
+		{
+			LoginUserName().Text(resourceLoader.GetString(L"Keyword/Default/Name"));
+			LoginUserLevel().Text(resourceLoader.GetString(L"Keyword/Default/Level"));
+			LoginUserTitle().Text(resourceLoader.GetString(L"Keyword/Default/Title"));
+			hstring slogan = resourceLoader.GetString(L"Keyword/Default/Slogan");
+			LoginUserSlogan().Text(slogan);
+			LoginUserSloganTip().Content(box_value(slogan));
+			LoginUserPic().ProfilePicture(BitmapImage{ Uri{ L"ms-appx:///Assets//Picacgs//placeholder_avatar_2.png" } });
+		}
+		for (auto x : LoginGridView().Items())
+		{
+			if (text == x.as<UserBlock>().Email())
+			{
+				LoginGridView().SelectedItem(x);
+				return;
+			}
+		}
+	}
 }

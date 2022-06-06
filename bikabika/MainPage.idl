@@ -16,6 +16,7 @@ namespace bikabika
         MainPage();
         static MainPage Current{ get; };
         BikaClient.BikaHttpClient HttpClient{ get; };
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.UserBlock> LoginUsers{ get; };
         void LayoutMessageShow(String message, Boolean isOpen);
         void LayoutMessageShow(Boolean isOpen);
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);

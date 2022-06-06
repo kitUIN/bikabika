@@ -47,10 +47,15 @@ namespace winrt::bikabika::implementation
 		void PropertyChanged(winrt::event_token const& token) noexcept;
 		bool IsLogin();
 		void IsLogin(bool const& value);
+		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> LoginUsers();
 		static bikabika::MainPage Current() { return current; }
 	private:
 		static bikabika::MainPage current;
+		winrt::Windows::Data::Json::JsonObject m_emails;
+		winrt::Windows::Data::Json::JsonObject m_passwords;
+		winrt::Windows::Data::Json::JsonObject m_userDatas;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
+		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> m_loginUsers = winrt::single_threaded_observable_vector<BikaClient::Blocks::UserBlock>();
 		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
@@ -99,6 +104,10 @@ namespace winrt::bikabika::implementation
 		void BirthdayDatePicker_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void RegisterEmail_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextBoxTextChangingEventArgs const& e);
+		void Border_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+		void StackPanel_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void LoginGridView_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
+		void Email_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextChangedEventArgs const& e);
 	};
 
 }
