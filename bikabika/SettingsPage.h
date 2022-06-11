@@ -16,9 +16,9 @@ namespace winrt::bikabika::implementation
         void PropertyChanged(winrt::event_token const& token) noexcept;
 
     private:
-        Windows::Foundation::Collections::IObservableVector<hstring> m_flows = winrt::single_threaded_observable_vector<hstring>();
-        Windows::Foundation::Collections::IObservableVector<hstring> m_themes = winrt::single_threaded_observable_vector<hstring>();
-        Windows::Foundation::Collections::IObservableVector<hstring> m_serverFlow = winrt::single_threaded_observable_vector<hstring>();
+        Windows::Foundation::Collections::IObservableVector<hstring> m_flows;
+        Windows::Foundation::Collections::IObservableVector<hstring> m_themes;
+        Windows::Foundation::Collections::IObservableVector<hstring> m_serverFlow;
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         bikabika::MainPage rootPage{ MainPage::Current() };
         double m_settingWidth = 600;

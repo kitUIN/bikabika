@@ -37,31 +37,25 @@ namespace winrt::bikabika::implementation
     void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
         __super::OnNavigatedTo(e);
-        m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/One"));
-        m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Two"));
-        m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
-        m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/One"));
-        m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/Two"));
-        m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
-        m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Light"));
-        m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Dark"));
+        m_serverFlow = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Flow/One"),resourceLoader.GetString(L"Keyword/Flow/Two"), resourceLoader.GetString(L"Keyword/Flow/Three") });
+        m_flows      = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Flow/One"),resourceLoader.GetString(L"Keyword/Flow/Two"), resourceLoader.GetString(L"Keyword/Flow/Three") });
+        m_themes     = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Theme/Light"), resourceLoader.GetString(L"Keyword/Theme/Dark") });
         SettingTheme().ItemsSource(box_value(m_themes));
-        auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
-        if (theme == ElementTheme::Light)
+        ElementTheme theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
+        if (theme == ElementTheme::Dark)
         {
-            SettingTheme().SelectedIndex(0);
+            SettingTheme().SelectedIndex(1);
         }
         else
         {
-            SettingTheme().SelectedIndex(1);
+            SettingTheme().SelectedIndex(0);
         }
         SettingAPPVersion().Content(box_value(rootPage.HttpClient().APPVersion()));
         SettingBikaClientFlow().ItemsSource(box_value(m_flows));
         SettingBikaClientFlow().SelectedIndex(0);
-        SettingBikaClientServerFlow().ItemsSource(box_value(m_flows));
-        SettingBikaClientServerFlow().SelectedIndex(rootPage.HttpClient().APPChannel()-1);
+        SettingBikaClientServerFlow().ItemsSource(box_value(m_serverFlow));
+        SettingBikaClientServerFlow().SelectedIndex(rootPage.HttpClient().APPChannel() - 1);
         PackageVersion version = Package::Current().Id().Version();
-
         SettingVersion().Content(box_value(to_hstring(version.Major) + L"." + to_hstring(version.Minor) + L"." + to_hstring(version.Build)));
 
     }

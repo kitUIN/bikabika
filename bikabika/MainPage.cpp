@@ -896,6 +896,11 @@ void winrt::bikabika::implementation::MainPage::Password_Loaded(winrt::Windows::
 			Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
 		}
 	}
+	else
+	{
+		Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Light);
+		settings.Values().Insert(L"Theme", box_value(L"Light"));
+	}
 	if (m_emails.HasKey(L"Last"))
 	{
 		Email().Text(m_emails.GetNamedString(L"Last"));
@@ -1282,9 +1287,10 @@ void winrt::bikabika::implementation::MainPage::RegisterEmail_TextChanged(winrt:
 
 void winrt::bikabika::implementation::MainPage::Border_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
-	SelectUserTip().Target(sender.as<FrameworkElement>());
-	SelectUserTip().IsOpen(true);
-
+	if (m_loginUsers > 0) {
+		SelectUserTip().Target(sender.as<FrameworkElement>());
+		SelectUserTip().IsOpen(true);
+	}
 }
 
 
