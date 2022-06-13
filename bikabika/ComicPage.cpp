@@ -201,3 +201,17 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::ComicPage::Re
 	m_comics.Clear();
 	co_await Goto(m_index + 1, ComicTitle().Text(), m_sort);
 }
+
+void winrt::bikabika::implementation::ComicPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
+{
+	auto comicBlock = e.ClickedItem().as<BikaClient::Blocks::ComicBlock>();
+	auto container = GridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
+	auto root = container.ContentTemplateRoot().as<FrameworkElement>();
+	auto image = root.FindName(L"ConnectedElement2").as<UIElement>();
+	winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+	winrt::Windows::UI::Xaml::Controls::Frame frame;
+	symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::PreviewLink);
+	frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(comicBlock.Id()) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+	rootPage.CreateNewTab(frame, comicBlock.Title(), symbol);
+}

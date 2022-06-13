@@ -7,4 +7,526 @@
     xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d" />
+    mc:Ignorable="d">
+    <Page.Resources>
+
+        <Style x:Key="TagStyle" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemAccentColorLight4}" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorLight1}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="10">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColorLight4}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColor}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ContentPresenter>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Name="MyListBoxItemStyle2" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border
+                                x:Name="ContentBackground"
+                                Padding="10"
+                                BorderThickness="1.5"
+                                CornerRadius="10"
+                                Opacity="0.9">
+                                <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                            </Border>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <!--  缺省样式  -->
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBackground" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrushLight1}" />
+                                            </ObjectAnimationUsingKeyFrames>
+
+                                        </Storyboard>
+                                    </VisualState>
+                                    <!--  设置鼠标悬停样式  -->
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBackground" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MyAcrylicBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <ScrollViewer x:Name="InfoPageScrollViewer">
+                <Grid x:Name="MainGrid" SizeChanged="MainGrid_SizeChanged">
+                    <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                x:Name="Img"
+                                Width="210"
+                                Height="280"
+                                HorizontalAlignment="Left" />
+                            <StackPanel x:Name="MainBookInfo" Orientation="Horizontal">
+                                <Grid Height="280" Margin="10,0,0,0">
+                                    <StackPanel
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top">
+                                        <StackPanel>
+                                            <TextBlock
+                                                x:Name="Title"
+                                                FontSize="17"
+                                                FontWeight="Bold"
+                                                MaxLines="6"
+                                                PointerPressed="Title_PointerPressed"
+                                                Text="{x:Bind Book.Title, Mode=OneWay}"
+                                                TextWrapping="Wrap">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                            <TextBlock
+                                                x:Name="Author"
+                                                FontSize="15"
+                                                Foreground="{ThemeResource SystemAccentColorDark3}"
+                                                PointerPressed="Author_Drop"
+                                                Text="{x:Bind Book.Author, Mode=OneWay}">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip />
+                                                </ToolTipService.ToolTip>
+                                            </TextBlock>
+                                            <TextBlock
+                                                x:Name="ChineseTeam"
+                                                FontSize="15"
+                                                Foreground="CornflowerBlue"
+                                                PointerPressed="Author_Drop"
+                                                Text="{x:Bind Book.ChineseTeam, Mode=OneWay}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel
+                                        Margin="10,0,0,0"
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <FontIcon
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                Glyph="&#xEB52;" />
+                                            <TextBlock
+                                                x:Name="LikesCount"
+                                                Margin="5,0,0,0"
+                                                FontSize="18"
+                                                Text="{x:Bind Book.LikesCount, Mode=OneWay}" />
+                                            <FontIcon
+                                                Margin="10,0,0,0"
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                Glyph="&#xe7b3;" />
+                                            <TextBlock
+                                                x:Name="TotalViews"
+                                                Margin="5,0,0,0"
+                                                FontSize="18"
+                                                Text="{x:Bind Book.TotalViews, Mode=OneWay}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                x:Name="CategoriesString"
+                                                Width="540"
+                                                FontSize="13"
+                                                FontWeight="Black"
+                                                Foreground="Gray"
+                                                MaxLines="5"
+                                                Text="{x:Bind Book.CategoriesString, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+                                        <StackPanel Margin="0,0,0,0" Orientation="Horizontal">
+                                            <FontIcon
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Foreground="Gray"
+                                                Glyph="&#xe7b8;" />
+                                            <TextBlock
+                                                x:Name="EpsCount"
+                                                Margin="10,0,0,0"
+                                                FontSize="18"
+                                                Foreground="Gray"
+                                                Text="{x:Bind Book.EpsCount, Mode=OneWay}" />
+                                            <TextBlock
+                                                FontSize="18"
+                                                Foreground="Gray"
+                                                Text="E" />
+                                            <TextBlock
+                                                Margin="4,0,0,0"
+                                                FontSize="18"
+                                                Foreground="Gray"
+                                                Text="/" />
+                                            <TextBlock
+                                                x:Name="PagesCount"
+                                                Margin="4,0,0,0"
+                                                FontSize="18"
+                                                Foreground="Gray"
+                                                Text="{x:Bind Book.PagesCount, Mode=OneWay}" />
+                                            <TextBlock
+                                                FontSize="18"
+                                                Foreground="Gray"
+                                                Text="P" />
+                                            <Border
+                                                x:Name="Finished"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Top"
+                                                Background="{ThemeResource SystemAccentColorLight1}"
+                                                CornerRadius="7"
+                                                Visibility="{x:Bind Book.Finished.Visibility, Mode=OneWay}">
+                                                <TextBlock
+                                                    Padding="3"
+                                                    FontSize="13"
+                                                    FontWeight="Bold"
+                                                    Foreground="{ThemeResource SystemAccentColorDark3}"
+                                                    Text="完结" />
+                                            </Border>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </StackPanel>
+
+                        </StackPanel>
+                        <ScrollViewer
+                            Height="45"
+                            HorizontalScrollBarVisibility="Visible"
+                            HorizontalScrollMode="Enabled"
+                            VerticalScrollMode="Disabled">
+                            <ItemsControl x:Name="imageContent" ItemsSource="{x:Bind Tags}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel x:Name="TagsGrid" Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="blocks:TagBlock">
+                                        <Button
+                                            Margin="0,0,10,0"
+                                            Click="TagButton_Click"
+                                            Content="{x:Bind Tag}"
+                                            Style="{StaticResource TagStyle}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                        </ScrollViewer>
+
+                        <Border
+                            Padding="10"
+                            HorizontalAlignment="Left"
+                            Background="{ThemeResource SystemAccentAcrylicColorLight4}"
+                            BorderBrush="{StaticResource SystemAccentColorDark1}"
+                            BorderThickness="1.5"
+                            CornerRadius="10"
+                            Opacity="0.9">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        x:Name="Description"
+                                        Margin="3,10,0,10"
+                                        HorizontalAlignment="Left"
+                                        FontSize="18"
+                                        IsTextSelectionEnabled="True"
+                                        TextWrapping="Wrap" />
+
+                                </StackPanel>
+
+                                <Grid MinWidth="500">
+                                    <Border
+                                        x:Name="CreaterBorder"
+                                        Padding="10"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        Background="{ThemeResource SystemAccentAcrylicColorLight4}"
+                                        BorderThickness="1.5"
+                                        CornerRadius="10"
+                                        Opacity="0.9"
+                                        PointerPressed="CreaterBorder_PointerPressed">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Uid="CreaterTip" />
+                                        </ToolTipService.ToolTip>
+                                        <StackPanel Orientation="Horizontal">
+                                            <PersonPicture
+                                                x:Name="Creater"
+                                                Width="64"
+                                                Height="64"
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png" />
+                                            <StackPanel Margin="10,0,0,0">
+                                                <TextBlock
+                                                    x:Name="CreaterName"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Foreground="{StaticResource SystemAccentColorDark1}" />
+                                                <TextBlock
+                                                    x:Name="CreateDate"
+                                                    Margin="0,0,30,0"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    Foreground="Gray"
+                                                    IsTextSelectionEnabled="True" />
+                                                <TextBlock
+                                                    x:Uid="UpdateTime"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="15"
+                                                    FontWeight="Bold"
+                                                    Foreground="Gray"
+                                                    Text="更新" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border
+                                        Padding="10"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="{ThemeResource SystemAccentAcrylicColorLight5}"
+                                        BorderThickness="1.5"
+                                        CornerRadius="10"
+                                        Opacity="0.9">
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <AppBarToggleButton
+                                                x:Name="Favourite"
+                                                x:Uid="Favourite"
+                                                Width="64"
+                                                Height="64"
+                                                Label="Favourite">
+                                                <ToolTipService.ToolTip>
+                                                    <ToolTip />
+                                                </ToolTipService.ToolTip>
+                                                <AppBarToggleButton.Icon>
+                                                    <FontIcon
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="LightYellow"
+                                                        Glyph="&#xe735;" />
+                                                </AppBarToggleButton.Icon>
+                                            </AppBarToggleButton>
+                                            <Grid>
+                                                <AppBarToggleButton
+                                                    x:Name="Like"
+                                                    x:Uid="Like"
+                                                    Width="64"
+                                                    Height="64"
+                                                    Label="Like">
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip x:Name="LikeTip" />
+                                                    </ToolTipService.ToolTip>
+                                                    <AppBarToggleButton.Icon>
+                                                        <FontIcon
+                                                            FontFamily="Segoe MDL2 Assets"
+                                                            Foreground="HotPink"
+                                                            Glyph="&#xEB52;" />
+                                                    </AppBarToggleButton.Icon>
+                                                </AppBarToggleButton>
+                                                <muxc:InfoBadge
+                                                    x:Name="LikeCounts"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"
+                                                    Style="{StaticResource AttentionValueInfoBadgeStyle}"
+                                                    Value="{x:Bind Book.LikesCount, Mode=OneWay}" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                            </StackPanel>
+
+                        </Border>
+
+                        <Border
+                            Margin="0,10,0,0"
+                            Padding="10"
+                            Background="{ThemeResource SystemAccentAcrylicColorLight4}"
+                            BorderThickness="1.5"
+                            CornerRadius="10"
+                            Opacity="0.9">
+                            <ListView
+                                x:Name="ListV"
+                                Margin="0,0,0,0"
+                                IsItemClickEnabled="True"
+                                ItemClick="ListV_ItemClick"
+                                ItemContainerStyle="{StaticResource MyListBoxItemStyle2}"
+                                SelectionMode="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="blocks:EpisodeBlock">
+                                        <TextBlock FontWeight="Bold" Text="{x:Bind Title, Mode=OneWay}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                    </StackPanel>
+                    <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Background="{ThemeResource SystemAccentAcrylicColorLight5}">
+                        <muxc:TeachingTip.Content>
+                            <StackPanel Margin="0,6,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <PersonPicture
+                                        x:Name="UsersPic"
+                                        Width="64"
+                                        Height="64"
+                                        ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png" />
+                                    <StackPanel
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        Orientation="Vertical">
+                                        <TextBlock
+                                            x:Name="UsersName"
+                                            MaxWidth="200"
+                                            VerticalAlignment="Center"
+                                            FontSize="16"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource SystemAccentColorDark2}"
+                                            PointerPressed="UsersName_PointerPressed"
+                                            Text="{x:Bind Book.Creater.Name, Mode=OneWay}"
+                                            TextWrapping="Wrap">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Uid="AuthorTip" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                x:Name="UsersLevel"
+                                                VerticalAlignment="Center"
+                                                FontSize="13"
+                                                IsTextSelectionEnabled="True"
+                                                Text="{x:Bind Book.Creater.LevelString, Mode=OneWay}" />
+                                            <Border
+                                                Padding="4"
+                                                VerticalAlignment="Center"
+                                                Background="{ThemeResource SystemAccentColorDark1}"
+                                                BorderThickness="1.5"
+                                                CornerRadius="10"
+                                                Opacity="0.9">
+                                                <TextBlock
+                                                    x:Name="UsersTitle"
+                                                    FontSize="10"
+                                                    FontWeight="Bold"
+                                                    IsTextSelectionEnabled="True"
+                                                    Text="{x:Bind Book.Creater.Title, Mode=OneWay}" />
+                                            </Border>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </StackPanel>
+                                <TextBlock
+                                    x:Name="UserInfomation"
+                                    Margin="0,6,0,0"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind Book.Creater.Slogan, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                            </StackPanel>
+                        </muxc:TeachingTip.Content>
+                        <muxc:TeachingTip.IconSource>
+                            <muxc:SymbolIconSource Symbol="OtherUser" />
+                        </muxc:TeachingTip.IconSource>
+                    </muxc:TeachingTip>
+                </Grid>
+            </ScrollViewer>
+            <Grid Width="450">
+                <Pivot>
+                    <PivotItem Header="Unread">
+                        <TextBlock Text="all emails go here." />
+                    </PivotItem>
+                    <PivotItem>
+                        <PivotItem.Header>
+                            <Grid>
+                                <TextBlock Padding="5" Text="comments" />
+                                <muxc:InfoBadge
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Style="{StaticResource AttentionValueInfoBadgeStyle}"
+                                    Value="0" />
+                            </Grid>
+                        </PivotItem.Header>
+                        <TextBlock Text="unread emails go here." />
+                    </PivotItem>
+                </Pivot>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -16,11 +16,12 @@
                     x:Name="GridV"
                     HorizontalAlignment="Center"
                     IsItemClickEnabled="True"
+                    ItemClick="GridV_ItemClick"
                     ItemsSource="{x:Bind Comics, Mode=OneWay}"
                     SelectionMode="None">
                     <GridView.Transitions>
                         <TransitionCollection>
-                            <ContentThemeTransition />
+                            <AddDeleteThemeTransition />
                         </TransitionCollection>
                     </GridView.Transitions>
                     <GridView.ItemTemplate>

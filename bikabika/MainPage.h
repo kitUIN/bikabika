@@ -43,20 +43,22 @@ namespace winrt::bikabika::implementation
 		void LogOut();
 		BikaClient::Blocks::UserBlock User();
 		void User(BikaClient::Blocks::UserBlock const& value);
-		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
-		void PropertyChanged(winrt::event_token const& token) noexcept;
+
 		bool IsLogin();
 		void IsLogin(bool const& value);
 		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> LoginUsers();
 		static bikabika::MainPage Current() { return current; }
+		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
+		void PropertyChanged(winrt::event_token const& token) noexcept;
 	private:
+		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 		static bikabika::MainPage current;
 		winrt::Windows::Data::Json::JsonObject m_emails;
 		winrt::Windows::Data::Json::JsonObject m_passwords;
 		winrt::Windows::Data::Json::JsonObject m_userDatas;
 		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
 		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> m_loginUsers = winrt::single_threaded_observable_vector<BikaClient::Blocks::UserBlock>();
-		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
+
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };

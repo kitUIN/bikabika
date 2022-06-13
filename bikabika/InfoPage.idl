@@ -1,9 +1,10 @@
 namespace bikabika
 {
     [default_interface]
-    runtimeclass InfoPage : Windows.UI.Xaml.Controls.Page
+    runtimeclass InfoPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         InfoPage();
-
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.TagBlock> Tags{ get; };
+        BikaClient.Blocks.BookBlock Book{ get; };
     }
 }
