@@ -12,6 +12,8 @@ namespace winrt::bikabika::implementation
         BikaClient::Blocks::BookBlock Book();
         void Book(BikaClient::Blocks::BookBlock const& value);
         void CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json);
+        void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
     private:
