@@ -136,10 +136,10 @@
         </Style>
 
     </Page.Resources>
-    <Grid Margin="10,10,0,0">
+    <Grid Margin="10,10,10,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="450" />
+            <ColumnDefinition Width="470" />
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0">
             <Grid
@@ -260,7 +260,6 @@
                                         FontSize="18"
                                         Foreground="Gray"
                                         Text="P" />
-
                                     <Border
                                         Margin="10,0,0,0"
                                         Padding="5"
@@ -391,51 +390,58 @@
                                     BorderThickness="1.5"
                                     CornerRadius="10"
                                     Opacity="0.9">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="64" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="70" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="70" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="70" />
-                                        </Grid.ColumnDefinitions>
-                                        <AppBarToggleButton
+                                    <StackPanel Height="64" Orientation="Horizontal">
+                                        <ToggleButton
                                             x:Name="Favourite"
-                                            x:Uid="ButtonFavourite"
-                                            Grid.Row="0"
-                                            Grid.Column="0"
-                                            IsCompact="False"
-                                            LabelPosition="Default">
+                                            Margin="10,0,0,0"
+                                            CornerRadius="10"
+                                            Opacity="0.9">
                                             <ToolTipService.ToolTip>
                                                 <ToolTip x:Name="FavouriteTip" />
                                             </ToolTipService.ToolTip>
-                                            <AppBarToggleButton.Icon>
-                                                <FontIcon
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Foreground="HotPink"
-                                                    Glyph="&#xe735;" />
-                                            </AppBarToggleButton.Icon>
-                                        </AppBarToggleButton>
-                                        <AppBarSeparator Grid.Row="0" Grid.Column="1" />
-                                        <Grid Grid.Row="0" Grid.Column="2">
-                                            <AppBarToggleButton
+
+                                            <ToggleButton.Content>
+                                                <StackPanel Padding="5,3,5,3" Orientation="Vertical">
+                                                    <FontIcon
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="HotPink"
+                                                        Glyph="&#xe735;" />
+                                                    <TextBlock
+                                                        x:Uid="BlockFavourite"
+                                                        Margin="0,3,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="12" />
+                                                </StackPanel>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                        <Grid Margin="10,0,0,0">
+                                            <ToggleButton
                                                 x:Name="Like"
-                                                x:Uid="ButtonLike"
-                                                IsCompact="False"
-                                                LabelPosition="Default">
+                                                CornerRadius="10"
+                                                Opacity="0.9">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="LikeTip" />
                                                 </ToolTipService.ToolTip>
-                                                <AppBarToggleButton.Icon>
-                                                    <FontIcon
-                                                        FontFamily="Segoe MDL2 Assets"
-                                                        Foreground="HotPink"
-                                                        Glyph="&#xEB52;" />
-                                                </AppBarToggleButton.Icon>
-                                            </AppBarToggleButton>
+                                                <ToggleButton.Content>
+                                                    <StackPanel Padding="5,3,5,3" Orientation="Vertical">
+                                                        <FontIcon
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            FontFamily="Segoe MDL2 Assets"
+                                                            Foreground="HotPink"
+                                                            Glyph="&#xEB52;" />
+                                                        <TextBlock
+                                                            x:Uid="BlockLike"
+                                                            Margin="0,3,0,0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="12" />
+                                                    </StackPanel>
+                                                </ToggleButton.Content>
+                                            </ToggleButton>
                                             <muxc:InfoBadge
                                                 x:Name="LikeCounts"
                                                 HorizontalAlignment="Right"
@@ -443,52 +449,60 @@
                                                 Style="{StaticResource AttentionValueInfoBadgeStyle}"
                                                 Value="{x:Bind Book.LikesCount, Mode=OneWay}" />
                                         </Grid>
-                                        <AppBarSeparator Grid.Row="0" Grid.Column="3" />
-                                        <AppBarToggleButton
+                                        <ToggleButton
                                             x:Name="Downlaod"
-                                            x:Uid="ButtonDownlaod"
-                                            Grid.Row="0"
-                                            Grid.Column="4"
-                                            IsCompact="False"
-                                            LabelPosition="Default">
+                                            Margin="10,0,0,0"
+                                            CornerRadius="10"
+                                            Opacity="0.9">
                                             <ToolTipService.ToolTip>
                                                 <ToolTip x:Name="DownlaodTip" />
                                             </ToolTipService.ToolTip>
-                                            <AppBarToggleButton.Icon>
-                                                <FontIcon
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Foreground="HotPink"
-                                                    Glyph="&#xE896;" />
-                                            </AppBarToggleButton.Icon>
-                                        </AppBarToggleButton>
-                                    </Grid>
+
+                                            <ToggleButton.Content>
+                                                <StackPanel Padding="5,3,5,3" Orientation="Vertical">
+                                                    <FontIcon
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="HotPink"
+                                                        Glyph="&#xE896;" />
+                                                    <TextBlock
+                                                        x:Uid="BlockDownlaod"
+                                                        Margin="0,3,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="12" />
+                                                </StackPanel>
+                                            </ToggleButton.Content>
+                                        </ToggleButton>
+                                    </StackPanel>
                                 </Border>
                             </Grid>
 
                         </Grid>
 
                     </Border>
-
                     <Border
                         Margin="0,10,0,0"
                         Padding="10"
-                        Background="{ThemeResource SystemAccentAcrylicColorLight5}"
+                        Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         BorderThickness="1.5"
                         CornerRadius="10"
                         Opacity="0.9">
-                        <ListView
-                            x:Name="ListV"
-                            Margin="0,0,0,0"
-                            IsItemClickEnabled="True"
-                            ItemClick="ListV_ItemClick"
-                            ItemContainerStyle="{StaticResource MyListBoxItemStyle2}"
-                            SelectionMode="None">
-                            <ListView.ItemTemplate>
+                        <muxc:ItemsRepeater x:Name="ListV" ItemsSource="{x:Bind Episodes, Mode=OneWay}">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:FlowLayout
+                                    MinColumnSpacing="7"
+                                    MinRowSpacing="7"
+                                    Orientation="Horizontal" />
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="blocks:EpisodeBlock">
-                                    <TextBlock FontWeight="Bold" Text="{x:Bind Title, Mode=OneWay}" />
+                                    <Button Content="{x:Bind Title, Mode=OneWay}" Style="{StaticResource TagStyle}" />
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
                     </Border>
                 </StackPanel>
                 <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Background="{ThemeResource SystemAccentAcrylicColorLight5}">
@@ -557,10 +571,190 @@
                 </muxc:TeachingTip>
             </Grid>
         </ScrollViewer>
-        <Grid Grid.Column="1" Width="450">
+        <Border
+            Grid.Column="1"
+            Width="470"
+            Padding="3"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1.5"
+            CornerRadius="10"
+            Opacity="0.9">
             <Pivot>
-                <PivotItem x:Uid="BlockRecommand">
-                    <TextBlock Text="all emails go here." />
+                <PivotItem x:Uid="BlockRecommend">
+                    <GridView
+                        x:Name="GridV"
+                        HorizontalAlignment="Center"
+                        IsItemClickEnabled="True"
+                        ItemsSource="{x:Bind Comics, Mode=OneWay}"
+                        SelectionMode="None">
+                        <GridView.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition IsStaggeringEnabled="True" />
+                            </TransitionCollection>
+                        </GridView.Transitions>
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="blocks:ComicBlock">
+                                <StackPanel
+                                    Width="400"
+                                    Height="190"
+                                    Margin="10,0,0,0"
+                                    Orientation="Horizontal">
+                                    <Border
+                                        Width="120"
+                                        Height="160"
+                                        VerticalAlignment="Center"
+                                        CornerRadius="10">
+                                        <Image Name="ConnectedElement2" Source="{x:Bind Thumb.Img, Mode=OneWay}" />
+                                    </Border>
+                                    <Grid Width="260">
+                                        <StackPanel
+                                            Margin="10,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Width="250"
+                                                    FontSize="17"
+                                                    FontWeight="Bold"
+                                                    MaxLines="3"
+                                                    Text="{x:Bind Title, Mode=OneWay}"
+                                                    TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    FontSize="15"
+                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                    Text="{x:Bind Author, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon
+                                                    FontFamily="Segoe MDL2 Assets"
+                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                    Glyph="&#xEB52;" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    FontSize="18"
+                                                    Text="{x:Bind LikesCount, Mode=OneWay}" />
+                                                <FontIcon
+                                                    Margin="10,0,0,0"
+                                                    FontFamily="Segoe MDL2 Assets"
+                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                    Glyph="&#xe7b3;" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    FontSize="18"
+                                                    Text="{x:Bind TotalViews, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Width="250"
+                                                    FontSize="13"
+                                                    FontWeight="Black"
+                                                    Foreground="Gray"
+                                                    MaxLines="5"
+                                                    Text="{x:Bind CategoriesString, Mode=OneWay}"
+                                                    TextWrapping="Wrap" />
+                                            </StackPanel>
+                                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                                <FontIcon
+                                                    FontFamily="Segoe MDL2 Assets"
+                                                    Foreground="Gray"
+                                                    Glyph="&#xe7b8;" />
+                                                <TextBlock
+                                                    Margin="10,0,0,0"
+                                                    FontSize="18"
+                                                    Foreground="Gray"
+                                                    Text="{x:Bind EpsCount, Mode=OneWay}" />
+                                                <TextBlock
+                                                    FontSize="18"
+                                                    Foreground="Gray"
+                                                    Text="E" />
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    FontSize="18"
+                                                    Foreground="Gray"
+                                                    Text="/" />
+                                                <TextBlock
+                                                    Margin="4,0,0,0"
+                                                    FontSize="18"
+                                                    Foreground="Gray"
+                                                    Text="{x:Bind PagesCount, Mode=OneWay}" />
+                                                <TextBlock
+                                                    FontSize="18"
+                                                    Foreground="Gray"
+                                                    Text="P" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <Border
+                                            Padding="5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Bottom"
+                                            Background="{ThemeResource SystemComicFinishAccentColor}"
+                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                            BorderThickness=".5"
+                                            CornerRadius="7"
+                                            Visibility="{x:Bind Finished.Visibility, Mode=OneWay}">
+                                            <TextBlock
+                                                x:Uid="BlockFinished"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemContainerStyle>
+                            <Style TargetType="GridViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="GridViewItem">
+                                            <Grid Background="{TemplateBinding Background}">
+                                                <Border
+                                                    x:Name="ContentBackground1"
+                                                    Width="410"
+                                                    Height="210"
+                                                    BorderThickness="1.5"
+                                                    CornerRadius="10">
+                                                    <Border
+                                                        x:Name="ContentBackground"
+                                                        Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="1.5"
+                                                        CornerRadius="10">
+                                                        <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                                                    </Border>
+                                                </Border>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup>
+                                                        <!--  缺省样式  -->
+                                                        <VisualState x:Name="Normal">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBackground" Storyboard.TargetProperty="Margin">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="2,2,0,0" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <!--  设置鼠标悬停样式  -->
+                                                        <VisualState x:Name="PointerOver" />
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GridView.ItemContainerStyle>
+                    </GridView>
                 </PivotItem>
                 <PivotItem>
                     <PivotItem.Header>
@@ -576,6 +770,6 @@
                     <TextBlock />
                 </PivotItem>
             </Pivot>
-        </Grid>
+        </Border>
     </Grid>
 </Page>

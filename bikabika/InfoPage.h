@@ -9,8 +9,10 @@ namespace winrt::bikabika::implementation
         InfoPage();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> Episodes();
+        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> Comics();
+        Windows::Foundation::IAsyncAction Recommend();
         BikaClient::Blocks::BookBlock Book();
-        Windows::Foundation::IAsyncAction Eps(int32_t const& page);
+        Windows::Foundation::IAsyncOperation<uint32_t> Eps(int32_t const& page);
         void Book(BikaClient::Blocks::BookBlock const& value);
         void CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json);
         Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
@@ -26,6 +28,7 @@ namespace winrt::bikabika::implementation
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_categories = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_tags = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<BikaClient::Blocks::EpisodeBlock>();
+        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> m_comics = winrt::single_threaded_observable_vector<BikaClient::Blocks::ComicBlock>();
 
 
     public:

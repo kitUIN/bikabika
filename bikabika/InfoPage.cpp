@@ -13,7 +13,15 @@ namespace winrt::bikabika::implementation
     {
         InitializeComponent();
     }
-    Windows::Foundation::IAsyncAction InfoPage::Eps(int32_t const& page)
+    winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> InfoPage::Episodes()
+    {
+        return m_eps;
+    }
+    winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> InfoPage::Comics()
+    {
+        return m_comics;
+    }
+    Windows::Foundation::IAsyncOperation<uint32_t> InfoPage::Eps(int32_t const& page)
     {
         auto res = co_await rootPage.HttpClient().Episodes(m_id, page);
         if (res.Code() == -1)
@@ -22,7 +30,11 @@ namespace winrt::bikabika::implementation
         }
         else if (res.Code() == 200)
         {
-
+            for (auto x : res.Episodes())
+            {
+                m_eps.Append(x);
+            }
+            co_return res.Pages();
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
         {
@@ -32,6 +44,7 @@ namespace winrt::bikabika::implementation
         {
             rootPage.ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
         }
+        co_return 0;
     }
 
     winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> InfoPage::Tags()
@@ -54,6 +67,32 @@ namespace winrt::bikabika::implementation
     {
         m_book = value;
         m_propertyChanged(*this, Windows::UI::Xaml::Data::PropertyChangedEventArgs{ L"Book" });
+    }
+    Windows::Foundation::IAsyncAction InfoPage::Recommend()
+    {
+        auto res = co_await rootPage.HttpClient().Recommend(m_id);
+        if (res.Code() == -1)
+        {
+            rootPage.ContentDialogShow(BikaHttpStatus::TIMEOUT, L"");
+        }
+        else if (res.Code() == 200)
+        {
+
+            for (auto x : res.Comics())
+            {
+                m_comics.Append(x);
+            }
+
+
+        }
+        else if (res.Code() == 401 && res.Error() == L"1005")
+        {
+            rootPage.ContentDialogShow(BikaHttpStatus::NOAUTH, res.Message());
+        }
+        else
+        {
+            rootPage.ContentDialogShow(BikaHttpStatus::UNKNOWN, res.Message());
+        }
     }
     Windows::Foundation::IAsyncAction InfoPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
@@ -80,7 +119,12 @@ namespace winrt::bikabika::implementation
             {
                 m_tags.Append(x);
             }
-
+            auto pages = co_await Eps(1);
+            for (uint32_t i = 2; i <= pages; i++)
+            {
+                co_await Eps(i);
+            }
+            co_await Recommend();
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
         {
