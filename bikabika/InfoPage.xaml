@@ -7,11 +7,12 @@
     xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
     <Page.Resources>
 
         <Style x:Key="TagStyle" TargetType="Button">
-            <Setter Property="Background" Value="{ThemeResource SystemDesBorderAccentColor}" />
+            <Setter Property="Background" Value="{ThemeResource SystemComicFinishAccentColor}" />
             <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
             <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
             <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
@@ -49,13 +50,13 @@
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColorLight4}" />
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColor}" />
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemAccentColorDark1}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
@@ -259,20 +260,22 @@
                                         FontSize="18"
                                         Foreground="Gray"
                                         Text="P" />
+
                                     <Border
-                                        x:Name="Finished"
                                         Margin="10,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        Background="{ThemeResource SystemAccentColorLight1}"
+                                        Padding="5"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Background="{ThemeResource SystemComicFinishAccentColor}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness=".5"
                                         CornerRadius="7"
                                         Visibility="{x:Bind Book.Finished.Visibility, Mode=OneWay}">
                                         <TextBlock
                                             x:Uid="BlockFinished"
-                                            Padding="3"
-                                            FontSize="13"
+                                            FontSize="12"
                                             FontWeight="Bold"
-                                            Foreground="{ThemeResource SystemAccentColorDark3}" />
+                                            Foreground="{ThemeResource SystemAccentColorDark2}" />
                                     </Border>
                                 </StackPanel>
                             </StackPanel>
@@ -280,32 +283,40 @@
                         </Grid>
 
                     </Grid>
-                    <muxc:ItemsRepeater
-                        x:Name="imageContent"
-                        Margin="0,10,0,10"
-                        ItemsSource="{x:Bind Tags}">
-                        <muxc:ItemsRepeater.Layout>
-                            <muxc:FlowLayout
-                                MinColumnSpacing="10"
-                                MinRowSpacing="10"
-                                Orientation="Horizontal" />
-                        </muxc:ItemsRepeater.Layout>
-                        <muxc:ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="blocks:TagBlock">
-                                <Button
-                                    Click="TagButton_Click"
-                                    Content="{x:Bind Tag}"
-                                    Style="{StaticResource TagStyle}" />
-                            </DataTemplate>
-                        </muxc:ItemsRepeater.ItemTemplate>
-                    </muxc:ItemsRepeater>
+                    <Border
+                        Margin="0,10,0,0"
+                        Padding="10"
+                        Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1.5"
+                        CornerRadius="10"
+                        Opacity="0.9">
+                        <muxc:ItemsRepeater x:Name="imageContent" ItemsSource="{x:Bind Tags}">
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:FlowLayout
+                                    MinColumnSpacing="7"
+                                    MinRowSpacing="7"
+                                    Orientation="Horizontal" />
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="blocks:TagBlock">
+                                    <Button
+                                        Click="TagButton_Click"
+                                        Content="{x:Bind Tag}"
+                                        Style="{StaticResource TagStyle}" />
+                                </DataTemplate>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
+                    </Border>
+
 
                     <Border
                         x:Name="DesBorder"
-                        MinWidth="500"
+                        Margin="0,10,0,0"
                         Padding="10"
-                        HorizontalAlignment="Left"
-                        Background="{ThemeResource SystemDesBorderAccentColor}"
+                        Background="{ThemeResource LayerFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1.5"
                         CornerRadius="10"
                         Opacity="0.9">
                         <Grid>
@@ -328,7 +339,8 @@
                                     Padding="10"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
-                                    Background="{ThemeResource SystemBorderAccentColor}"
+                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                     BorderThickness="1.5"
                                     CornerRadius="10"
                                     Opacity="0.9"
@@ -374,19 +386,31 @@
                                     Padding="10"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
-                                    Background="{ThemeResource SystemBorderAccentColor}"
+                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                     BorderThickness="1.5"
                                     CornerRadius="10"
                                     Opacity="0.9">
-                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="64" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="70" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="70" />
+                                        </Grid.ColumnDefinitions>
                                         <AppBarToggleButton
                                             x:Name="Favourite"
-                                            x:Uid="Favourite"
-                                            Width="64"
-                                            Height="64"
-                                            Label="Favourite">
+                                            x:Uid="ButtonFavourite"
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            IsCompact="False"
+                                            LabelPosition="Default">
                                             <ToolTipService.ToolTip>
-                                                <ToolTip />
+                                                <ToolTip x:Name="FavouriteTip" />
                                             </ToolTipService.ToolTip>
                                             <AppBarToggleButton.Icon>
                                                 <FontIcon
@@ -395,13 +419,13 @@
                                                     Glyph="&#xe735;" />
                                             </AppBarToggleButton.Icon>
                                         </AppBarToggleButton>
-                                        <Grid>
+                                        <AppBarSeparator Grid.Row="0" Grid.Column="1" />
+                                        <Grid Grid.Row="0" Grid.Column="2">
                                             <AppBarToggleButton
                                                 x:Name="Like"
-                                                x:Uid="Like"
-                                                Width="64"
-                                                Height="64"
-                                                Label="Like">
+                                                x:Uid="ButtonLike"
+                                                IsCompact="False"
+                                                LabelPosition="Default">
                                                 <ToolTipService.ToolTip>
                                                     <ToolTip x:Name="LikeTip" />
                                                 </ToolTipService.ToolTip>
@@ -419,7 +443,25 @@
                                                 Style="{StaticResource AttentionValueInfoBadgeStyle}"
                                                 Value="{x:Bind Book.LikesCount, Mode=OneWay}" />
                                         </Grid>
-                                    </StackPanel>
+                                        <AppBarSeparator Grid.Row="0" Grid.Column="3" />
+                                        <AppBarToggleButton
+                                            x:Name="Downlaod"
+                                            x:Uid="ButtonDownlaod"
+                                            Grid.Row="0"
+                                            Grid.Column="4"
+                                            IsCompact="False"
+                                            LabelPosition="Default">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Name="DownlaodTip" />
+                                            </ToolTipService.ToolTip>
+                                            <AppBarToggleButton.Icon>
+                                                <FontIcon
+                                                    FontFamily="Segoe MDL2 Assets"
+                                                    Foreground="HotPink"
+                                                    Glyph="&#xE896;" />
+                                            </AppBarToggleButton.Icon>
+                                        </AppBarToggleButton>
+                                    </Grid>
                                 </Border>
                             </Grid>
 
@@ -430,7 +472,7 @@
                     <Border
                         Margin="0,10,0,0"
                         Padding="10"
-                        Background="{ThemeResource SystemAccentAcrylicColorLight4}"
+                        Background="{ThemeResource SystemAccentAcrylicColorLight5}"
                         BorderThickness="1.5"
                         CornerRadius="10"
                         Opacity="0.9">

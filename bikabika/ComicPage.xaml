@@ -7,6 +7,7 @@
     xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
 
     <Grid Margin="0,3,0,0">
@@ -124,17 +125,19 @@
                                         </StackPanel>
                                     </StackPanel>
                                     <Border
+                                        Padding="5"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
                                         Background="{ThemeResource SystemComicFinishAccentColor}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness=".5"
                                         CornerRadius="7"
                                         Visibility="{x:Bind Finished.Visibility, Mode=OneWay}">
                                         <TextBlock
-                                            Padding="3"
-                                            FontSize="13"
+                                            x:Uid="BlockFinished"
+                                            FontSize="12"
                                             FontWeight="Bold"
-                                            Foreground="{ThemeResource SystemAccentColorDark2}"
-                                            Text="完结" />
+                                            Foreground="{ThemeResource SystemAccentColorDark2}" />
                                     </Border>
                                 </Grid>
                             </StackPanel>
@@ -155,12 +158,13 @@
                                                 x:Name="ContentBackground1"
                                                 Width="410"
                                                 Height="210"
-                                                BorderThickness="2"
+                                                BorderThickness="1.5"
                                                 CornerRadius="10">
                                                 <Border
                                                     x:Name="ContentBackground"
-                                                    Background="{ThemeResource SystemComicItemAccentColor}"
-                                                    BorderThickness="2"
+                                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="1.5"
                                                     CornerRadius="10">
                                                     <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
                                                 </Border>

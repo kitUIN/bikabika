@@ -241,7 +241,7 @@
     <value>未知错误</value>
     <comment>错误消息标题:未知错误</comment>
   </data>
-  <data name="Favourite.Label" xml:space="preserve">
+  <data name="ButtonFavourite.Label" xml:space="preserve">
     <value>收藏</value>
   </data>
   <data name="FlyoutAccountSettings.Text" xml:space="preserve">
@@ -367,7 +367,7 @@
     <value>提示</value>
     <comment>关键字:提示</comment>
   </data>
-  <data name="Like.Label" xml:space="preserve">
+  <data name="ButtonLike.Label" xml:space="preserve">
     <value>爱心</value>
     <comment>漫画详细页</comment>
   </data>
@@ -740,5 +740,9 @@
   <data name="BlockFinished.Text" xml:space="preserve">
     <value>完结</value>
     <comment>文本框：完结</comment>
+  </data>
+  <data name="ButtonDownlaod.Label" xml:space="preserve">
+    <value>下载</value>
+    <comment>按钮:下载</comment>
   </data>
 </root>

@@ -251,10 +251,10 @@
                     <Color x:Key="SystemTabAccentColor">#FFFFEBF4</Color>
                     <Color x:Key="SystemBorderAccentColor">#FFfff5fa</Color>
                     <Color x:Key="SystemTipAccentColor">#FFffe8f2</Color>
-                    <Color x:Key="SystemDesBorderAccentColor">#FFffdeee</Color>
+                    <Color x:Key="SystemDesBorderAccentColor">#FFffe8f4</Color>
                     <Color x:Key="SystemNavigationAccentColor">#FFFEC9DF</Color>
                     <Color x:Key="SystemComicItemAccentColor">#FFfdd7e6</Color>
-                    <Color x:Key="SystemComicFinishAccentColor">#FFfbc6db</Color>
+                    <Color x:Key="SystemComicFinishAccentColor">#FFffe8f4</Color>
                     <Color x:Key="SystemAccentColorLight1">#FFFBA3C4</Color>
                     <Color x:Key="SystemAccentColorLight2">#FFFCB0CD</Color>
                     <Color x:Key="SystemAccentColorLight3">#FFFDBCD6</Color>
