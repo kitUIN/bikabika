@@ -725,4 +725,20 @@
   <data name="Message.Success.Avatar" xml:space="preserve">
     <value>修改头像成功</value>
   </data>
+  <data name="BlockComments.Text" xml:space="preserve">
+    <value>评论</value>
+    <comment>文本框:评论</comment>
+  </data>
+  <data name="BlockRecommand.Header" xml:space="preserve">
+    <value>看了这个本子的得都看</value>
+    <comment>标题:看了这个本子的得都看</comment>
+  </data>
+  <data name="BlockUpdateTime.Text" xml:space="preserve">
+    <value>最后更新</value>
+    <comment>文本框:最后更新</comment>
+  </data>
+  <data name="BlockFinished.Text" xml:space="preserve">
+    <value>完结</value>
+    <comment>文本框：完结</comment>
+  </data>
 </root>

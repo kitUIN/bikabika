@@ -14,8 +14,12 @@ namespace winrt::bikabika::implementation
     {
         return m_comicType;
     }
-    ComicArgs::ComicArgs(hstring const& bookId, int32_t eps, int32_t pageIndex, int32_t page, BikaClient::Utils::BikaSort const& sortMode)
+    ComicArgs::ComicArgs(hstring const& bookId, int32_t const& eps, int32_t const& pageIndex, int32_t const& page)
     {
+        BookId(bookId);
+        Eps(eps);
+        Page(page);
+        PageIndex(pageIndex);
     }
     void ComicArgs::ComicType(winrt::bikabika::ComicsType const& value)
     {

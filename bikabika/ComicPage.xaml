@@ -21,7 +21,7 @@
                     SelectionMode="None">
                     <GridView.Transitions>
                         <TransitionCollection>
-                            <AddDeleteThemeTransition />
+                            <EntranceThemeTransition IsStaggeringEnabled="True" />
                         </TransitionCollection>
                     </GridView.Transitions>
                     <GridView.ItemTemplate>

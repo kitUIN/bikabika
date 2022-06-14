@@ -23,7 +23,7 @@ namespace bikabika
     {
         ComicArgs();
         ComicArgs(ComicsType comicType, String title, BikaClient.Utils.BikaSort sortMode);
-        ComicArgs(String bookId, Int32 eps, Int32 pageIndex, Int32 page, BikaClient.Utils.BikaSort sortMode);
+        ComicArgs(String bookId, Int32 eps, Int32 pageIndex, Int32 page);
         ComicsType ComicType;
         String Title;
         String BookId;

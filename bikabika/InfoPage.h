@@ -10,9 +10,10 @@ namespace winrt::bikabika::implementation
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> Tags();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> Episodes();
         BikaClient::Blocks::BookBlock Book();
+        Windows::Foundation::IAsyncAction Eps(int32_t const& page);
         void Book(BikaClient::Blocks::BookBlock const& value);
         void CommentsFormat(winrt::Windows::Data::Json::JsonObject const& json);
-        void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
+        Windows::Foundation::IAsyncAction OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 
         winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(winrt::event_token const& token) noexcept;
@@ -21,6 +22,7 @@ namespace winrt::bikabika::implementation
         bikabika::MainPage rootPage{ MainPage::Current() };
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         BikaClient::Blocks::BookBlock m_book;
+        hstring m_id=L"";
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_categories = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_tags = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<BikaClient::Blocks::EpisodeBlock>();

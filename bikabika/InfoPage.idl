@@ -6,5 +6,6 @@ namespace bikabika
         InfoPage();
         Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.TagBlock> Tags{ get; };
         BikaClient.Blocks.BookBlock Book{ get; };
+        Windows.UI.Xaml.Controls.Border DesBorder{ get; };
     }
 }

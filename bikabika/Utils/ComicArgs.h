@@ -8,7 +8,7 @@ namespace winrt::bikabika::implementation
     {
         ComicArgs() = default;
         ComicArgs(winrt::bikabika::ComicsType const& comicType,hstring const& title, BikaClient::Utils::BikaSort const& sortMode);
-        ComicArgs(hstring const& bookId,int32_t eps,int32_t pageIndex, int32_t page, BikaClient::Utils::BikaSort const& sortMode);
+        ComicArgs(hstring const& bookId,int32_t const& eps,int32_t const& pageIndex, int32_t const& page);
         winrt::bikabika::ComicsType ComicType();
         void ComicType(winrt::bikabika::ComicsType const& value);
         hstring Title();

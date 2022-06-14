@@ -212,6 +212,6 @@ void winrt::bikabika::implementation::ComicPage::GridV_ItemClick(winrt::Windows:
 	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
 	winrt::Windows::UI::Xaml::Controls::Frame frame;
 	symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::PreviewLink);
-	frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(comicBlock.ID()) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
+	frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
 	rootPage.CreateNewTab(frame, comicBlock.Title(), symbol);
 }
