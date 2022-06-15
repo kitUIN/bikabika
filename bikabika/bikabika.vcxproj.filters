@@ -346,6 +346,7 @@
     <Image Include="Assets\Wide310x150Logo.scale-150.png">
       <Filter>Assets\Logo</Filter>
     </Image>
+    <Image Include="Assets\Picacgs\icon_top_comment.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

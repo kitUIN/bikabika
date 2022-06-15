@@ -62,7 +62,7 @@ namespace winrt::bikabika::implementation
 		winrt::Microsoft::UI::Xaml::Controls::TabViewItem newItem;
 		newItem.Header(box_value(title));
 		newItem.IconSource(symbol);
-		frame.Height(MainRootGrid().ActualHeight() - 40);
+		frame.MinHeight(MainRootGrid().ActualHeight() - 40);
 		newItem.Content(frame);
 		Dispatcher().RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, [newItem, this]()
 			{
@@ -847,7 +847,7 @@ void winrt::bikabika::implementation::MainPage::CatSearch_QuerySubmitted(winrt::
 	}
 	SearchFlyout().Hide();
 	winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
-	symbol.Symbol(Symbol::List);
+	symbol.Symbol(Symbol::Find);
 	winrt::Windows::UI::Xaml::Controls::Frame frame;
 	frame.Navigate(winrt::xaml_typename<bikabika::ComicPage>(), box_value(ComicArgs{ ComicsType::SEARCH, text, BikaClient::Utils::BikaSort{ BikaClient::Utils::SortMode::DD } }));
 	CreateNewTab(frame, text, symbol);
@@ -1380,7 +1380,6 @@ void winrt::bikabika::implementation::MainPage::Email_TextChanged(winrt::Windows
 				f = true;
 
 			}
-
 		}
 		if (f)
 		{
@@ -1415,6 +1414,15 @@ void winrt::bikabika::implementation::MainPage::Email_TextChanged(winrt::Windows
 			}
 		}
 	}
+	string str;
+	for (auto x : to_string(sender.as<TextBox>().Text()))
+	{
+		if (x >= '0' && x <= '9' || x >= 'a' && x <= 'z' || x == '.' || x == '_')
+		{
+			str += x;
+		}
+	}
+	sender.as<TextBox>().Text(to_hstring(str));
 }
 
 
