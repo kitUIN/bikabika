@@ -49,6 +49,9 @@ namespace winrt::bikabika::implementation
                 m_comments.Append(y);
             }
             BookComments().ItemsSource(box_value(m_comments));
+            m_commentsPages = res.Pages();
+            m_commentsPage = res.Page();
+            m_commentsContinue = false;
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
         {
@@ -138,6 +141,7 @@ namespace winrt::bikabika::implementation
         auto img = winrt::unbox_value<winrt::Windows::UI::Xaml::Media::ImageSource>(params.GetAt(0));
         m_id = winrt::unbox_value<ComicArgs>(params.GetAt(1)).BookId();
         __super::OnNavigatedTo(e);
+        UserThumb().ProfilePicture(rootPage.User().Thumb().Img());
         auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
         if (anim)
         {
@@ -163,7 +167,7 @@ namespace winrt::bikabika::implementation
                 co_await Eps(i);
             }
             co_await Recommend();
-            co_await Comment(1);
+            co_await Comment(m_commentsPage);
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
         {
@@ -343,4 +347,29 @@ void winrt::bikabika::implementation::InfoPage::CommentLike_PointerEntered(winrt
 void winrt::bikabika::implementation::InfoPage::CommentLike_PointerExited(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     sender.as<Border>().Background(Media::SolidColorBrush{ Windows::UI::Colors::Transparent() });
+}
+
+
+void winrt::bikabika::implementation::InfoPage::CommentComment_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+
+}
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::CommentLike_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    auto comment = sender.as<StackPanel>().Tag().as<winrt::BikaClient::Blocks::CommentBlock>();
+    comment.IsLiked().Bool(!comment.IsLiked().Bool());
+}
+Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e)
+{
+    auto sv = sender.as<winrt::Windows::UI::Xaml::Controls::ScrollViewer>();
+    if (sv.VerticalOffset() + sv.ActualHeight() + 2 >= sv.ExtentHeight()) {
+        if (m_commentsPage < m_commentsPages && !m_commentsContinue)
+        {
+            m_commentsContinue = true;
+            co_await Comment(m_commentsPage + 1);
+        }
+    }
+
 }

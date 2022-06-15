@@ -589,6 +589,7 @@
                         IsItemClickEnabled="True"
                         ItemClick="GridV_ItemClick"
                         ItemsSource="{x:Bind Comics, Mode=OneWay}"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         SelectionMode="None">
                         <GridView.Transitions>
                             <TransitionCollection>
@@ -778,7 +779,8 @@
                             <ScrollViewer
                                 Grid.Row="0"
                                 Padding="5,0,5,0"
-                                VerticalScrollBarVisibility="Hidden">
+                                VerticalScrollBarVisibility="Hidden"
+                                ViewChanged="ScrollViewer_ViewChanged">
                                 <muxc:ItemsRepeater x:Name="BookComments">
                                     <muxc:ItemsRepeater.ItemTemplate>
                                         <DataTemplate x:DataType="blocks:CommentBlock">
@@ -878,25 +880,30 @@
                                                                 CornerRadius="5"
                                                                 Opacity=".5"
                                                                 PointerEntered="CommentLike_PointerEntered"
-                                                                PointerExited="CommentLike_PointerExited">
-                                                                <Grid>
-                                                                    <FontIcon
-                                                                        FontFamily="Segoe MDL2 Assets"
-                                                                        FontSize="14"
-                                                                        Glyph="&#xEB51;" />
-                                                                    <FontIcon
-                                                                        FontFamily="Segoe MDL2 Assets"
-                                                                        FontSize="14"
-                                                                        Foreground="{ThemeResource SystemAccentColorDark3}"
-                                                                        Glyph="&#xEB52;"
-                                                                        Visibility="{x:Bind IsLiked.Visibility, Mode=OneWay}" />
-                                                                </Grid>
+                                                                PointerExited="CommentLike_PointerExited"
+                                                                PointerPressed="CommentLike_PointerPressed"
+                                                                Tag="{x:Bind}">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <Grid>
+                                                                        <FontIcon
+                                                                            FontFamily="Segoe MDL2 Assets"
+                                                                            FontSize="14"
+                                                                            Glyph="&#xEB51;" />
+                                                                        <FontIcon
+                                                                            FontFamily="Segoe MDL2 Assets"
+                                                                            FontSize="14"
+                                                                            Foreground="{ThemeResource SystemAccentColorDark3}"
+                                                                            Glyph="&#xEB52;"
+                                                                            Visibility="{x:Bind IsLiked.Visibility, Mode=OneWay}" />
+                                                                    </Grid>
+                                                                    <TextBlock
+                                                                        Margin="3,0,0,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="16"
+                                                                        Text="{x:Bind LikesCount, Mode=OneWay}" />
+                                                                </StackPanel>
                                                             </Border>
-                                                            <TextBlock
-                                                                Margin="3,0,0,0"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Text="{x:Bind LikesCount, Mode=OneWay}" />
+
                                                             <Border
                                                                 x:Name="CommentComment"
                                                                 Margin="10,0,0,0"
@@ -906,18 +913,20 @@
                                                                 CornerRadius="5"
                                                                 Opacity=".5"
                                                                 PointerEntered="CommentLike_PointerEntered"
-                                                                PointerExited="CommentLike_PointerExited">
-                                                                <FontIcon
-                                                                    FontFamily="Segoe MDL2 Assets"
-                                                                    FontSize="14"
-                                                                    Glyph="&#xE8BD;" />
+                                                                PointerExited="CommentLike_PointerExited"
+                                                                PointerPressed="CommentComment_PointerPressed">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <FontIcon
+                                                                        FontFamily="Segoe MDL2 Assets"
+                                                                        FontSize="14"
+                                                                        Glyph="&#xE8BD;" />
+                                                                    <TextBlock
+                                                                        Margin="3,0,0,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="16"
+                                                                        Text="{x:Bind CommentsCount, Mode=OneWay}" />
+                                                                </StackPanel>
                                                             </Border>
-                                                            <TextBlock
-                                                                Margin="3,0,0,0"
-                                                                VerticalAlignment="Center"
-                                                                FontSize="16"
-                                                                Text="{x:Bind CommentsCount, Mode=OneWay}" />
-
                                                         </StackPanel>
                                                         <TextBlock
                                                             Grid.Column="1"
@@ -947,6 +956,7 @@
                                         <ColumnDefinition Width="65" />
                                     </Grid.ColumnDefinitions>
                                     <PersonPicture
+                                        x:Name="UserThumb"
                                         Grid.Column="0"
                                         Height="32"
                                         Margin="5,0,0,0" />
