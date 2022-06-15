@@ -121,70 +121,49 @@
     <value>哔咔哔咔</value>
     <comment>标题栏</comment>
   </data>
-  <data name="AuthorTip.Content" xml:space="preserve">
-    <value>左键搜索，右键复制</value>
-  </data>
-  <data name="AutoCheckBox.Content" xml:space="preserve">
+  <data name="CheckBoxAuto.Content" xml:space="preserve">
     <value>自动登录</value>
-    <comment>登陆</comment>
+    <comment>复选框:自动登录</comment>
   </data>
-  <data name="AutoLogining" xml:space="preserve">
-    <value>自动登陆中</value>
+  <data name="BlockPassword.Text" xml:space="preserve">
+    <value>密码:</value>
+    <comment>文本框:密码</comment>
   </data>
-  <data name="categories.forum" xml:space="preserve">
+  <data name="BoxPassword.PlaceholderText" xml:space="preserve">
+    <value>密码</value>
+    <comment>输入框:密码</comment>
+  </data>
+  <data name="Categories.Forum" xml:space="preserve">
     <value>哔咔留言板</value>
     <comment>分类第六个</comment>
   </data>
-  <data name="categories.game" xml:space="preserve">
+  <data name="Categories.Game" xml:space="preserve">
     <value>游戏推荐</value>
     <comment>分类第三个</comment>
   </data>
-  <data name="categories.help" xml:space="preserve">
-    <value>点击救哔咔</value>
-    <comment>分类第四个</comment>
-  </data>
-  <data name="categories.latest" xml:space="preserve">
+  <data name="Categories.Latest" xml:space="preserve">
     <value>最近更新</value>
     <comment>分类第七个</comment>
   </data>
-  <data name="categories.leaderboard" xml:space="preserve">
+  <data name="Categories.Leaderboard" xml:space="preserve">
     <value>哔咔排行榜</value>
     <comment>分类第二个</comment>
   </data>
-  <data name="categories.random" xml:space="preserve">
+  <data name="Categories.Random" xml:space="preserve">
     <value>随机本子</value>
     <comment>分类第八个</comment>
   </data>
-  <data name="categories.smalltool" xml:space="preserve">
+  <data name="Categories.Smalltool" xml:space="preserve">
     <value>哔咔小程序</value>
     <comment>分类第五个</comment>
   </data>
-  <data name="categories.support" xml:space="preserve">
+  <data name="Categories.Support" xml:space="preserve">
     <value>支持哔咔</value>
     <comment>分类第一个</comment>
   </data>
   <data name="CatSearch.PlaceholderText" xml:space="preserve">
     <value>搜索</value>
     <comment>分类搜索栏</comment>
-  </data>
-  <data name="ChangePasswordButton.Content" xml:space="preserve">
-    <value>修改密码</value>
-    <comment>窗口按钮:修改密码</comment>
-  </data>
-  <data name="ChangePasswordTip.Title" xml:space="preserve">
-    <value>更改密码</value>
-    <comment>窗口标题:修改密码</comment>
-  </data>
-  <data name="ChangeSignatureButton.Content" xml:space="preserve">
-    <value>修改签名</value>
-    <comment>窗口按钮:修改签名</comment>
-  </data>
-  <data name="ChangeSignatureTip.Title" xml:space="preserve">
-    <value>修改签名</value>
-    <comment>窗口标题:修改签名</comment>
-  </data>
-  <data name="ClearHistory.Content" xml:space="preserve">
-    <value>清除历史记录</value>
   </data>
   <data name="Comment.Text" xml:space="preserve">
     <value>评论</value>
@@ -197,87 +176,26 @@
   <data name="CommentsLoading" xml:space="preserve">
     <value>加载评论区中...</value>
   </data>
-  <data name="CommentsTip.Content" xml:space="preserve">
-    <value>展开评论面板</value>
-  </data>
   <data name="CommentSubmit.Text" xml:space="preserve">
     <value>发射</value>
   </data>
   <data name="CommentTitle.Text" xml:space="preserve">
     <value>评论区</value>
   </data>
-  <data name="CopySuccess" xml:space="preserve">
-    <value>复制成功</value>
-    <comment>复制成功</comment>
-  </data>
-  <data name="CreaterTip.Content" xml:space="preserve">
-    <value>点击查看上传者信息</value>
-  </data>
   <data name="Delete.Content" xml:space="preserve">
     <value>删除记录</value>
     <comment>删除记录</comment>
   </data>
   <data name="E-mail.Text" xml:space="preserve">
-    <value>邮箱</value>
+    <value>账户:</value>
     <comment>登陆账号显示</comment>
   </data>
-  <data name="E-mailBox.PlaceholderText" xml:space="preserve">
-    <value>邮箱</value>
+  <data name="BoxE-mail.PlaceholderText" xml:space="preserve">
+    <value>哔咔账户</value>
     <comment>登陆账号提示</comment>
   </data>
   <data name="Edit.Content" xml:space="preserve">
     <value>点击编辑</value>
-  </data>
-  <data name="ErrorButton.Text" xml:space="preserve">
-    <value>重新加载</value>
-  </data>
-  <data name="ErrorText.Text" xml:space="preserve">
-    <value>是否需要重新加载？</value>
-  </data>
-  <data name="ErrorText1.Text" xml:space="preserve">
-    <value>哔咔哔咔被玩坏了!</value>
-    <comment>未知错误第1行</comment>
-  </data>
-  <data name="ErrorText2.Text" xml:space="preserve">
-    <value>  </value>
-    <comment>未知错误第2行</comment>
-  </data>
-  <data name="ErrorText3.Text" xml:space="preserve">
-    <value>这肯定不是哔咔的问题!</value>
-    <comment>未知错误第3行</comment>
-  </data>
-  <data name="ErrorText4.Text" xml:space="preserve">
-    <value>绝对不是!</value>
-    <comment>未知错误第4行</comment>
-  </data>
-  <data name="ErrorTip.Title" xml:space="preserve">
-    <value>加载失败QAQ</value>
-  </data>
-  <data name="FailAuth" xml:space="preserve">
-    <value>Token获取失败,请重新登录</value>
-    <comment>因为Token获取失败登陆失败对话框内容</comment>
-  </data>
-  <data name="FailCloseButtonText" xml:space="preserve">
-    <value>确定</value>
-    <comment>对话框按钮"确定"</comment>
-  </data>
-  <data name="FailComment" xml:space="preserve">
-    <value>该作品不允许评论</value>
-  </data>
-  <data name="FailHttpTitle" xml:space="preserve">
-    <value>请求错误</value>
-  </data>
-  <data name="FailLoginBlank" xml:space="preserve">
-    <value>请输入您的账号和密码</value>
-    <comment>因为用户名空登陆失败对话框内容</comment>
-  </data>
-  <data name="FailLoginPassword" xml:space="preserve">
-    <value>错误的账号或密码,请重试 :(</value>
-    <comment>因为密码错误登陆失败对话框内容</comment>
-  </data>
-  <data name="FailLoginTitle" xml:space="preserve">
-    <value>登陆失败</value>
-    <comment>对话框标题"登陆失败"</comment>
   </data>
   <data name="FailMessage.CloseButton.Normal" xml:space="preserve">
     <value>关闭</value>
@@ -323,11 +241,23 @@
     <value>未知错误</value>
     <comment>错误消息标题:未知错误</comment>
   </data>
-  <data name="Favourite.Label" xml:space="preserve">
+  <data name="BlockFavourite.Text" xml:space="preserve">
     <value>收藏</value>
+  </data>
+  <data name="FlyoutAccountSettings.Text" xml:space="preserve">
+    <value>账户设置</value>
+    <comment>浮出:账户设置</comment>
   </data>
   <data name="FlyoutBirthday.Text" xml:space="preserve">
     <value>生日</value>
+  </data>
+  <data name="FlyoutChangePassword.Text" xml:space="preserve">
+    <value>修改密码</value>
+    <comment>浮出:修改密码</comment>
+  </data>
+  <data name="FlyoutChangeSignature.Text" xml:space="preserve">
+    <value>修改签名</value>
+    <comment>浮出:修改签名</comment>
   </data>
   <data name="FlyoutCreateAt.Text" xml:space="preserve">
     <value>账户创建日期</value>
@@ -337,6 +267,10 @@
   </data>
   <data name="FlyoutImg.Text" xml:space="preserve">
     <value>头像</value>
+  </data>
+  <data name="FlyoutLogOut.Text" xml:space="preserve">
+    <value>登出</value>
+    <comment>浮出:登出</comment>
   </data>
   <data name="FlyoutName.Text" xml:space="preserve">
     <value>绅士名称</value>
@@ -349,6 +283,10 @@
   </data>
   <data name="FlyoutSlogan.Text" xml:space="preserve">
     <value>个人签名</value>
+  </data>
+  <data name="FlyoutSwitchAccounts.Text" xml:space="preserve">
+    <value>切换账户</value>
+    <comment>浮出:切换账户</comment>
   </data>
   <data name="FlyoutUPassword.Text" xml:space="preserve">
     <value>不可见</value>
@@ -429,7 +367,7 @@
     <value>提示</value>
     <comment>关键字:提示</comment>
   </data>
-  <data name="Like.Label" xml:space="preserve">
+  <data name="BlockLike.Text" xml:space="preserve">
     <value>爱心</value>
     <comment>漫画详细页</comment>
   </data>
@@ -440,27 +378,21 @@
   <data name="Loading" xml:space="preserve">
     <value>加载中.....</value>
   </data>
-  <data name="LoginButton.Content" xml:space="preserve">
-    <value>登陆</value>
-    <comment>登陆按钮</comment>
-  </data>
-  <data name="LoginTeachingTip.Title" xml:space="preserve">
-    <value>登录</value>
-  </data>
   <data name="Message.AutoPunchIn" xml:space="preserve">
     <value>自动打卡</value>
     <comment>通知消息:自动打卡</comment>
   </data>
-  <data name="Message.Change" xml:space="preserve">
-    <value>修改中....</value>
-    <comment>通知消息:修改中</comment>
-  </data>
-  <data name="Message.ChangeSuccess" xml:space="preserve">
+  <data name="Message.Change.Success" xml:space="preserve">
     <value>修改成功✔</value>
     <comment>通知消息:修改成功</comment>
   </data>
-  <data name="Message.Logining" xml:space="preserve">
-    <value>登录中</value>
+  <data name="Message.Book.Success" xml:space="preserve">
+    <value>成功✔</value>
+    <comment>通知消息:成功</comment>
+  </data>
+  <data name="Message.Book.Fail" xml:space="preserve">
+    <value>失败❌</value>
+    <comment>通知消息:失败</comment>
   </data>
   <data name="Message.PunchIned" xml:space="preserve">
     <value>已打卡✔</value>
@@ -492,40 +424,22 @@
   </data>
   <data name="NewPasswrod.Text" xml:space="preserve">
     <value>新密码: </value>
-    <comment>窗口文本:新密码</comment>
+    <comment>文本框:新密码</comment>
   </data>
   <data name="NewSignature.Text" xml:space="preserve">
     <value>新签名:</value>
-    <comment>窗口文本:签名</comment>
+    <comment>文本框:签名</comment>
   </data>
   <data name="OldPasswrod.Text" xml:space="preserve">
     <value>旧密码: </value>
-    <comment>窗口文本:旧密码</comment>
-  </data>
-  <data name="Password.Text" xml:space="preserve">
-    <value>密码</value>
-    <comment>登陆密码显示</comment>
-  </data>
-  <data name="PasswordBox.PlaceholderText" xml:space="preserve">
-    <value>密码</value>
-    <comment>登陆密码提示</comment>
-  </data>
-  <data name="PicErrorDialog.CloseButtonText" xml:space="preserve">
-    <value>确定</value>
-    <comment>未知错误按钮</comment>
-  </data>
-  <data name="Punch.Label" xml:space="preserve">
-    <value>打卡</value>
-  </data>
-  <data name="PunchTip.Content" xml:space="preserve">
-    <value>打卡</value>
+    <comment>文本框:旧密码</comment>
   </data>
   <data name="ReadText" xml:space="preserve">
     <value>开始阅读</value>
   </data>
-  <data name="RememberCheckBox.Content" xml:space="preserve">
+  <data name="CheckBoxRemember.Content" xml:space="preserve">
     <value>记住密码</value>
-    <comment>登录时记住我</comment>
+    <comment>复选框:记住密码</comment>
   </data>
   <data name="Search.Content" xml:space="preserve">
     <value>搜索</value>
@@ -549,7 +463,7 @@
     <comment>设置介绍:网络设置</comment>
   </data>
   <data name="SettingBikaClientFlowName.Text" xml:space="preserve">
-    <value>图片分流设置</value>
+    <value>图片分流</value>
     <comment>设置介绍:图片分流设置</comment>
   </data>
   <data name="SettingBikaClientName.Text" xml:space="preserve">
@@ -559,6 +473,10 @@
   <data name="SettingBikaClientServerFlowName.Text" xml:space="preserve">
     <value>服务器分流</value>
     <comment>设置标题:服务器分流</comment>
+  </data>
+  <data name="SettingLogButton.Content" xml:space="preserve">
+    <value>生成日志</value>
+    <comment>设置按钮:生成日志</comment>
   </data>
   <data name="SettingLogDes.Text" xml:space="preserve">
     <value>日志生成与打开</value>
@@ -584,31 +502,25 @@
     <value>应用版本</value>
     <comment>设置标题:应用内核</comment>
   </data>
-  <data name="SortMode.DA" xml:space="preserve">
+  <data name="sort.da" xml:space="preserve">
     <value>旧到新</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.DD" xml:space="preserve">
+  <data name="sort.dd" xml:space="preserve">
     <value>新到旧</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.LD" xml:space="preserve">
+  <data name="sort.ld" xml:space="preserve">
     <value>最多爱心</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.UA" xml:space="preserve">
+  <data name="sort.ua" xml:space="preserve">
     <value>默认排序</value>
     <comment>筛选框</comment>
   </data>
-  <data name="SortMode.VD" xml:space="preserve">
+  <data name="sort.vd" xml:space="preserve">
     <value>最多指名</value>
     <comment>筛选框</comment>
-  </data>
-  <data name="SubmitButton.Content" xml:space="preserve">
-    <value>提交</value>
-  </data>
-  <data name="Submiting" xml:space="preserve">
-    <value>提交中...</value>
   </data>
   <data name="TipComment" xml:space="preserve">
     <value>点击展开评论区</value>
@@ -619,6 +531,14 @@
   <data name="TipLike" xml:space="preserve">
     <value>点击给予爱心</value>
   </data>
+  <data name="TipRefresh.Content" xml:space="preserve">
+    <value>刷新</value>
+    <comment>提示框:刷新</comment>
+  </data>
+  <data name="TipSeal.Content" xml:space="preserve">
+    <value>封印分区</value>
+    <comment>提示框:封印分区</comment>
+  </data>
   <data name="TipUncomment" xml:space="preserve">
     <value>点击关闭评论区</value>
   </data>
@@ -627,9 +547,6 @@
   </data>
   <data name="TipUnlike" xml:space="preserve">
     <value>点击收回爱心</value>
-  </data>
-  <data name="TitleTip.Content" xml:space="preserve">
-    <value>左键复制</value>
   </data>
   <data name="UnEdit.Content" xml:space="preserve">
     <value>无法编辑</value>
@@ -645,23 +562,211 @@
     <value>我的收藏</value>
     <comment>用户界面</comment>
   </data>
-  <data name="UserLogOut.Label" xml:space="preserve">
-    <value>登出</value>
-  </data>
-  <data name="UserLogOutTip.Content" xml:space="preserve">
-    <value>登出</value>
-  </data>
   <data name="UserLook.Text" xml:space="preserve">
     <value>浏览记录</value>
     <comment>用户界面</comment>
   </data>
-  <data name="UserSettings.Label" xml:space="preserve">
-    <value>账户设置</value>
-  </data>
-  <data name="UserSettingsTip.Content" xml:space="preserve">
-    <value>账户设置</value>
-  </data>
   <data name="Verified" xml:space="preserve">
     <value>已验证✔</value>
+  </data>
+  <data name="BlockNewTitle.Text" xml:space="preserve">
+    <value>新称号</value>
+    <comment>文本框:新称号</comment>
+  </data>
+  <data name="FlyoutChangeTitle.Text" xml:space="preserve">
+    <value>修改称号(管理员)</value>
+    <comment>浮出:修改称号</comment>
+  </data>
+  <data name="Keyword.Default.Title" xml:space="preserve">
+    <value>萌新</value>
+    <comment>默认关键字:萌新</comment>
+  </data>
+  <data name="TipRegister.Content" xml:space="preserve">
+    <value>注册为新绅士</value>
+    <comment>提示框:注册为新绅士</comment>
+  </data>
+  <data name="TipSwitchUser.Content" xml:space="preserve">
+    <value>切换账户</value>
+    <comment>提示框:切换账户</comment>
+  </data>
+  <data name="BlockAnswer1.Text" xml:space="preserve">
+    <value>回答1:</value>
+    <comment>文本框:回答1</comment>
+  </data>
+  <data name="BlockAnswer2.Text" xml:space="preserve">
+    <value>回答2:</value>
+    <comment>文本框:回答2</comment>
+  </data>
+  <data name="BlockAnswer3.Text" xml:space="preserve">
+    <value>回答3:</value>
+    <comment>文本框:回答3</comment>
+  </data>
+  <data name="BlockBirthday.Text" xml:space="preserve">
+    <value>生日:</value>
+    <comment>文本框:生日</comment>
+  </data>
+  <data name="BlockGender.Text" xml:space="preserve">
+    <value>性别:</value>
+    <comment>文本框:性别</comment>
+  </data>
+  <data name="BlockName.Text" xml:space="preserve">
+    <value>昵称:</value>
+    <comment>文本框:昵称</comment>
+  </data>
+  <data name="BlockPasswordSure.Text" xml:space="preserve">
+    <value>确认密码:</value>
+    <comment>文本框:确认密码</comment>
+  </data>
+  <data name="BlockQuestion1.Text" xml:space="preserve">
+    <value>问题1:</value>
+    <comment>文本框:问题1</comment>
+  </data>
+  <data name="BlockQuestion2.Text" xml:space="preserve">
+    <value>问题2:</value>
+    <comment>文本框:问题2</comment>
+  </data>
+  <data name="BlockQuestion3.Text" xml:space="preserve">
+    <value>问题3:</value>
+    <comment>文本框:问题3</comment>
+  </data>
+  <data name="BoxAnswer1.PlaceholderText" xml:space="preserve">
+    <value>回答1</value>
+    <comment>输入框:回答1</comment>
+  </data>
+  <data name="BoxAnswer2.PlaceholderText" xml:space="preserve">
+    <value>回答2</value>
+    <comment>输入框:回答2</comment>
+  </data>
+  <data name="BoxAnswer3.PlaceholderText" xml:space="preserve">
+    <value>回答3</value>
+    <comment>输入框:回答3</comment>
+  </data>
+  <data name="BoxName.PlaceholderText" xml:space="preserve">
+    <value>昵称</value>
+    <comment>输入框:昵称</comment>
+  </data>
+  <data name="BoxPasswordSure.PlaceholderText" xml:space="preserve">
+    <value>确认密码</value>
+    <comment>输入框:确认密码</comment>
+  </data>
+  <data name="BoxQuestion1.PlaceholderText" xml:space="preserve">
+    <value>问题1(忘记密码用)</value>
+    <comment>输入框:问题1</comment>
+  </data>
+  <data name="BoxQuestion2.PlaceholderText" xml:space="preserve">
+    <value>问题2(忘记密码用)</value>
+    <comment>输入框:问题2</comment>
+  </data>
+  <data name="BoxQuestion3.PlaceholderText" xml:space="preserve">
+    <value>问题3(忘记密码用)</value>
+    <comment>输入框:问题3</comment>
+  </data>
+  <data name="FailMessage.Message.Blank" xml:space="preserve">
+    <value>您有必填项未填</value>
+    <comment>错误消息内容:必填项未填</comment>
+  </data>
+  <data name="FailMessage.Message.NameTooLong" xml:space="preserve">
+    <value>昵称应该在2-50字之间</value>
+  </data>
+  <data name="FailMessage.Message.PasswordSure" xml:space="preserve">
+    <value>前后密码设置不一致</value>
+  </data>
+  <data name="FailMessage.Message.PassWordTooShort" xml:space="preserve">
+    <value>密码长度不能小于8</value>
+    <comment>错误消息内容:密码长度不能小于8</comment>
+  </data>
+  <data name="FailMessage.Title.OldPassWordError" xml:space="preserve">
+    <value>旧密码错误</value>
+    <comment>错误消息内容:旧密码错误</comment>
+  </data>
+  <data name="FailMessage.Title.PassWordTooShort" xml:space="preserve">
+    <value>密码过短</value>
+    <comment>错误消息内容:密码过短</comment>
+  </data>
+  <data name="FailMessage.Title.Write" xml:space="preserve">
+    <value>填写错误</value>
+    <comment>错误消息内容:填写错误</comment>
+  </data>
+  <data name="Keyword.Gender.bot" xml:space="preserve">
+    <value>机器人🤖</value>
+    <comment>关键字:机器人</comment>
+  </data>
+  <data name="Keyword.Gender.f" xml:space="preserve">
+    <value>淑女👧</value>
+    <comment>关键字:女</comment>
+  </data>
+  <data name="Keyword.Gender.m" xml:space="preserve">
+    <value>绅士👦</value>
+    <comment>关键字:男</comment>
+  </data>
+  <data name="Keyword.Login" xml:space="preserve">
+    <value>登入</value>
+    <comment>关键字:登入</comment>
+  </data>
+  <data name="Keyword.Message.Register" xml:space="preserve">
+    <value>注册成功</value>
+    <comment>关键字:注册成功</comment>
+  </data>
+  <data name="Message.Login.Success" xml:space="preserve">
+    <value>欢迎您</value>
+  </data>
+  <data name="FlyoutDelete.Label" xml:space="preserve">
+    <value>删除账户</value>
+  </data>
+  <data name="FlyoutDelete.ToolTipService.ToolTip" xml:space="preserve">
+    <value>删除账户</value>
+  </data>
+  <data name="Message.Login.Switch" xml:space="preserve">
+    <value>正在切换账户-&gt;</value>
+  </data>
+  <data name="TipSelectUser.Title" xml:space="preserve">
+    <value>切换账户</value>
+  </data>
+  <data name="FailMessage.Message.AuthError" xml:space="preserve">
+    <value>您不是管理员,无法使用</value>
+    <comment>错误消息内容:不是管理员</comment>
+  </data>
+  <data name="FlyoutChangeAvatar.Text" xml:space="preserve">
+    <value>修改头像</value>
+    <comment>浮出:修改头像</comment>
+  </data>
+  <data name="Message.Success.Avatar" xml:space="preserve">
+    <value>修改头像成功</value>
+  </data>
+  <data name="BlockComments.Text" xml:space="preserve">
+    <value>评论</value>
+    <comment>文本框:评论</comment>
+  </data>
+  <data name="BlockRecommend.Header" xml:space="preserve">
+    <value>看了这个本子的都看</value>
+    <comment>标题:看了这个本子的都看</comment>
+  </data>
+  <data name="BlockUpdateTime.Text" xml:space="preserve">
+    <value>最后更新</value>
+    <comment>文本框:最后更新</comment>
+  </data>
+  <data name="BlockDownlaod.Text" xml:space="preserve">
+    <value>下载</value>
+    <comment>文本框:下载</comment>
+  </data>
+  <data name="BlockFinished.Text" xml:space="preserve">
+    <value>完结</value>
+    <comment>文本框：完结</comment>
+  </data>
+  <data name="TipCreater.Content" xml:space="preserve">
+    <value>查看用户</value>
+    <comment>提示框:查看用户</comment>
+  </data>
+  <data name="Message.Favourite.Cancel" xml:space="preserve">
+    <value>取消收藏</value>
+    <comment>通知信息:取消收藏</comment>
+  </data>
+  <data name="Message.Like.Cancel" xml:space="preserve">
+    <value>取消爱心</value>
+    <comment>通知信息:取消爱心</comment>
+  </data>
+  <data name="ButtonSend.Content" xml:space="preserve">
+    <value>发射</value>
+    <comment>按钮:评论</comment>
   </data>
 </root>

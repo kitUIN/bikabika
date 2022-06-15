@@ -1,0 +1,37 @@
+namespace bikabika
+{
+    enum ComicsType
+    {
+        // 分区
+        COMIC = 0,
+        // 搜索
+        SEARCH = 1,
+        // 历史记录
+        HISTORY = 2,
+        // 喜爱的作品
+        FACOURITE = 3,
+        // 最近更新
+	    RECENTLY_UPDATE = 4,
+	    // 随机本子
+	    RANDOM = 5,
+		// 排行榜
+        RANK = 6,
+		// 其他跳转
+		BOOK = 7
+    };
+    runtimeclass ComicArgs
+    {
+        ComicArgs();
+        ComicArgs(ComicsType comicType, String title, BikaClient.Utils.BikaSort sortMode);
+        ComicArgs(String bookId, Int32 eps, Int32 pageIndex, Int32 page);
+        ComicsType ComicType;
+        String Title;
+        String BookId;
+        Int32 Eps;
+        Int32 PageIndex;
+        Int32 Page;
+        BikaClient.Utils.BikaSort SortMode;
+        String SortModeString{ get; };
+        Boolean IsAnime;
+    }
+}

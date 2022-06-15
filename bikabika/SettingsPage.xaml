@@ -71,11 +71,11 @@
                                         FontWeight="Bold" />
                                 </StackPanel>
                                 <ComboBox
+                                    x:Name="SettingBikaClientServerFlow"
                                     Width="200"
                                     Margin="0,0,10,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
-                                    Loaded="SettingBikaClientServerFlow_Loaded"
                                     SelectionChanged="SettingBikaClientServerFlow_SelectionChanged" />
                             </Grid>
 
@@ -106,11 +106,11 @@
                                         FontWeight="Bold" />
                                 </StackPanel>
                                 <ComboBox
+                                    x:Name="SettingBikaClientFlow"
                                     Width="200"
                                     Margin="0,0,10,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
-                                    Loaded="SettingBikaClientFlow_Loaded"
                                     SelectionChanged="SettingBikaClientFlow_SelectionChanged" />
                             </Grid>
 
@@ -155,11 +155,11 @@
                         </StackPanel>
                     </StackPanel>
                     <ComboBox
+                        x:Name="SettingTheme"
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Loaded="SettingTheme_Loaded"
                         SelectionChanged="SettingTheme_SelectionChanged" />
                 </Grid>
             </Border>
@@ -199,10 +199,12 @@
                         </StackPanel>
                     </StackPanel>
                     <Button
+                        x:Uid="SettingLogButton"
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Click="LogButton_Click" />
 
                 </Grid>
             </Border>
@@ -241,12 +243,12 @@
                         </StackPanel>
                     </StackPanel>
                     <Button
+                        x:Name="SettingAPPVersion"
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        IsEnabled="False"
-                        Loaded="SettingAPPVersion_Loaded" />
+                        IsEnabled="False" />
                 </Grid>
             </Border>
             <Border
@@ -284,11 +286,11 @@
                         </StackPanel>
                     </StackPanel>
                     <Button
+                        x:Name="SettingVersion"
                         Width="200"
                         Margin="0,0,10,0"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Loaded="SettingVersion_Loaded" />
+                        VerticalAlignment="Center" />
                 </Grid>
             </Border>
         </StackPanel>

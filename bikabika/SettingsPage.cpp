@@ -1,4 +1,11 @@
-﻿#include "pch.h"
+﻿/*****************************************************************//**
+ * \file   SettingsPage.cpp
+ * \brief  设置界面
+ *
+ * \author kulujun
+ * \date   June 2022
+ *********************************************************************/
+#include "pch.h"
 #include "SettingsPage.h"
 #if __has_include("SettingsPage.g.cpp")
 #include "SettingsPage.g.cpp"
@@ -27,6 +34,31 @@ namespace winrt::bikabika::implementation
     {
         return m_settingWidth-50;
     }
+    void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+    {
+        __super::OnNavigatedTo(e);
+        m_serverFlow = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Flow/One"),resourceLoader.GetString(L"Keyword/Flow/Two"), resourceLoader.GetString(L"Keyword/Flow/Three") });
+        m_flows      = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Flow/One"),resourceLoader.GetString(L"Keyword/Flow/Two"), resourceLoader.GetString(L"Keyword/Flow/Three") });
+        m_themes     = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Theme/Light"), resourceLoader.GetString(L"Keyword/Theme/Dark") });
+        SettingTheme().ItemsSource(box_value(m_themes));
+        ElementTheme theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
+        if (theme == ElementTheme::Dark)
+        {
+            SettingTheme().SelectedIndex(1);
+        }
+        else
+        {
+            SettingTheme().SelectedIndex(0);
+        }
+        SettingAPPVersion().Content(box_value(rootPage.HttpClient().APPVersion()));
+        SettingBikaClientFlow().ItemsSource(box_value(m_flows));
+        SettingBikaClientFlow().SelectedIndex(0);
+        SettingBikaClientServerFlow().ItemsSource(box_value(m_serverFlow));
+        SettingBikaClientServerFlow().SelectedIndex(rootPage.HttpClient().APPChannel() - 1);
+        PackageVersion version = Package::Current().Id().Version();
+        SettingVersion().Content(box_value(to_hstring(version.Major) + L"." + to_hstring(version.Minor) + L"." + to_hstring(version.Build)));
+
+    }
     winrt::event_token SettingsPage::PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
         return m_propertyChanged.add(handler);
@@ -39,7 +71,7 @@ namespace winrt::bikabika::implementation
 }
 
 
-void winrt::bikabika::implementation::SettingsPage::BackGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& e)
+void winrt::bikabika::implementation::SettingsPage::BackGrid_SizeChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::SizeChangedEventArgs const& /*e*/)
 {
     auto width = sender.as<Grid>().ActualWidth();
     if (width > 700)
@@ -53,7 +85,7 @@ void winrt::bikabika::implementation::SettingsPage::BackGrid_SizeChanged(winrt::
 }
 
 
-void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& /*e*/)
 {
 
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
@@ -69,46 +101,21 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_Select
 }
 
 
-void winrt::bikabika::implementation::SettingsPage::SettingBikaClientFlow_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/One"));
-    m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/Two"));
-    m_flows.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
-    sender.as<ComboBox>().ItemsSource(box_value(m_flows));
-    sender.as<ComboBox>().SelectedIndex(0);
-}
 
 
-void winrt::bikabika::implementation::SettingsPage::SettingTheme_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Light"));
-    m_themes.Append(resourceLoader.GetString(L"Keyword/Theme/Dark"));
-    sender.as<ComboBox>().ItemsSource(box_value(m_themes));
-    auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
-    if (theme == ElementTheme::Light)
-    {
-        sender.as<ComboBox>().SelectedIndex(0);
-    }
-    else
-    {
-        sender.as<ComboBox>().SelectedIndex(1);
-    }
 
 
-}
 
-
-void winrt::bikabika::implementation::SettingsPage::SettingTheme_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+void winrt::bikabika::implementation::SettingsPage::SettingTheme_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& /*e*/)
 {
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
-    auto theme = Window::Current().Content().as<FrameworkElement>().RequestedTheme();
     Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
-    if (mode == resourceLoader.GetString(L"Keyword/Theme/Light") && theme != ElementTheme::Light)
+    if (mode == resourceLoader.GetString(L"Keyword/Theme/Light"))
     {
         Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Light);
         settings.Values().Insert(L"Theme", box_value(L"Light"));
     }
-    else if (mode == resourceLoader.GetString(L"Keyword/Theme/Dark") && theme != ElementTheme::Dark)
+    else if (mode == resourceLoader.GetString(L"Keyword/Theme/Dark"))
     {
         Window::Current().Content().as<FrameworkElement>().RequestedTheme(ElementTheme::Dark);
         settings.Values().Insert(L"Theme", box_value(L"Dark"));
@@ -116,31 +123,8 @@ void winrt::bikabika::implementation::SettingsPage::SettingTheme_SelectionChange
 }
 
 
-void winrt::bikabika::implementation::SettingsPage::SettingVersion_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    PackageVersion version = Package::Current().Id().Version();
 
-    sender.as<Button>().Content(box_value(to_hstring(version.Major) +L"."+ to_hstring(version.Minor)+L"."+ to_hstring(version.Build)));
-}
-
-
-void winrt::bikabika::implementation::SettingsPage::SettingAPPVersion_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    sender.as<Button>().Content(box_value(rootPage.HttpClient().APPVersion()));
-}
-
-
-void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/One"));
-    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Two"));
-    m_serverFlow.Append(resourceLoader.GetString(L"Keyword/Flow/Three"));
-    sender.as<ComboBox>().ItemsSource(box_value(m_flows));
-    sender.as<ComboBox>().SelectedIndex(2);
-}
-
-
-void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& e)
+void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_SelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& /*e*/)
 {
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
     if (mode == resourceLoader.GetString(L"Keyword/Flow/Two"))
@@ -151,5 +135,11 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_
     {
 
     }
+
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::LogButton_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
+{
 
 }

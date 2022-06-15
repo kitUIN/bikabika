@@ -8,21 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Default">
-                    <AcrylicBrush
-                        x:Key="NavigationViewExpandedPaneBackground"
-                        TintColor="{ThemeResource SystemNavigationAccentColor}"
-                        TintOpacity=".6" />
 
-                </ResourceDictionary>
-            </ResourceDictionary.ThemeDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
-
-    <Grid>
+    <Grid x:Name="MainRootGrid">
         <muxc:TeachingTip
             x:Name="LayoutMessage"
             Width="300"
@@ -62,43 +49,38 @@
                     Tag="NavBigImg">
                     <FlyoutBase.AttachedFlyout>
                         <MenuFlyout x:Name="Menu">
-                            <MenuFlyoutItem
-                                x:Uid="SwitchAccounts"
-                                Click="LogOut_Click"
-                                Text="切换账号">
-                                <MenuFlyoutItem.Icon>
-                                    <SymbolIcon Symbol="People" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutSubItem Text="账户设置">
-                                <MenuFlyoutSubItem.Icon>
-                                    <SymbolIcon Symbol="Setting" />
-                                </MenuFlyoutSubItem.Icon>
+                            <MenuFlyoutSubItem
+                                x:Name="FlyoutSwitchAccounts"
+                                x:Uid="FlyoutSwitchAccounts"
+                                Icon="People"
+                                IsEnabled="False" />
+                            <MenuFlyoutSubItem x:Uid="FlyoutAccountSettings" Icon="Setting">
+                                <MenuFlyoutItem
+                                    x:Name="ChangeAvatar"
+                                    x:Uid="FlyoutChangeAvatar"
+                                    Click="ChangeAvatar_Click"
+                                    Icon="Contact2" />
                                 <MenuFlyoutItem
                                     x:Name="ChangeSignature"
-                                    x:Uid="ChangeSignature"
+                                    x:Uid="FlyoutChangeSignature"
                                     Click="ChangeSignature_Click"
-                                    Text="修改签名">
-                                    <MenuFlyoutItem.Icon>
-                                        <SymbolIcon Symbol="ContactInfo" />
-                                    </MenuFlyoutItem.Icon>
-                                </MenuFlyoutItem>
+                                    Icon="ContactInfo" />
+                                <MenuFlyoutItem
+                                    x:Name="ChangeTitle"
+                                    x:Uid="FlyoutChangeTitle"
+                                    Click="ChangeTitle_Click"
+                                    Icon="ContactPresence" />
                                 <MenuFlyoutItem
                                     x:Name="ChangePassword"
-                                    x:Uid="ChangePassword"
+                                    x:Uid="FlyoutChangePassword"
                                     Click="ChangePassword_Click"
-                                    Icon="Permissions"
-                                    Text="修改密码" />
+                                    Icon="Permissions" />
                             </MenuFlyoutSubItem>
                             <MenuFlyoutItem
                                 x:Name="LogOut"
-                                x:Uid="LogOut"
+                                x:Uid="FlyoutLogOut"
                                 Click="LogOut_Click"
-                                Text="登出">
-                                <MenuFlyoutItem.Icon>
-                                    <SymbolIcon Symbol="ClosePane" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
+                                Icon="ClosePane" />
                         </MenuFlyout>
                     </FlyoutBase.AttachedFlyout>
                     <StackPanel Margin="0,20,0,0">
@@ -116,7 +98,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="20"
                                         FontWeight="Bold"
-                                        Foreground="{ThemeResource SystemAccentColorDark3}"
+                                        Foreground="{ThemeResource SystemAccentColorDark1}"
                                         Text="{x:Bind User.Name, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                 </Grid>
@@ -199,15 +181,14 @@
                     x:Uid="APPTitle"
                     Margin="10,4,0,0"
                     FontSize="25"
-                    FontWeight="Bold"
-                    Text="嗶咔嗶咔" />
+                    FontWeight="Bold" />
             </StackPanel>
 
         </Grid>
         <Frame
             x:Name="ContentFrame"
             Margin="179,0,0,0"
-            Background="{ThemeResource SystemFrameAccentColor}"
+            Background="{ThemeResource SystemFrameAcrylicAccentColor}"
             CornerRadius="10"
             NavigationFailed="ContentFrame_NavigationFailed"
             SizeChanged="Grid_SizeChanged">
@@ -225,6 +206,7 @@
                         <Button.Flyout>
                             <Flyout
                                 x:Name="SearchFlyout"
+                                LightDismissOverlayMode="Off"
                                 Opened="Flyout_Opened"
                                 Placement="BottomEdgeAlignedRight">
                                 <StackPanel Width="280" Orientation="Horizontal">
@@ -287,9 +269,6 @@
                                                             <ToolTip x:Uid="Delete" />
                                                         </ToolTipService.ToolTip>
                                                     </AppBarButton>
-
-
-
                                                 </Grid>
                                             </DataTemplate>
                                         </AutoSuggestBox.ItemTemplate>
@@ -314,8 +293,269 @@
         </Frame>
         <muxc:TeachingTip
             x:Name="LoginTeachingTip"
-            x:Uid="LoginTeachingTip"
-            Title="Login"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Loaded="StackPanel_Loaded">
+                    <Border
+                        Width="240"
+                        Padding="10"
+                        HorizontalAlignment="Center"
+                        Background="{ThemeResource SystemBorderAccentColor}"
+                        CornerRadius="10"
+                        Opacity="0.9"
+                        PointerPressed="Border_PointerPressed">
+
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="TipSwitchUser" />
+                        </ToolTipService.ToolTip>
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
+                            <PersonPicture
+                                x:Name="LoginUserPic"
+                                Width="64"
+                                Height="64"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                ProfilePicture="Assets/Picacgs/placeholder_avatar_2.png" />
+                            <StackPanel Margin="10,0,0,0">
+                                <TextBlock
+                                    x:Name="LoginUserName"
+                                    VerticalAlignment="Center"
+                                    FontSize="18"
+                                    FontWeight="Bold"
+                                    Foreground="{StaticResource SystemAccentColorDark1}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        x:Name="LoginUserLevel"
+                                        VerticalAlignment="Center"
+                                        FontSize="14" />
+                                    <Border
+                                        Margin="10,0,0,0"
+                                        Padding="6,3,6,3"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Background="#ffb401"
+                                        CornerRadius="12">
+                                        <TextBlock
+                                            x:Name="LoginUserTitle"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontSize="14" />
+                                    </Border>
+                                </StackPanel>
+                                <TextBlock
+                                    x:Name="LoginUserSlogan"
+                                    Margin="0,5,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Loaded="LoginUserSlogan_Loaded">
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip x:Name="LoginUserSloganTip" />
+                                    </ToolTipService.ToolTip>
+                                </TextBlock>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Border>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Background="Transparent">
+                        <TextBlock
+                            x:Uid="E-mail"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="E-mail:" />
+                        <TextBox
+                            x:Name="Email"
+                            x:Uid="BoxE-mail"
+                            Width="200"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            PlaceholderText="E-mail"
+                            TextChanged="Email_TextChanged" />
+
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Background="Transparent">
+                        <TextBlock
+                            x:Uid="BlockPassword"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="Password:" />
+                        <PasswordBox
+                            x:Name="Password"
+                            x:Uid="BoxPassword"
+                            Width="200"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            KeyUp="LoginButton_KeyUp"
+                            Loaded="Password_Loaded"
+                            PlaceholderText="Password" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        Background="Transparent">
+                        <CheckBox
+                            x:Name="RememberCheckBox"
+                            x:Uid="CheckBoxRemember"
+                            HorizontalAlignment="Left"
+                            Checked="RememberCheckBox_Checked"
+                            Unchecked="RememberCheckBox_Checked" />
+                        <CheckBox
+                            x:Name="AutoCheckBox"
+                            x:Uid="CheckBoxAuto"
+                            HorizontalAlignment="Right"
+                            Checked="AutoCheckBox_Checked"
+                            FlowDirection="RightToLeft"
+                            Unchecked="AutoCheckBox_Checked" />
+
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,15,0,0"
+                        HorizontalAlignment="Center"
+                        Background="Transparent">
+                        <Button
+                            x:Name="ButtonRegister"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Click="ButtonRegister_Click">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="TipRegister" />
+                            </ToolTipService.ToolTip>
+                            <FontIcon
+                                FontFamily="Segoe MDL2 Assets"
+                                FontSize="12"
+                                Glyph="&#xE8FA;" />
+                        </Button>
+                        <Button
+                            x:Name="LoginButton"
+                            Width="160"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Click="LoginClickHandler" />
+                    </Grid>
+
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="AddFriend" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="SelectUserTip"
+            x:Uid="TipSelectUser"
+            IsLightDismissEnabled="True"
+            PreferredPlacement="Right">
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="Switch" />
+            </muxc:TeachingTip.IconSource>
+            <muxc:TeachingTip.Content>
+                <GridView
+                    x:Name="LoginGridView"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    AllowDrop="True"
+                    CanReorderItems="True"
+                    IsItemClickEnabled="True"
+                    ItemClick="LoginGridView_ItemClick"
+                    ItemsSource="{x:Bind LoginUsers, Mode=OneWay}"
+                    SelectionMode="Single">
+                    <GridView.ItemContainerTransitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                        </TransitionCollection>
+                    </GridView.ItemContainerTransitions>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="block:UserBlock">
+                            <Border
+                                Width="240"
+                                Padding="10"
+                                HorizontalAlignment="Center"
+                                Background="{ThemeResource SystemTipAcrylicAccentColor}"
+                                CornerRadius="10"
+                                Opacity="0.9"
+                                PointerPressed="Border_PointerPressed_1">
+                                <FlyoutBase.AttachedFlyout>
+                                    <muxc:CommandBarFlyout Placement="Right">
+                                        <AppBarButton
+                                            x:Uid="FlyoutDelete"
+                                            Click="AppBarButton_Click"
+                                            Icon="Delete"
+                                            Tag="{x:Bind}" />
+                                    </muxc:CommandBarFlyout>
+                                </FlyoutBase.AttachedFlyout>
+                                <StackPanel Orientation="Horizontal">
+                                    <PersonPicture
+                                        Width="64"
+                                        Height="64"
+                                        Margin="10,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        ProfilePicture="{x:Bind Thumb.Img, Mode=OneWay}" />
+                                    <StackPanel Margin="10,0,0,0">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource SystemAccentColorDark1}"
+                                            Text="{x:Bind Name, Mode=OneWay}" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Text="{x:Bind LevelString, Mode=OneWay}" />
+                                            <Border
+                                                Margin="10,0,0,0"
+                                                Padding="6,3,6,3"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                Background="#ffb401"
+                                                CornerRadius="12">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Text="{x:Bind Title, Mode=OneWay}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="{x:Bind SloganOmit, Mode=OneWay}">
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{x:Bind Slogan, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </muxc:TeachingTip.Content>
+        </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="RegisterTeachingTip"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
@@ -324,58 +564,215 @@
                     Padding="10"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                    <StackPanel
+                    <Grid
+                        Width="240"
                         Margin="0,10,0,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockName"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="RegisterName"
+                            x:Uid="BoxName"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            MaxLength="50" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
                         <TextBlock
                             x:Uid="E-mail"
+                            Margin="10,0,0,0"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Text="E-mail:" />
+                            VerticalAlignment="Center" />
                         <TextBox
-                            x:Name="Email"
-                            x:Uid="E-mailBox"
-                            Width="200"
-                            PlaceholderText="E-mail" />
-                    </StackPanel>
-                    <StackPanel
-                        Margin="0,10,0,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            x:Uid="Password"
+                            x:Name="RegisterEmail"
+                            x:Uid="BoxE-mail"
+                            Width="180"
+                            HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Text="Password:" />
+                            TextChanging="RegisterEmail_TextChanged" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockPassword"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
                         <PasswordBox
-                            x:Name="Password"
-                            x:Uid="PasswordBox"
-                            Width="200"
-                            KeyUp="LoginButton_KeyUp"
-                            Loaded="Password_Loaded"
-                            PlaceholderText="Password" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            x:Name="RememberCheckBox"
-                            x:Uid="RememberCheckBox"
-                            Checked="RememberCheckBox_Checked"
-                            Content="Remember me"
-                            Unchecked="RememberCheckBox_Checked" />
-                        <CheckBox
-                            x:Name="AutoCheckBox"
-                            x:Uid="AutoCheckBox"
-                            Checked="AutoCheckBox_Checked"
-                            Content="Auto login"
-                            Unchecked="AutoCheckBox_Checked" />
-                    </StackPanel>
+                            x:Name="RegisterPassword"
+                            x:Uid="BoxPassword"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockPasswordSure"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <PasswordBox
+                            x:Name="RegisterPasswordSure"
+                            x:Uid="BoxPasswordSure"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockGender"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <ComboBox
+                            x:Name="GenderComboBox"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockBirthday"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <CalendarDatePicker
+                            x:Name="BirthdayDatePicker"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            DateFormat="{}{year.full}-{month.integer}-{day.integer}"
+                            Loaded="BirthdayDatePicker_Loaded" />
+                    </Grid>
+
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockQuestion1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Question1Box"
+                            x:Uid="BoxQuestion1"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockAnswer1"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Answer1Box"
+                            x:Uid="BoxAnswer1"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockQuestion2"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Question2Box"
+                            x:Uid="BoxQuestion2"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockAnswer3"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Answer3Box"
+                            x:Uid="BoxAnswer3"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+
+
+                    </Grid>
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockQuestion3"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Question3Box"
+                            x:Uid="BoxQuestion3"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+
+
+                    </Grid>
+
+                    <Grid
+                        Width="240"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            x:Uid="BlockAnswer2"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="Answer2Box"
+                            x:Uid="BoxAnswer2"
+                            Width="180"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                    </Grid>
                     <Button
-                        x:Name="LoginButton"
-                        x:Uid="LoginButton"
-                        Margin="0,0,0,0"
-                        HorizontalAlignment="Right"
-                        Click="LoginClickHandler"
-                        Content="Log In" />
+                        x:Name="RegisterButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="RegisterButton_Click" />
                 </StackPanel>
             </muxc:TeachingTip.Content>
             <muxc:TeachingTip.IconSource>
@@ -384,7 +781,7 @@
         </muxc:TeachingTip>
         <muxc:TeachingTip
             x:Name="ChangePasswordTip"
-            x:Uid="ChangePasswordTip"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
@@ -395,20 +792,30 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="OldPasswrod" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="OldPasswrod"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox x:Name="OldPasswrod" Width="200" />
                     </StackPanel>
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="NewPasswrod" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="NewPasswrod"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox
                             x:Name="NewPasswrod"
                             Width="200"
                             KeyUp="ChangePasswordButton_KeyUp" />
                     </StackPanel>
                     <Button
-                        x:Uid="ChangePasswordButton"
-                        HorizontalAlignment="Right"
-                        Click="ChangePasswordButton_Click" />
+                        x:Name="ChangePasswordButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="ChangePasswordButton_Click"
+                        Loaded="ChangePasswordButton_Loaded" />
                 </StackPanel>
             </muxc:TeachingTip.Content>
             <muxc:TeachingTip.IconSource>
@@ -417,7 +824,7 @@
         </muxc:TeachingTip>
         <muxc:TeachingTip
             x:Name="ChangeSignatureTip"
-            x:Uid="ChangeSignatureTip"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
             IsLightDismissEnabled="False"
             PreferredPlacement="Center">
             <muxc:TeachingTip.Content>
@@ -428,33 +835,81 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
                     <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
-                        <TextBlock x:Uid="NewSignature" VerticalAlignment="Center" />
+                        <TextBlock
+                            x:Uid="NewSignature"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
                         <TextBox
                             x:Name="NewSignature"
                             Width="200"
                             KeyUp="ChangeSignatureBox_KeyUp" />
                     </StackPanel>
                     <Button
-                        x:Uid="ChangeSignatureButton"
-                        HorizontalAlignment="Right"
-                        Click="ChangeSignatureButton_Click" />
+                        x:Name="ChangeSignatureButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="ChangeSignatureButton_Click"
+                        Loaded="ChangeSignatureButton_Loaded" />
                 </StackPanel>
             </muxc:TeachingTip.Content>
             <muxc:TeachingTip.IconSource>
                 <muxc:SymbolIconSource Symbol="ContactInfo" />
             </muxc:TeachingTip.IconSource>
         </muxc:TeachingTip>
+        <muxc:TeachingTip
+            x:Name="ChangeTitleTip"
+            Background="{ThemeResource SystemTipAcrylicAccentColor}"
+            IsLightDismissEnabled="False"
+            PreferredPlacement="Center">
+            <muxc:TeachingTip.Content>
+                <StackPanel
+                    Margin="0,10,0,0"
+                    Padding="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
+                    <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <TextBlock
+                            x:Uid="BlockNewTitle"
+                            Margin="0,0,10,0"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            x:Name="NewTitle"
+                            Width="200"
+                            KeyUp="NewTitle_KeyUp" />
+                    </StackPanel>
+                    <Button
+                        x:Name="ChangeTitleButton"
+                        Width="160"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Click="ButtonChangeTitle_Click"
+                        Loaded="ChangeTitleButton_Loaded" />
+                </StackPanel>
+            </muxc:TeachingTip.Content>
+            <muxc:TeachingTip.IconSource>
+                <muxc:SymbolIconSource Symbol="ContactPresence" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
         <muxc:InfoBar
             x:Name="Info"
-            Margin="0,0,5,5"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
+            Margin="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             IsClosable="False"
             IsIconVisible="True"
             IsOpen="False"
-            Severity="Success" />
-
-
+            Severity="Success">
+            <muxc:ProgressBar
+                x:Name="InfoBar"
+                Width="200"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Value="50" />
+        </muxc:InfoBar>
     </Grid>
 </Page>
 

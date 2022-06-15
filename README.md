@@ -74,7 +74,9 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 ![](https://i.niupic.com/images/2022/03/06/9W2Q.png)  
 ![](https://i.niupic.com/images/2022/03/06/9W2P.png)  
 ![](https://i.niupic.com/images/2022/03/06/9W2S.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2V.png)  
+![](https://i.niupic.com/images/2022/03/06/9W2V.png)
+暗系主题:  
+![](https://files.catbox.moe/x0s1kj.png)  
 磁贴:
 ![](https://i.niupic.com/images/2022/03/06/9W2W.png)  
 ## 功能📝

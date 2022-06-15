@@ -5,6 +5,11 @@ namespace bikabika
         UNKNOWN = 0,
         TIMEOUT = 1,
         NOAUTH = 2,
+        OLDPASSWORDERROR = 3,
+        PASSWORDTOOSHORT = 4,
+        BLANK = 5,
+        SUREERROR = 6,
+
     };
     [default_interface]
     runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
@@ -12,6 +17,9 @@ namespace bikabika
         MainPage();
         static MainPage Current{ get; };
         BikaClient.BikaHttpClient HttpClient{ get; };
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.UserBlock> LoginUsers{ get; };
+        void LayoutMessageShow(String message, Boolean isOpen);
+        void LayoutMessageShow(Boolean isOpen);
         void CreateNewTab(Windows.UI.Xaml.Controls.Frame frame, String title, Microsoft.UI.Xaml.Controls.SymbolIconSource symbol);
         void ContentDialogShow(bikabika.BikaHttpStatus mode, String message);
         void InfoBarMessageShow(String title, String message, Microsoft.UI.Xaml.Controls.InfoBarSeverity severity);

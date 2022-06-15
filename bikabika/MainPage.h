@@ -20,7 +20,6 @@ namespace winrt::bikabika::implementation
 
 		void LoginViewShow(bool const& isOpen);
 
-
 		void CreateNewTab(Windows::UI::Xaml::Controls::Frame const& frame, hstring const& title, Microsoft::UI::Xaml::Controls::SymbolIconSource const& symbol);
 		void ContentDialogShow(bikabika::BikaHttpStatus const& mode, hstring const& message);
 		void LayoutMessageShow(hstring const& message,bool const& isOpen);
@@ -29,8 +28,12 @@ namespace winrt::bikabika::implementation
 		Windows::Foundation::IAsyncAction PunchIn();
 		void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e);
 
+		hstring Omit(hstring const& str, uint32_t const& length);
+
 		void StartInfoBar();
+		void Register(bool const& isOpen);
 		void ChangePassword(bool const& isOpen);
+		void ChangeTitle(bool const& isOpen);
 		void ChangeSignature(bool const& isOpen);
 		Windows::Foundation::IAsyncAction SetPerson();
 		Windows::Foundation::IAsyncAction GetKeywords();
@@ -40,15 +43,22 @@ namespace winrt::bikabika::implementation
 		void LogOut();
 		BikaClient::Blocks::UserBlock User();
 		void User(BikaClient::Blocks::UserBlock const& value);
-		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
-		void PropertyChanged(winrt::event_token const& token) noexcept;
+
 		bool IsLogin();
 		void IsLogin(bool const& value);
+		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> LoginUsers();
 		static bikabika::MainPage Current() { return current; }
+		winrt::event_token PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
+		void PropertyChanged(winrt::event_token const& token) noexcept;
 	private:
-		static bikabika::MainPage current;
-		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
 		winrt::event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
+		static bikabika::MainPage current;
+		winrt::Windows::Data::Json::JsonObject m_emails;
+		winrt::Windows::Data::Json::JsonObject m_passwords;
+		winrt::Windows::Data::Json::JsonObject m_userDatas;
+		winrt::Windows::Foundation::Collections::IObservableVector<bikabika::KeywordBox> m_suggestions = winrt::single_threaded_observable_vector<bikabika::KeywordBox>();
+		winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::UserBlock> m_loginUsers = winrt::single_threaded_observable_vector<BikaClient::Blocks::UserBlock>();
+
 		BikaClient::BikaHttpClient m_bikaClient;
 		BikaClient::Blocks::UserBlock m_user{nullptr};
 		Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
@@ -82,11 +92,27 @@ namespace winrt::bikabika::implementation
 		void Flyout_Opened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::Foundation::IInspectable const& e);
 		void LogOut_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		void ChangeSignature_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
-
-		void NewPasswrodBox_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		void ChangeSignatureBox_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangePasswordButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 		Windows::Foundation::IAsyncAction ChangeSignatureButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ButtonRegister_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void LoginUserSlogan_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction ButtonChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangeTitle_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void NewTitle_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
+		void ChangeSignatureButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangePasswordButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void ChangeTitleButton_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void BirthdayDatePicker_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void RegisterEmail_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextBoxTextChangingEventArgs const& e);
+		void Border_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+		void StackPanel_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		void LoginGridView_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
+		void Email_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextChangedEventArgs const& e);
+		void Border_PointerPressed_1(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+		void AppBarButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+		Windows::Foundation::IAsyncAction ChangeAvatar_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
 	};
 
 }

@@ -42,6 +42,7 @@
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.Storage.h>
+#include <winrt/Windows.Storage.Pickers.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Web.Syndication.h>
@@ -49,10 +50,10 @@
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-#include <winrt/Windows.UI.Xaml.Data.h>
+#include <winrt/Windows.System.h>
 #include <winrt/BikaClient.h>
 #include <winrt/BikaClient.Blocks.h>
 #include <winrt/BikaClient.Date.h>
 #include <winrt/BikaClient.Utils.h>
 #include <winrt/BikaClient.Responses.h>
+

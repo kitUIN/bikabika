@@ -4,7 +4,6 @@
     <ApplicationDefinition Include="App.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage.xaml" />
     <Page Include="HomePage.xaml">
       <Filter>Pages</Filter>
     </Page>
@@ -23,11 +22,23 @@
     <Page Include="Themes\BikaTheme.xaml">
       <Filter>Themes</Filter>
     </Page>
+    <Page Include="MainPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
+    <Page Include="ComicPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
+    <Page Include="InfoPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
     <Midl Include="Utils\KeywordBox.idl">
+      <Filter>Utils</Filter>
+    </Midl>
+    <Midl Include="Utils\ComicArgs.idl">
       <Filter>Utils</Filter>
     </Midl>
   </ItemGroup>
@@ -39,10 +50,16 @@
     <ClCompile Include="Utils\KeywordBox.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\ComicArgs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Utils\KeywordBox.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ComicArgs.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,6 +346,7 @@
     <Image Include="Assets\Wide310x150Logo.scale-150.png">
       <Filter>Assets\Logo</Filter>
     </Image>
+    <Image Include="Assets\Picacgs\icon_top_comment.png" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -362,7 +380,7 @@
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\zh-cn\Resources.resw">
+    <PRIResource Include="Resources\zh-cn\Resources.resw">
       <Filter>i18n</Filter>
     </PRIResource>
   </ItemGroup>
