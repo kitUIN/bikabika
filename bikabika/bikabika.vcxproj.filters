@@ -41,6 +41,7 @@
     <Midl Include="Utils\ComicArgs.idl">
       <Filter>Utils</Filter>
     </Midl>
+    <Midl Include="CommentView.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Utils\ComicArgs.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CommentView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -62,6 +64,7 @@
     <ClInclude Include="Utils\ComicArgs.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CommentView.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LargeTile.scale-400.png">

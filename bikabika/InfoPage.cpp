@@ -17,15 +17,10 @@ namespace winrt::bikabika::implementation
     {
         InitializeComponent();
     }
-    winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> InfoPage::Episodes()
+    bikabika::CommentView InfoPage::GetCommentView()
     {
-        return m_eps;
+        return m_commentView;
     }
-    winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> InfoPage::Comics()
-    {
-        return m_comics;
-    }
-
 
     Windows::Foundation::IAsyncAction InfoPage::Comment(int32_t const& page)
     {
@@ -41,14 +36,14 @@ namespace winrt::bikabika::implementation
                 m_isTop = true;
                 for (auto x : res.TopComments())
                 {
-                    m_comments.Append(x);
+                    m_commentView.Comments().Append(x);
                 }
             }
             for (auto y : res.Comments())
             {
-                m_comments.Append(y);
+                m_commentView.Comments().Append(y);
             }
-            BookComments().ItemsSource(box_value(m_comments));
+
             m_commentsPages = res.Pages();
             m_commentsPage = res.Page();
             m_commentsContinue = false;
@@ -75,6 +70,7 @@ namespace winrt::bikabika::implementation
             {
                 m_eps.Append(x);
             }
+            EpisodesListV().ItemsSource(box_value(m_eps));
             co_return res.Pages();
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
@@ -88,10 +84,6 @@ namespace winrt::bikabika::implementation
         co_return 0;
     }
 
-    winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> InfoPage::Tags()
-    {
-        return m_tags;
-    }
     winrt::event_token InfoPage::PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
     {
         return m_propertyChanged.add(handler);
@@ -123,7 +115,7 @@ namespace winrt::bikabika::implementation
             {
                 m_comics.Append(x);
             }
-
+            ComicsGridV().ItemsSource(box_value(m_comics));
 
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
@@ -161,6 +153,7 @@ namespace winrt::bikabika::implementation
             {
                 m_tags.Append(x);
             }
+            TagsContent().ItemsSource(box_value(m_tags));
             auto pages = co_await Eps(1);
             for (uint32_t i = 2; i <= pages; i++)
             {
@@ -284,7 +277,13 @@ void winrt::bikabika::implementation::InfoPage::MainGrid_SizeChanged(winrt::Wind
 }
 void winrt::bikabika::implementation::InfoPage::CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
+
     ToggleThemeTeachingTip1().Title(m_book.Creater().Role());
+    UsersTitle().Text(m_book.Creater().Title());
+	UsersName().Text(m_book.Creater().Name());
+    UsersLevel().Text(m_book.Creater().LevelString());
+    UsersPic().ProfilePicture(m_book.Creater().Thumb().Img());
+    UserInfomation().Text(m_book.Creater().Slogan());
     ToggleThemeTeachingTip1().Target(sender.as<FrameworkElement>());
     ToggleThemeTeachingTip1().IsOpen(true);
 }
@@ -295,7 +294,7 @@ void winrt::bikabika::implementation::InfoPage::ListV_ItemClick(winrt::Windows::
 void winrt::bikabika::implementation::InfoPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
     auto comicBlock = e.ClickedItem().as<BikaClient::Blocks::ComicBlock>();
-    auto container = GridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
+    auto container = ComicsGridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
     auto root = container.ContentTemplateRoot().as<FrameworkElement>();
     auto image = root.FindName(L"ConnectedElement2").as<UIElement>();
     winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
@@ -356,10 +355,46 @@ void winrt::bikabika::implementation::InfoPage::CommentComment_PointerPressed(wi
 }
 
 
-Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::CommentLike_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::CommentLike_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
-    auto comment = sender.as<StackPanel>().Tag().as<winrt::BikaClient::Blocks::CommentBlock>();
-    comment.IsLiked().Bool(!comment.IsLiked().Bool());
+    auto stack = sender.as<Border>().Child().as<StackPanel>();
+    auto like = stack.Children().GetAt(0).as<Grid>().Children().GetAt(1).as<FontIcon>();
+    auto likeCount = stack.Children().GetAt(1).as<TextBlock>();
+    if (like.Visibility() == Visibility::Collapsed)
+    {
+        like.Visibility(Visibility::Visible);
+    }
+    else like.Visibility(Visibility::Collapsed);
+    auto comment = sender.as<Border>().Tag().as<BikaClient::Blocks::CommentBlock>();
+    auto res = co_await rootPage.HttpClient().LikeComments(comment.ID());
+    if (res.Code() == 200)
+    {
+        if (like.Visibility() == Visibility::Visible)
+        {
+            likeCount.Text(to_hstring(comment.LikesCount() + 1));
+            rootPage.InfoBarMessageShow(resourceLoader.GetString(L"BlockLike/Text"), resourceLoader.GetString(L"Message/Book/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+        }
+        else
+        {
+            likeCount.Text(to_hstring(comment.LikesCount() - 1));
+            rootPage.InfoBarMessageShow(resourceLoader.GetString(L"Message/Like/Cancel"), resourceLoader.GetString(L"Message/Book/Success"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Success);
+        }
+    }
+    else {
+        if (like.Visibility() == Visibility::Collapsed)
+        {
+            like.Visibility(Visibility::Visible);
+        }
+        else like.Visibility(Visibility::Collapsed);
+        if (like.Visibility() == Visibility::Visible)
+        {
+            rootPage.InfoBarMessageShow(resourceLoader.GetString(L"BlockLike/Text"), resourceLoader.GetString(L"Message/Book/Fail"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Error);
+        }
+        else
+        {
+            rootPage.InfoBarMessageShow(resourceLoader.GetString(L"Message/Like/Cancel"), resourceLoader.GetString(L"Message/Book/Fail"), Microsoft::UI::Xaml::Controls::InfoBarSeverity::Error);
+        }
+    }
 }
 Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e)
 {
@@ -372,4 +407,18 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::Sc
         }
     }
 
+}
+
+void winrt::bikabika::implementation::InfoPage::PersonPicture_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+{
+    auto comment = sender.as<PersonPicture>().Parent().as<Grid>().Children().GetAt(4).as<Grid>().Children().GetAt(0).as<StackPanel>().Children().GetAt(0).as<Border>().Tag().as<BikaClient::Blocks::CommentBlock>();
+
+    ToggleThemeTeachingTip1().Title(comment.User().Role());
+    UsersTitle().Text(comment.User().Title());
+    UsersName().Text(comment.User().Name());
+    UsersLevel().Text(comment.User().LevelString());
+    UsersPic().ProfilePicture(comment.User().Thumb().Img());
+    UserInfomation().Text(comment.User().Slogan());
+    ToggleThemeTeachingTip1().Target(sender.as<FrameworkElement>());
+    ToggleThemeTeachingTip1().IsOpen(true);
 }

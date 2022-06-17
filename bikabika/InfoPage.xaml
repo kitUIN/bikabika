@@ -283,7 +283,7 @@
                         BorderThickness="1.5"
                         CornerRadius="10"
                         Opacity="0.9">
-                        <muxc:ItemsRepeater x:Name="imageContent" ItemsSource="{x:Bind Tags, Mode=OneWay}">
+                        <muxc:ItemsRepeater x:Name="TagsContent">
                             <muxc:ItemsRepeater.Layout>
                                 <muxc:FlowLayout
                                     MinColumnSpacing="7"
@@ -325,7 +325,7 @@
                                 IsTextSelectionEnabled="True"
                                 Text="{x:Bind Book.Description, Mode=OneWay}"
                                 TextWrapping="Wrap" />
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" MinWidth="500">
                                 <Border
                                     x:Name="CreaterBorder"
                                     Padding="10"
@@ -486,7 +486,7 @@
                         BorderThickness="1.5"
                         CornerRadius="10"
                         Opacity="0.9">
-                        <muxc:ItemsRepeater x:Name="ListV" ItemsSource="{x:Bind Episodes, Mode=OneWay}">
+                        <muxc:ItemsRepeater x:Name="EpisodesListV">
                             <muxc:ItemsRepeater.Layout>
                                 <muxc:FlowLayout
                                     MinColumnSpacing="7"
@@ -504,7 +504,10 @@
                         </muxc:ItemsRepeater>
                     </Border>
                 </StackPanel>
-                <muxc:TeachingTip x:Name="ToggleThemeTeachingTip1" Background="{ThemeResource SystemTipAcrylicAccentColor}">
+                <muxc:TeachingTip
+                    x:Name="ToggleThemeTeachingTip1"
+                    Background="{ThemeResource SystemTipAcrylicAccentColor}"
+                    PreferredPlacement="Auto">
                     <muxc:TeachingTip.Content>
                         <StackPanel Margin="0,6,0,0">
                             <StackPanel Orientation="Horizontal">
@@ -525,19 +528,13 @@
                                         FontWeight="Bold"
                                         Foreground="{StaticResource SystemAccentColorDark2}"
                                         PointerPressed="UsersName_PointerPressed"
-                                        Text="{x:Bind Book.Creater.Name, Mode=OneWay}"
-                                        TextWrapping="Wrap">
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip x:Uid="AuthorTip" />
-                                        </ToolTipService.ToolTip>
-                                    </TextBlock>
+                                        TextWrapping="Wrap" />
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
                                             x:Name="UsersLevel"
                                             VerticalAlignment="Center"
                                             FontSize="13"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind Book.Creater.LevelString, Mode=OneWay}" />
+                                            IsTextSelectionEnabled="True" />
                                         <Border
                                             Margin="10,0,0,0"
                                             Padding="6,3,6,3"
@@ -550,8 +547,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
-                                                IsTextSelectionEnabled="True"
-                                                Text="{x:Bind Book.Creater.Title, Mode=OneWay}" />
+                                                IsTextSelectionEnabled="True" />
                                         </Border>
 
                                     </StackPanel>
@@ -562,7 +558,6 @@
                                 x:Name="UserInfomation"
                                 Margin="0,6,0,0"
                                 IsTextSelectionEnabled="True"
-                                Text="{x:Bind Book.Creater.Slogan, Mode=OneWay}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </muxc:TeachingTip.Content>
@@ -584,11 +579,10 @@
             <Pivot>
                 <PivotItem x:Uid="BlockRecommend">
                     <GridView
-                        x:Name="GridV"
+                        x:Name="ComicsGridV"
                         HorizontalAlignment="Center"
                         IsItemClickEnabled="True"
                         ItemClick="GridV_ItemClick"
-                        ItemsSource="{x:Bind Comics, Mode=OneWay}"
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         SelectionMode="None">
                         <GridView.Transitions>
@@ -781,7 +775,7 @@
                                 Padding="5,0,5,0"
                                 VerticalScrollBarVisibility="Hidden"
                                 ViewChanged="ScrollViewer_ViewChanged">
-                                <muxc:ItemsRepeater x:Name="BookComments">
+                                <muxc:ItemsRepeater x:Name="BookComments" ItemsSource="{x:Bind GetCommentView.Comments}">
                                     <muxc:ItemsRepeater.ItemTemplate>
                                         <DataTemplate x:DataType="blocks:CommentBlock">
                                             <Border
@@ -809,6 +803,7 @@
                                                         Height="48"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
+                                                        PointerPressed="PersonPicture_PointerPressed"
                                                         ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
 
                                                     <StackPanel
@@ -873,7 +868,6 @@
                                                             VerticalAlignment="Center"
                                                             Orientation="Horizontal">
                                                             <Border
-                                                                x:Name="CommentLike"
                                                                 Padding="4"
                                                                 VerticalAlignment="Center"
                                                                 Background="Transparent"
@@ -894,13 +888,14 @@
                                                                             FontSize="14"
                                                                             Foreground="{ThemeResource SystemAccentColorDark3}"
                                                                             Glyph="&#xEB52;"
-                                                                            Visibility="{x:Bind IsLiked.Visibility, Mode=OneWay}" />
+                                                                            Visibility="{x:Bind IsLiked.Visibility, Mode=TwoWay}" />
                                                                     </Grid>
                                                                     <TextBlock
+                                                                        x:Name="CommentLikesCount"
                                                                         Margin="3,0,0,0"
                                                                         VerticalAlignment="Center"
                                                                         FontSize="16"
-                                                                        Text="{x:Bind LikesCount, Mode=OneWay}" />
+                                                                        Text="{x:Bind LikesCount, Mode=TwoWay}" />
                                                                 </StackPanel>
                                                             </Border>
 
