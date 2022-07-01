@@ -769,4 +769,8 @@
     <value>发射</value>
     <comment>按钮:评论</comment>
   </data>
+  <data name="Keyword.Reply" xml:space="preserve">
+    <value>回复</value>
+    <comment>关键字:回复</comment>
+  </data>
 </root>

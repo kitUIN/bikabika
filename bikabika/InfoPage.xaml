@@ -10,7 +10,137 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     mc:Ignorable="d">
     <Page.Resources>
+        <DataTemplate x:Key="ReplyCommentTemplate" x:DataType="blocks:CommentBlock">
+            <Border
+                Margin="0,5,0,0"
+                Padding="3"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1.5"
+                CornerRadius="10"
+                Opacity="0.9">
+                <Grid Width="350">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <PersonPicture
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Width="48"
+                        Height="48"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        PointerPressed="PersonPicture_PointerPressed"
+                        ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
 
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Vertical">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{ThemeResource SystemAccentColorDark2}"
+                            Text="{x:Bind User.Name, Mode=OneWay}" />
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Text="{x:Bind User.LevelString, Mode=OneWay}" />
+                            <Border
+                                Margin="10,0,0,0"
+                                Padding="6,3,6,3"
+                                VerticalAlignment="Center"
+                                Background="#ffb401"
+                                CornerRadius="12">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind User.Title, Mode=OneWay}" />
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="17"
+                        IsTextSelectionEnabled="True"
+                        Text="{x:Bind Content, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+                    <Image
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Width="55"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Source="Assets/Picacgs/icon_top_comment.png"
+                        Visibility="{x:Bind IsTop.Visibility, Mode=OneWay}" />
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <Border
+                                Padding="4"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                CornerRadius="5"
+                                Opacity=".5"
+                                PointerEntered="CommentLike_PointerEntered"
+                                PointerExited="CommentLike_PointerExited"
+                                PointerPressed="CommentLike_PointerPressed"
+                                Tag="{x:Bind}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <FontIcon
+                                            FontFamily="Segoe MDL2 Assets"
+                                            FontSize="14"
+                                            Glyph="&#xEB51;" />
+                                        <FontIcon
+                                            FontFamily="Segoe MDL2 Assets"
+                                            FontSize="14"
+                                            Foreground="{ThemeResource SystemAccentColorDark3}"
+                                            Glyph="&#xEB52;"
+                                            Visibility="{x:Bind IsLiked.Visibility, Mode=TwoWay}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Margin="3,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{x:Bind LikesCount, Mode=TwoWay}" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{x:Bind CreatedAt.GetDateTime, Mode=OneWay}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
         <Style x:Key="TagStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource SystemComicFinishAccentColor}" />
             <Setter Property="Foreground" Value="{ThemeResource SystemAccentColorDark1}" />
@@ -776,162 +906,185 @@
                                 VerticalScrollBarVisibility="Hidden"
                                 ViewChanged="ScrollViewer_ViewChanged">
                                 <muxc:ItemsRepeater x:Name="BookComments" ItemsSource="{x:Bind GetCommentView.Comments}">
+                                    <muxc:ItemsRepeater.Transitions>
+                                        <TransitionCollection>
+                                            <EntranceThemeTransition IsStaggeringEnabled="True" />
+                                        </TransitionCollection>
+                                    </muxc:ItemsRepeater.Transitions>
                                     <muxc:ItemsRepeater.ItemTemplate>
                                         <DataTemplate x:DataType="blocks:CommentBlock">
-                                            <Border
-                                                Margin="0,10,0,0"
-                                                Padding="3"
-                                                Background="{ThemeResource LayerFillColorDefaultBrush}"
-                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                                BorderThickness="1.5"
-                                                CornerRadius="10"
-                                                Opacity="0.9">
-                                                <Grid Width="410">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="60" />
-                                                        <RowDefinition Height="*" />
-                                                        <RowDefinition Height="40" />
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="56" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <PersonPicture
-                                                        Grid.Row="0"
-                                                        Grid.Column="0"
-                                                        Width="48"
-                                                        Height="48"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        PointerPressed="PersonPicture_PointerPressed"
-                                                        ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
-
-                                                    <StackPanel
-                                                        Grid.Row="0"
-                                                        Grid.Column="1"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        Orientation="Vertical">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Center"
-                                                            FontSize="16"
-                                                            FontWeight="Bold"
-                                                            Foreground="{ThemeResource SystemAccentColorDark2}"
-                                                            Text="{x:Bind User.Name, Mode=OneWay}" />
-                                                        <StackPanel
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Center"
-                                                            Orientation="Horizontal">
-                                                            <TextBlock
-                                                                VerticalAlignment="Center"
-                                                                FontSize="15"
-                                                                Text="{x:Bind User.LevelString, Mode=OneWay}" />
-                                                            <Border
-                                                                Margin="10,0,0,0"
-                                                                Padding="6,3,6,3"
-                                                                VerticalAlignment="Center"
-                                                                Background="#ffb401"
-                                                                CornerRadius="12">
-                                                                <TextBlock
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalAlignment="Center"
-                                                                    FontSize="12"
-                                                                    IsTextSelectionEnabled="True"
-                                                                    Text="{x:Bind User.Title, Mode=OneWay}" />
-                                                            </Border>
-                                                        </StackPanel>
-                                                    </StackPanel>
-                                                    <TextBlock
-                                                        Grid.Row="1"
-                                                        Grid.Column="1"
-                                                        FontSize="17"
-                                                        IsTextSelectionEnabled="True"
-                                                        Text="{x:Bind Content, Mode=OneWay}"
-                                                        TextWrapping="Wrap" />
-                                                    <Image
-                                                        Grid.Row="2"
-                                                        Grid.Column="0"
-                                                        Width="55"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Source="Assets/Picacgs/icon_top_comment.png"
-                                                        Visibility="{x:Bind IsTop.Visibility, Mode=OneWay}" />
-                                                    <Grid Grid.Row="2" Grid.Column="1">
+                                            <StackPanel>
+                                                <Border
+                                                    Margin="0,10,0,0"
+                                                    Padding="3"
+                                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                    BorderThickness="1.5"
+                                                    CornerRadius="10"
+                                                    Opacity="0.9">
+                                                    <Grid Width="410">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="60" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="40" />
+                                                        </Grid.RowDefinitions>
                                                         <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="56" />
                                                             <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="150" />
                                                         </Grid.ColumnDefinitions>
-                                                        <StackPanel
+                                                        <PersonPicture
+                                                            Grid.Row="0"
                                                             Grid.Column="0"
+                                                            Width="48"
+                                                            Height="48"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Center"
-                                                            Orientation="Horizontal">
-                                                            <Border
-                                                                Padding="4"
+                                                            PointerPressed="PersonPicture_PointerPressed"
+                                                            ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <StackPanel
+                                                                HorizontalAlignment="Left"
                                                                 VerticalAlignment="Center"
-                                                                Background="Transparent"
-                                                                CornerRadius="5"
-                                                                Opacity=".5"
-                                                                PointerEntered="CommentLike_PointerEntered"
-                                                                PointerExited="CommentLike_PointerExited"
-                                                                PointerPressed="CommentLike_PointerPressed"
-                                                                Tag="{x:Bind}">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <Grid>
-                                                                        <FontIcon
-                                                                            FontFamily="Segoe MDL2 Assets"
-                                                                            FontSize="14"
-                                                                            Glyph="&#xEB51;" />
-                                                                        <FontIcon
-                                                                            FontFamily="Segoe MDL2 Assets"
-                                                                            FontSize="14"
-                                                                            Foreground="{ThemeResource SystemAccentColorDark3}"
-                                                                            Glyph="&#xEB52;"
-                                                                            Visibility="{x:Bind IsLiked.Visibility, Mode=TwoWay}" />
-                                                                    </Grid>
+                                                                Orientation="Vertical">
+                                                                <TextBlock
+                                                                    HorizontalAlignment="Left"
+                                                                    VerticalAlignment="Center"
+                                                                    FontSize="16"
+                                                                    FontWeight="Bold"
+                                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                                    Text="{x:Bind User.Name, Mode=OneWay}" />
+                                                                <StackPanel
+                                                                    HorizontalAlignment="Left"
+                                                                    VerticalAlignment="Center"
+                                                                    Orientation="Horizontal">
                                                                     <TextBlock
-                                                                        x:Name="CommentLikesCount"
-                                                                        Margin="3,0,0,0"
                                                                         VerticalAlignment="Center"
-                                                                        FontSize="16"
-                                                                        Text="{x:Bind LikesCount, Mode=TwoWay}" />
-                                                                </StackPanel>
-                                                            </Border>
-
-                                                            <Border
-                                                                x:Name="CommentComment"
-                                                                Margin="10,0,0,0"
-                                                                Padding="4"
-                                                                VerticalAlignment="Center"
-                                                                Background="Transparent"
-                                                                CornerRadius="5"
-                                                                Opacity=".5"
-                                                                PointerEntered="CommentLike_PointerEntered"
-                                                                PointerExited="CommentLike_PointerExited"
-                                                                PointerPressed="CommentComment_PointerPressed">
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <FontIcon
-                                                                        FontFamily="Segoe MDL2 Assets"
-                                                                        FontSize="14"
-                                                                        Glyph="&#xE8BD;" />
-                                                                    <TextBlock
-                                                                        Margin="3,0,0,0"
+                                                                        FontSize="15"
+                                                                        Text="{x:Bind User.LevelString, Mode=OneWay}" />
+                                                                    <Border
+                                                                        Margin="10,0,0,0"
+                                                                        Padding="6,3,6,3"
                                                                         VerticalAlignment="Center"
-                                                                        FontSize="16"
-                                                                        Text="{x:Bind CommentsCount, Mode=OneWay}" />
+                                                                        Background="#ffb401"
+                                                                        CornerRadius="12">
+                                                                        <TextBlock
+                                                                            HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="12"
+                                                                            IsTextSelectionEnabled="True"
+                                                                            Text="{x:Bind User.Title, Mode=OneWay}" />
+                                                                    </Border>
                                                                 </StackPanel>
-                                                            </Border>
-                                                        </StackPanel>
+                                                            </StackPanel>
+                                                            <muxc:InfoBadge
+                                                                Margin="0,10,10,0"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Top"
+                                                                Style="{StaticResource AttentionValueInfoBadgeStyle}"
+                                                                Value="{x:Bind Order, Mode=OneWay}" />
+                                                        </Grid>
                                                         <TextBlock
+                                                            Grid.Row="1"
                                                             Grid.Column="1"
-                                                            HorizontalAlignment="Right"
+                                                            FontSize="17"
+                                                            IsTextSelectionEnabled="True"
+                                                            Text="{x:Bind Content, Mode=OneWay}"
+                                                            TextWrapping="Wrap" />
+                                                        <Image
+                                                            Grid.Row="2"
+                                                            Grid.Column="0"
+                                                            Width="55"
+                                                            HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            FontSize="14"
-                                                            Text="{x:Bind CreatedAt.GetDateTime, Mode=OneWay}" />
+                                                            Source="Assets/Picacgs/icon_top_comment.png"
+                                                            Visibility="{x:Bind IsTop.Visibility, Mode=OneWay}" />
+                                                        <Grid Grid.Row="2" Grid.Column="1">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="150" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel
+                                                                Grid.Column="0"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Orientation="Horizontal">
+                                                                <Border
+                                                                    Padding="4"
+                                                                    VerticalAlignment="Center"
+                                                                    Background="Transparent"
+                                                                    CornerRadius="5"
+                                                                    Opacity=".5"
+                                                                    PointerEntered="CommentLike_PointerEntered"
+                                                                    PointerExited="CommentLike_PointerExited"
+                                                                    PointerPressed="CommentLike_PointerPressed"
+                                                                    Tag="{x:Bind}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Grid>
+                                                                            <FontIcon
+                                                                                FontFamily="Segoe MDL2 Assets"
+                                                                                FontSize="14"
+                                                                                Glyph="&#xEB51;" />
+                                                                            <FontIcon
+                                                                                FontFamily="Segoe MDL2 Assets"
+                                                                                FontSize="14"
+                                                                                Foreground="{ThemeResource SystemAccentColorDark3}"
+                                                                                Glyph="&#xEB52;"
+                                                                                Visibility="{x:Bind IsLiked.Visibility, Mode=TwoWay}" />
+                                                                        </Grid>
+                                                                        <TextBlock
+                                                                            x:Name="CommentLikesCount"
+                                                                            Margin="3,0,0,0"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="16"
+                                                                            Text="{x:Bind LikesCount, Mode=TwoWay}" />
+                                                                    </StackPanel>
+                                                                </Border>
+
+                                                                <Border
+                                                                    Margin="10,0,0,0"
+                                                                    Padding="4"
+                                                                    VerticalAlignment="Center"
+                                                                    Background="Transparent"
+                                                                    CornerRadius="5"
+                                                                    Opacity=".5"
+                                                                    PointerEntered="CommentLike_PointerEntered"
+                                                                    PointerExited="CommentLike_PointerExited"
+                                                                    PointerPressed="CommentComment_PointerPressed"
+                                                                    Tag="{x:Bind}">
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <FontIcon
+                                                                            FontFamily="Segoe MDL2 Assets"
+                                                                            FontSize="14"
+                                                                            Glyph="&#xE8BD;" />
+                                                                        <TextBlock
+                                                                            Margin="3,0,0,0"
+                                                                            VerticalAlignment="Center"
+                                                                            FontSize="16"
+                                                                            Text="{x:Bind CommentsCount, Mode=OneWay}" />
+                                                                    </StackPanel>
+                                                                </Border>
+                                                            </StackPanel>
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Text="{x:Bind CreatedAt.GetDateTime, Mode=OneWay}" />
+                                                        </Grid>
+
                                                     </Grid>
-                                                </Grid>
-                                            </Border>
+                                                </Border>
+                                                <muxc:ItemsRepeater
+                                                    Margin="40,0,0,0"
+                                                    ItemTemplate="{StaticResource ReplyCommentTemplate}"
+                                                    ItemsSource="{x:Bind ReplyComments, Mode=TwoWay}">
+                                                    <muxc:ItemsRepeater.Transitions>
+                                                        <TransitionCollection>
+                                                            <EntranceThemeTransition IsStaggeringEnabled="True" />
+                                                        </TransitionCollection>
+                                                    </muxc:ItemsRepeater.Transitions>
+                                                </muxc:ItemsRepeater>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </muxc:ItemsRepeater.ItemTemplate>
                                 </muxc:ItemsRepeater>
@@ -955,13 +1108,28 @@
                                         Grid.Column="0"
                                         Height="32"
                                         Margin="5,0,0,0" />
-                                    <TextBox Grid.Column="1" Margin="5,0,0,0" />
+                                    <TextBox
+                                        x:Name="SendContent"
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0" />
                                     <Button
                                         x:Uid="ButtonSend"
                                         Grid.Column="2"
-                                        Margin="10,0,0,0" />
+                                        Margin="10,0,0,0"
+                                        Click="ButtonSend_Click" />
                                 </Grid>
                             </Border>
+                            <muxc:InfoBar
+                                x:Name="InfoReply"
+                                Margin="0,0,0,5"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                FontSize="13"
+                                FontWeight="Bold"
+                                Foreground="{ThemeResource SystemAccentColorDark2}"
+                                IsIconVisible="True"
+                                IsOpen="False"
+                                Severity="Informational" />
                         </Grid>
                     </PivotItem.Content>
                 </PivotItem>

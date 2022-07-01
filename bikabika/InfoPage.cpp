@@ -229,6 +229,11 @@ Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::Fav
     }
 
 }
+/// <summary>
+/// 标签点击
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::TagButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
     auto text = sender.as<Button>().Content().as<hstring>();
@@ -246,6 +251,11 @@ void winrt::bikabika::implementation::InfoPage::Title_PointerPressed(winrt::Wind
 {
 
 }
+/// <summary>
+/// 点击搜索用户
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::UsersName_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     PointerPoint currentPoint = e.GetCurrentPoint(NULL);
@@ -275,6 +285,11 @@ void winrt::bikabika::implementation::InfoPage::MainGrid_SizeChanged(winrt::Wind
 {
 
 }
+/// <summary>
+/// 用户详情
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::CreaterBorder_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
 
@@ -287,10 +302,12 @@ void winrt::bikabika::implementation::InfoPage::CreaterBorder_PointerPressed(win
     ToggleThemeTeachingTip1().Target(sender.as<FrameworkElement>());
     ToggleThemeTeachingTip1().IsOpen(true);
 }
-void winrt::bikabika::implementation::InfoPage::ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
-{
 
-}
+/// <summary>
+/// 大家都在看点击跳转
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
     auto comicBlock = e.ClickedItem().as<BikaClient::Blocks::ComicBlock>();
@@ -304,57 +321,79 @@ void winrt::bikabika::implementation::InfoPage::GridV_ItemClick(winrt::Windows::
     frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
     rootPage.CreateNewTab(frame, comicBlock.Title(), symbol);
 }
-
+/// <summary>
+/// 看漫画
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
     Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
     hstring text = sender.as<Button>().Content().as<hstring>();
-    if (historys.Values().HasKey(L"Search"))
-    {
-        uint32_t i;
-        bool f = false;
-        JsonArray searchHistorys = Windows::Data::Json::JsonArray::Parse(historys.Values().Lookup(L"Search").as<hstring>());
-        for (i = 0; i < searchHistorys.Size(); i++)
-        {
-            if (text == searchHistorys.GetStringAt(i))
-            {
-                f = true;
-                break;
-            }
-        }
-        if (f)
-        {
-            searchHistorys.RemoveAt(i);
-        }
-        searchHistorys.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
-        historys.Values().Insert(L"Search", box_value(searchHistorys.Stringify()));
-    }
-    else {
-        Windows::Data::Json::JsonArray json;
-        json.InsertAt(0, Windows::Data::Json::JsonValue::CreateStringValue(text));
-        historys.Values().Insert(L"Search", box_value(json.Stringify()));
-    }
 }
 
-
+/// <summary>
+/// 鼠标进入评论和爱心的响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::CommentLike_PointerEntered(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     sender.as<Border>().Background(Media::SolidColorBrush{ Windows::UI::Colors::LightGray() });
 }
 
-
+/// <summary>
+/// 鼠标离开评论和爱心的响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::CommentLike_PointerExited(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     sender.as<Border>().Background(Media::SolidColorBrush{ Windows::UI::Colors::Transparent() });
 }
 
-
-void winrt::bikabika::implementation::InfoPage::CommentComment_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+/// <summary>
+/// 展开评论的评论
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::CommentComment_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
+    auto border = sender.as<Border>();
+    auto block = border.Tag().as<BikaClient::Blocks::CommentBlock>();
+    InfoReply().Title(resourceLoader.GetString(L"Keyword/Reply") + L":" + block.User().Name());
+    InfoReply().Content(box_value(block.Content()));
+    m_reply = block.ID();
+    InfoReply().IsOpen(true);
+    if (block.CommentsCount() > 0)
+    {
+        if (block.ReplyComments().Size() >0)
+        {
+            block.ReplyComments().Clear();
+            InfoReply().IsOpen(false);
+        }
+        else
+        {
+            BikaClient::Responses::CommentsResponse res = co_await rootPage.HttpClient().GetReplyComment(block.ID(), 1);
+            if (res.Code() == 200)
+            {
+                for (auto x : res.Comments())
+                {
+                    block.ReplyComments().Append(x);
+                }
+            }
+        }
+    }
 
 }
 
-
+/// <summary>
+/// 评论的爱心
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
 Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::CommentLike_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     auto stack = sender.as<Border>().Child().as<StackPanel>();
@@ -396,6 +435,12 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::Co
         }
     }
 }
+/// <summary>
+/// 评论的自动加载控制
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
 Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e)
 {
     auto sv = sender.as<winrt::Windows::UI::Xaml::Controls::ScrollViewer>();
@@ -403,12 +448,17 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::Sc
         if (m_commentsPage < m_commentsPages && !m_commentsContinue)
         {
             m_commentsContinue = true;
+
             co_await Comment(m_commentsPage + 1);
         }
     }
 
 }
-
+/// <summary>
+/// 用户点击详细
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::PersonPicture_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
     auto comment = sender.as<PersonPicture>().Parent().as<Grid>().Children().GetAt(4).as<Grid>().Children().GetAt(0).as<StackPanel>().Children().GetAt(0).as<Border>().Tag().as<BikaClient::Blocks::CommentBlock>();
@@ -421,4 +471,26 @@ void winrt::bikabika::implementation::InfoPage::PersonPicture_PointerPressed(win
     UserInfomation().Text(comment.User().Slogan());
     ToggleThemeTeachingTip1().Target(sender.as<FrameworkElement>());
     ToggleThemeTeachingTip1().IsOpen(true);
+}
+
+/// <summary>
+/// 发送评论
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::InfoPage::ButtonSend_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    auto text = SendContent().Text();
+    SendContent().Text(L"");
+    if (InfoReply().IsOpen())
+    {
+        auto res = co_await rootPage.HttpClient().ReplyComment(m_reply, text);
+    }
+    else
+    {
+        auto res = co_await rootPage.HttpClient().SendComments(m_id, text);
+    }
+    m_isTop = false;
+    m_commentView.Comments().Clear();
+    co_await Comment(1);
 }
