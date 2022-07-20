@@ -1,12 +1,11 @@
+import "CommentView.idl";
 namespace bikabika
 {
     [default_interface]
     runtimeclass InfoPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         InfoPage();
-        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.TagBlock> Tags{ get; };
-        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.EpisodeBlock> Episodes{ get; };
-        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.ComicBlock> Comics{ get; };
+        bikabika.CommentView GetCommentView{ get; };
         BikaClient.Blocks.BookBlock Book{ get; };
         Windows.UI.Xaml.Controls.Border DesBorder{ get; };
     }

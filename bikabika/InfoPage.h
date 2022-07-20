@@ -1,15 +1,13 @@
 ﻿#pragma once
 
 #include "InfoPage.g.h"
-
+#include "CommentView.h"
 namespace winrt::bikabika::implementation
 {
     struct InfoPage : InfoPageT<InfoPage>
     {
         InfoPage();
-        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> Tags();
-        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> Episodes();
-        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> Comics();
+        bikabika::CommentView GetCommentView();
 
         Windows::Foundation::IAsyncAction Comment(int32_t const& page);
         Windows::Foundation::IAsyncAction Recommend();
@@ -27,13 +25,15 @@ namespace winrt::bikabika::implementation
         Windows::ApplicationModel::Resources::ResourceLoader resourceLoader{ Windows::ApplicationModel::Resources::ResourceLoader::GetForCurrentView() };
         BikaClient::Blocks::BookBlock m_book;
         hstring m_id=L"";
+        hstring m_reply =L"";
         bool m_isTop = false;
-        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_categories = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
+        int32_t m_commentsPage = 1;
+        int32_t m_commentsPages = 1;
+        bool m_commentsContinue = false;
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_tags = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<BikaClient::Blocks::EpisodeBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::ComicBlock> m_comics = winrt::single_threaded_observable_vector<BikaClient::Blocks::ComicBlock>();
-        winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::CommentBlock> m_comments = winrt::single_threaded_observable_vector<BikaClient::Blocks::CommentBlock>();
-
+        bikabika::CommentView m_commentView;
 
     public:
         Windows::Foundation::IAsyncAction Like_Checked(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
@@ -49,10 +49,14 @@ namespace winrt::bikabika::implementation
         void ListV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
 
         void GridV_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e);
-
+        Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::InfoPage::ScrollViewer_ViewChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ScrollViewerViewChangedEventArgs const& e);
         void Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
         void CommentLike_PointerEntered(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void CommentLike_PointerExited(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        Windows::Foundation::IAsyncAction CommentComment_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        Windows::Foundation::IAsyncAction  CommentLike_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void PersonPicture_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        Windows::Foundation::IAsyncAction ButtonSend_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
     };
 }
 

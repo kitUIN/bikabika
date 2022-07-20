@@ -1,0 +1,8 @@
+namespace bikabika
+{
+    runtimeclass CommentView
+    {
+        CommentView();
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.CommentBlock> Comments{ get; };
+    }
+}

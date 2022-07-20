@@ -72,7 +72,7 @@
 
                     <!--  Override system generated accent colors  -->
                     <Color x:Key="SystemFrameAccentColor">#FF333333</Color>
-                    <Color x:Key="SystemTabAccentColor">#FF282828</Color>
+                    <Color x:Key="SystemTabAccentColor">#FF1f1f1f</Color>
                     <Color x:Key="SystemBorderAccentColor">#FF3f3f3f</Color>
                     <Color x:Key="SystemTipAccentColor">#FF333333</Color>
                     <Color x:Key="SystemDesBorderAccentColor">#FF333333</Color>

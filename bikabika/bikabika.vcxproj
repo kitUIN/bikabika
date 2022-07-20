@@ -131,6 +131,7 @@
       <DependentUpon>ComicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="CommentView.h" />
     <ClInclude Include="DownloadPage.h">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -304,6 +305,7 @@
       <DependentUpon>ComicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="CommentView.cpp" />
     <ClCompile Include="DownloadPage.cpp">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -349,6 +351,7 @@
       <DependentUpon>ComicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="CommentView.idl" />
     <Midl Include="DownloadPage.idl">
       <DependentUpon>DownloadPage.xaml</DependentUpon>
       <SubType>Code</SubType>
