@@ -1,0 +1,11 @@
+namespace bikabika
+{
+    [default_interface]
+    runtimeclass BikaImage : Windows.UI.Xaml.Controls.UserControl
+    {
+        BikaImage();
+        static Windows.UI.Xaml.DependencyProperty ImageProperty{ get; };
+        Boolean ImageLoaded;
+        BikaClient.Blocks.ImageBlock ImgBlock;
+    }
+}
