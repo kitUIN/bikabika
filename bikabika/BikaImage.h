@@ -14,16 +14,20 @@ namespace winrt::bikabika::implementation
 
         winrt::BikaClient::Blocks::ImageBlock ImgBlock();
         void ImgBlock(winrt::BikaClient::Blocks::ImageBlock const& value);
-
+        Windows::UI::Xaml::Media::ImageSource ImgSource();
         static Windows::UI::Xaml::DependencyProperty ImageProperty() { return m_imageProperty; }
-        static void OnBlockChanged(Windows::UI::Xaml::DependencyObject const& d, Windows::UI::Xaml::DependencyPropertyChangedEventArgs const&);
-        Windows::Foundation::IAsyncAction ImgLoad();
-        bool ImageLoaded();
         void ImageLoaded(bool const& value);
+        bool ImageLoaded();
     private:
-        bikabika::MainPage rootPage{ MainPage::Current() };
+
         static Windows::UI::Xaml::DependencyProperty m_imageProperty;
+        winrt::BikaClient::Blocks::ImageBlock m_imgBlock;
         bool m_loaded = false;
+
+    public:
+        void BikaImg_ImageFailed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::ExceptionRoutedEventArgs const& e);
+        Windows::Foundation::IAsyncAction BikaImg_ImageOpened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);
+        void RefreshIcon_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e);
     };
 }
 

@@ -8,6 +8,16 @@
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Image x:Name="BikaImg" />
+        <Image
+            x:Name="BikaImg"
+            ImageFailed="BikaImg_ImageFailed"
+            ImageOpened="BikaImg_ImageOpened" />
+        <SymbolIcon
+            x:Name="RefreshIcon"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            PointerPressed="RefreshIcon_PointerPressed"
+            Symbol="Refresh"
+            Visibility="Collapsed" />
     </Grid>
 </UserControl>

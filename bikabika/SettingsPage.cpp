@@ -150,13 +150,13 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
     if (mode == resourceLoader.GetString(L"Keyword/Flow/Two"))
     {
-
+        rootPage.HttpClient().APPChannel(2);
     }
     else if (mode == resourceLoader.GetString(L"Keyword/Flow/Three"))
     {
-
+        rootPage.HttpClient().APPChannel(3);
     }
-
+    else rootPage.HttpClient().APPChannel(1);
 }
 
 

@@ -5,7 +5,8 @@ namespace bikabika
     {
         BikaImage();
         static Windows.UI.Xaml.DependencyProperty ImageProperty{ get; };
-        Boolean ImageLoaded;
+        Windows.UI.Xaml.Media.ImageSource ImgSource{ get; };
         BikaClient.Blocks.ImageBlock ImgBlock;
+        Boolean ImageLoaded;
     }
 }

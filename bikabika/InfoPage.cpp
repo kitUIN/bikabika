@@ -135,11 +135,8 @@ namespace winrt::bikabika::implementation
         __super::OnNavigatedTo(e);
         UserThumb().ProfilePicture(rootPage.User().Thumb().Img());
         auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
-        if (anim)
-        {
-            Img().Source(img);
-            anim.TryStart(Img());
-        }
+        Img().Source(img);
+        if (anim) anim.TryStart(Img());
         auto res = co_await rootPage.HttpClient().BookInfo(m_id);
         if (res.Code() == -1)
         {
@@ -313,11 +310,13 @@ void winrt::bikabika::implementation::InfoPage::GridV_ItemClick(winrt::Windows::
     auto comicBlock = e.ClickedItem().as<BikaClient::Blocks::ComicBlock>();
     auto container = ComicsGridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
     auto root = container.ContentTemplateRoot().as<FrameworkElement>();
-    auto image = root.FindName(L"ConnectedElement2").as<UIElement>();
-    winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+    FrameworkElement root = container.ContentTemplateRoot().as<FrameworkElement>();
+    bikabika::BikaImage bikaImg = root.FindName(L"ConnectedElement2").as<bikabika::BikaImage>();
+    if (bikaImg.ImageLoaded()) winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", bikaImg.as<UIElement>());
     winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
     winrt::Windows::UI::Xaml::Controls::Frame frame;
     symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::PreviewLink);
+    frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(bikaImg.ImgSource()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
     frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
     rootPage.CreateNewTab(frame, comicBlock.Title(), symbol);
 }
