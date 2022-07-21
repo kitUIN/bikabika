@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -123,6 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BikaImage.h">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ClassificationPage.h">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -166,6 +170,9 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BikaImage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -297,6 +304,10 @@
     <Image Include="Assets\Wide310x150Logo.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BikaImage.cpp">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ClassificationPage.cpp">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -342,6 +353,10 @@
   <ItemGroup>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
+    </Midl>
+    <Midl Include="BikaImage.idl">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Midl>
     <Midl Include="ClassificationPage.idl">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>

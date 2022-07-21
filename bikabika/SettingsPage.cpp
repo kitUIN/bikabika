@@ -18,6 +18,10 @@ using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::UI::ViewManagement;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Pickers;
+using namespace Windows::ApplicationModel::DataTransfer;
+
 namespace winrt::bikabika::implementation
 {
     SettingsPage::SettingsPage()
@@ -34,7 +38,7 @@ namespace winrt::bikabika::implementation
     {
         return m_settingWidth-50;
     }
-    void SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
+    Windows::Foundation::IAsyncAction SettingsPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs const& e)
     {
         __super::OnNavigatedTo(e);
         m_serverFlow = winrt::single_threaded_observable_vector<hstring>({ resourceLoader.GetString(L"Keyword/Flow/One"),resourceLoader.GetString(L"Keyword/Flow/Two"), resourceLoader.GetString(L"Keyword/Flow/Three") });
@@ -57,6 +61,23 @@ namespace winrt::bikabika::implementation
         SettingBikaClientServerFlow().SelectedIndex(rootPage.HttpClient().APPChannel() - 1);
         PackageVersion version = Package::Current().Id().Version();
         SettingVersion().Content(box_value(to_hstring(version.Major) + L"." + to_hstring(version.Minor) + L"." + to_hstring(version.Build)));
+        Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+        if (!settings.Values().HasKey(L"DownloadFolder"))
+        {
+            Windows::Storage::StorageFolder storageFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+            Windows::Storage::StorageFolder downloadFolder  = co_await storageFolder.CreateFolderAsync(L"DownLoads");
+            settings.Values().Insert(L"DownloadFolder", box_value(downloadFolder.Path()));
+        }
+        if (!settings.Values().HasKey(L"CacheFolder"))
+        {
+            Windows::Storage::StorageFolder storageFolder{ Windows::Storage::ApplicationData::Current().LocalFolder() };
+            Windows::Storage::StorageFolder downloadFolder = co_await storageFolder.CreateFolderAsync(L"Cache");
+            settings.Values().Insert(L"CacheFolder", box_value(downloadFolder.Path()));
+        }
+        SettingDownloadButton().Content(settings.Values().Lookup(L"DownloadFolder"));
+        SettingDownloadButtonTip().Content(settings.Values().Lookup(L"DownloadFolder"));
+        SettingCacheButton().Content(settings.Values().Lookup(L"CacheFolder"));
+        SettingCacheButtonTip().Content(settings.Values().Lookup(L"CacheFolder"));
 
     }
     winrt::event_token SettingsPage::PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler)
@@ -129,17 +150,90 @@ void winrt::bikabika::implementation::SettingsPage::SettingBikaClientServerFlow_
     auto mode = sender.as<ComboBox>().SelectedItem().as<hstring>();
     if (mode == resourceLoader.GetString(L"Keyword/Flow/Two"))
     {
-
+        rootPage.HttpClient().APPChannel(2);
     }
     else if (mode == resourceLoader.GetString(L"Keyword/Flow/Three"))
     {
-
+        rootPage.HttpClient().APPChannel(3);
     }
-
+    else rootPage.HttpClient().APPChannel(1);
 }
 
 
 void winrt::bikabika::implementation::SettingsPage::LogButton_Click(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::RoutedEventArgs const& /*e*/)
 {
 
+}
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::SettingsPage::SettingDownloadButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    FolderPicker openPicker;
+    openPicker.ViewMode(PickerViewMode::List);
+    openPicker.SuggestedStartLocation(PickerLocationId::Desktop);
+    StorageFolder folder = co_await openPicker.PickSingleFolderAsync();
+    if (folder != nullptr)
+    {
+        Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+        settings.Values().Insert(L"DownloadFolder", box_value(folder.Path()));
+        SettingDownloadButton().Content(settings.Values().Lookup(L"DownloadFolder"));
+        SettingDownloadButtonTip().Content(settings.Values().Lookup(L"DownloadFolder"));
+    }
+}
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::SettingsPage::SettingCacheButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    FolderPicker openPicker;
+    openPicker.ViewMode(PickerViewMode::List);
+    openPicker.SuggestedStartLocation(PickerLocationId::Desktop);
+    StorageFolder folder = co_await openPicker.PickSingleFolderAsync();
+    if (folder != nullptr)
+    {
+        Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+        settings.Values().Insert(L"CacheFolder", box_value(folder.Path()));
+        SettingCacheButton().Content(settings.Values().Lookup(L"CacheFolder"));
+        SettingCacheButtonTip().Content(settings.Values().Lookup(L"CacheFolder"));
+    }
+}
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::SettingsPage::SettingVersion_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::System::LauncherOptions launcherOptions;
+    launcherOptions.TreatAsUntrusted(true);
+    co_await Windows::System::Launcher::LaunchUriAsync(Windows::Foundation::Uri{ L"https://github.com/kitUIN/bikabika/releases/tag/"+ SettingVersion().Content().as<hstring>()});
+}
+
+
+
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::SettingsPage::FlyoutOpenFolder_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+    Windows::System::LauncherOptions launcherOptions;
+    launcherOptions.TreatAsUntrusted(true);
+    co_await Windows::System::Launcher::LaunchFolderPathAsync(settings.Values().Lookup(L"DownloadFolder").as<hstring>());
+
+}
+Windows::Foundation::IAsyncAction winrt::bikabika::implementation::SettingsPage::FlyoutOpenCacheFolder_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+    Windows::System::LauncherOptions launcherOptions;
+    launcherOptions.TreatAsUntrusted(true);
+    co_await Windows::System::Launcher::LaunchFolderPathAsync(settings.Values().Lookup(L"CacheFolder").as<hstring>());
+
+}
+
+
+void winrt::bikabika::implementation::SettingsPage::FlyoutCopyPath_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+    DataPackage dataPackage = DataPackage();
+    dataPackage.SetText(settings.Values().Lookup(L"DownloadFolder").as<hstring>());
+    Clipboard::SetContentWithOptions(dataPackage, nullptr);
+}
+void winrt::bikabika::implementation::SettingsPage::FlyoutCopyCachePath_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    Windows::Storage::ApplicationDataContainer settings = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Settings", Windows::Storage::ApplicationDataCreateDisposition::Always);
+    DataPackage dataPackage = DataPackage();
+    dataPackage.SetText(settings.Values().Lookup(L"CacheFolder").as<hstring>());
+    Clipboard::SetContentWithOptions(dataPackage, nullptr);
 }

@@ -39,7 +39,7 @@
                                     Height="160"
                                     VerticalAlignment="Center"
                                     CornerRadius="10">
-                                    <Image Name="ConnectedElement2" Source="{x:Bind Thumb.Img, Mode=OneWay}" />
+                                    <local:BikaImage Name="ConnectedElement2" ImgBlock="{x:Bind Thumb, Mode=OneWay}" />
                                 </Border>
                                 <Grid Width="260">
                                     <StackPanel

@@ -90,6 +90,7 @@
                                 Width="120"
                                 Height="120"
                                 ProfilePicture="{x:Bind User.Thumb.Img, Mode=OneWay}" />
+
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Grid>
                                     <TextBlock
