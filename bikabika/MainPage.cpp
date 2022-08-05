@@ -1175,7 +1175,12 @@ void winrt::bikabika::implementation::MainPage::BirthdayDatePicker_Loaded(winrt:
 	GenderComboBox().SelectedIndex(0);
 }
 
-
+/// <summary>
+/// 注册提交按钮
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
+/// <returns></returns>
 Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::MainPage::RegisterButton_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	LoginViewShow(false);
@@ -1270,7 +1275,11 @@ Windows::Foundation::IAsyncAction  winrt::bikabika::implementation::MainPage::Re
 	RegisterButton().Content(box_value(resourceLoader.GetString(L"TipRegister/Content")));
 	RegisterButton().IsEnabled(true);
 }
-
+/// <summary>
+/// 注册用户名检测
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::RegisterEmail_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextBoxTextChangingEventArgs const& e)
 {
 	string str;
@@ -1293,7 +1302,11 @@ void winrt::bikabika::implementation::MainPage::Border_PointerPressed(winrt::Win
 	}
 }
 
-
+/// <summary>
+/// 初始化用户列表
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::StackPanel_Loaded(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
 	if (m_emails.HasKey(L"Last"))
@@ -1350,7 +1363,11 @@ void winrt::bikabika::implementation::MainPage::StackPanel_Loaded(winrt::Windows
 	}
 }
 
-
+/// <summary>
+/// 选择用户响应
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::LoginGridView_ItemClick(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::ItemClickEventArgs const& e)
 {
 	auto user = e.ClickedItem().as<UserBlock>();
@@ -1365,7 +1382,11 @@ void winrt::bikabika::implementation::MainPage::LoginGridView_ItemClick(winrt::W
 	}
 }
 
-
+/// <summary>
+/// 账号名检测与更改
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
 void winrt::bikabika::implementation::MainPage::Email_TextChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::TextChangedEventArgs const& e)
 {
 	JsonArray emailArray = m_emails.GetNamedArray(L"emailArray");
@@ -1429,7 +1450,6 @@ void winrt::bikabika::implementation::MainPage::Email_TextChanged(winrt::Windows
 void winrt::bikabika::implementation::MainPage::Border_PointerPressed_1(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::PointerRoutedEventArgs const& e)
 {
 	PointerPoint currentPoint = e.GetCurrentPoint(NULL);
-
 	PointerPointProperties props = currentPoint.Properties();
 	if (props.IsRightButtonPressed()) {
 		auto flyout = Windows::UI::Xaml::Controls::Primitives::FlyoutBase::GetAttachedFlyout(sender.as<FrameworkElement>());

@@ -1,0 +1,15 @@
+namespace bikabika
+{
+
+runtimeclass PicArgs
+{
+    PicArgs();
+    PicArgs(String bookId, Int32 total, BikaClient.Blocks.EpisodeBlock ep, Int32 order, Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.EpisodeBlock> eps);
+    PicArgs(String bookId, Int32 total, BikaClient.Blocks.EpisodeBlock ep, Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.EpisodeBlock> eps);
+    String BookId;
+    Int32 Total;
+    Int32 Order;
+    BikaClient.Blocks.EpisodeBlock Episode;
+    Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.EpisodeBlock> Episodes;
+}
+}

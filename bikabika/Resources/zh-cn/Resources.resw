@@ -773,4 +773,54 @@
     <value>回复</value>
     <comment>关键字:回复</comment>
   </data>
+  <data name="FlyoutCopyPath.Text" xml:space="preserve">
+    <value>复制目录地址</value>
+    <comment>悬浮菜单:复制目录地址</comment>
+  </data>
+  <data name="FlyoutOpenFolder.Text" xml:space="preserve">
+    <value>打开目录</value>
+    <comment>悬浮菜单:打开目录</comment>
+  </data>
+  <data name="FlyoutSwitchFolder.Text" xml:space="preserve">
+    <value>选择目录</value>
+    <comment>悬浮菜单:选择目录</comment>
+  </data>
+  <data name="SettingCacheFolder.Text" xml:space="preserve">
+    <value>设置缓存目录</value>
+    <comment>设置标题:缓存目录</comment>
+  </data>
+  <data name="SettingDownloadDes.Text" xml:space="preserve">
+    <value>本地下载与缓存相关设置</value>
+    <comment>设置介绍:下载缓存设置</comment>
+  </data>
+  <data name="SettingDownloadFolder.Text" xml:space="preserve">
+    <value>设置下载目录</value>
+    <comment>设置标题:下载目录</comment>
+  </data>
+  <data name="SettingDownloadName.Text" xml:space="preserve">
+    <value>下载与缓存设置</value>
+    <comment>设置标题:下载缓存设置</comment>
+  </data>
+  <data name="BlockEmpty.Text" xml:space="preserve">
+    <value>好像什么都没有欸....</value>
+  </data>
+  <data name="NotOK.Content" xml:space="preserve">
+    <value>这个还没做好</value>
+  </data>
+  <data name="TipDown.ActionButtonContent" xml:space="preserve">
+    <value>下一话</value>
+    <comment>提示框:下一话</comment>
+  </data>
+  <data name="TipDown.CloseButtonContent" xml:space="preserve">
+    <value>取消</value>
+    <comment>提示框:下一话</comment>
+  </data>
+  <data name="TipDown.Subtitle" xml:space="preserve">
+    <value>是否前往下一话</value>
+    <comment>提示框:下一话</comment>
+  </data>
+  <data name="TipDown.Title" xml:space="preserve">
+    <value>您已经阅读完毕</value>
+    <comment>提示框:下一话</comment>
+  </data>
 </root>

@@ -29,6 +29,7 @@ namespace winrt::bikabika::implementation
         bool m_isTop = false;
         int32_t m_commentsPage = 1;
         int32_t m_commentsPages = 1;
+        int32_t m_total = 1;
         bool m_commentsContinue = false;
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::TagBlock> m_tags = winrt::single_threaded_observable_vector<BikaClient::Blocks::TagBlock>();
         winrt::Windows::Foundation::Collections::IObservableVector<BikaClient::Blocks::EpisodeBlock> m_eps = winrt::single_threaded_observable_vector<BikaClient::Blocks::EpisodeBlock>();

@@ -89,7 +89,7 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64|arm|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
@@ -123,6 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BikaImage.h">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ClassificationPage.h">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -142,6 +146,11 @@
     </ClInclude>
     <ClInclude Include="InfoPage.h">
       <DependentUpon>InfoPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="PicArgs.h" />
+    <ClInclude Include="PicPage.h">
+      <DependentUpon>PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="SettingsPage.h">
@@ -166,6 +175,9 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BikaImage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ClassificationPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -182,6 +194,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PicPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsPage.xaml">
@@ -297,6 +312,10 @@
     <Image Include="Assets\Wide310x150Logo.scale-400.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BikaImage.cpp">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ClassificationPage.cpp">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -316,6 +335,11 @@
     </ClCompile>
     <ClCompile Include="InfoPage.cpp">
       <DependentUpon>InfoPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="PicArgs.cpp" />
+    <ClCompile Include="PicPage.cpp">
+      <DependentUpon>PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="SettingsPage.cpp">
@@ -343,6 +367,10 @@
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
+    <Midl Include="BikaImage.idl">
+      <DependentUpon>BikaImage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="ClassificationPage.idl">
       <DependentUpon>ClassificationPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -362,6 +390,11 @@
     </Midl>
     <Midl Include="InfoPage.idl">
       <DependentUpon>InfoPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="PicArgs.idl" />
+    <Midl Include="PicPage.idl">
+      <DependentUpon>PicPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="SettingsPage.idl">
@@ -395,7 +428,7 @@
     <Import Project="..\packages\YY.NuGet.Import.Helper.1.0.0.4\build\native\YY.NuGet.Import.Helper.targets" Condition="Exists('..\packages\YY.NuGet.Import.Helper.1.0.0.4\build\native\YY.NuGet.Import.Helper.targets')" />
     <Import Project="..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets')" />
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="..\packages\BikaClient.0.9.6\build\native\BikaClient.targets" Condition="Exists('..\packages\BikaClient.0.9.6\build\native\BikaClient.targets')" />
+    <Import Project="..\packages\BikaClient.0.9.7\build\native\BikaClient.targets" Condition="Exists('..\packages\BikaClient.0.9.7\build\native\BikaClient.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -408,6 +441,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('..\packages\BikaClient.0.9.6\build\native\BikaClient.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BikaClient.0.9.6\build\native\BikaClient.targets'))" />
+    <Error Condition="!Exists('..\packages\BikaClient.0.9.7\build\native\BikaClient.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BikaClient.0.9.7\build\native\BikaClient.targets'))" />
   </Target>
 </Project>

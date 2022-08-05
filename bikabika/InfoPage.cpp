@@ -68,8 +68,10 @@ namespace winrt::bikabika::implementation
         {
             for (auto x : res.Episodes())
             {
+
                 m_eps.Append(x);
             }
+            m_total = res.Total();
             EpisodesListV().ItemsSource(box_value(m_eps));
             co_return res.Pages();
         }
@@ -110,12 +112,19 @@ namespace winrt::bikabika::implementation
         }
         else if (res.Code() == 200)
         {
-
-            for (auto x : res.Comics())
+            if (res.Comics().Size()>0)
             {
-                m_comics.Append(x);
+                for (auto x : res.Comics())
+                {
+                    m_comics.Append(x);
+                }
+                ComicsGridV().ItemsSource(box_value(m_comics));
             }
-            ComicsGridV().ItemsSource(box_value(m_comics));
+            else
+            {
+                ImageEmpty().Visibility(Visibility::Visible);
+                BlockEmpty().Visibility(Visibility::Visible);
+            }
 
         }
         else if (res.Code() == 401 && res.Error() == L"1005")
@@ -135,11 +144,8 @@ namespace winrt::bikabika::implementation
         __super::OnNavigatedTo(e);
         UserThumb().ProfilePicture(rootPage.User().Thumb().Img());
         auto anim = winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().GetAnimation(L"ForwardConnectedAnimation");
-        if (anim)
-        {
-            Img().Source(img);
-            anim.TryStart(Img());
-        }
+        Img().Source(img);
+        if (anim) anim.TryStart(Img());
         auto res = co_await rootPage.HttpClient().BookInfo(m_id);
         if (res.Code() == -1)
         {
@@ -312,24 +318,32 @@ void winrt::bikabika::implementation::InfoPage::GridV_ItemClick(winrt::Windows::
 {
     auto comicBlock = e.ClickedItem().as<BikaClient::Blocks::ComicBlock>();
     auto container = ComicsGridV().ContainerFromItem(e.ClickedItem()).as<winrt::Windows::UI::Xaml::Controls::GridViewItem>();
-    auto root = container.ContentTemplateRoot().as<FrameworkElement>();
-    auto image = root.FindName(L"ConnectedElement2").as<UIElement>();
-    winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", image);
+    FrameworkElement root = container.ContentTemplateRoot().as<FrameworkElement>();
+    bikabika::BikaImage bikaImg = root.FindName(L"ConnectedElement2").as<bikabika::BikaImage>();
+    if (bikaImg.ImageLoaded()) winrt::Windows::UI::Xaml::Media::Animation::ConnectedAnimationService::GetForCurrentView().PrepareToAnimate(L"ForwardConnectedAnimation", bikaImg.as<UIElement>());
     winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
     winrt::Windows::UI::Xaml::Controls::Frame frame;
     symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::PreviewLink);
+    frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(bikaImg.ImgSource()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
     frame.Navigate(winrt::xaml_typename<bikabika::InfoPage>(), box_value(single_threaded_vector<winrt::Windows::Foundation::IInspectable>({ box_value(root.FindName(L"ConnectedElement2").as<winrt::Windows::UI::Xaml::Controls::Image>().Source()), box_value(bikabika::ComicArgs(comicBlock.ID(),1,1,1)) })), winrt::Windows::UI::Xaml::Media::Animation::SuppressNavigationTransitionInfo());
     rootPage.CreateNewTab(frame, comicBlock.Title(), symbol);
 }
 /// <summary>
-/// 看漫画
+/// 点击漫画话按钮
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
 void winrt::bikabika::implementation::InfoPage::Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
     Windows::Storage::ApplicationDataContainer historys = Windows::Storage::ApplicationData::Current().LocalSettings().CreateContainer(L"Historys", Windows::Storage::ApplicationDataCreateDisposition::Always);
-    hstring text = sender.as<Button>().Content().as<hstring>();
+    auto eps = sender.as<Button>().Tag().as<BikaClient::Blocks::EpisodeBlock>();
+    bikabika::PicArgs picArgs{ m_id,m_total,eps,m_eps };
+    winrt::Microsoft::UI::Xaml::Controls::SymbolIconSource symbol;
+    winrt::Windows::UI::Xaml::Controls::Frame frame;
+    symbol.Symbol(Windows::UI::Xaml::Controls::Symbol::Pictures);
+    frame.Navigate(winrt::xaml_typename<bikabika::PicPage>(), box_value(picArgs));
+    rootPage.CreateNewTab(frame, picArgs.Episode().Title(), symbol);
+
 }
 
 /// <summary>

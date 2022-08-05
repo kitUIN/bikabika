@@ -628,7 +628,8 @@
                                     <Button
                                         Click="Button_Click"
                                         Content="{x:Bind Title, Mode=OneWay}"
-                                        Style="{StaticResource TagStyle}" />
+                                        Style="{StaticResource TagStyle}"
+                                        Tag="{x:Bind}" />
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
                         </muxc:ItemsRepeater>
@@ -706,182 +707,198 @@
             BorderThickness="1.5"
             CornerRadius="10"
             Opacity="0.9">
-            <Pivot>
+            <Pivot x:Name="InfoPivot">
                 <PivotItem x:Uid="BlockRecommend">
-                    <GridView
-                        x:Name="ComicsGridV"
-                        HorizontalAlignment="Center"
-                        IsItemClickEnabled="True"
-                        ItemClick="GridV_ItemClick"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        SelectionMode="None">
-                        <GridView.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition IsStaggeringEnabled="True" />
-                            </TransitionCollection>
-                        </GridView.Transitions>
-                        <GridView.ItemTemplate>
-                            <DataTemplate x:DataType="blocks:ComicBlock">
-                                <StackPanel
-                                    Width="400"
-                                    Height="190"
-                                    Margin="10,0,0,0"
-                                    Orientation="Horizontal">
-                                    <Border
-                                        Width="120"
-                                        Height="160"
-                                        VerticalAlignment="Center"
-                                        CornerRadius="10">
-                                        <Image Name="ConnectedElement2" Source="{x:Bind Thumb.Img, Mode=OneWay}" />
-                                    </Border>
-                                    <Grid Width="260">
-                                        <StackPanel
-                                            Margin="10,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top">
-                                            <StackPanel>
-                                                <TextBlock
-                                                    Width="250"
-                                                    FontSize="17"
-                                                    FontWeight="Bold"
-                                                    MaxLines="3"
-                                                    Text="{x:Bind Title, Mode=OneWay}"
-                                                    TextWrapping="Wrap" />
-                                                <TextBlock
-                                                    FontSize="15"
-                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
-                                                    Text="{x:Bind Author, Mode=OneWay}" />
-                                            </StackPanel>
-                                        </StackPanel>
-                                        <StackPanel
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Bottom"
-                                            Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal">
-                                                <FontIcon
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
-                                                    Glyph="&#xEB52;" />
-                                                <TextBlock
-                                                    Margin="5,0,0,0"
-                                                    FontSize="18"
-                                                    Text="{x:Bind LikesCount, Mode=OneWay}" />
-                                                <FontIcon
-                                                    Margin="10,0,0,0"
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Foreground="{ThemeResource SystemAccentColorDark2}"
-                                                    Glyph="&#xe7b3;" />
-                                                <TextBlock
-                                                    Margin="5,0,0,0"
-                                                    FontSize="18"
-                                                    Text="{x:Bind TotalViews, Mode=OneWay}" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="250"
-                                                    FontSize="13"
-                                                    FontWeight="Black"
-                                                    Foreground="Gray"
-                                                    MaxLines="5"
-                                                    Text="{x:Bind CategoriesString, Mode=OneWay}"
-                                                    TextWrapping="Wrap" />
-                                            </StackPanel>
-                                            <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
-                                                <FontIcon
-                                                    FontFamily="Segoe MDL2 Assets"
-                                                    Foreground="Gray"
-                                                    Glyph="&#xe7b8;" />
-                                                <TextBlock
-                                                    Margin="10,0,0,0"
-                                                    FontSize="18"
-                                                    Foreground="Gray"
-                                                    Text="{x:Bind EpsCount, Mode=OneWay}" />
-                                                <TextBlock
-                                                    FontSize="18"
-                                                    Foreground="Gray"
-                                                    Text="E" />
-                                                <TextBlock
-                                                    Margin="4,0,0,0"
-                                                    FontSize="18"
-                                                    Foreground="Gray"
-                                                    Text="/" />
-                                                <TextBlock
-                                                    Margin="4,0,0,0"
-                                                    FontSize="18"
-                                                    Foreground="Gray"
-                                                    Text="{x:Bind PagesCount, Mode=OneWay}" />
-                                                <TextBlock
-                                                    FontSize="18"
-                                                    Foreground="Gray"
-                                                    Text="P" />
-                                            </StackPanel>
-                                        </StackPanel>
+                    <Grid>
+                        <StackPanel Orientation="Vertical">
+                            <Image
+                                x:Name="ImageEmpty"
+                                Width="400"
+                                Source="ms-appx:///Assets//Picacgs//icon_empty.png"
+                                Visibility="Collapsed" />
+                            <TextBlock
+                                x:Name="BlockEmpty"
+                                x:Uid="BlockEmpty"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="18"
+                                Visibility="Collapsed" />
+                        </StackPanel>
+                        <GridView
+                            x:Name="ComicsGridV"
+                            HorizontalAlignment="Center"
+                            IsItemClickEnabled="True"
+                            ItemClick="GridV_ItemClick"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                            SelectionMode="None">
+                            <GridView.Transitions>
+                                <TransitionCollection>
+                                    <EntranceThemeTransition IsStaggeringEnabled="True" />
+                                </TransitionCollection>
+                            </GridView.Transitions>
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="blocks:ComicBlock">
+                                    <StackPanel
+                                        Width="400"
+                                        Height="190"
+                                        Margin="10,0,0,0"
+                                        Orientation="Horizontal">
                                         <Border
-                                            Padding="5"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Bottom"
-                                            Background="{ThemeResource SystemComicFinishAccentColor}"
-                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                            BorderThickness=".5"
-                                            CornerRadius="7"
-                                            Visibility="{x:Bind Finished.Visibility, Mode=OneWay}">
-                                            <TextBlock
-                                                x:Uid="BlockFinished"
-                                                FontSize="12"
-                                                FontWeight="Bold"
-                                                Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                            Width="120"
+                                            Height="160"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="10">
+                                            <local:BikaImage Name="ConnectedElement2" ImgBlock="{x:Bind Thumb, Mode=OneWay}" />
                                         </Border>
-                                    </Grid>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                        <GridView.ItemContainerStyle>
-                            <Style TargetType="GridViewItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="GridViewItem">
-                                            <Grid Background="{TemplateBinding Background}">
-                                                <Border
-                                                    x:Name="ContentBackground1"
-                                                    Width="410"
-                                                    Height="210"
-                                                    BorderThickness="1.5"
-                                                    CornerRadius="10">
+                                        <Grid Width="260">
+                                            <StackPanel
+                                                Margin="10,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top">
+                                                <StackPanel>
+                                                    <TextBlock
+                                                        Width="250"
+                                                        FontSize="17"
+                                                        FontWeight="Bold"
+                                                        MaxLines="3"
+                                                        Text="{x:Bind Title, Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
+                                                    <TextBlock
+                                                        FontSize="15"
+                                                        Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                        Text="{x:Bind Author, Mode=OneWay}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel
+                                                Margin="10,0,0,0"
+                                                VerticalAlignment="Bottom"
+                                                Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <FontIcon
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                        Glyph="&#xEB52;" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        FontSize="18"
+                                                        Text="{x:Bind LikesCount, Mode=OneWay}" />
+                                                    <FontIcon
+                                                        Margin="10,0,0,0"
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="{ThemeResource SystemAccentColorDark2}"
+                                                        Glyph="&#xe7b3;" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        FontSize="18"
+                                                        Text="{x:Bind TotalViews, Mode=OneWay}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock
+                                                        Width="250"
+                                                        FontSize="13"
+                                                        FontWeight="Black"
+                                                        Foreground="Gray"
+                                                        MaxLines="5"
+                                                        Text="{x:Bind CategoriesString, Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
+                                                </StackPanel>
+                                                <StackPanel Margin="0,0,0,15" Orientation="Horizontal">
+                                                    <FontIcon
+                                                        FontFamily="Segoe MDL2 Assets"
+                                                        Foreground="Gray"
+                                                        Glyph="&#xe7b8;" />
+                                                    <TextBlock
+                                                        Margin="10,0,0,0"
+                                                        FontSize="18"
+                                                        Foreground="Gray"
+                                                        Text="{x:Bind EpsCount, Mode=OneWay}" />
+                                                    <TextBlock
+                                                        FontSize="18"
+                                                        Foreground="Gray"
+                                                        Text="E" />
+                                                    <TextBlock
+                                                        Margin="4,0,0,0"
+                                                        FontSize="18"
+                                                        Foreground="Gray"
+                                                        Text="/" />
+                                                    <TextBlock
+                                                        Margin="4,0,0,0"
+                                                        FontSize="18"
+                                                        Foreground="Gray"
+                                                        Text="{x:Bind PagesCount, Mode=OneWay}" />
+                                                    <TextBlock
+                                                        FontSize="18"
+                                                        Foreground="Gray"
+                                                        Text="P" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Border
+                                                Padding="5"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Background="{ThemeResource SystemComicFinishAccentColor}"
+                                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                BorderThickness=".5"
+                                                CornerRadius="7"
+                                                Visibility="{x:Bind Finished.Visibility, Mode=OneWay}">
+                                                <TextBlock
+                                                    x:Uid="BlockFinished"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Foreground="{ThemeResource SystemAccentColorDark2}" />
+                                            </Border>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid MaximumRowsOrColumns="10" Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="GridViewItem">
+                                                <Grid Background="{TemplateBinding Background}">
                                                     <Border
-                                                        x:Name="ContentBackground"
-                                                        Background="{ThemeResource LayerFillColorDefaultBrush}"
-                                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                        x:Name="ContentBackground1"
+                                                        Width="410"
+                                                        Height="210"
                                                         BorderThickness="1.5"
                                                         CornerRadius="10">
-                                                        <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                                                        <Border
+                                                            x:Name="ContentBackground"
+                                                            Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                                            BorderThickness="1.5"
+                                                            CornerRadius="10">
+                                                            <ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
+                                                        </Border>
                                                     </Border>
-                                                </Border>
-                                                <VisualStateManager.VisualStateGroups>
-                                                    <VisualStateGroup>
-                                                        <!--  缺省样式  -->
-                                                        <VisualState x:Name="Normal">
-                                                            <Storyboard>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBackground" Storyboard.TargetProperty="Margin">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="2,2,0,0" />
-                                                                </ObjectAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <!--  设置鼠标悬停样式  -->
-                                                        <VisualState x:Name="PointerOver" />
-                                                    </VisualStateGroup>
-                                                </VisualStateManager.VisualStateGroups>
-                                            </Grid>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </GridView.ItemContainerStyle>
-                    </GridView>
+                                                    <VisualStateManager.VisualStateGroups>
+                                                        <VisualStateGroup>
+                                                            <!--  缺省样式  -->
+                                                            <VisualState x:Name="Normal">
+                                                                <Storyboard>
+                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentBackground" Storyboard.TargetProperty="Margin">
+                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="2,2,0,0" />
+                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </VisualState>
+                                                            <!--  设置鼠标悬停样式  -->
+                                                            <VisualState x:Name="PointerOver" />
+                                                        </VisualStateGroup>
+                                                    </VisualStateManager.VisualStateGroups>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                        </GridView>
+                    </Grid>
                 </PivotItem>
                 <PivotItem>
                     <PivotItem.Header>
