@@ -1106,11 +1106,12 @@
                                 Padding="5"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Bottom"
-                                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                Background="#fff4f9"
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1.5"
                                 CornerRadius="10">
-                                <StackPanel Orientation="Vertical">
+                                <StackPanel Width="405" Orientation="Vertical">
+
                                     <muxc:InfoBar
                                         x:Name="InfoReply"
                                         Margin="0,0,0,5"
