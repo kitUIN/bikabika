@@ -628,7 +628,8 @@
                                     <Button
                                         Click="Button_Click"
                                         Content="{x:Bind Title, Mode=OneWay}"
-                                        Style="{StaticResource TagStyle}" />
+                                        Style="{StaticResource TagStyle}"
+                                        Tag="{x:Bind}" />
                                 </DataTemplate>
                             </muxc:ItemsRepeater.ItemTemplate>
                         </muxc:ItemsRepeater>

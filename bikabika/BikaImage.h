@@ -19,9 +19,7 @@ namespace winrt::bikabika::implementation
         void ImageLoaded(bool const& value);
         bool ImageLoaded();
     private:
-
         static Windows::UI::Xaml::DependencyProperty m_imageProperty;
-        winrt::BikaClient::Blocks::ImageBlock m_imgBlock;
         bool m_loaded = false;
 
     public:

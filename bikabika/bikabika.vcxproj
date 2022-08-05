@@ -148,6 +148,11 @@
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="PicArgs.h" />
+    <ClInclude Include="PicPage.h">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="SettingsPage.h">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -189,6 +194,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PicPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsPage.xaml">
@@ -329,6 +337,11 @@
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="PicArgs.cpp" />
+    <ClCompile Include="PicPage.cpp">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="SettingsPage.cpp">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -379,6 +392,11 @@
       <DependentUpon>InfoPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="PicArgs.idl" />
+    <Midl Include="PicPage.idl">
+      <DependentUpon>PicPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="SettingsPage.idl">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -410,7 +428,7 @@
     <Import Project="..\packages\YY.NuGet.Import.Helper.1.0.0.4\build\native\YY.NuGet.Import.Helper.targets" Condition="Exists('..\packages\YY.NuGet.Import.Helper.1.0.0.4\build\native\YY.NuGet.Import.Helper.targets')" />
     <Import Project="..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets')" />
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="..\packages\BikaClient.0.9.6\build\native\BikaClient.targets" Condition="Exists('..\packages\BikaClient.0.9.6\build\native\BikaClient.targets')" />
+    <Import Project="..\packages\BikaClient.0.9.7\build\native\BikaClient.targets" Condition="Exists('..\packages\BikaClient.0.9.7\build\native\BikaClient.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -423,6 +441,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.2.8.0-prerelease.220601001\build\native\Microsoft.UI.Xaml.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.210806.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('..\packages\BikaClient.0.9.6\build\native\BikaClient.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BikaClient.0.9.6\build\native\BikaClient.targets'))" />
+    <Error Condition="!Exists('..\packages\BikaClient.0.9.7\build\native\BikaClient.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BikaClient.0.9.7\build\native\BikaClient.targets'))" />
   </Target>
 </Project>

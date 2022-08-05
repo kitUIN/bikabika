@@ -1,0 +1,9 @@
+namespace bikabika
+{
+    [default_interface]
+    runtimeclass PicPage : Windows.UI.Xaml.Controls.Page
+    {
+        PicPage();
+        Windows.Foundation.Collections.IObservableVector<BikaClient.Blocks.ImageBlock> PicturesBlocks{ get; };
+    }
+}

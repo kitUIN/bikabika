@@ -6,7 +6,6 @@
     xmlns:local="using:bikabika"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Image
             x:Name="BikaImg"

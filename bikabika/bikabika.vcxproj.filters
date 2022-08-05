@@ -31,7 +31,12 @@
     <Page Include="InfoPage.xaml">
       <Filter>Pages</Filter>
     </Page>
-    <Page Include="BikaImage.xaml" />
+    <Page Include="BikaImage.xaml">
+      <Filter>Tools</Filter>
+    </Page>
+    <Page Include="PicPage.xaml">
+      <Filter>Pages</Filter>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
@@ -43,6 +48,9 @@
       <Filter>Utils</Filter>
     </Midl>
     <Midl Include="CommentView.idl">
+      <Filter>Utils</Filter>
+    </Midl>
+    <Midl Include="PicArgs.idl">
       <Filter>Utils</Filter>
     </Midl>
   </ItemGroup>
@@ -60,6 +68,9 @@
     <ClCompile Include="CommentView.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="PicArgs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -70,6 +81,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="CommentView.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="PicArgs.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
@@ -381,6 +395,9 @@
     </Filter>
     <Filter Include="Themes">
       <UniqueIdentifier>{e7fb3a60-7052-4c29-83d0-560e9f77fbda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{57203c16-fdc5-407b-bbf3-1839343c0b6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
