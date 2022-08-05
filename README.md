@@ -34,7 +34,7 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 - 有问题或者建议可以提issue
 - 支持项目可以点个Star✨呢~
 - 点个Watch👀能随时了解开发动态呢~
-
+- [Telegram频道](https://t.me/bikabikaUWP) 将会提前发布测试版以供测试
 
 > 刚学C++, 做个项目练练手
 >
@@ -69,33 +69,36 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 保姆级教程(施工中)
 
 ## 展示🍀
-![](https://i.niupic.com/images/2022/03/06/9W2O.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2R.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2Q.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2P.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2S.png)  
-![](https://i.niupic.com/images/2022/03/06/9W2V.png)
+> 此为重制版新UI,目前仅在[Telegram频道](https://t.me/bikabikaUWP) 测试
+> 待完整开发后在Github发布
+![](https://files.catbox.moe/exh50q.png)  
+![](https://files.catbox.moe/47jzrt.png)  
+![](https://files.catbox.moe/mzitik.png)  
+![](https://files.catbox.moe/8mpfdq.png)  
+![](https://files.catbox.moe/vfed3i.png)  
 暗系主题:  
 ![](https://files.catbox.moe/x0s1kj.png)  
 磁贴:
 ![](https://i.niupic.com/images/2022/03/06/9W2W.png)  
 ## 功能📝
-
+以下为重置版功能列表
 *   登陆
 
     *   [x] 登陆
 
     *   [ ] 自动测速分流
 
+    *   [x] 多用户切换
+
 *   个人信息
 
-    *   [x] 个人信息
+    *   [ ] 个人信息
 
-    *   [x] 打卡
+    *   [ ] 打卡
 
-    *   [x] 收藏
+    *   [ ] 收藏
 
-    *   [x] 浏览历史
+    *   [ ] 浏览历史
 
 *   主页
 
@@ -107,9 +110,9 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 
     *   [ ] 哔咔排行榜
 
-    *   [ ] 随机本子
+    *   [x] 随机本子
 
-    *   [ ] 最近更新
+    *   [x] 最近更新
 
     *   [x] 其他主要分区
 
@@ -123,7 +126,7 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 
     *   [x] 点击标签搜索
 
-    *   [x] 点击作者搜索
+    *   [ ] 点击作者搜索
 
 *   漫画
 
@@ -137,6 +140,8 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 
     *   [ ] 封印本子
 
+    *   [ ] 下载
+
 *   看图
 
     *   [ ] 全屏
@@ -147,7 +152,5 @@ _✨ 目前正在重构项目中,请耐心等待✨_
 
     *   [ ] 界面
 
-*   小程序
 
-    *   [ ] 聊天室
 

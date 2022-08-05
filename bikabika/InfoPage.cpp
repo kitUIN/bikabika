@@ -112,12 +112,19 @@ namespace winrt::bikabika::implementation
         }
         else if (res.Code() == 200)
         {
-
-            for (auto x : res.Comics())
+            if (res.Comics().Size()>0)
             {
-                m_comics.Append(x);
+                for (auto x : res.Comics())
+                {
+                    m_comics.Append(x);
+                }
+                ComicsGridV().ItemsSource(box_value(m_comics));
             }
-            ComicsGridV().ItemsSource(box_value(m_comics));
+            else
+            {
+                ImageEmpty().Visibility(Visibility::Visible);
+                BlockEmpty().Visibility(Visibility::Visible);
+            }
 
         }
         else if (res.Code() == 401 && res.Error() == L"1005")

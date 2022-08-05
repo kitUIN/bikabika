@@ -801,6 +801,12 @@
     <value>下载与缓存设置</value>
     <comment>设置标题:下载缓存设置</comment>
   </data>
+  <data name="BlockEmpty.Text" xml:space="preserve">
+    <value>好像什么都没有欸....</value>
+  </data>
+  <data name="NotOK.Content" xml:space="preserve">
+    <value>这个还没做好</value>
+  </data>
   <data name="TipDown.ActionButtonContent" xml:space="preserve">
     <value>下一话</value>
     <comment>提示框:下一话</comment>
