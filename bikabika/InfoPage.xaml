@@ -455,7 +455,7 @@
                                 IsTextSelectionEnabled="True"
                                 Text="{x:Bind Book.Description, Mode=OneWay}"
                                 TextWrapping="Wrap" />
-                            <Grid Grid.Row="1" MinWidth="500">
+                            <Grid Grid.Row="1" MinWidth="520">
                                 <Border
                                     x:Name="CreaterBorder"
                                     Padding="10"
@@ -913,12 +913,8 @@
                     </PivotItem.Header>
                     <PivotItem.Content>
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="50" />
-                            </Grid.RowDefinitions>
                             <ScrollViewer
-                                Grid.Row="0"
+                                Margin="0,0,0,50"
                                 Padding="5,0,5,0"
                                 VerticalScrollBarVisibility="Hidden"
                                 ViewChanged="ScrollViewer_ViewChanged">
@@ -1107,46 +1103,52 @@
                                 </muxc:ItemsRepeater>
                             </ScrollViewer>
                             <Border
-                                Grid.Row="1"
                                 Padding="5"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
                                 Background="{ThemeResource LayerFillColorDefaultBrush}"
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1.5"
-                                CornerRadius="10"
-                                Opacity="0.9">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="65" />
-                                    </Grid.ColumnDefinitions>
-                                    <PersonPicture
-                                        x:Name="UserThumb"
-                                        Grid.Column="0"
-                                        Height="32"
-                                        Margin="5,0,0,0" />
-                                    <TextBox
-                                        x:Name="SendContent"
-                                        Grid.Column="1"
-                                        Margin="5,0,0,0" />
-                                    <Button
-                                        x:Uid="ButtonSend"
-                                        Grid.Column="2"
-                                        Margin="10,0,0,0"
-                                        Click="ButtonSend_Click" />
-                                </Grid>
+                                CornerRadius="10">
+                                <StackPanel Orientation="Vertical">
+                                    <muxc:InfoBar
+                                        x:Name="InfoReply"
+                                        Margin="0,0,0,5"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="13"
+                                        FontWeight="Bold"
+                                        Foreground="{ThemeResource SystemAccentColorDark2}"
+                                        IsIconVisible="True"
+                                        IsOpen="False"
+                                        Severity="Informational" />
+                                    <Grid HorizontalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="290" />
+                                            <ColumnDefinition Width="65" />
+                                        </Grid.ColumnDefinitions>
+                                        <PersonPicture
+                                            x:Name="UserThumb"
+                                            Grid.Column="0"
+                                            Height="32"
+                                            Margin="5,0,0,0" />
+                                        <TextBox
+                                            x:Name="SendContent"
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            AcceptsReturn="True"
+                                            IsSpellCheckEnabled="True"
+                                            TextWrapping="Wrap" />
+                                        <Button
+                                            x:Uid="ButtonSend"
+                                            Grid.Column="2"
+                                            Margin="10,0,0,0"
+                                            Click="ButtonSend_Click" />
+                                    </Grid>
+                                </StackPanel>
                             </Border>
-                            <muxc:InfoBar
-                                x:Name="InfoReply"
-                                Margin="0,0,0,5"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Bottom"
-                                FontSize="13"
-                                FontWeight="Bold"
-                                Foreground="{ThemeResource SystemAccentColorDark2}"
-                                IsIconVisible="True"
-                                IsOpen="False"
-                                Severity="Informational" />
+
                         </Grid>
                     </PivotItem.Content>
                 </PivotItem>
