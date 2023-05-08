@@ -54,7 +54,7 @@ void winrt::bikabika::implementation::BikaImage::BikaImg_ImageFailed(winrt::Wind
 }
 
 
-Windows::Foundation::IAsyncAction winrt::bikabika::implementation::BikaImage::BikaImg_ImageOpened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+void winrt::bikabika::implementation::BikaImage::BikaImg_ImageOpened(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
     ImageLoaded(true);
     RefreshIcon().Visibility(Visibility::Collapsed);

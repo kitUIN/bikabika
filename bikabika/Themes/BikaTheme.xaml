@@ -174,7 +174,7 @@
                         TintColor="{ThemeResource SystemNavigationAccentColor}"
                         TintOpacity=".6" />
                     <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected" Color="{ThemeResource SystemTabAccentColor}" />
-                    <SolidColorBrush x:Key="TeachingTipBackgroundBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="TeachingTipBackgroundBrush" Color="{StaticResource SystemTipAccentColor}" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -250,7 +250,7 @@
                     <Color x:Key="SystemFrameAccentColor">#FFfee5ef</Color>
                     <Color x:Key="SystemTabAccentColor">#FFFFEBF4</Color>
                     <Color x:Key="SystemBorderAccentColor">#FFfff5fa</Color>
-                    <Color x:Key="SystemTipAccentColor">#FFffe8f2</Color>
+                    <Color x:Key="SystemTipAccentColor">#FFf2dce6</Color>
                     <Color x:Key="SystemDesBorderAccentColor">#FFffe8f4</Color>
                     <Color x:Key="SystemNavigationAccentColor">#FFFEC9DF</Color>
                     <Color x:Key="SystemComicItemAccentColor">#FFfdd7e6</Color>
@@ -354,8 +354,9 @@
                         x:Key="NavigationViewExpandedPaneBackground"
                         TintColor="{ThemeResource SystemNavigationAccentColor}"
                         TintOpacity=".6" />
-                    <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected" Color="{ThemeResource SystemTabAccentColor}" />
-                    <SolidColorBrush x:Key="TeachingTipBackgroundBrush" Color="Transparent" />
+                    <SolidColorBrush x:Key="TabViewItemHeaderBackgroundSelected" Color="{StaticResource SystemTabAccentColor}" />
+                    <SolidColorBrush x:Key="TeachingTipBackgroundBrush" Color="{StaticResource SystemTipAccentColor}" />
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
