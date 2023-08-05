@@ -7,7 +7,7 @@
 
 # 嗶咔漫畫UWP版🍍
 
-_✨ 该项目即将被转移到新的应用[ShadowViewer](https://github.com/kitUIN/ShadowViewer)中,请耐心等待,预计七月份发布 ✨_  
+_✨ 该项目作为插件嵌入到新的应用[ShadowViewer](https://github.com/kitUIN/ShadowViewer)中✨_  
 
 
 </div>
